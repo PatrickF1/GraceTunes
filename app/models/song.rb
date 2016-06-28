@@ -8,6 +8,6 @@ class Song < ActiveRecord::Base
   private
   def normalize
     self.name = self.name.titleize
-    self.artist = self.name.titleize
+    self.artist = self.artist.titleize
   end
 end
