@@ -6,7 +6,6 @@ class Tag < ActiveRecord::Base
   private
   def normalize
     self.name = self.name.titleize
-    self.artist = self.name.titleize
   end
 
 end
