@@ -1,11 +1,10 @@
 class SongsController < ApplicationController
-
   def index
-
   end
 
-  def show
-
+  def new
   end
-  
+
+  def edit
+  end
 end
