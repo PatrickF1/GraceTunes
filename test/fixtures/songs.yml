@@ -4,8 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+God_be_praised:
+  name: "God Be Praised"
+  artist: "Elevation Worship"
+  key: "D"
+  tempo: "Slow"
+  song_sheet: "                G               D\nYou left Your throne for our salvation"
