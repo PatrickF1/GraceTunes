@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627064700) do
+ActiveRecord::Schema.define(version: 20160706024317) do
 
   create_table "song_tags", force: :cascade do |t|
     t.integer  "song_id",    limit: 4
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20160627064700) do
     t.string   "name",       limit: 255,   null: false
     t.string   "key",        limit: 2
     t.string   "artist",     limit: 255
+    t.string   "tempo",      limit: 255
     t.text     "song_sheet", limit: 65535
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false

@@ -1,9 +1,11 @@
 class Song < ActiveRecord::Base
   has_many :tags, through: :song_tags
   
-  VALID_KEY_NAMES = %w(Ab A Bb B C C# D Eb E F F# G G#)
-  
-  validates_inclusion_of :key, in: VALID_KEY_NAMES, allow_nil: true
+  VALID_KEYS = %w(Ab A Bb B C C# D Eb E F F# G G#)
+  VALID_TEMPOS = %(Fast Medium Slow)
+
+  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: true
+  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: true
   before_save :normalize
 
   private
