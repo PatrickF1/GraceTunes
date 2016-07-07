@@ -2,7 +2,8 @@ require 'test_helper'
 
 class SongTest < ActiveSupport::TestCase
   test "should not save without name" do
-    song = Song.new
+    song = songs(:God_be_praised)
+    song.name = nil
     assert_not song.save, "Saved without a name"
   end
 
@@ -18,8 +19,14 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved with an invalid tempo"
   end
 
+  test "should not save without a song sheet" do
+    song = songs(:God_be_praised)
+    song.song_sheet = nil
+    assert_not song.save, "Saved without a song sheet"
+  end
+
   test "normalizes name and artist" do
-    song = Song.new
+    song = songs(:God_be_praised)
     song.name = "a name"
     song.artist = "a band"
     song.save

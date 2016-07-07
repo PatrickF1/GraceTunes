@@ -5,6 +5,7 @@ class Song < ActiveRecord::Base
   VALID_TEMPOS = %w(Fast Medium Slow)
 
   validates :name, presence: true
+  validates :song_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, allow_nil: true
   validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: true
   before_save :normalize
