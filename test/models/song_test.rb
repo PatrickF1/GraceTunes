@@ -33,4 +33,16 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.name, "A Name")
     assert_equal(song.artist, "A Band")
   end
+  
+  test "search returns correct records" do
+    results = Song.search('God')
+    correct_results = songs(:God_be_praised)
+    assert_equal results.first, correct_results
+    assert results.one?
+  end
+  
+  test "search returns no records if no results" do
+    results = Song.search('banana')
+    assert results.none?
+  end
 end

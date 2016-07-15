@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
   root 'songs#index'
+  
+  get '/search', to: "songs#search"
 
   resources :songs
   resources :tags

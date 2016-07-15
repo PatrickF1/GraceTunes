@@ -15,4 +15,10 @@ class Song < ActiveRecord::Base
     self.name = self.name.titleize
     self.artist = self.artist.titleize if self.artist
   end
+  
+  def self.search(query)
+    if query
+      where('name LIKE ? OR song_sheet LIKE?', "%#{query}%", "%#{query}%")
+    end
+  end
 end
