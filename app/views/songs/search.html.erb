@@ -1,0 +1,21 @@
+<%= form_tag(search_path, :method => "get", id: "search-form") do %>
+    <%= text_field_tag :search, params[:search], placeholder: "Search Songs" %>
+    <%= submit_tag "Search", :name => nil %>
+<% end %>
+<% if flash.key?(:notice) %>
+    <h1> <%= flash[:notice] %> </h1>
+<% end %>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <!--<th>Download</th>-->
+    </tr>
+    <% @songs.each do |songs| %>
+        <tr>
+            <td><%= songs.name %></td>
+            <td><%= songs.artist %></td>
+            <!--<td><%#= download link %></td>-->
+        </tr>
+    <% end %>
+</table>
