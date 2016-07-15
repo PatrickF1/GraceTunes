@@ -32,7 +32,7 @@ class SongsControllerTest < ActionController::TestCase
     get(:search, {'search' => 'praise'})
     assert_response :success
     assert_select 'td', "God Be Praised"
-    assert_select 'td', {count: 0, text: "Give Me Faith"}
+    assert_select 'td', {count: 0, text: "10,000 Reasons"}
   end
   
   test "should route to post" do
