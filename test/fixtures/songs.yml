@@ -10,3 +10,21 @@ God_be_praised:
   key: "D"
   tempo: "Slow"
   song_sheet: "                G               D\nYou left Your throne for our salvation"
+forever_reign:
+  name: "Forever Reign"
+  artist: "Hillsong Worship"
+  key: "C"
+  tempo: "Medium"
+  song_sheet: "           C              \nYou are good, You are good"
+10_000_reasons:
+  name: "10,000 Reasons"
+  artist: "Matt Redman"
+  key: "G"
+  tempo: "Medium"
+  song_sheet: "          C         G   \nBless the Lord O my soul"
+glorious_day:
+  name: "Glorious Day (Living He Loved Me)"
+  artist: "Casting Crowns"
+  key: "B"
+  tempo: "Medium"
+  song_sheet: " B             E                           B   \nOne day when Heaven was filled with His praises"

@@ -4,3 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+song_tag1:
+  song: 10_000_reasons
+  tag: adoration
+song_tag2:
+  song: glorious_day
+  tag: resurrection
