@@ -19,7 +19,7 @@ class SongsController < ApplicationController
           draw: params[:draw].to_i,
           recordsTotal: total_songs,
           recordsFiltered: total_songs - songs.count,
-          data: songs
+          data: songs.select(:name, :artist, :tempo, :key)
         }
 
         render json: song_data and return
