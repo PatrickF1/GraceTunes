@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707234059) do
+ActiveRecord::Schema.define(version: 20160720024212) do
 
   create_table "song_tags", force: :cascade do |t|
     t.integer  "song_id",    limit: 4
@@ -34,7 +34,9 @@ ActiveRecord::Schema.define(version: 20160707234059) do
   end
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :btree
-  add_index "songs", ["name"], name: "index_songs_on_name", using: :btree
+  add_index "songs", ["name", "song_sheet"], name: "index_songs_on_name_and_song_sheet", type: :fulltext
+  add_index "songs", ["name"], name: "index_songs_on_name", type: :fulltext
+  add_index "songs", ["song_sheet"], name: "index_songs_on_song_sheet", type: :fulltext
 
   create_table "tags", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
