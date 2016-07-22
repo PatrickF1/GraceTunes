@@ -2,8 +2,10 @@ class SongsFinder
 
   def self.search(keywords)
     return [] if keywords.blank?
-    weighted_query = ActiveRecord::Base::sanitize(">(#{keywords}*)")
-    unweighted_query = ActiveRecord::Base::sanitize(keywords + '*')
+
+    keywords = keywords + '*'
+    weighted_query = ActiveRecord::Base::sanitize(">(#{keywords})")
+    unweighted_query = ActiveRecord::Base::sanitize(keywords)
     Song.find_by_sql <<-SQL.squish
       SELECT
         *,

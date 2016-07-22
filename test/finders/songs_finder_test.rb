@@ -3,7 +3,8 @@ require 'test_helper'
 class SongsFinderTest < ActionController::TestCase
   single_word_results = SongsFinder.search "relevant"
   multi_word_results = SongsFinder.search "truth live life hands"
-  
+  partial_word_results = SongsFinder.search 'hand'
+
   test 'should prioritize songs with keyword in the title' do
     assert_equal(single_word_results.first, songs(:relevant_1))
   end
@@ -18,7 +19,7 @@ class SongsFinderTest < ActionController::TestCase
   end
 
   test 'should include all songs where at least one keyword present' do
-    
+
     assert_includes(multi_word_results, songs(:God_be_praised))
     assert_includes(multi_word_results, songs(:forever_reign))
     assert_includes(multi_word_results, songs(:hands_to_the_heaven))
@@ -34,6 +35,11 @@ class SongsFinderTest < ActionController::TestCase
   end
 
   test 'retrieve all returns many songs' do
-    assert(SongsFinder.retrieve_all.count > 7) 
+    assert(SongsFinder.retrieve_all.count > 7)
+  end
+
+  test 'should partially match' do
+    assert_includes(partial_word_results, songs(:hands_to_the_heaven))
+    assert_includes(partial_word_results, songs(:glorious_day))
   end
 end
