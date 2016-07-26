@@ -8,10 +8,14 @@ class SongsControllerTest < ActionController::TestCase
 
   test "index should retrieve relevant search results" do
     get :index, sSearch: "hand", format: :json, xhr: true
-    songs = JSON.parse(@response.body)["data"]
-    song_names = songs.map { |s| s["name"] }
-    assert_includes(song_names, songs(:hands_to_the_heaven)[:name])
-    assert_includes(song_names, songs(:glorious_day)[:name])
+
+    songs_data = JSON.parse(@response.body)["data"].map! do|s|
+      s.delete('relevance')
+      Song.new(s)
+    end
+
+    assert_includes(songs_data, songs(:hands_to_the_heaven))
+    assert_includes(songs_data, songs(:glorious_day))
   end
 
   test "should get new" do
