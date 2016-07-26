@@ -3,9 +3,13 @@ class SongsFinder
   def self.search(keywords)
     return [] if keywords.blank?
 
-    keywords = keywords + '*'
+    # The + allows for exact matches, the * is a wildcard. We want to match
+    # every word in the string exactly, but allow partial matches for the
+    # last word since the search is performed as the user types
+    keywords << '*'
     weighted_query = ActiveRecord::Base::sanitize(">(#{keywords})")
     unweighted_query = ActiveRecord::Base::sanitize(keywords)
+
     Song.find_by_sql <<-SQL.squish
       SELECT
         *,
