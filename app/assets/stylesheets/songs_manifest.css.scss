@@ -1,0 +1,28 @@
+// Place all the styles related to the Songs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+body {
+  padding-top: 40px;
+}
+.index-page {
+  input[type=search] {
+    border-radius: 0;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+  }
+
+  thead tr[role="row"] {
+    background-color: #3d8af7;
+  }
+
+  .songs-table {
+    border: 1px solid #ccc;
+  }
+
+  table.songs-table thead th, table.songs-table {
+    border-bottom: 1px solid #ccc;
+  }
+}

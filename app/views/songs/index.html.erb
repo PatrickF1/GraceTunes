@@ -1,23 +1,35 @@
-<h1>Songs</h1>
-<table class="songs-table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Artist</th>
-      <th>Tempo</th>
-      <th>Key</th>
-    </tr>
-  </thead>
-</table>
 
+<%= stylesheet_link_tag 'songs_manifest' %>
+
+<div class="index-page">
+  <div class="container">
+    <div class="row">
+      <div class="center-block">
+        <h1>Songs</h1>
+        <input type="search" id="songs-search-field" class="form-control" placeholder="Enter a lyric phrase or song title"/>
+        <table class="songs-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Artist</th>
+              <th>Tempo</th>
+              <th>Key</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   $(function() {
-    $('.songs-table').DataTable({
+    var table = $('.songs-table').DataTable({
       sAjaxSource: '<%= songs_path(format: :json) %>',
       serverSide: true,
-      processing: true,
       responsive: true,
+      lengthChange: false,
+      dom: '',
       columns: [
         { data: 'name' },
         { data: 'artist' },
@@ -25,5 +37,11 @@
         { data: 'key' },
       ],
     });
+
+    $('#songs-search-field').keyup(function() {
+      table.search(this.value).draw();
+    });
+
+    $('.search-page').addClass('active');
   });
 </script>
