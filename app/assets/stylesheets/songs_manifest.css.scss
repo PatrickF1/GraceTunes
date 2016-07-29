@@ -8,7 +8,7 @@ body {
 }
 .index-page {
   input[type=search] {
-    border-radius: 0 0 0 0;
+    border-radius: 0;
     width: 100%;
     margin: 0 auto;
     margin-bottom: 20px;
@@ -19,6 +19,10 @@ body {
   }
 
   .songs-table {
-    border: 1px solid black;
+    border: 1px solid #ccc;
+  }
+
+  table.songs-table thead th, table.songs-table {
+    border-bottom: 1px solid #ccc;
   }
 }

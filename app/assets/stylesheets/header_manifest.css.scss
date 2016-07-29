@@ -7,10 +7,10 @@
 }
 
 .navbar-nav.navbar-right .btn{
-    position: relative; 
+    position: relative;
     z-index: 2;
-    padding: 4px 20px; 
-    margin: 10px auto; 
+    padding: 4px 20px;
+    margin: 10px auto;
     transition: transform 0.3s;
 }
 
@@ -30,4 +30,8 @@
 
 .navbar.navbar-default {
     background-color: #f8f8f8;
+}
+
+.navbar li.active {
+  background-color: #ccc;
 }
