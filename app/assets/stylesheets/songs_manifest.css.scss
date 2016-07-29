@@ -2,10 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-body {
-  padding-top: 40px;
-}
 .index-page {
   input[type=search] {
     border-radius: 0;
@@ -29,5 +25,35 @@ body {
 
   table.songs-table thead th, table.songs-table {
     border-bottom: 1px solid #ccc;
+  }
+}
+
+.form-page {
+  .tempo-and-key, .tempo-and-key select {
+    width: 100%;
+  }
+
+  .tempo-and-key .form-group {
+    width: 10%;
+  }
+
+  .name-and-artist .form-group {
+    width: 30%;
+  }
+
+  .name-and-artist .form-group input {
+    width: 100%;
+  }
+
+  .form-inline {
+    margin-bottom: 15px;
+  }
+
+  .form-inline .form-group {
+    margin-right: 15px;
+  }
+
+  textarea {
+    height: 300px;
   }
 }
