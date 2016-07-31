@@ -7,6 +7,17 @@
       <div class="center-block">
         <h1>Songs</h1>
         <input type="search" id="songs-search-field" class="form-control" placeholder="Search lyrics, song titles, and artists"/>
+        <table class="filter-selection" border="0">
+          <tbody>
+            <tr>
+              <td>Filter Key:</td>
+              <td><%= select_tag 'key', options_for_select(['Any key'] + Song::VALID_KEYS, :selected => 'Any key') %></td>
+              <td>Filter Tempo:</td>
+              <td><%= select_tag 'tempo', options_for_select(['Any tempo'] + Song::VALID_TEMPOS, :selected => 'Any tempo') %></td>
+            </tr>
+          </tbody>
+        </table>
+        
         <table class="songs-table">
           <thead>
             <tr>
@@ -40,6 +51,14 @@
 
     $('#songs-search-field').keyup(function() {
       table.search(this.value).draw();
+    });
+
+    $('#key').on('change', function() {
+      table.columns(3).search(this.value).draw();
+    });
+
+    $('#tempo').on('change', function() {
+      table.columns(2).search(this.value).draw();
     });
 
     $('.search-page').addClass('active');
