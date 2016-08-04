@@ -1,4 +1,12 @@
 class Song < ActiveRecord::Base
+  
+  include PgSearch
+  pg_search_scope(
+    :search_by_keywords, 
+    against: {name: 'A', song_sheet: 'B', artist: 'B'},
+    using: {:tsearch => {any_word: true, prefix: true}}
+  )
+
   has_many :tags, through: :song_tags
   
   VALID_KEYS = %w(Ab A Bb B C C# D Eb E F F# G G#)
