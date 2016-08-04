@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
   test "should not save without name" do
@@ -39,31 +39,31 @@ class SongTest < ActiveSupport::TestCase
   multi_word_results = Song.search_by_keywords "truth live life hands"
   partial_word_results = Song.search_by_keywords "hand"
 
-  test 'search should prioritize songs with keyword in the title' do
+  test "search should prioritize songs with keyword in the title" do
     assert_equal(single_word_results.first, songs(:relevant_1))
   end
 
-  test 'search should prioritize songs with more occurances of the keyword' do
+  test "search should prioritize songs with more occurances of the keyword" do
     assert_equal(single_word_results.second, songs(:relevant_2))
     assert_equal(single_word_results.third, songs(:relevant_3))
   end
 
-  test 'search should not include songs without any occurances of the keyword' do
+  test "search should not include songs without any occurances of the keyword" do
     assert_not_includes(single_word_results, songs(:relevant_4), "Song without keyword appeared in search")
   end
 
-  test 'search should include all songs where at least one keyword present' do
+  test "search should include all songs where at least one keyword present" do
     assert_includes(multi_word_results, songs(:God_be_praised))
     assert_includes(multi_word_results, songs(:forever_reign))
     assert_includes(multi_word_results, songs(:hands_to_the_heaven))
   end
 
-  test 'empty search should return no results' do
+  test "empty search should return no results" do
     assert_equal(Song.search_by_keywords(nil), [])
     assert_equal(Song.search_by_keywords(""), [])
   end
 
-  test 'search should include partial matches' do
+  test "search should include partial matches" do
     assert_includes(partial_word_results, songs(:hands_to_the_heaven))
     assert_includes(partial_word_results, songs(:glorious_day))
   end
