@@ -4,7 +4,7 @@ class SongsController < ApplicationController
       format.json do
         songs = Song.all
         total_songs = songs.count
-        songs = SongsFinder.search(params[:sSearch]) if params[:sSearch].present?
+        songs = Song.search_by_keywords(params[:sSearch]) if params[:sSearch].present?
         
         song_data = {
           draw: params[:draw].to_i,

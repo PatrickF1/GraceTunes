@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
 
+ruby '2.2.5'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
-# Use MySQL as the database for Active Record
-gem 'mysql2'
+# Use Postgres as the database for Active Record
+gem 'pg'
+gem 'pg_search'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -33,7 +36,7 @@ gem 'autoprefixer-rails'
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -51,3 +54,7 @@ group :development do
   gem 'spring'
 end
 
+group :production do
+  # Used by Heroku
+  gem 'rails_12factor'
+end

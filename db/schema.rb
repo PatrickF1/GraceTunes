@@ -11,37 +11,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720024212) do
+ActiveRecord::Schema.define(version: 20160803224917) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "btree_gin"
 
   create_table "song_tags", force: :cascade do |t|
-    t.integer  "song_id",    limit: 4
-    t.integer  "tag_id",     limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "song_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "song_tags", ["song_id"], name: "index_song_tags_on_song_id", using: :btree
   add_index "song_tags", ["tag_id"], name: "index_song_tags_on_tag_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
-    t.string   "name",       limit: 255,   null: false
-    t.string   "artist",     limit: 255
+    t.string   "name",                 null: false
     t.string   "key",        limit: 2
-    t.string   "tempo",      limit: 255
-    t.text     "song_sheet", limit: 65535, null: false
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "artist"
+    t.text     "song_sheet",           null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "tempo"
   end
 
-  add_index "songs", ["artist"], name: "index_songs_on_artist", using: :btree
-  add_index "songs", ["name", "song_sheet"], name: "index_songs_on_name_and_song_sheet", type: :fulltext
-  add_index "songs", ["name"], name: "index_songs_on_name", type: :fulltext
-  add_index "songs", ["song_sheet"], name: "index_songs_on_song_sheet", type: :fulltext
+  add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
+  add_index "songs", ["name"], name: "index_songs_on_name", using: :gin
+  add_index "songs", ["song_sheet"], name: "index_songs_on_song_sheet", using: :gin
 
   create_table "tags", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
