@@ -30,7 +30,7 @@ God_be_praised:
                        G       A     D
     But through Your shame we came alive
 
-    CHORUS 
+    CHORUS
               G      Bm
     God be praised
        D    A                   G      Bm
@@ -54,14 +54,14 @@ God_be_praised:
                     G        A    D
     Bought with a price, we are alive
 
-    BRIDGE 
-       Bm         A           D          G      
+    BRIDGE
+       Bm         A           D          G
     Because I'm alive, I'll give You my life
-       Bm         A          D           G      
+       Bm         A          D           G
     Because I am free, I'll bow at Your feet
-       Bm          A         D       G      
+       Bm          A         D       G
     Because I am loved, I'm able to love
-       Bm          A         D        G      
+       Bm          A         D        G
     Because I am Yours, my worth is secure
 
 forever_reign:
@@ -229,7 +229,7 @@ glorious_day:
     Suffering anguish, despised and rejected
                  E                  C#m
     Bearing our sins, my Redeemer is He
-                         E                        G#m 
+                         E                        G#m
     Hands that healed nations, stretched out on a tree
                            F#
     And took the nails for me
@@ -244,7 +244,7 @@ glorious_day:
                 E                 C#m
     Now He's ascended, my Lord evermore
                      E
-    Death could not hold Him 
+    Death could not hold Him
                         G#m
     The grave could not keep Him
                   F#
@@ -280,13 +280,13 @@ hands_to_the_heaven:
     Expectant here for you to move
 
     CHORUS
-               B                  
-    With our hands to the heaven 
+               B
+    With our hands to the heaven
      D#m                       F#
     Alive in your presence oh God
               C#
     When you come
-        B 
+        B
     So pour out your spirit
         D#m                    F#
     We love to be near you oh God
@@ -310,6 +310,60 @@ hands_to_the_heaven:
     Come like a burning flame
      C#
     Have your way, Have your way
+
+all_my_hope:
+  name: "All My Hope"
+  artist: "Hillsong Worship"
+  key: "C"
+  tempo: "Medium"
+  song_sheet: |
+    VERSE 1
+    Gb                        Db
+    Peace be still, You are near
+                           Gb
+    There's nowhere we can go
+                                       Db
+    That You won't shine redemption's light
+
+    Our guilt withdrawn
+
+    PRECHORUS 1
+    Ab      Gb       Ab    Gb
+    As You rise, we come alive
+          Ab       Gb        Ab     Gb
+    The grave has lost, the old is gone
+
+    CHORUS
+                 Db               Gb
+    And You're making all things new
+              Db               Gb
+    You are making all things new
+              Db               Gb
+    You are making all things new
+
+    And we are free
+
+    VERSE 2
+    Gb                      Db
+    Hope is found, You are here
+                         Gb
+    Our hearts forever sealed
+                               Db
+    By this love that came for us
+
+    Now we are Yours
+
+    PRECHORUS 2
+    Ab      Gb       Ab    Gb
+    As You rise, we come alive
+
+    BRIDGE
+          Gb           Ab
+    Your love never ending
+          Bbm           Ab
+    Your grace never failing
+        Gb           Ab       Bbm     Ab
+    Redemption is calling us home
 
 relevant_1:
   name: "relevant"
