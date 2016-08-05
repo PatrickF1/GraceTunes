@@ -7,7 +7,7 @@ class SongsControllerTest < ActionController::TestCase
   end
 
   test "index should retrieve relevant search results" do
-    get :index, sSearch: "hand", format: :json, xhr: true
+    get :index, search: { value: "hand" }, format: :json, xhr: true
 
     songs_data = JSON.parse(@response.body)["data"].map! do|s|
       s.delete('relevance')

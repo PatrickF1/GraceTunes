@@ -10,10 +10,10 @@
         <table class="filter-selection" border="0">
           <tbody>
             <tr>
-              <td>Filter Key:</td>
-              <td><%= select_tag 'key', options_for_select(['Any key'] + Song::VALID_KEYS, :selected => 'Any key') %></td>
-              <td>Filter Tempo:</td>
-              <td><%= select_tag 'tempo', options_for_select(['Any tempo'] + Song::VALID_TEMPOS, :selected => 'Any tempo') %></td>
+              <td>Key:</td>
+              <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any') %></td>
+              <td>Tempo:</td>
+              <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any') %></td>
             </tr>
           </tbody>
         </table>
@@ -36,7 +36,6 @@
 <script>
   $(function() {
     var table = $('.songs-table').DataTable({
-      sAjaxSource: '<%= songs_path(format: :json) %>',
       serverSide: true,
       responsive: true,
       lengthChange: false,
@@ -47,18 +46,23 @@
         { data: 'tempo' },
         { data: 'key' },
       ],
+      ajax: {
+        sAjaxSource: '<%= songs_path(format: :json) %>',
+        data: function(d) {
+          d.tempo = $('#tempo').val();
+          d.key = $('#key').val();
+
+          return d;
+        }
+      }
     });
 
     $('#songs-search-field').keyup(function() {
       table.search(this.value).draw();
     });
 
-    $('#key').on('change', function() {
-      table.columns(3).search(this.value).draw();
-    });
-
-    $('#tempo').on('change', function() {
-      table.columns(2).search(this.value).draw();
+    $('.filter-selection').change(function() {
+      table.ajax.reload();
     });
 
     $('.search-page').addClass('active');
