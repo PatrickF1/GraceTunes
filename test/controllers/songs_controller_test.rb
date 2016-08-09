@@ -19,7 +19,7 @@ class SongsControllerTest < ActionController::TestCase
     http_params = {
       search: { value: "forever" },
       tempo: "Medium",
-      key: "C",
+      key: "B",
       format: :json,
       xhr: :true
     }
@@ -27,8 +27,12 @@ class SongsControllerTest < ActionController::TestCase
     get :index, http_params
     songs_data = load_songs
 
-    assert_includes(songs_data, songs(:all_my_hope))
-    assert_includes(songs_data, songs(:forever_reign))
+    # these songs almost match but have different keys
+    assert(songs_data.exclude?(songs(:all_my_hope)))
+    assert(songs_data.exclude?(songs(:ten_thousand_reasons)))
+    assert(songs_data.exclude?(songs(:forever_reign)))
+
+    assert_includes(songs_data, songs(:glorious_day))
   end
 
   test "should get new" do
