@@ -76,6 +76,6 @@ class SongTest < ActiveSupport::TestCase
   test "search should include songs that match on different individual columns" do
     songs = Song.search_by_keywords("church reasons")
     assert_includes(songs, songs(:hands_to_the_heaven))
-    assert_includes(songs, songs(:"10_000_reasons"))
+    assert_includes(songs, songs(:ten_thousand_reasons))
   end
 end

@@ -7,6 +7,17 @@
       <div class="center-block">
         <h1>Songs</h1>
         <input type="search" id="songs-search-field" class="form-control" placeholder="Search lyrics, song titles, and artists"/>
+        <table class="filter-selection" border="0">
+          <tbody>
+            <tr>
+              <td>Key:</td>
+              <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any') %></td>
+              <td>Tempo:</td>
+              <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any') %></td>
+            </tr>
+          </tbody>
+        </table>
+        
         <table class="songs-table">
           <thead>
             <tr>
@@ -25,7 +36,6 @@
 <script>
   $(function() {
     var table = $('.songs-table').DataTable({
-      sAjaxSource: '<%= songs_path(format: :json) %>',
       serverSide: true,
       responsive: true,
       lengthChange: false,
@@ -36,10 +46,23 @@
         { data: 'tempo' },
         { data: 'key' },
       ],
+      ajax: {
+        sAjaxSource: '<%= songs_path(format: :json) %>',
+        data: function(d) {
+          d.tempo = $('#tempo').val();
+          d.key = $('#key').val();
+
+          return d;
+        }
+      }
     });
 
     $('#songs-search-field').keyup(function() {
       table.search(this.value).draw();
+    });
+
+    $('.filter-selection').change(function() {
+      table.ajax.reload();
     });
 
     $('.search-page').addClass('active');
