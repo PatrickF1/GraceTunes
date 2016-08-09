@@ -15,7 +15,7 @@ class SongsControllerTest < ActionController::TestCase
     assert_includes(songs_data, songs(:glorious_day))
   end
 
-  test "index should stack searches" do
+  test "index should stack filters" do
     http_params = {
       search: { value: "forever" },
       tempo: "Medium",
