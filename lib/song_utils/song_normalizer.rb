@@ -5,9 +5,6 @@ module SongUtils
 
   class SongNormalizer
     class UnsupportedFileType < StandardError; end
-    class UnsupportedLayout < StandardError; end
-
-    attr_reader :raw_contents
 
     SUPPORTED_MIME_TYPES = ['application', 'text', 'image']
     STRATEGIES = [
@@ -21,8 +18,8 @@ module SongUtils
       @garbage_prefix = 'SNORMALIZER-'
       Dir.mkdir(@garbage_dir) unless Dir.exists?(@garbage_dir)
 
-      @raw_contents = text_for_file(File.expand_path(path))
-      @strategy = parsing_strategy(path, @raw_contents)
+      raw_contents = text_for_file(File.expand_path(path))
+      @strategy = parsing_strategy(path, raw_contents)
       @strategy.execute!
 
       cleanup_garbage
@@ -72,7 +69,7 @@ module SongUtils
 
     def pdf_to_png(input_path)
       output_name = File.basename(input_path, File.extname(input_path)) << '.png'
-      output_path = "#{@garbage_dir}/#{@garbage_prefix}-#{output_name}"
+      output_path = "#{@garbage_dir}/#{@garbage_prefix}#{output_name}"
 
       MiniMagick::Tool::Convert.new do |convert|
         convert.density(300)
@@ -91,13 +88,11 @@ module SongUtils
 
     def parsing_strategy(filename, raw_text)
       matches = STRATEGIES.select { |strategy| strategy.match?(raw_text) }
-      raise UnsupportedLayout.new('Unknown sheet layout.') if matches.empty?
-
       matches.first.new(File.basename(filename, '.*'), raw_text)
     end
 
     def cleanup_garbage
-      FileUtils.rm(Dir.glob("#{@garbage_dir}/#{@garbage_prefix}-*"))
+      FileUtils.rm(Dir.glob("#{@garbage_dir}/#{@garbage_prefix}*"))
     end
   end
 
@@ -164,7 +159,7 @@ module SongUtils
 
       # some GP sheets have 'Page 1 of 1' and the name gets set to 'Page'.
       # if that happens just fallback to the filename.
-      if name_match.present? && name_match[0] != 'Page'
+      if name_match.present? && name_match[0].strip != 'Page'
         name = name_match[0].strip
         @song.name = name
       end

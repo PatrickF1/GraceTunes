@@ -25,6 +25,5 @@ module GraceTunes
     config.eager_load = true
     config.autoload_paths << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('lib')
-    #config.eager_load_namespaces << SongUtils
   end
 end
