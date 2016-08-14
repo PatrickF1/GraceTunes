@@ -1,8 +1,8 @@
 
 module SongUtils
-  class ParsingStrategy; end
-  class GracepointParsingStrategy < ParsingStrategy; end
-  class SongSelectParsingStrategy < ParsingStrategy; end
+  class BaseParsingStrategy; end
+  class GracepointParsingStrategy < BaseParsingStrategy; end
+  class SongSelectParsingStrategy < BaseParsingStrategy; end
 
   class SongNormalizer
     class UnsupportedFileType < StandardError; end
@@ -13,17 +13,20 @@ module SongUtils
     SUPPORTED_MIME_TYPES = ['application', 'image']
     STRATEGIES = [
       ::SongUtils::GracepointParsingStrategy,
-      ::SongUtils::SongSelectParsingStrategy
+      ::SongUtils::SongSelectParsingStrategy,
+      ::SongUtils::BaseParsingStrategy
     ]
 
-    def initialize(path, garbage_dir='./tmp')
-      @garbage_dir = File.expand_path(garbage_dir)
+    def initialize(path)
+      @garbage_dir = File.expand_path('./tmp/file-conv-dump')
+      @garbage_prefix = 'SNORMALIZER-'
       Dir.mkdir(@garbage_dir) unless Dir.exists?(@garbage_dir)
 
       @raw_contents = text_for_file(path)
-      @strategy = parsing_strategy(@raw_contents)
-
+      @strategy = parsing_strategy(path, @raw_contents)
       @strategy.execute!
+
+      cleanup_garbage
     end
 
     def normalized_song
@@ -74,7 +77,7 @@ module SongUtils
 
     def pdf_to_png(input_path)
       output_name = File.basename(input_path, File.extname(input_path)) << '.png'
-      output_path = "#{@garbage_dir}/#{output_name}"
+      output_path = "#{@garbage_dir}/#{@garbage_prefix}-#{output_name}"
 
       MiniMagick::Tool::Convert.new do |convert|
         convert.density(300)
@@ -91,38 +94,59 @@ module SongUtils
       SUPPORTED_MIME_TYPES.include?(mime_type)
     end
 
-    def parsing_strategy(raw_text)
+    def parsing_strategy(filename, raw_text)
       matches = STRATEGIES.select { |strategy| strategy.match?(raw_text) }
       raise UnsupportedLayout.new('Unknown sheet layout.') if matches.empty?
 
-      matches.first.new(raw_text)
+      matches.first.new(File.basename(filename, '.*'), raw_text)
+    end
+
+    def cleanup_garbage
+      FileUtils.rm(Dir.glob("#{@garbage_dir}/#{@garbage_prefix}-*"))
     end
   end
 
-  class ParsingStrategy
+  class BaseParsingStrategy
     attr_reader :song
 
     def self.match?(text)
-      # Base class, never match it
-      false
+      # Base class, always match it
+      true
     end
 
-    def initialize(raw_text)
-      @song = Song.new
+    def initialize(filename, raw_text)
+      @filename = filename
       @raw_text = raw_text
+      @song = Song.new
     end
 
     def execute!
       parse_name
       parse_artist
       parse_key
+      parse_tempo
       parse_sheet_music
     end
 
     protected
-    def parse_name; end
+    # use the filename as the name
+    def parse_name
+      # remove stuff like (1) or (A) or - or _ in title
+      name = @filename.gsub(/\([0-9]\)|\([A-Za-z]{1,2}\)/, '')
+      # replace separators with spaces
+      @song.name = name.gsub(/-|_/, ' ')
+    end
+
     def parse_artist; end
-    def parse_key; end
+
+    def parse_tempo; end
+
+    def parse_key
+      # try to strip key from the filename
+      key_match = @filename.match(/\([A-Za-z]{1,2}\)/)
+      @song.key = key_match[0] if key_match.present?
+    end
+
     def parse_sheet_music
       @song.song_sheet = @raw_text
     end
@@ -135,11 +159,13 @@ module SongUtils
 
     private
     def parse_name
-      name = ''
-      match_name = @raw_text.match(/(?<=Chordsheet)\s*[\w| ]*/)
-      name = match_name[0].strip if match_name
+      super
+      name_match = @raw_text.match(/(?<=Chordsheet)\s*[\w| ]*/)
 
-      @song.name = name
+      if name_match.present?
+        name = name_match[0].strip
+        @song.name = name
+      end
     end
   end
 
@@ -150,31 +176,33 @@ module SongUtils
 
     private
     def parse_name
-      name = ''
-      match_name = @raw_text.match(/.*(?=Key)|(?=\n)/)
-      name = match_name[0].strip if match_name.present?
+      super
+      name_match = @raw_text.match(/.*(?=Key)|(?=\n)/)
 
-      @song.name = name
+      if name_match.present?
+        name = name_match[0].strip
+        @song.name = name
+      end
     end
 
     def parse_artist
-      artist = ''
-      match_artist = @raw_text.match(/(?<=Words and Music by)\s*[\w| ]*/)
-      artist = match_artist[0].strip if match_artist.present?
+      artist = nil
+      artist_match = @raw_text.match(/(?<=Words and Music by)\s*[\w| ]*/)
 
-      @song.artist = artist
+      if artist_match.present?
+        artist = artist_match[0].strip
+        @song.artist = artist
+      end
     end
 
     def parse_key
-      key = ''
-      match_key = @raw_text.match(/Key((\s*-\s*)|(-|\s*))\w{1,2}/)
+      super
+      key_match = @raw_text.match(/Key((\s*-\s*)|(-|\s*))\w{1,2}/)
 
-      if match_key.present?
-        match = match_key[0]
-        key = match.gsub(/(Key|-)/, '').strip
+      if key_match.present?
+        key = key_match[0].gsub(/(Key|-)/, '').strip
+        @song.key = key
       end
-
-      @song.key = key
     end
   end
 
