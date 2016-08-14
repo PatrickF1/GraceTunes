@@ -162,7 +162,9 @@ module SongUtils
       super
       name_match = @raw_text.match(/(?<=Chordsheet)\s*[\w| |,]*/)
 
-      if name_match.present?
+      # some GP sheets have 'Page 1 of 1' and the name gets set to 'Page'.
+      # if that happens just fallback to the filename.
+      if name_match.present? && name_match[0] != 'Page'
         name = name_match[0].strip
         @song.name = name
       end
