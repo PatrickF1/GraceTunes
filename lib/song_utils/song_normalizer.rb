@@ -1,4 +1,3 @@
-
 module SongUtils
   class BaseParsingStrategy; end
   class GracepointParsingStrategy < BaseParsingStrategy; end
@@ -10,7 +9,7 @@ module SongUtils
 
     attr_reader :raw_contents
 
-    SUPPORTED_MIME_TYPES = ['application', 'image']
+    SUPPORTED_MIME_TYPES = ['application', 'text', 'image']
     STRATEGIES = [
       ::SongUtils::GracepointParsingStrategy,
       ::SongUtils::SongSelectParsingStrategy,
@@ -22,7 +21,7 @@ module SongUtils
       @garbage_prefix = 'SNORMALIZER-'
       Dir.mkdir(@garbage_dir) unless Dir.exists?(@garbage_dir)
 
-      @raw_contents = text_for_file(path)
+      @raw_contents = text_for_file(File.expand_path(path))
       @strategy = parsing_strategy(path, @raw_contents)
       @strategy.execute!
 
@@ -33,23 +32,19 @@ module SongUtils
       @strategy.song
     end
 
-    def self.bacon
-      fn = File.expand_path("~/Downloads/Worship Resources/By His Wounds.pdf")
-      self.new(fn)
-    end
-
     private
     def text_for_file(path)
       text = ''
 
       mime_type = MIME::Types.type_for(path).first.try(:media_type)
       if !mime_type_supported?(mime_type)
-        raise UnsupportedFileType.new("The #{mime_type} is unsupported.")
+        raise UnsupportedFileType.new("Mime type '#{mime_type}' is unsupported.")
       end
 
-      if mime_type == 'application'
+      case mime_type
+      when 'application', 'text'
         ext = File.extname(path)
-        case ext
+        case ext.downcase
         when '.pdf'
           text = Yomu.new(path).text
           if text.blank?
@@ -65,7 +60,7 @@ module SongUtils
           raise UnsupportedFileType.new(err)
         end
 
-      elsif mime_type == 'image'
+      when 'image'
         text = Tesseract::Engine.new.text_for(path)
       else
         err = 'File extension is unknown or unsupported.'
@@ -143,8 +138,13 @@ module SongUtils
 
     def parse_key
       # try to strip key from the filename
-      key_match = @filename.match(/\([A-Za-z]{1,2}\)/)
-      @song.key = key_match[0] if key_match.present?
+      key_match = @filename.match(/\([A-Za-z]{1,2}\)|(?<=in )[A-Za-z]{1,2}(?=\.)/)
+      if key_match.present?
+        # remove surrounding parentheses
+        key = key_match[0].gsub(/\(|\)/, '')
+        key = key.upcase if key.length == 1
+        @song.key = key
+      end
     end
 
     def parse_sheet_music
@@ -160,7 +160,7 @@ module SongUtils
     private
     def parse_name
       super
-      name_match = @raw_text.match(/(?<=Chordsheet)\s*[\w| ]*/)
+      name_match = @raw_text.match(/(?<=Chordsheet)\s*[\w| |,]*/)
 
       if name_match.present?
         name = name_match[0].strip
@@ -205,5 +205,4 @@ module SongUtils
       end
     end
   end
-
 end
