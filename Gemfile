@@ -21,6 +21,7 @@ gem 'jquery-rails'
 
 # Use datatables for rendering and searching songs
 gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'will_paginate'
 
 gem 'yomu'
 gem 'tesseract-ocr'

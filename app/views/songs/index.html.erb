@@ -17,7 +17,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <table class="songs-table">
           <thead>
             <tr>
@@ -39,7 +39,9 @@
       serverSide: true,
       responsive: true,
       lengthChange: false,
-      dom: '',
+      pageLength: 25,
+      processing: true,
+      dom: 'pr',
       columns: [
         { data: 'name' },
         { data: 'artist' },
