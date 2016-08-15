@@ -12,7 +12,8 @@
     <%= render 'layouts/header' %>
   </div>
 
-<%= yield %>
+  <%= render partial: "flash_messages", flash: flash %> 
+  <%= yield %>
 
 </body>
 </html>

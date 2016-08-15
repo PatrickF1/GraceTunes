@@ -36,8 +36,25 @@ class SongsController < ApplicationController
   end
 
   def create
+    @song = Song.new(song_params)
+    if @song.save
+      flash[:success] = "#{@song} successfully created!"
+      # TODO: redirect to @song once show action implemented
+      redirect_to action: :index
+    else
+      flash.now[:error] = "Error: #{@song.errors.messages}"
+      render :new
+    end
   end
 
   def edit
+  end
+
+  def show
+  end
+
+  private
+  def song_params
+    params.require(:song).permit(:name, :key, :artist, :tempo, :song_sheet)
   end
 end
