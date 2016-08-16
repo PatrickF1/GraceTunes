@@ -18,6 +18,10 @@ class Song < ActiveRecord::Base
   validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: true
   before_save :normalize
 
+  def to_s
+    name
+  end
+
   private
   def normalize
     self.name = self.name.titleize

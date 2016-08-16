@@ -1,0 +1,32 @@
+<%= form_for @song do |f| %>
+  <div class="form-inline name-and-artist">
+    <div class="form-group">
+      <%= f.label :name, 'Song Title' %><br/>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :artist %><br/>
+      <%= f.text_field :artist, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-inline tempo-and-key">
+    <div class="form-group">
+      <%= f.label :tempo %><br/>
+      <%= f.select :tempo, Song::VALID_TEMPOS, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :key %><br/>
+      <%= f.select :key, Song::VALID_KEYS, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :song_sheet %><br/>
+    <%= f.text_area :song_sheet, class: 'form-control' %>
+  </div>
+
+  <%= f.submit 'Upload', class: 'btn btn-default' %>
+<% end %>

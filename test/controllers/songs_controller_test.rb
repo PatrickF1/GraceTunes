@@ -1,7 +1,9 @@
 require "test_helper"
 
 class SongsControllerTest < ActionController::TestCase
-  test "should get index" do
+  
+  # "index" action tests
+  test "index should be retrieved successfully" do
     get :index
     assert_response :success
   end
@@ -35,9 +37,39 @@ class SongsControllerTest < ActionController::TestCase
     assert_includes(songs_data, songs(:glorious_day))
   end
 
-  test "should get new" do
+  # "new" action tests
+  test "new song page should load successfully" do
     get :new
     assert_response :success
+  end
+
+  # "create" action tests
+  test "should load the new song template when song creation unsuccessful" do
+    post :create, song: {problem: true}
+    assert_template :new
+  end
+
+  test "should notify user appropriately when song creation unsuccessful" do
+    post :create, song: {problem: true}
+    assert_not_nil flash[:error]
+  end
+
+  test "submitting a valid song should result in a new song in the database with the same name" do
+    assert_difference('Song.count', difference = 1) do
+      post_new_song_form
+    end
+    assert_not_nil Song.find_by_name("New Song Just Posted")
+  end
+
+  test "should redirect to index when song successfully created" do
+    post_new_song_form
+    # TODO: will redirect to show action once it's implemented
+    assert_redirected_to action: "index"
+  end
+
+  test "should notify user appropriately when song created successfully" do
+    post_new_song_form
+    assert_not_nil flash[:success]
   end
 
   private
@@ -46,6 +78,10 @@ class SongsControllerTest < ActionController::TestCase
       s.delete('relevance')
       Song.new(s)
     end
+  end
+
+  def post_new_song_form
+    post :create, song: {name: "New Song Just Posted", key: "E", artist: "New Song Artist", tempo: "Fast", song_sheet: "New Song Chords"}
   end
 
 end
