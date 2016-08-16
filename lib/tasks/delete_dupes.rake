@@ -27,16 +27,16 @@ namespace :songs do
       base_name = File.basename(file, File.extname(file))
       next if base_name.split.length < 3 # not enough words to go by
 
-      puts "Looking at '#{base_name}'...".green
+      puts "Looking at '#{base_name}'...".white
 
       similar_files = Dir.glob("#{new_dir}/#{base_name}*")
       similar_files.delete(file) # don't want to remove the original
 
       if similar_files.any?
-        puts "\nremoving: \n\t#{similar_files.join("\n\t")}\n".green
+        puts "\nremoving: \n\t#{similar_files.join("\n\t")}\n".red
         FileUtils.rm(similar_files)
         deleted_files += similar_files
-      elsif file.match(/\(.*\)(?=\.)| in \w{1,2}(?=\.)/)
+      elsif file.match(/ \(.*\)(?=\.)| in \w{1,2}(?=\.)/)
         # It's possible that dupes may exist as
         # 'same file (A).doc', 'same file (B).doc'. Using Dir.glob with the
         # whole filename as the prefix to search against won't capture these.
@@ -54,7 +54,7 @@ namespace :songs do
           end
 
           if remove.any?
-            puts "\nremoving: \n\t#{remove.join("\n\t")}\n".green
+            puts "\nremoving: \n\t#{remove.join("\n\t")}\n".red
             FileUtils.rm(remove)
             deleted_files += remove
           end
@@ -63,6 +63,6 @@ namespace :songs do
     end
 
     puts "Done! Removed #{deleted_files.length} files.".green
-    puts "New directory is: #{new_dir}".cyan
+    puts "New directory is: #{new_dir}".green
   end
 end
