@@ -128,13 +128,13 @@ module SongUtils
     end
 
     def parse_artist; end
-
+    
     def parse_tempo; end
 
     def parse_key
       # try to strip key from the filename
       key_match = @filename.match(/\([A-Za-z]{1,2}\)|(?<=in )[A-Za-z]{1,2}(?=\.)/)
-      if key_match.present?
+      if key_match && key_match[0].present?
         # remove surrounding parentheses
         key = key_match[0].gsub(/\(|\)/, '')
         key = key.upcase if key.length == 1
@@ -159,7 +159,7 @@ module SongUtils
 
       # some GP sheets have 'Page 1 of 1' and the name gets set to 'Page'.
       # if that happens just fallback to the filename.
-      if name_match.present? && name_match[0].strip != 'Page'
+      if name_match.present? && name_match[0].present? && name_match[0].strip != 'Page'
         name = name_match[0].strip
         @song.name = name
       end
@@ -176,7 +176,7 @@ module SongUtils
       super
       name_match = @raw_text.match(/.*(?=Key)|(?=\n)/)
 
-      if name_match.present?
+      if name_match && name_match[0].present?
         name = name_match[0].strip
         @song.name = name
       end
@@ -186,7 +186,7 @@ module SongUtils
       artist = nil
       artist_match = @raw_text.match(/(?<=Words and Music by)\s*[\w| ]*/)
 
-      if artist_match.present?
+      if artist_match && artist_match[0].present?
         artist = artist_match[0].strip
         @song.artist = artist
       end
@@ -196,7 +196,7 @@ module SongUtils
       super
       key_match = @raw_text.match(/Key((\s*-\s*)|(-|\s*))\w{1,2}/)
 
-      if key_match.present?
+      if key_match && key_match[0].present?
         key = key_match[0].gsub(/(Key|-)/, '').strip
         @song.key = key
       end
