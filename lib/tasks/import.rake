@@ -45,7 +45,7 @@ namespace :songs do
       end
 
       if song.valid?
-        if song.song_sheet.length > PG_INDEX_SIZE_LIMIT
+        if Marshal.dump(song.as_json).size > PG_INDEX_SIZE_LIMIT
           files_too_large << filename
           next
         end
@@ -62,6 +62,7 @@ namespace :songs do
     end
 
     Song.create!(songs) if songs.any?
+
     puts "\nThe following files could not be parsed: \n\t#{files_invalid.join("\n\t").cyan}".red
     puts "\nThe following files were too large: \n\t#{files_too_large.join("\n\t").cyan}".red
     puts "\nThe following files had unsupported mime types: \n\t#{files_unsupported.join("\n\t").cyan}".red
