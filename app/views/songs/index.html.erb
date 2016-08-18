@@ -17,7 +17,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <table class="songs-table">
           <thead>
             <tr>
@@ -30,6 +30,11 @@
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="preview-drawer">
+    <h1 class="name"></h1>
+    <div class="song-sheet"></div>
   </div>
 </div>
 
@@ -46,6 +51,9 @@
         { data: 'tempo' },
         { data: 'key' },
       ],
+      createdRow: function(row, data, index) {
+        $(row).data('song-id', data.id);
+      },
       ajax: {
         sAjaxSource: '<%= songs_path(format: :json) %>',
         data: function(d) {
@@ -66,5 +74,15 @@
     });
 
     $('.search-page').addClass('active');
+
+    $('.songs-table').on('click', 'tbody tr', function() {
+      var url = '/songs/' + $(this).data('song-id') + '.json';
+
+      $.get(url, function (data) {
+        var song = data.song;
+        $('.preview-drawer').find('.name').text(song.name);
+        $('.preview-drawer').find('.song-sheet').html(song.song_sheet);
+      });
+    });
   });
 </script>
