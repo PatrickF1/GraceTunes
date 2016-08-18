@@ -22,6 +22,14 @@ body {
     border: 1px solid #ccc;
   }
 
+  .songs-table tbody tr {
+    cursor: pointer;
+  }
+
+  .songs-table tbody tr:hover {
+    background-color: whitesmoke;
+  }
+
   table.filter-selection td {
     padding-right: 10px;
     padding-bottom: 15px;
@@ -29,5 +37,29 @@ body {
 
   table.songs-table thead th, table.songs-table {
     border-bottom: 1px solid #ccc;
+  }
+
+  .preview-drawer {
+    position: fixed;
+    top: 50px;
+    right: 0;
+    padding: 20px;
+    background-color: white;
+    height: 100%;
+    width:  50vw;
+    max-width:  500px;
+    border-left: 1px solid whitesmoke;
+    box-shadow: 1px 1px 20px gray;
+    overflow-y: scroll;
+  }
+
+  .preview-drawer .name {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .preview-drawer .song-sheet {
+    font-style: italic;
+    white-space: pre;
   }
 }
