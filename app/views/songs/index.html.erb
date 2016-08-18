@@ -77,11 +77,24 @@
 
     $('.songs-table').on('click', 'tbody tr', function() {
       var url = '/songs/' + $(this).data('song-id') + '.json';
+      $('.songs-table .selected').removeClass('selected');
+      $(this).addClass('selected');
 
       $.get(url, function (data) {
         var song = data.song;
+        var songSheet = song.song_sheet;
+
+        if ($('#songs-search-field').val() !== '') {
+          // highlight the keywords they searched for in the song sheet
+          var keywords = $('#songs-search-field').val();
+          $.each(keywords.split(' '), function(i, keyword) {
+            var highlightedKeyword = '<span class="highlight">' + keyword + '</span>';
+            songSheet = songSheet.replace(new RegExp(keyword, 'ig'), highlightedKeyword);
+          });
+        }
+
         $('.preview-drawer').find('.name').text(song.name);
-        $('.preview-drawer').find('.song-sheet').html(song.song_sheet);
+        $('.preview-drawer').find('.song-sheet').html(songSheet);
       });
     });
   });

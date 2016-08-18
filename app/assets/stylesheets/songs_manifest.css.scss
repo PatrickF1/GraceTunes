@@ -26,7 +26,11 @@ body {
     cursor: pointer;
   }
 
-  .songs-table tbody tr:hover {
+  .songs-table tbody tr.selected {
+    background-color: #ccc;
+  }
+
+  .songs-table tbody tr:not(.selected):hover {
     background-color: whitesmoke;
   }
 
@@ -61,5 +65,9 @@ body {
   .preview-drawer .song-sheet {
     font-style: italic;
     white-space: pre;
+  }
+
+  .preview-drawer .song-sheet .highlight {
+    background-color: yellow;
   }
 }
