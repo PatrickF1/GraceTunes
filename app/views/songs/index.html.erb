@@ -83,19 +83,42 @@
       $.get(url, function (data) {
         var song = data.song;
         var songSheet = song.song_sheet;
+        var keywords = $('#songs-search-field').val();
 
-        if ($('#songs-search-field').val() !== '') {
-          // highlight the keywords they searched for in the song sheet
-          var keywords = $('#songs-search-field').val();
-          $.each(keywords.split(' '), function(i, keyword) {
-            var highlightedKeyword = '<span class="highlight">' + keyword + '</span>';
-            songSheet = songSheet.replace(new RegExp(keyword, 'ig'), highlightedKeyword);
-          });
+        if (keywords !== '') {
+          songSheet = highlightedSongSheet(keywords, songSheet);
         }
 
         $('.preview-drawer').find('.name').text(song.name);
         $('.preview-drawer').find('.song-sheet').html(songSheet);
       });
     });
+
+    var uniqueMatches = function(matches) {
+      var uniqueWords = {};
+      $.each(matches, function(i, match) {
+        uniqueWords[match] = null;
+      });
+
+      return Object.keys(uniqueWords);
+    };
+
+    // highlight the keywords they searched for in the song sheet
+    var highlightedSongSheet = function(keywords, songSheet) {
+      var highlightedSheet = songSheet;
+
+      $.each(keywords.split(' '), function(i, keyword) {
+        var matches = songSheet.match(new RegExp(keyword, 'ig'));
+        if (!matches) return;
+        var matches = uniqueMatches(matches);
+
+        $.each(matches, function(i, match) {
+          var highlightedMatch = '<span class="highlight">' + match + '</span>';
+          highlightedSheet = highlightedSheet.replace(new RegExp(match, 'g'), highlightedMatch);
+        });
+      });
+
+      return highlightedSheet;
+    }
   });
 </script>
