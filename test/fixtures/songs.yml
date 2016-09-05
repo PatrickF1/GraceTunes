@@ -9,7 +9,7 @@ God_be_praised:
   artist: "Elevation Worship"
   key: "D"
   tempo: "Slow"
-  song_sheet: |
+  chord_sheet: |
     VERSE 1
                     G               D
     You left Your throne for our salvation
@@ -69,7 +69,7 @@ forever_reign:
   artist: "Hillsong Worship"
   key: "C"
   tempo: "Medium"
-  song_sheet: |
+  chord_sheet: |
     VERSE 1
               C
     You are good, You are good
@@ -146,7 +146,7 @@ ten_thousand_reasons:
   artist: "Matt Redman"
   key: "G"
   tempo: "Medium"
-  song_sheet: |
+  chord_sheet: |
     CHORUS
               F          C     G/B Am
     Bless the Lord, O my soul, O my soul
@@ -191,7 +191,7 @@ glorious_day:
   artist: "Casting Crowns"
   key: "B"
   tempo: "Medium"
-  song_sheet: |
+  chord_sheet: |
     VERSE 1
      B             E                           B
     One day when Heaven was filled with His praises
@@ -264,7 +264,7 @@ hands_to_the_heaven:
   artist: "Kari Jobe"
   key: "F#"
   tempo: "Fast"
-  song_sheet: |
+  chord_sheet: |
     VERSE 1
     D#m B         F#
     We are your church
@@ -316,7 +316,7 @@ all_my_hope:
   artist: "Hillsong Worship"
   key: "C"
   tempo: "Medium"
-  song_sheet: |
+  chord_sheet: |
     VERSE 1
     Gb                        Db
     Peace be still, You are near
@@ -367,13 +367,13 @@ all_my_hope:
 
 relevant_1:
   name: "relevant"
-  song_sheet: "lyrics go here"
+  chord_sheet: "lyrics go here"
 relevant_2:
   name: "not very"
-  song_sheet: "relevant relevant"
+  chord_sheet: "relevant relevant"
 relevant_3:
   name: "even less"
-  song_sheet: "relevant"
+  chord_sheet: "relevant"
 relevant_4:
   name: "not at all"
-  song_sheet: "lyrics go here"
+  chord_sheet: "lyrics go here"

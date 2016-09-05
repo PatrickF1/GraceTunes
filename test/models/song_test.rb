@@ -19,10 +19,10 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved with an invalid tempo"
   end
 
-  test "should not save without a song sheet" do
+  test "should not save without a chord sheet" do
     song = songs(:God_be_praised)
-    song.song_sheet = nil
-    assert_not song.save, "Saved without a song sheet"
+    song.chord_sheet = nil
+    assert_not song.save, "Saved without a chord sheet"
   end
 
   test "normalizes name and artist" do
