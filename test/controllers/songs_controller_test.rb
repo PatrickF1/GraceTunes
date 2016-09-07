@@ -81,7 +81,7 @@ class SongsControllerTest < ActionController::TestCase
   end
 
   def post_new_song_form
-    post :create, song: {name: "New Song Just Posted", key: "E", artist: "New Song Artist", tempo: "Fast", song_sheet: "New Song Chords"}
+    post :create, song: {name: "New Song Just Posted", key: "E", artist: "New Song Artist", tempo: "Fast", chord_sheet: "New Song Chords"}
   end
 
 end

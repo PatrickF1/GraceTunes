@@ -3,7 +3,7 @@ class Song < ActiveRecord::Base
   include PgSearch
   pg_search_scope(
     :search_by_keywords, 
-    against: {name: 'A', song_sheet: 'B', artist: 'B'},
+    against: {name: 'A', chord_sheet: 'B', artist: 'B'},
     using: {:tsearch => {any_word: true, prefix: true}}
   )
 
@@ -13,7 +13,7 @@ class Song < ActiveRecord::Base
   VALID_TEMPOS = %w(Fast Medium Slow)
 
   validates :name, presence: true
-  validates :song_sheet, presence: true
+  validates :chord_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, allow_nil: true
   validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: true
   before_save :normalize
