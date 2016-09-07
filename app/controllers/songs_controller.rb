@@ -15,11 +15,13 @@ class SongsController < ApplicationController
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
 
+        page = (params[:start].to_i / 25) + 1
+
         song_data = {
           draw: params[:draw].to_i,
           recordsTotal: total_songs,
-          recordsFiltered: total_songs - songs.count,
-          data: songs
+          recordsFiltered: songs.count,
+          data: songs.paginate(page: page, per_page: 25)
         }
 
         render json: song_data and return
