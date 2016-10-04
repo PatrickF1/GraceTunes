@@ -43,7 +43,14 @@ body {
     border-bottom: 1px solid #ccc;
   }
 
+  @keyframes slide-in
+  {
+    0%   { width: 10vw }
+    100% { width: 50vw }
+  }
+
   .preview-drawer {
+    animation: 0.3s slide-in;
     display: none;
     position: fixed;
     top: 50px;
