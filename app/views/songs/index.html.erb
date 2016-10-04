@@ -33,92 +33,12 @@
   </div>
 
   <div class="preview-drawer">
+    <div class="close-button">X</div>
     <h1 class="name"></h1>
     <div class="song-sheet"></div>
   </div>
 </div>
 
-<script>
-  $(function() {
-    var table = $('.songs-table').DataTable({
-      serverSide: true,
-      responsive: true,
-      lengthChange: false,
-      dom: '',
-      columns: [
-        { data: 'name' },
-        { data: 'artist' },
-        { data: 'tempo' },
-        { data: 'key' },
-      ],
-      createdRow: function(row, data, index) {
-        $(row).data('song-id', data.id);
-      },
-      ajax: {
-        sAjaxSource: '<%= songs_path(format: :json) %>',
-        data: function(d) {
-          d.tempo = $('#tempo').val();
-          d.key = $('#key').val();
-
-          return d;
-        }
-      }
-    });
-
-    $('#songs-search-field').keyup(function() {
-      table.search(this.value).draw();
-    });
-
-    $('.filter-selection').change(function() {
-      table.ajax.reload();
-    });
-
-    $('.search-page').addClass('active');
-
-    $('.songs-table').on('click', 'tbody tr', function() {
-      var url = '/songs/' + $(this).data('song-id') + '.json';
-      $('.songs-table .selected').removeClass('selected');
-      $(this).addClass('selected');
-
-      $.get(url, function (data) {
-        var song = data.song;
-        var songSheet = song.song_sheet;
-        var keywords = $('#songs-search-field').val();
-
-        if (keywords !== '') {
-          songSheet = highlightedSongSheet(keywords, songSheet);
-        }
-
-        $('.preview-drawer').find('.name').text(song.name);
-        $('.preview-drawer').find('.song-sheet').html(songSheet);
-      });
-    });
-
-    var uniqueMatches = function(matches) {
-      var uniqueWords = {};
-      $.each(matches, function(i, match) {
-        uniqueWords[match] = null;
-      });
-
-      return Object.keys(uniqueWords);
-    };
-
-    // highlight the keywords they searched for in the song sheet
-    var highlightedSongSheet = function(keywords, songSheet) {
-      var highlightedSheet = songSheet;
-
-      $.each(keywords.split(' '), function(i, keyword) {
-        var matches = songSheet.match(new RegExp(keyword, 'ig'));
-        if (!matches) return;
-        var matches = uniqueMatches(matches);
-
-        $.each(matches, function(i, match) {
-          var highlightedMatch = '<span class="highlight">' + match + '</span>';
-          highlightedSheet = highlightedSheet.replace(new RegExp(match, 'g'), highlightedMatch);
-        });
-      });
-
-      return highlightedSheet;
-    }
-  });
-</script>
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'songs/index' %>
+<% end %>

@@ -44,6 +44,7 @@ body {
   }
 
   .preview-drawer {
+    display: none;
     position: fixed;
     top: 50px;
     right: 0;
@@ -58,6 +59,7 @@ body {
   }
 
   .preview-drawer .name {
+    max-width: 90%;
     margin-top: 0;
     margin-bottom: 10px;
   }
@@ -69,5 +71,14 @@ body {
 
   .preview-drawer .song-sheet .highlight {
     background-color: yellow;
+  }
+
+  .preview-drawer .close-button
+  {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    cursor: pointer;
   }
 }
