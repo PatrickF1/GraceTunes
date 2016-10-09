@@ -23,8 +23,28 @@ class Song < ActiveRecord::Base
   end
 
   private
+  # Titlize important fields and strip away unnecessary spaces
   def normalize
-    self.name = self.name.titleize
-    self.artist = self.artist.titleize if self.artist
+    self.name = self.name.titleize.strip
+    self.artist = self.artist.titleize.strip if self.artist
+    
+    normalized_lines = []
+    self.chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
+    self.chord_sheet = normalized_lines.join("\n")
+  end
+
+  def extract_lyrics
+    lyrics = self.chord_sheet.split("\n").find_all { |line| is_line_of_lyrics(line) }
+    self.lyrics = lyrics.join("\n")
+  end
+
+  CHORD_GIVEAWAY_STRINGS = Set.new(%w(# / [ 2 3 4 7 9))
+  def is_line_of_lyrics(line)
+    # headers always end with :
+    return false if line[-1] == ":"
+    # chord lines contain these giveaway substrings
+    return false if line.split.any? {|word| CHORD_GIVEAWAY_STRINGS.include? word}
+    # lyric lines have low density of spaces and contain 2+ words
+    return (line.count(" ") / line.length.to_f < 0.31) && (line.length > 6)
   end
 end
