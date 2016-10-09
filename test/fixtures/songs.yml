@@ -1,9 +1,6 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Due to YAML and Minispec limitations, song fixtures have empty string lyrics
+# except for song fixtures specifically created for search relevancy tests.
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 God_be_praised:
   name: "God Be Praised"
   artist: "Elevation Worship"
@@ -63,6 +60,7 @@ God_be_praised:
     Because I am loved, I'm able to love
        Bm          A         D        G
     Because I am Yours, my worth is secure
+  lyrics: ""
 
 forever_reign:
   name: "Forever Reign"
@@ -141,6 +139,8 @@ forever_reign:
     No other name
             G/B
     Jesus, Jesus
+  lyrics: ""
+
 ten_thousand_reasons:
   name: "10,000 Reasons"
   artist: "Matt Redman"
@@ -186,6 +186,8 @@ ten_thousand_reasons:
     Still my soul will sing Your praise unending
     F            C              G       C
     Ten thousand years and then forever more!
+  lyrics: ""
+
 glorious_day:
   name: "Glorious Day (Living He Loved Me)"
   artist: "Casting Crowns"
@@ -259,6 +261,8 @@ glorious_day:
     Wonderful day, my Beloved One, bringing
          E
     My Savior, Jesus, is mine
+  lyrics: ""
+
 hands_to_the_heaven:
   name: "Hands To The Heaven"
   artist: "Kari Jobe"
@@ -310,6 +314,7 @@ hands_to_the_heaven:
     Come like a burning flame
      C#
     Have your way, Have your way
+  lyrics: ""
 
 all_my_hope:
   name: "All My Hope"
@@ -364,16 +369,21 @@ all_my_hope:
     Your grace never failing
         Gb           Ab       Bbm     Ab
     Redemption is calling us home
+  lyrics: ""
 
 relevant_1:
   name: "relevant"
   chord_sheet: "lyrics go here"
+  lyrics: "lyrics go here"
 relevant_2:
   name: "not very"
   chord_sheet: "relevant relevant"
+  lyrics: "relevant relevant"
 relevant_3:
   name: "even less"
   chord_sheet: "relevant"
+  lyrics: "relevant"
 relevant_4:
   name: "not at all"
   chord_sheet: "lyrics go here"
+  lyrics: "lyrics go here"

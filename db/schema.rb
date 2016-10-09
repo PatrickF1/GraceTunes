@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905214718) do
+ActiveRecord::Schema.define(version: 20161003203532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160905214718) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.string   "tempo"
+    t.text     "lyrics",                null: false
   end
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
