@@ -49,8 +49,13 @@ $(function() {
         songSheet = highlightedSongSheet(keywords, songSheet);
       }
 
-      $('.preview-drawer').find('.name').text(song.name);
-      $('.preview-drawer').find('.song-sheet').html(songSheet);
+      populateDrawer({
+        name: song.name,
+        songSheet: songSheet,
+        key: song.key || 'n/a',
+        tempo: song.tempo || 'n/a'
+      });
+
       $('.preview-drawer').show();
     });
   });
@@ -85,5 +90,13 @@ $(function() {
     });
 
     return highlightedSheet;
+  }
+
+  var populateDrawer = function(song) {
+    var drawer = $('.preview-drawer');
+    drawer.find('.name').text(song.name);
+    drawer.find('.song-sheet').html(song.songSheet);
+    drawer.find('.tempo').text('Tempo: ' + song.tempo);
+    drawer.find('.key').text('Key: ' + song.key);
   }
 });
