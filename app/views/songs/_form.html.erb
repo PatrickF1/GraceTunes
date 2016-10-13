@@ -1,4 +1,4 @@
-<%= form_for @song do |f| %>
+<%= form_for @song, mulitpart: true do |f| %>
   <div class="form-inline name-and-artist">
     <div class="form-group">
       <%= f.label :name, 'Song Title' %><br/>
@@ -24,9 +24,28 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :chord_sheet %><br/>
+    <%= f.label :chord_sheet, 'Paste chord sheet below or upload from file: ' %><br/>
+    <%= file_field_tag :chord_sheet_file, accept: 'image/png,image/gif,image/jpeg,text/html,application/pdf' %> <br/>
     <%= f.text_area :chord_sheet, class: 'form-control' %>
   </div>
 
   <%= f.submit 'Upload', class: 'btn btn-default' %>
 <% end %>
+
+<%= javascript_include_tag 'https://cdn.rawgit.com/naptha/tesseract.js/0.2.0/dist/tesseract.js' %>
+<script>
+  $('#chord_sheet_file').change(function() {
+    var chordSheet = this.files[0];
+    Tesseract.recognize(chordSheet)
+      .then(function(result) {
+        var text = '';
+        $.each(result.lines, function(i, line) {
+          text = text + "\n" + line.text;
+        });
+
+        $('#song_chord_sheet').val(text);
+      }).progress(function(prog) {
+        console.log(prog);
+      });
+  });
+</script>
