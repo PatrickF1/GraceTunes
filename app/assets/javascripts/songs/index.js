@@ -42,16 +42,16 @@ $(function() {
 
     $.get(url, function (data) {
       var song = data.song;
-      var songSheet = song.song_sheet;
+      var chordSheet = song.chord_sheet;
       var keywords = $('#songs-search-field').val();
 
       if (keywords !== '') {
-        songSheet = highlightedSongSheet(keywords, songSheet);
+        chordSheet = highlightedSongSheet(keywords, chordSheet);
       }
 
       populateDrawer({
         name: song.name,
-        songSheet: songSheet,
+        chordSheet: chordSheet,
         key: song.key || 'n/a',
         tempo: song.tempo || 'n/a',
         editPath: song.edit_path
@@ -76,11 +76,11 @@ $(function() {
   };
 
   // highlight the keywords they searched for in the song sheet
-  var highlightedSongSheet = function(keywords, songSheet) {
-    var highlightedSheet = songSheet;
+  var highlightedSongSheet = function(keywords, chordSheet) {
+    var highlightedSheet = chordSheet;
 
     $.each(keywords.split(' '), function(i, keyword) {
-      var matches = songSheet.match(new RegExp(keyword, 'ig'));
+      var matches = chordSheet.match(new RegExp(keyword, 'ig'));
       if (!matches) return;
       var matches = uniqueMatches(matches);
 
@@ -96,7 +96,7 @@ $(function() {
   var populateDrawer = function(song) {
     var drawer = $('.preview-drawer');
     drawer.find('.name').text(song.name);
-    drawer.find('.song-sheet').html(song.songSheet);
+    drawer.find('.song-sheet').html(song.chordSheet);
     drawer.find('.tempo').text('Tempo: ' + song.tempo);
     drawer.find('.key').text('Key: ' + song.key);
     drawer.find('.actions .edit').attr('href', song.editPath);

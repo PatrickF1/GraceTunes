@@ -63,9 +63,6 @@ class SongsController < ApplicationController
   def edit
   end
 
-  def show
-  end
-
   private
   def song_params
     params.require(:song).permit(:name, :key, :artist, :tempo, :chord_sheet)
