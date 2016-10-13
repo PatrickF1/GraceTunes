@@ -97,4 +97,12 @@ body {
   .preview-drawer .meta-info .key {
     margin-right: 10px;
   }
+
+  .preview-drawer .actions, .preview-drawer .meta-info {
+    display: inline-block;
+  }
+
+  .preview-drawer .actions {
+    float: right;
+  }
 }
