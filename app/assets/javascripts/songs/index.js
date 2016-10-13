@@ -53,7 +53,8 @@ $(function() {
         name: song.name,
         songSheet: songSheet,
         key: song.key || 'n/a',
-        tempo: song.tempo || 'n/a'
+        tempo: song.tempo || 'n/a',
+        editPath: song.edit_path
       });
 
       $('.preview-drawer').show();
@@ -98,5 +99,6 @@ $(function() {
     drawer.find('.song-sheet').html(song.songSheet);
     drawer.find('.tempo').text('Tempo: ' + song.tempo);
     drawer.find('.key').text('Key: ' + song.key);
+    drawer.find('.actions .edit').attr('href', song.editPath);
   }
 });

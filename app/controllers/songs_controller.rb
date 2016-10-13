@@ -37,7 +37,9 @@ class SongsController < ApplicationController
       @song = Song.find(params[:id])
       song = @song
       format.json do
-        render json: { song: @song }
+        render json: {
+          song: @song.as_json.merge(edit_path: edit_song_path(@song))
+        }
       end
     end
   end
