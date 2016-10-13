@@ -9,10 +9,11 @@
 </head>
 <body>
   <div class="header navbar-fixed-top" id='head'>
-    <%= render 'layouts/header' %>
+    <%= render 'header' %>
   </div>
 
-<%= yield %>
+  <%= render partial: "flash_messages", flash: flash %> 
+  <%= yield %>
 
 </body>
 </html>
