@@ -49,7 +49,11 @@ $(function() {
 
       if (keywords !== '') {
         chordSheet = highlightedKeywords(keywords, chordSheet);
-        artist = highlightedKeywords(keywords, artist);
+        
+        if (artist) {
+          highlightedKeywords(keywords, artist);
+        }
+
         name = highlightedKeywords(keywords, name);
       }
 
