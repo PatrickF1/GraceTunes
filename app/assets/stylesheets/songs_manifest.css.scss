@@ -111,6 +111,10 @@
     margin-top: 8px;
   }
 
+  .preview-drawer .actions a, .songs-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
   .preview-drawer .actions a:hover {
     text-decoration: none;
     color: black;
