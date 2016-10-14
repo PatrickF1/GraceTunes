@@ -62,9 +62,16 @@
   }
 
   .preview-drawer .name {
-    max-width: 90%;
+    display: inline-block;
+    max-width: 65%;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .preview-drawer .artist {
     margin-top: 0;
     margin-bottom: 10px;
+    font-size: 20px;
   }
 
   .preview-drawer .song-sheet {
@@ -72,22 +79,22 @@
     white-space: pre;
   }
 
-  .preview-drawer .song-sheet .highlight {
+  .preview-drawer .highlight {
     background-color: yellow;
   }
 
   .preview-drawer .close-button
   {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: -5px;
+    right: 5px;
     font-size: 30px;
     cursor: pointer;
   }
 
   .preview-drawer .meta-info {
     margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .preview-drawer .meta-info .key {
@@ -100,6 +107,8 @@
 
   .preview-drawer .actions {
     float: right;
+    margin-right: 25px;
+    margin-top: 8px;
   }
 
   .preview-drawer .actions a:hover {

@@ -43,14 +43,19 @@ $(function() {
     $.get(url, function (data) {
       var song = data.song;
       var chordSheet = song.chord_sheet;
+      var artist = song.artist;
+      var name = song.name;
       var keywords = $('#songs-search-field').val();
 
       if (keywords !== '') {
-        chordSheet = highlightedSongSheet(keywords, chordSheet);
+        chordSheet = highlightedKeywords(keywords, chordSheet);
+        artist = highlightedKeywords(keywords, artist);
+        name = highlightedKeywords(keywords, name);
       }
 
       populateDrawer({
-        name: song.name,
+        name: name,
+        artist: artist || 'n/a',
         chordSheet: chordSheet,
         key: song.key || 'n/a',
         tempo: song.tempo || 'n/a',
@@ -62,8 +67,24 @@ $(function() {
   });
 
   $('.preview-drawer .close-button').click(function() {
-    $('.preview-drawer').hide();
-    $('.songs-table tr.selected').removeClass('selected');
+    hideDrawer();
+  });
+
+  // hide drawer when escape key is pressed
+  $('body').keyup(function(e) {
+    var escKey = 27;
+    if (e.keyCode == escKey) hideDrawer();
+  });
+
+  // hide drawer if anything outside of the table & drawer are clicked
+  $('body').click(function(e) {
+    var drawer = $('.preview-drawer');
+    var target = $(e.target);
+
+    if (!target.parents('.songs-table').length &&
+      !target.parents('.preview-drawer').length && !target.is(drawer)) {
+      hideDrawer();
+    }
   });
 
   var uniqueMatches = function(matches) {
@@ -75,12 +96,12 @@ $(function() {
     return Object.keys(uniqueWords);
   };
 
-  // highlight the keywords they searched for in the song sheet
-  var highlightedSongSheet = function(keywords, chordSheet) {
-    var highlightedSheet = chordSheet;
+  // highlight the keywords they searched for in some text
+  var highlightedKeywords = function(keywords, text) {
+    var highlightedSheet = text;
 
     $.each(keywords.split(' '), function(i, keyword) {
-      var matches = chordSheet.match(new RegExp(keyword, 'ig'));
+      var matches = text.match(new RegExp(keyword, 'ig'));
       if (!matches) return;
       var matches = uniqueMatches(matches);
 
@@ -95,10 +116,16 @@ $(function() {
 
   var populateDrawer = function(song) {
     var drawer = $('.preview-drawer');
-    drawer.find('.name').text(song.name);
+    drawer.find('.name').html(song.name);
+    drawer.find('.artist').html('by ' + song.artist);
     drawer.find('.song-sheet').html(song.chordSheet);
     drawer.find('.tempo').text('Tempo: ' + song.tempo);
     drawer.find('.key').text('Key: ' + song.key);
     drawer.find('.actions .edit').attr('href', song.editPath);
+  }
+
+  var hideDrawer = function() {
+    $('.preview-drawer').hide();
+    $('.songs-table tr.selected').removeClass('selected');
   }
 });

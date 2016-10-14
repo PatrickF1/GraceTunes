@@ -34,11 +34,10 @@ class SongsController < ApplicationController
 
   def show
     respond_to do |format|
-      @song = Song.find(params[:id])
-      song = @song
+      song = Song.find(params[:id])
       format.json do
         render json: {
-          song: @song.as_json.merge(edit_path: edit_song_path(@song))
+          song: song.as_json.merge(edit_path: edit_song_path(song))
         }
       end
     end
