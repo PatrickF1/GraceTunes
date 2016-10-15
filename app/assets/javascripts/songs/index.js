@@ -59,10 +59,10 @@ $(function() {
 
       populateDrawer({
         name: name,
-        artist: artist || 'n/a',
+        artist: artist,
         chordSheet: chordSheet,
-        key: song.key || 'n/a',
-        tempo: song.tempo || 'n/a',
+        key: song.key,
+        tempo: song.tempo,
         editPath: song.edit_path
       });
 
@@ -119,17 +119,26 @@ $(function() {
   }
 
   var populateDrawer = function(song) {
+    wipeDrawer();
+
     var drawer = $('.preview-drawer');
     drawer.find('.name').html(song.name);
-    drawer.find('.artist').html('by ' + song.artist);
     drawer.find('.song-sheet').html(song.chordSheet);
-    drawer.find('.tempo').text('Tempo: ' + song.tempo);
-    drawer.find('.key').text('Key: ' + song.key);
     drawer.find('.actions .edit').attr('href', song.editPath);
+
+    if (song.artist) drawer.find('.artist').html('by ' + song.artist);
+    if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
+    if (song.key) drawer.find('.key').text('Key: ' + song.key);
   }
 
   var hideDrawer = function() {
     $('.preview-drawer').hide();
+    wipeDrawer();
     $('.songs-table tr.selected').removeClass('selected');
+  }
+
+  var wipeDrawer = function() {
+    $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
+      .html('');
   }
 });
