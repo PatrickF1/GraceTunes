@@ -161,7 +161,39 @@ forever_reign:
     No other name
             G/B
     Jesus, Jesus
-  lyrics: ""
+  lyrics: |
+    You are good, You are good
+    And there's nothing good in me
+    You are love, You are love
+    On display for all to see
+    You are light, You are light
+    When the darkness closes in
+    You are hope, You are hope
+    You've covered all my sin
+    You are peace, You are peace
+    When my fear is crippling
+    You are truth, You are truth
+    Even in my wandering
+    You are joy, You are joy
+    You're the reason that I sing
+    You are life, You are life
+    In You death has lost it's sting
+    I'm running to Your arms, I'm running to Your arms
+    The riches of Your love will always be enough
+    And nothing compares to Your embrace
+    Light of the world, Forever reign
+    You are more, You are more
+    Than my words will ever say
+    You are Lord, You are Lord
+    All creation will proclaim
+    You are here, You are here
+    In Your presence I'm made whole
+    You are God, You are God
+    Of all else I'm letting go
+    Bridge:
+    My heart will sing
+    No other name
+    Jesus, Jesus
 
 ten_thousand_reasons:
   name: "10,000 Reasons"
@@ -208,7 +240,23 @@ ten_thousand_reasons:
     Still my soul will sing Your praise unending
     F            C              G       C
     Ten thousand years and then forever more!
-  lyrics: ""
+  chord_sheet: |
+    Bless the Lord, O my soul, O my soul
+    Worship His holy name
+    Sing like never before, O my soul
+    I'll worship Your holy name
+    The sun comes up, it's a new day dawning
+    It's time to sing Your song again
+    Whatever may pass, and whatever lies before me
+    Let me be singing when the evening comes
+    You're rich in love, and You're slow to anger
+    Your name is great, and Your heart is kind
+    For all Your goodness, I will keep on singing
+    Ten thousand reasons for my heart to find
+    And on that day when my strength is failing
+    The end draws near, and my time has come
+    Still my soul will sing Your praise unending
+    Ten thousand years and then forever more!
 
 glorious_day:
   name: "Glorious Day (Living He Loved Me)"
@@ -283,7 +331,36 @@ glorious_day:
     Wonderful day, my Beloved One, bringing
          E
     My Savior, Jesus, is mine
-  lyrics: ""
+  chord_sheet: |
+    One day when Heaven was filled with His praises
+    One day when sin was as black as could be
+    Jesus came forth to be born of a virgin
+    Dwelt among men, my example is He
+    Word became flesh and the light shined among us
+    His glory revealed
+    Living, He loved me
+    Dying, He saved me
+    Buried, He carried my sins far away
+    Rising, He justified freely forever
+    One day He's coming
+    Oh glorious day, oh glorious day
+    One day they led Him up Calvary's mountain
+    One day they nailed Him to die on a tree
+    Suffering anguish, despised and rejected
+    Bearing our sins, my Redeemer is He
+    Hands that healed nations, stretched out on a tree
+    And took the nails for me
+    One day the grave could conceal Him no longer
+    One day the stone rolled away from the door
+    Then He arose, over death He had conquered
+    Now He's ascended, my Lord evermore
+    Death could not hold Him
+    The grave could not keep Him
+    From rising again
+    One day the trumpet will sound for His coming
+    One day the skies with His glories will shine
+    Wonderful day, my Beloved One, bringing
+    My Savior, Jesus, is mine
 
 hands_to_the_heaven:
   name: "Hands To The Heaven"
@@ -336,7 +413,26 @@ hands_to_the_heaven:
     Come like a burning flame
      C#
     Have your way, Have your way
-  lyrics: ""
+lyrics: |
+    We are your church
+    We are your sons and daughters
+    We've gathered here to meet with you
+    We lift our eyes
+    We lay our hearts before you
+    Expectant here for you to move
+    With our hands to the heaven
+    Alive in your presence oh God
+    When you come
+    So pour out your spirit
+    We love to be near you oh God
+    When you come
+    You are the way
+    The truth and the life we live for
+    Oh how we long to know you more
+    Come like a rushing wind
+    Come light the fire again
+    Come like a burning flame
+    Have your way, Have your way
 
 all_my_hope:
   name: "All My Hope"
@@ -391,7 +487,25 @@ all_my_hope:
     Your grace never failing
         Gb           Ab       Bbm     Ab
     Redemption is calling us home
-  lyrics: ""
+  lyrics: |
+    Peace be still, You are near
+    There's nowhere we can go
+    That You won't shine redemption's light
+    Our guilt withdrawn
+    As You rise, we come alive
+    The grave has lost, the old is gone
+    And You're making all things new
+    You are making all things new
+    You are making all things new
+    And we are free
+    Hope is found, You are here
+    Our hearts forever sealed
+    By this love that came for us
+    Now we are Yours
+    As You rise, we come alive
+    Your love never ending
+    Your grace never failing
+    Redemption is calling us home
 
 relevant_1:
   name: "relevant"
