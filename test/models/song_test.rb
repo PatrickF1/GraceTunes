@@ -1,6 +1,7 @@
 require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
+
   test "should not save without name" do
     song = songs(:God_be_praised)
     song.name = nil
@@ -25,6 +26,21 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a chord sheet"
   end
 
+  test "should save without trailing whitespaces in the chord sheet" do
+    song = songs(:God_be_praised)
+    song.chord_sheet = " a b c             "
+    song.save
+    # leaving leading whitespaces untouched on purpose
+    assert_equal(song.chord_sheet, " a b c") 
+  end
+
+  test "never leaves lyrics field blank" do
+    song = songs(:God_be_praised)
+    song.lyrics = nil
+    song.save
+    assert_not_equal(song.lyrics, nil) 
+  end
+
   test "normalizes name and artist" do
     song = songs(:God_be_praised)
     song.name = "a name"
@@ -34,6 +50,15 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.artist, "A Band")
   end
 
+  # lyric extraction tests
+  test "extracted lyrics don't contain headers" do
+
+  end
+
+  test "extracted lyrics don't contain chords" do
+    
+  end
+
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
   multi_word_results = Song.search_by_keywords "truth live life hands"
@@ -41,6 +66,7 @@ class SongTest < ActiveSupport::TestCase
 
   test "search should prioritize songs with keyword in the title" do
     assert_equal(single_word_results.first, songs(:relevant_1))
+  test "search should prioritize songs with the keyword in the title" do
   end
 
   test "search should prioritize songs with more occurances of the keyword" do
@@ -77,5 +103,10 @@ class SongTest < ActiveSupport::TestCase
     songs = Song.search_by_keywords("church reasons")
     assert_includes(songs, songs(:hands_to_the_heaven))
     assert_includes(songs, songs(:ten_thousand_reasons))
+  end
+
+  test "search should be case insensitive" do
+    songs = Song.search_by_keywords("another")
+    assert_includes(songs, songs(:relevancy_5))
   end
 end
