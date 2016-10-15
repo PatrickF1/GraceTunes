@@ -44,7 +44,7 @@ class Song < ActiveRecord::Base
     return false if line[-1] == ":"
     # chord lines contain these giveaway substrings
     return false if line.split.any? {|word| CHORD_GIVEAWAY_STRINGS.include? word}
-    # lyric lines have low density of spaces and contain 2+ words
+    # chord lines have a high density of spaces or contain less than 3 words
     return (line.count(" ") / line.length.to_f < 0.31) && (line.length > 6)
   end
 end

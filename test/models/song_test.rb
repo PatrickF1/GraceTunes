@@ -50,13 +50,24 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.artist, "A Band")
   end
 
-  # lyric extraction tests
   test "extracted lyrics don't contain headers" do
-
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    assert_no_match(/Verse \d:/, song.lyrics, "Lyrics contained verse headers")
+    assert_not_includes(song.lyrics, "Chorus:", "Lyrics contained chorus header")
   end
 
   test "extracted lyrics don't contain chords" do
-    
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    assert_no_match CHORD_REGEX, song.lyrics
+  end
+
+  test "extracted lyrics contains all of the lyric lines from chord_sheet" do
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    num_lyric_lines = song.lyrics.split("\n").length
+    assert_equal(num_lyric_lines, 18)
   end
 
   # full text search tests
@@ -105,7 +116,17 @@ class SongTest < ActiveSupport::TestCase
   end
 
   test "search should be case insensitive" do
-    songs = Song.search_by_keywords("another")
-    assert_includes(songs, songs(:relevancy_5))
+    songs = Song.search_by_keywords("hillsong")
+    assert_includes(songs, songs(:forever_reign))
+  end
+
+  private
+  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
+  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+
+  # clear the lyrics and save it to trigger the extract_lyrics callback
+  def force_lyrics_extraction(song)
+    song.lyrics = nil
+    song.save
   end
 end

@@ -509,17 +509,17 @@ all_my_hope:
 
 relevant_1:
   name: "relevant"
-  chord_sheet: "lyrics go here"
+  chord_sheet: ""
   lyrics: "lyrics go here"
 relevant_2:
   name: "not very"
-  chord_sheet: "relevant relevant"
+  chord_sheet: ""
   lyrics: "relevant relevant"
 relevant_3:
   name: "even less"
-  chord_sheet: "relevant"
+  chord_sheet: ""
   lyrics: "relevant"
 relevant_4:
   name: "not at all"
-  chord_sheet: "lyrics go here"
+  chord_sheet: ""
   lyrics: "lyrics go here"
