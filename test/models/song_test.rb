@@ -64,9 +64,8 @@ class SongTest < ActiveSupport::TestCase
   multi_word_results = Song.search_by_keywords "truth live life hands"
   partial_word_results = Song.search_by_keywords "hand"
 
-  test "search should prioritize songs with keyword in the title" do
-    assert_equal(single_word_results.first, songs(:relevant_1))
   test "search should prioritize songs with the keyword in the title" do
+    assert_equal(single_word_results.first, songs(:relevant_1))
   end
 
   test "search should prioritize songs with more occurances of the keyword" do
