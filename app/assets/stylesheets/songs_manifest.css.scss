@@ -18,6 +18,18 @@
     border: 1px solid #ccc;
   }
 
+  .songs-table tbody tr {
+    cursor: pointer;
+  }
+
+  .songs-table tbody tr.selected {
+    background-color: #ccc;
+  }
+
+  .songs-table tbody tr:not(.selected):hover {
+    background-color: whitesmoke;
+  }
+
   table.filter-selection td {
     padding-right: 10px;
     padding-bottom: 15px;
@@ -25,6 +37,96 @@
 
   table.songs-table thead th, table.songs-table {
     border-bottom: 1px solid #ccc;
+  }
+
+  @keyframes slide-in
+  {
+    0%   { width: 10vw }
+    100% { width: 50vw }
+  }
+
+  .preview-drawer {
+    animation: 0.3s slide-in;
+    display: none;
+    position: fixed;
+    top: 50px;
+    right: 0;
+    padding: 20px;
+    background-color: white;
+    height: 100%;
+    width:  50vw;
+    max-width:  500px;
+    border-left: 1px solid whitesmoke;
+    box-shadow: 1px 1px 20px gray;
+    overflow-y: scroll;
+  }
+
+  .preview-drawer .name {
+    display: inline-block;
+    max-width: 65%;
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+
+  .preview-drawer .artist {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+
+  .preview-drawer .song-sheet {
+    font-style: italic;
+    white-space: pre;
+  }
+
+  .preview-drawer .highlight {
+    background-color: yellow;
+  }
+
+  .preview-drawer .close-button
+  {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  .preview-drawer .meta-info {
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .preview-drawer .meta-info .key {
+    margin-right: 10px;
+  }
+
+  .preview-drawer .actions, .preview-drawer .meta-info {
+    display: inline-block;
+  }
+
+  .preview-drawer .actions {
+    float: right;
+    margin-right: 25px;
+    margin-top: 8px;
+  }
+
+  .preview-drawer .actions a, .songs-table tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  .preview-drawer .actions a:hover {
+    text-decoration: none;
+    color: black;
+    background-color: lightgray;
+  }
+
+  .preview-drawer .actions a {
+    color: black;
+    text-decoration: none;
+    box-shadow: 0 0 1px 0;
+    padding: 5px 15px;
+    box-shadow: 0px 0px 2px 0 gray;
   }
 }
 

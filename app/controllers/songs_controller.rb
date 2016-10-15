@@ -14,11 +14,12 @@ class SongsController < ApplicationController
 
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
+        songs = songs.select('id, artist, tempo, key, name')
 
         song_data = {
           draw: params[:draw].to_i,
           recordsTotal: total_songs,
-          recordsFiltered: total_songs - songs.count,
+          recordsFiltered: total_songs - songs.size,
           data: songs
         }
 
@@ -27,6 +28,17 @@ class SongsController < ApplicationController
 
       format.html do
         return
+      end
+    end
+  end
+
+  def show
+    respond_to do |format|
+      song = Song.find(params[:id])
+      format.json do
+        render json: {
+          song: song.as_json.merge(edit_path: edit_song_path(song))
+        }
       end
     end
   end
@@ -48,9 +60,6 @@ class SongsController < ApplicationController
   end
 
   def edit
-  end
-
-  def show
   end
 
   private

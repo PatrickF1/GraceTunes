@@ -17,7 +17,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <table class="songs-table">
           <thead>
             <tr>
@@ -31,40 +31,22 @@
       </div>
     </div>
   </div>
+
+  <div class="preview-drawer">
+    <div class="close-button">x</div>
+    <h1 class="name"></h1>
+    <div class="actions">
+      <%= link_to 'Edit', nil, target: '_blank', class: 'edit' %>
+      <%= link_to 'Print', nil, target: '_blank', class: 'print' %>
+    </div>
+    <h3 class="artist"></h3>
+    <div class="meta-info">
+      <span class="key"></span><span class="tempo"></span>
+    </div>
+    <div class="song-sheet"></div>
+  </div>
 </div>
 
-<script>
-  $(function() {
-    var table = $('.songs-table').DataTable({
-      serverSide: true,
-      responsive: true,
-      lengthChange: false,
-      dom: '',
-      columns: [
-        { data: 'name' },
-        { data: 'artist' },
-        { data: 'tempo' },
-        { data: 'key' },
-      ],
-      ajax: {
-        sAjaxSource: '<%= songs_path(format: :json) %>',
-        data: function(d) {
-          d.tempo = $('#tempo').val();
-          d.key = $('#key').val();
-
-          return d;
-        }
-      }
-    });
-
-    $('#songs-search-field').keyup(function() {
-      table.search(this.value).draw();
-    });
-
-    $('.filter-selection').change(function() {
-      table.ajax.reload();
-    });
-
-    $('.search-page').addClass('active');
-  });
-</script>
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'songs/index' %>
+<% end %>
