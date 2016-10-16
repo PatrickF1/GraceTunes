@@ -2,6 +2,10 @@ require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
 
+  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
+  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  private_constant :CHORD_REGEX
+  
   test "should not save without name" do
     song = songs(:God_be_praised)
     song.name = nil
@@ -121,8 +125,6 @@ class SongTest < ActiveSupport::TestCase
   end
 
   private
-  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
-  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
 
   # clear the lyrics and save it to trigger the extract_lyrics callback
   def force_lyrics_extraction(song)
