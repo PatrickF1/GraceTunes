@@ -63,6 +63,17 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
   end
 
+  def update
+    @song = Song.find(params[:id])
+    if @song.update_attributes(song_params)
+      flash[:success] = "Your changes have been saved!"
+      redirect_to action: :index
+    else
+      flash.now[:error] = "Error: #{@song.errors.messages}"
+      render :edit
+    end
+  end
+
   private
   def song_params
     params.require(:song).permit(:name, :key, :artist, :tempo, :chord_sheet)
