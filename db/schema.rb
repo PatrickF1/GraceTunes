@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905214718) do
+ActiveRecord::Schema.define(version: 20161003203532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 20160905214718) do
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.string   "tempo"
+    t.text     "lyrics",                null: false
   end
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
-  add_index "songs", ["chord_sheet"], name: "index_songs_on_chord_sheet", using: :gin
+  add_index "songs", ["lyrics"], name: "index_songs_on_lyrics", using: :gin
   add_index "songs", ["name"], name: "index_songs_on_name", using: :gin
 
   create_table "tags", force: :cascade do |t|

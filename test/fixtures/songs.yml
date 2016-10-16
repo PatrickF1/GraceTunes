@@ -1,16 +1,13 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Due to YAML and Minispec limitations, song fixtures have empty string lyrics
+# except for song fixtures specifically created for search relevancy tests.
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
 God_be_praised:
   name: "God Be Praised"
   artist: "Elevation Worship"
   key: "D"
   tempo: "Slow"
   chord_sheet: |
-    VERSE 1
+    Verse 1:
                     G               D
     You left Your throne for our salvation
             G                       Bm       A
@@ -20,7 +17,7 @@ God_be_praised:
               G         A       D
     For our crimes You came to save
 
-    VERSE 2
+    Verse 2:
                 G                      D
     God of the world, You walked among us
                  G                     Bm       A
@@ -30,7 +27,7 @@ God_be_praised:
                        G       A     D
     But through Your shame we came alive
 
-    CHORUS
+    Chorus:
               G      Bm
     God be praised
        D    A                   G      Bm
@@ -44,7 +41,7 @@ God_be_praised:
            G        A     D
     Risen King be lifted high
 
-    VERSE 3
+    Verse 3:
                 G                     D
     Out of the dark, and into Your likeness
                G                   Bm        A
@@ -54,7 +51,7 @@ God_be_praised:
                     G        A    D
     Bought with a price, we are alive
 
-    BRIDGE
+    Bridge:
        Bm         A           D          G
     Because I'm alive, I'll give You my life
        Bm         A          D           G
@@ -63,6 +60,29 @@ God_be_praised:
     Because I am loved, I'm able to love
        Bm          A         D        G
     Because I am Yours, my worth is secure
+  lyrics: |
+    You left Your throne for our salvation
+    Jesus Christ, the hope of our nation
+    Battered by the weight of our nature
+    For our crimes You came to save
+    God of the world, You walked among us
+    Covered in flesh, in all of our weakness
+    You were despised, embarrassed, and lonely
+    But through Your shame we came alive
+    God be praised
+    Forever we will shout Your name
+    Lord over all
+    You left heaven for earth
+    Your glory for us
+    Risen King be lifted high
+    Out of the dark, and into Your likeness
+    Caught in hope, a love so relentless
+    Called by name, Your sons and Your daughters
+    Bought with a price, we are alive
+    Because I'm alive, I'll give You my life
+    Because I am free, I'll bow at Your feet
+    Because I am loved, I'm able to love
+    Because I am Yours, my worth is secure
 
 forever_reign:
   name: "Forever Reign"
@@ -70,7 +90,7 @@ forever_reign:
   key: "C"
   tempo: "Medium"
   chord_sheet: |
-    VERSE 1
+    Verse 1:
               C
     You are good, You are good
 
@@ -88,7 +108,7 @@ forever_reign:
 
     You've covered all my sin
 
-    VERSE 2
+    Verse 2:
              C
     You are peace, You are peace
 
@@ -106,7 +126,7 @@ forever_reign:
 
     In You death has lost it's sting
 
-    CHORUS
+    Chorus:
      C                               G             Am
     I'm running to Your arms, I'm running to Your arms
                                              F
@@ -116,7 +136,7 @@ forever_reign:
                    Am      G      F
     Light of the world, Forever reign
 
-    VERSE 3
+    Verse 3:
              C
     You are more, You are more
 
@@ -134,20 +154,54 @@ forever_reign:
 
     Of all else I'm letting go
 
-    BRIDGE
+    Bridge:
     Am             F
     My heart will sing
               C
     No other name
             G/B
     Jesus, Jesus
+  lyrics: |
+    You are good, You are good
+    And there's nothing good in me
+    You are love, You are love
+    On display for all to see
+    You are light, You are light
+    When the darkness closes in
+    You are hope, You are hope
+    You've covered all my sin
+    You are peace, You are peace
+    When my fear is crippling
+    You are truth, You are truth
+    Even in my wandering
+    You are joy, You are joy
+    You're the reason that I sing
+    You are life, You are life
+    In You death has lost it's sting
+    I'm running to Your arms, I'm running to Your arms
+    The riches of Your love will always be enough
+    And nothing compares to Your embrace
+    Light of the world, Forever reign
+    You are more, You are more
+    Than my words will ever say
+    You are Lord, You are Lord
+    All creation will proclaim
+    You are here, You are here
+    In Your presence I'm made whole
+    You are God, You are God
+    Of all else I'm letting go
+    Bridge:
+    My heart will sing
+    No other name
+    Jesus, Jesus
+
 ten_thousand_reasons:
   name: "10,000 Reasons"
   artist: "Matt Redman"
   key: "G"
   tempo: "Medium"
   chord_sheet: |
-    CHORUS
+    Chorus:
               F          C     G/B Am
     Bless the Lord, O my soul, O my soul
     F           C    G
@@ -157,7 +211,7 @@ ten_thousand_reasons:
          F            G    C
     I'll worship Your holy name
 
-    VERSE 1
+    Verse 1:
         F         C          G       Am
     The sun comes up, it's a new day dawning
     F            C         G    Am
@@ -167,7 +221,7 @@ ten_thousand_reasons:
     F         C                G       C
     Let me be singing when the evening comes
 
-    VERSE 2
+    Verse 2:
            F       C                G       Am
     You're rich in love, and You're slow to anger
          F       C               G        Am
@@ -177,7 +231,7 @@ ten_thousand_reasons:
     F            C              G        C
     Ten thousand reasons for my heart to find
 
-    VERSE 3
+    Verse 3:
         F       C           G           Am
     And on that day when my strength is failing
     F             C            G        Am
@@ -186,13 +240,31 @@ ten_thousand_reasons:
     Still my soul will sing Your praise unending
     F            C              G       C
     Ten thousand years and then forever more!
+  lyrics: |
+    Bless the Lord, O my soul, O my soul
+    Worship His holy name
+    Sing like never before, O my soul
+    I'll worship Your holy name
+    The sun comes up, it's a new day dawning
+    It's time to sing Your song again
+    Whatever may pass, and whatever lies before me
+    Let me be singing when the evening comes
+    You're rich in love, and You're slow to anger
+    Your name is great, and Your heart is kind
+    For all Your goodness, I will keep on singing
+    Ten thousand reasons for my heart to find
+    And on that day when my strength is failing
+    The end draws near, and my time has come
+    Still my soul will sing Your praise unending
+    Ten thousand years and then forever more!
+
 glorious_day:
   name: "Glorious Day (Living He Loved Me)"
   artist: "Casting Crowns"
   key: "B"
   tempo: "Medium"
   chord_sheet: |
-    VERSE 1
+    Verse 1:
      B             E                           B
     One day when Heaven was filled with His praises
                   E                        B
@@ -206,7 +278,7 @@ glorious_day:
                  E
     His glory revealed
 
-    CHORUS
+    Chorus:
                  B
     Living, He loved me
                 F#
@@ -220,7 +292,7 @@ glorious_day:
                  E                B
     Oh glorious day, oh glorious day
 
-    VERSE 2
+    Verse 2:
      B            E                      B
     One day they led Him up Calvary's mountain
                    E                     B
@@ -234,7 +306,7 @@ glorious_day:
                            F#
     And took the nails for me
 
-    VERSE 3
+    Verse 3:
      B            E                          B
     One day the grave could conceal Him no longer
                   E                         B
@@ -250,7 +322,7 @@ glorious_day:
                   F#
     From rising again
 
-    BRIDGE
+    Bridge:
      E             B           F#
     One day the trumpet will sound for His coming
      E            B               F#         B/D#
@@ -259,13 +331,44 @@ glorious_day:
     Wonderful day, my Beloved One, bringing
          E
     My Savior, Jesus, is mine
+  lyrics: |
+    One day when Heaven was filled with His praises
+    One day when sin was as black as could be
+    Jesus came forth to be born of a virgin
+    Dwelt among men, my example is He
+    Word became flesh and the light shined among us
+    His glory revealed
+    Living, He loved me
+    Dying, He saved me
+    Buried, He carried my sins far away
+    Rising, He justified freely forever
+    One day He's coming
+    Oh glorious day, oh glorious day
+    One day they led Him up Calvary's mountain
+    One day they nailed Him to die on a tree
+    Suffering anguish, despised and rejected
+    Bearing our sins, my Redeemer is He
+    Hands that healed nations, stretched out on a tree
+    And took the nails for me
+    One day the grave could conceal Him no longer
+    One day the stone rolled away from the door
+    Then He arose, over death He had conquered
+    Now He's ascended, my Lord evermore
+    Death could not hold Him
+    The grave could not keep Him
+    From rising again
+    One day the trumpet will sound for His coming
+    One day the skies with His glories will shine
+    Wonderful day, my Beloved One, bringing
+    My Savior, Jesus, is mine
+
 hands_to_the_heaven:
   name: "Hands To The Heaven"
   artist: "Kari Jobe"
   key: "F#"
   tempo: "Fast"
   chord_sheet: |
-    VERSE 1
+    Verse 1:
     D#m B         F#
     We are your church
     D#m B        F#          C#
@@ -279,7 +382,7 @@ hands_to_the_heaven:
      D#m  B    F#     C#/E#   D#m    B   C#
     Expectant here for you to move
 
-    CHORUS
+    Chorus:
                B
     With our hands to the heaven
      D#m                       F#
@@ -293,7 +396,7 @@ hands_to_the_heaven:
               C#
     When you come
 
-    VERSE 2
+    Verse 2:
     D#m  B       F#
     You are the way
     D#m   B            F#      C#
@@ -301,7 +404,7 @@ hands_to_the_heaven:
     D#m B      F#     C#/E#    D#m    B   C#
     Oh how we long to know you more
 
-    BRIDGE
+    Bridge:
     G#m           D#m
     Come like a rushing wind
      F#             C#
@@ -310,6 +413,26 @@ hands_to_the_heaven:
     Come like a burning flame
      C#
     Have your way, Have your way
+  lyrics: |
+    We are your church
+    We are your sons and daughters
+    We've gathered here to meet with you
+    We lift our eyes
+    We lay our hearts before you
+    Expectant here for you to move
+    With our hands to the heaven
+    Alive in your presence oh God
+    When you come
+    So pour out your spirit
+    We love to be near you oh God
+    When you come
+    You are the way
+    The truth and the life we live for
+    Oh how we long to know you more
+    Come like a rushing wind
+    Come light the fire again
+    Come like a burning flame
+    Have your way, Have your way
 
 all_my_hope:
   name: "All My Hope"
@@ -317,7 +440,7 @@ all_my_hope:
   key: "C"
   tempo: "Medium"
   chord_sheet: |
-    VERSE 1
+    Verse 1:
     Gb                        Db
     Peace be still, You are near
                            Gb
@@ -327,13 +450,13 @@ all_my_hope:
 
     Our guilt withdrawn
 
-    PRECHORUS 1
+    Pre-chorus 1:
     Ab      Gb       Ab    Gb
     As You rise, we come alive
           Ab       Gb        Ab     Gb
     The grave has lost, the old is gone
 
-    CHORUS
+    Chorus:
                  Db               Gb
     And You're making all things new
               Db               Gb
@@ -343,7 +466,7 @@ all_my_hope:
 
     And we are free
 
-    VERSE 2
+    Verse 2:
     Gb                      Db
     Hope is found, You are here
                          Gb
@@ -353,27 +476,50 @@ all_my_hope:
 
     Now we are Yours
 
-    PRECHORUS 2
+    Pre-chorus 2:
     Ab      Gb       Ab    Gb
     As You rise, we come alive
 
-    BRIDGE
+    Bridge:
           Gb           Ab
     Your love never ending
           Bbm           Ab
     Your grace never failing
         Gb           Ab       Bbm     Ab
     Redemption is calling us home
+  lyrics: |
+    Peace be still, You are near
+    There's nowhere we can go
+    That You won't shine redemption's light
+    Our guilt withdrawn
+    As You rise, we come alive
+    The grave has lost, the old is gone
+    And You're making all things new
+    You are making all things new
+    You are making all things new
+    And we are free
+    Hope is found, You are here
+    Our hearts forever sealed
+    By this love that came for us
+    Now we are Yours
+    As You rise, we come alive
+    Your love never ending
+    Your grace never failing
+    Redemption is calling us home
 
 relevant_1:
   name: "relevant"
-  chord_sheet: "lyrics go here"
+  chord_sheet: ""
+  lyrics: "lyrics go here"
 relevant_2:
   name: "not very"
-  chord_sheet: "relevant relevant"
+  chord_sheet: ""
+  lyrics: "relevant relevant"
 relevant_3:
   name: "even less"
-  chord_sheet: "relevant"
+  chord_sheet: ""
+  lyrics: "relevant"
 relevant_4:
   name: "not at all"
-  chord_sheet: "lyrics go here"
+  chord_sheet: ""
+  lyrics: "lyrics go here"

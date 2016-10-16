@@ -1,6 +1,11 @@
 require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
+
+  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
+  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  private_constant :CHORD_REGEX
+  
   test "should not save without name" do
     song = songs(:God_be_praised)
     song.name = nil
@@ -25,6 +30,21 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a chord sheet"
   end
 
+  test "should save without trailing whitespaces in the chord sheet" do
+    song = songs(:God_be_praised)
+    song.chord_sheet = " a b c             "
+    song.save
+    # leaving leading whitespaces untouched on purpose
+    assert_equal(song.chord_sheet, " a b c") 
+  end
+
+  test "never leaves lyrics field blank" do
+    song = songs(:God_be_praised)
+    song.lyrics = nil
+    song.save
+    assert_not_equal(song.lyrics, nil) 
+  end
+
   test "normalizes name and artist" do
     song = songs(:God_be_praised)
     song.name = "a name"
@@ -34,12 +54,32 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.artist, "A Band")
   end
 
+  test "extracted lyrics don't contain headers" do
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    assert_no_match(/Verse \d:/, song.lyrics, "Lyrics contained verse headers")
+    assert_not_includes(song.lyrics, "Chorus:", "Lyrics contained chorus header")
+  end
+
+  test "extracted lyrics don't contain chords" do
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    assert_no_match CHORD_REGEX, song.lyrics
+  end
+
+  test "extracted lyrics contains all of the lyric lines from chord_sheet" do
+    song = songs(:all_my_hope)
+    force_lyrics_extraction(song)
+    num_lyric_lines = song.lyrics.split("\n").length
+    assert_equal(num_lyric_lines, 18)
+  end
+
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
   multi_word_results = Song.search_by_keywords "truth live life hands"
   partial_word_results = Song.search_by_keywords "hand"
 
-  test "search should prioritize songs with keyword in the title" do
+  test "search should prioritize songs with the keyword in the title" do
     assert_equal(single_word_results.first, songs(:relevant_1))
   end
 
@@ -77,5 +117,18 @@ class SongTest < ActiveSupport::TestCase
     songs = Song.search_by_keywords("church reasons")
     assert_includes(songs, songs(:hands_to_the_heaven))
     assert_includes(songs, songs(:ten_thousand_reasons))
+  end
+
+  test "search should be case insensitive" do
+    songs = Song.search_by_keywords("hillsong")
+    assert_includes(songs, songs(:forever_reign))
+  end
+
+  private
+
+  # clear the lyrics and save it to trigger the extract_lyrics callback
+  def force_lyrics_extraction(song)
+    song.lyrics = nil
+    song.save
   end
 end
