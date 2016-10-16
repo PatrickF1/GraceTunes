@@ -11,7 +11,9 @@ class Song < ActiveRecord::Base
   
   VALID_KEYS = %w(Ab A Bb B C C# D Eb E F F# G G#)
   VALID_TEMPOS = %w(Fast Medium Slow)
-
+  CHORD_GIVEAWAY_STRINGS = Set.new(%w(# / [ 2 4 6 7 9 11 13 14 ))
+  private_constant :CHORD_GIVEAWAY_STRINGS
+  
   validates :name, presence: true
   validates :chord_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, allow_nil: true
@@ -23,6 +25,7 @@ class Song < ActiveRecord::Base
   end
 
   private
+
   # Titlize important fields and strip away unnecessary spaces
   def normalize
     self.name = self.name.titleize.strip
@@ -38,7 +41,6 @@ class Song < ActiveRecord::Base
     self.lyrics = lyrics.join("\n")
   end
 
-  CHORD_GIVEAWAY_STRINGS = Set.new(%w(# / [ 2 3 4 7 9))
   def is_line_of_lyrics(line)
     # headers always end with :
     return false if line[-1] == ":"
