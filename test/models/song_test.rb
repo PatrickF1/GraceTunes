@@ -12,16 +12,20 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a name"
   end
 
-  test "should not save with invalid keys" do
+  test "should not save without a valid key" do
     song = songs(:God_be_praised)
     song.key = "ab"
     assert_not song.save, "Saved with an invalid key"
+    song.key = nil
+    assert_not song.save, "Saved without a key"
   end
 
-  test "should not save with invalid tempo" do
+  test "should not save without a valid tempo" do
     song = songs(:God_be_praised)
     song.tempo = "really fast"
     assert_not song.save, "Saved with an invalid tempo"
+    song.tempo = nil
+    assert_not song.save, "Saved with a tempo"
   end
 
   test "should not save without a chord sheet" do
