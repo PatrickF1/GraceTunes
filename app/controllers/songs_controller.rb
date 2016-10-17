@@ -66,7 +66,7 @@ class SongsController < ApplicationController
   def update
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
-      flash[:success] = "Your changes have been saved!"
+      flash[:success] = "#{@song} successfully updated!"
       redirect_to action: :index
     else
       flash.now[:error] = "Error: #{@song.errors.messages}"
