@@ -73,12 +73,13 @@ class SongsControllerTest < ActionController::TestCase
   end
 
   test "editing a song should result in the song in the database with a different name" do
-    post_new_song_form
-    song = Song.find_by_name("New Song Just Posted")
-    song.name = "Newer Song Just Updated"
+    new_song_name = "Newer Song Just Updated"
+
+    song = songs(:God_be_praised)
+    song.name = new_song_name
     patch :update, song: song.as_json, id: song.id
 
-    updated_song = Song.find_by_name("Newer Song Just Updated")
+    updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
   end
 
