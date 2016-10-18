@@ -25,7 +25,7 @@ class SongTest < ActiveSupport::TestCase
     song.tempo = "really fast"
     assert_not song.save, "Saved with an invalid tempo"
     song.tempo = nil
-    assert_not song.save, "Saved with a tempo"
+    assert_not song.save, "Saved without a tempo"
   end
 
   test "should not save without a chord sheet" do
