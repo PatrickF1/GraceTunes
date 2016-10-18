@@ -16,8 +16,8 @@ class Song < ActiveRecord::Base
   
   validates :name, presence: true
   validates :chord_sheet, presence: true
-  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: true
-  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: true
+  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false
+  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false
   before_save :normalize, :extract_lyrics
 
   def to_s
