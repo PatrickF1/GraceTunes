@@ -1,7 +1,7 @@
 require "test_helper"
 
 class SongsControllerTest < ActionController::TestCase
-  
+
   # "index" action tests
   test "index should be retrieved successfully" do
     get :index
@@ -70,6 +70,17 @@ class SongsControllerTest < ActionController::TestCase
   test "should notify user appropriately when song created successfully" do
     post_new_song_form
     assert_not_nil flash[:success]
+  end
+
+  test "editing a song should result in the song in the database with a different name" do
+    new_song_name = "Newer Song Just Updated"
+
+    song = songs(:God_be_praised)
+    song.name = new_song_name
+    patch :update, song: song.as_json, id: song.id
+
+    updated_song = Song.find_by_name(new_song_name)
+    assert_equal updated_song.id, song.id
   end
 
   private
