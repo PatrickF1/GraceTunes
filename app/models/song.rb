@@ -8,10 +8,8 @@ class Song < ActiveRecord::Base
 
   has_many :tags, through: :song_tags
 
-  VALID_KEYS = %w(A Bb B C C# D Eb E F F# G Ab)
+  VALID_KEYS = Parser::MAJOR_SCALES
   VALID_TEMPOS = %w(Fast Medium Slow)
-  CHORD_GIVEAWAY_STRINGS = Set.new(%w(# / [ 2 4 6 7 9 11 13 14 ))
-  private_constant :CHORD_GIVEAWAY_STRINGS
 
   validates :name, presence: true
   validates :chord_sheet, presence: true

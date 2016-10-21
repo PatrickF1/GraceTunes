@@ -1,3 +1,5 @@
+# based off of https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c
+
 class Parser
   CHROMATICS = ['A', ['A#','Bb'], ['B', 'Cb'], ['B#', 'C'], ['C#','Db'], 'D', ['D#','Eb'], ['E', 'Fb'], ['E#', 'F'], ['F#','Gb'], 'G', ['G#','Ab']].freeze
   MAJOR_KEYS = ['A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab'].freeze # choose sharp versions of 3 enharmonic equivalent keys
@@ -30,8 +32,8 @@ class Parser
     [ key, scale ]
   end.to_h.freeze
 
-  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_TOKENIZER = /\s*\(?([A-G1-7][#b]?\/[A-G1-7][#b]?)|(([A-G1-7][#b]?(m|M|dim)?)\d*)\)?\s*/
+  CHORD_REGEX = /^(\s*(([A-G1-13][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  CHORD_TOKENIZER = /\s*\(?([A-G1-13][#b]?\/[A-G1-13][#b]?)|(([A-G1-13][#b]?(m|M|dim)?)\d*)\)?\s*/
 
   attr_reader :chord_sheet, :key
 
