@@ -2,8 +2,6 @@ require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
 
-  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
-
   test "should not save without name" do
     song = songs(:God_be_praised)
     song.name = nil
