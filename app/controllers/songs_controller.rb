@@ -2,6 +2,7 @@ class SongsController < ApplicationController
   def index
     @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
     @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
+    @transpose_key_opts = Song::VALID_KEYS.map { |k| [k, k] }
 
     respond_to do |format|
       format.json do

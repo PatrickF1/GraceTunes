@@ -120,6 +120,7 @@ $(function() {
 
   var populateDrawer = function(song) {
     wipeDrawer();
+    wipeTransposeSelect();
 
     var drawer = $('.preview-drawer');
     drawer.find('.name').html(song.name);
@@ -129,6 +130,17 @@ $(function() {
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
+
+    var current_key_index = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
+    $('#transpose_to option').each(function(index, el){
+      var offset = index - current_key_index;
+      if(offset == 0){
+        $(el).html($(el).html() + " (original)");
+        $(el).attr("selected", "selected");
+      } else {
+        $(el).html($(el).html() + " (" + offset + ")");
+      }
+    });
   }
 
   var hideDrawer = function() {
@@ -140,5 +152,11 @@ $(function() {
   var wipeDrawer = function() {
     $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
       .html('');
+  }
+
+  var wipeTransposeSelect = function(){
+    $('#transpose_to option').each(function(index, el){
+      $(el).html($(el).html().split(" ")[0]);
+    })
   }
 });
