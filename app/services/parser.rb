@@ -35,11 +35,11 @@ class Parser
   CHORD_REGEX = /^(\s*(([A-G1-13][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
   CHORD_TOKENIZER = /\s*\(?([A-G1-13][#b]?\/[A-G1-13][#b]?)|(([A-G1-13][#b]?(m|M|dim)?)\d*)\)?\s*/
 
-  attr_reader :chord_sheet, :key
+  attr_reader :chord_sheet, :chords, :key, :parsed_sheet
 
   def initialize(sheet, key = nil)
     @chord_sheet = sheet
-    @chords = {} # hash  of chord => count of that chord
+    @chords = Hash.new(0) # hash  of { chord => count of that chord }
     @key = key if key
     @transposed_sheets = {} # store transposed sheets in memory???
     @parsed_sheet = [] # list of lines [ { :type, :content } ]
@@ -59,7 +59,7 @@ class Parser
     return dump_sheet(@parsed_sheet) if new_key.nil?
     integer = Integer(new_key) rescue false
     half_steps = integer if integer
-    @transposed_sheets[new_key] ||= begin
+    new_sheet = begin
       sheet = []
       current_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(@key) : (note == @key)}) unless half_steps
       new_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(new_key) : (note == new_key)}) unless half_steps
@@ -74,7 +74,7 @@ class Parser
       end
       sheet
     end
-    dump_sheet(@transposed_sheets[new_key])
+    dump_sheet(new_sheet)
   end
 
   def highlight
@@ -169,11 +169,11 @@ class Parser
   private
 
   def parse_sheet!
-    @parsed_sheet ||= begin
+    @parsed_sheet = begin
       parsed_sheet = []
       parsed_chords = []
       key_change = false
-      @sheet.each_line do |line|
+      @chord_sheet.each_line do |line|
         chords = self.class.chords(line)
         key_change = true if line =~ /KEY (UP|DOWN)/
         parsed_sheet << (chords ? { type: :chords, content: line, parsed: chords } : { type: :lyrics, content: line })
@@ -212,24 +212,13 @@ class Parser
 
   def which_note_in_key(note_array, key)
     note_array.each do |note|
-      return note if ChordParser.scale_has_note?(MAJOR_SCALES[key], note)
+      return note if Parser.scale_has_note?(MAJOR_SCALES[key], note)
     end
   end
 
   def dump_sheet(sheet)
-    colorize = "".respond_to? :colorize #colorize gem
-    title = true
     sheet.map do |line|
-      if colorize
-        if title
-          title = false
-          line[:content].bold.light_cyan
-        else
-          line[:content].colorize(line[:type] == :chords ? :light_yellow : :white)
-        end
-      else
         line[:content]
-      end
     end.join("")
   end
 

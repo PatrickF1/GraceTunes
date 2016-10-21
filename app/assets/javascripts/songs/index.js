@@ -36,11 +36,41 @@ $(function() {
 
   // show preview drawer on table row click
   $('.songs-table').on('click', 'tbody tr', function() {
-    var url = '/songs/' + $(this).data('song-id') + '.json';
+    showSongChords($(this).data('song-id'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
+  });
 
-    $.get(url, function (data) {
+  $('#transpose_to').on('change', function(e){
+    var newKey = $('#transpose_to option:selected').val();
+    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey })
+  })
+
+  $('.preview-drawer .close-button').click(function() {
+    hideDrawer();
+  });
+
+  // hide drawer when escape key is pressed
+  $('body').keyup(function(e) {
+    var escKey = 27;
+    if (e.keyCode == escKey) hideDrawer();
+  });
+
+  // hide drawer if anything outside of the table & drawer are clicked
+  $('body').click(function(e) {
+    var drawer = $('.preview-drawer');
+    var target = $(e.target);
+
+    if (!target.parents('.songs-table').length &&
+      !target.parents('.preview-drawer').length && !target.is(drawer)) {
+      hideDrawer();
+    }
+  });
+
+  var showSongChords = function(songName, params = null) {
+    var url = '/songs/' + songName + '.json';
+
+    $.get(url, params, function (data) {
       var song = data.song;
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
@@ -68,28 +98,7 @@ $(function() {
 
       $('.preview-drawer').show();
     });
-  });
-
-  $('.preview-drawer .close-button').click(function() {
-    hideDrawer();
-  });
-
-  // hide drawer when escape key is pressed
-  $('body').keyup(function(e) {
-    var escKey = 27;
-    if (e.keyCode == escKey) hideDrawer();
-  });
-
-  // hide drawer if anything outside of the table & drawer are clicked
-  $('body').click(function(e) {
-    var drawer = $('.preview-drawer');
-    var target = $(e.target);
-
-    if (!target.parents('.songs-table').length &&
-      !target.parents('.preview-drawer').length && !target.is(drawer)) {
-      hideDrawer();
-    }
-  });
+  }
 
   var uniqueMatches = function(matches) {
     var uniqueWords = {};
@@ -135,8 +144,8 @@ $(function() {
     $('#transpose_to option').each(function(index, el){
       var offset = index - current_key_index;
       if(offset == 0){
-        $(el).html($(el).html() + " (original)");
-        $(el).attr("selected", "selected");
+        $(el).html($(el).html() + " (current)");
+        $('#transpose_to').prop("selectedIndex", index);
       } else {
         $(el).html($(el).html() + " (" + offset + ")");
       }
@@ -157,6 +166,7 @@ $(function() {
   var wipeTransposeSelect = function(){
     $('#transpose_to option').each(function(index, el){
       $(el).html($(el).html().split(" ")[0]);
-    })
+    });
+    $('#transpose_to').removeProp("selectedIndex");
   }
 });
