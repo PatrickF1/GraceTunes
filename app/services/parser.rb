@@ -218,7 +218,7 @@ class Parser
 
   def dump_sheet(sheet)
     sheet.map do |line|
-        line[:content]
+      line[:content]
     end.join("")
   end
 

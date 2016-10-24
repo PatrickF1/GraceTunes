@@ -140,9 +140,9 @@ $(function() {
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
 
-    var current_key_index = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
+    var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
     $('#transpose_to option').each(function(index, el){
-      var offset = index - current_key_index;
+      var offset = index - currentKeyIndex;
       if(offset == 0){
         $(el).html($(el).html() + " (current)");
         $('#transpose_to').prop("selectedIndex", index);
