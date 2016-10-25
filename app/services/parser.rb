@@ -41,7 +41,6 @@ class Parser
     @chord_sheet = sheet
     @chords = Hash.new(0) # hash  of { chord => count of that chord }
     @key = key if key
-    @transposed_sheets = {} # store transposed sheets in memory???
     @parsed_sheet = [] # list of lines [ { :type, :content } ]
     parse_sheet!
     guess_key! unless key || (key == false)
@@ -59,16 +58,16 @@ class Parser
     return dump_sheet(@parsed_sheet) if new_key.nil?
     integer = Integer(new_key) rescue false
     half_steps = integer if integer
+    current_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(@key) : (note == @key)}) unless half_steps
+    new_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(new_key) : (note == new_key)}) unless half_steps
+    half_steps ||= new_index-current_index
     new_sheet = begin
       sheet = []
-      current_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(@key) : (note == @key)}) unless half_steps
-      new_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(new_key) : (note == new_key)}) unless half_steps
-      half_steps ||= new_index-current_index
       @parsed_sheet.each do |line|
         if line[:type] == :lyrics
           sheet << line
         elsif line[:type] == :chords
-          new_chords = transpose_line(half_steps, line[:content], @key)
+          new_chords = transpose_line(half_steps, line[:content])
           sheet << {type: :chords, content: new_chords, parsed: self.class.chords(new_chords)}
         end
       end
@@ -156,12 +155,12 @@ class Parser
       end
     end
 
-
     def scale_has_note?(scale, note)
-      scale.each do |n|
-        return true if n[:base] == note
-      end
-      false
+      scale.find { |n| n[:base] == note }.present?
+    end
+
+    def get_note_index(note)
+      CHROMATICS.index(CHROMATICS.detect {|n| n.kind_of?(Array) ? n.include?(note) : (n == note)})
     end
 
   end
@@ -188,7 +187,7 @@ class Parser
     end
   end
 
-  def transpose_line(half_steps, line, original_key)
+  def transpose_line(half_steps, line)
     tokens = line.split("") # do this so that we can keep track of what we replace
     new_tokens = []
     tokens.each_with_index do |token, index|
@@ -197,29 +196,25 @@ class Parser
         token += second_token
         tokens[index + 1] = ''
       end
-      new_tokens << transpose_token(half_steps, token, original_key)
+      new_tokens << transpose_token(half_steps, token)
     end
     new_tokens.join("")
   end
 
-  def transpose_token(half_steps, token, original_key)
+  def transpose_token(half_steps, token)
     return token unless token =~ /[A-G]/
-    index = (CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(token) : (note == token)}) + half_steps) % 12
-    new_token = CHROMATICS[index]
+    new_note_index = (Parser.get_note_index(token) + half_steps) % 12
+    new_token = CHROMATICS[new_note_index]
     new_key = MAJOR_KEYS[(MAJOR_KEYS.index(@key) + half_steps) % 12]
     new_token.kind_of?(Array) ? which_note_in_key(new_token, new_key) : new_token
   end
 
   def which_note_in_key(note_array, key)
-    note_array.each do |note|
-      return note if Parser.scale_has_note?(MAJOR_SCALES[key], note)
-    end
+    note_array.find { |note| Parser.scale_has_note?(MAJOR_SCALES[key], note) }
   end
 
   def dump_sheet(sheet)
-    sheet.map do |line|
-      line[:content]
-    end.join("")
+    sheet.map { |line| line[:content] }.join
   end
 
 end
