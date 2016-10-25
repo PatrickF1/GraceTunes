@@ -76,10 +76,6 @@ class Parser
     dump_sheet(new_sheet)
   end
 
-  def highlight
-    dump_sheet(@parsed_sheet)
-  end
-
   def guess_key!
     @key ||= begin
       chords = @chords.keys
@@ -163,6 +159,10 @@ class Parser
       CHROMATICS.index(CHROMATICS.detect {|n| n.kind_of?(Array) ? n.include?(note) : (n == note)})
     end
 
+    def which_note_in_key(note_array, key)
+      note_array.find { |note| Parser.scale_has_note?(MAJOR_SCALES[key], note) }
+    end
+
   end
 
   private
@@ -206,11 +206,7 @@ class Parser
     new_note_index = (Parser.get_note_index(token) + half_steps) % 12
     new_token = CHROMATICS[new_note_index]
     new_key = MAJOR_KEYS[(MAJOR_KEYS.index(@key) + half_steps) % 12]
-    new_token.kind_of?(Array) ? which_note_in_key(new_token, new_key) : new_token
-  end
-
-  def which_note_in_key(note_array, key)
-    note_array.find { |note| Parser.scale_has_note?(MAJOR_SCALES[key], note) }
+    new_token.kind_of?(Array) ? Parser.which_note_in_key(new_token, new_key) : new_token
   end
 
   def dump_sheet(sheet)
