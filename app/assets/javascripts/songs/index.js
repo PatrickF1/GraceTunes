@@ -92,6 +92,7 @@ $(function() {
         artist: artist,
         chordSheet: chordSheet,
         key: song.key,
+        original_key: song.original_key,
         tempo: song.tempo,
         editPath: song.edit_path
       });
@@ -140,12 +141,15 @@ $(function() {
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
 
+    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.original_key+'"]'));
     var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
     $('#transpose_to option').each(function(index, el){
-      var offset = index - currentKeyIndex;
-      if(offset == 0){
-        $(el).html($(el).html() + " (current)");
+      if(currentKeyIndex == index){
         $('#transpose_to').prop("selectedIndex", index);
+      }
+      var offset = index - originalKeyIndex;
+      if(offset == 0){
+        $(el).html($(el).html() + " (original)");
       } else {
         $(el).html($(el).html() + " (" + offset + ")");
       }

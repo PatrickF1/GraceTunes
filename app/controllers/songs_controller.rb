@@ -40,7 +40,7 @@ class SongsController < ApplicationController
 
       format.json do
         render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song), chord_sheet: chord_sheet, key: key)
+          song: song.as_json.merge(edit_path: edit_song_path(song), chord_sheet: chord_sheet, key: key, original_key: song.key)
         }
       end
     end
