@@ -35,12 +35,15 @@ class SongsController < ApplicationController
   def show
     respond_to do |format|
       song = Song.find(params[:id])
-      key = params[:new_key] || song.key
-      chord_sheet = params[:new_key].present? ? Parser.new(song.chord_sheet, song.key).transpose_to(key) : song.chord_sheet
+      original_key = song.key
+      if params[:new_key]
+        song.chord_sheet = Parser.new(song.chord_sheet, original_key).transpose_to(params[:new_key])
+        song.key = params[:new_key]
+      end
 
       format.json do
         render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song), chord_sheet: chord_sheet, key: key, original_key: song.key)
+          song: song.as_json.merge(edit_path: edit_song_path(song), original_key: original_key)
         }
       end
     end
