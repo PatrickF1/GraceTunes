@@ -151,8 +151,8 @@ class Parser
       end
     end
 
-    def scale_has_note?(scale, note)
-      scale.find { |n| n[:base] == note }.present?
+    def key_has_note?(key, note)
+      MAJOR_SCALES[key].find { |n| n[:base] == note }.present?
     end
 
     def get_note_index(note)
@@ -160,7 +160,64 @@ class Parser
     end
 
     def which_note_in_key(note_array, key)
-      note_array.find { |note| Parser.scale_has_note?(MAJOR_SCALES[key], note) }
+      note_array.find { |note| Parser.key_has_note?(key, note) }
+    end
+
+    # takes any form of a note and returns the note in the given key
+    def get_note_in_key(key, note)
+      MAJOR_SCALES[key].find { |n| get_natural(n[:base]) == get_natural(note) }[:base]
+    end
+
+    def accidental_for_key?(key, note)
+      !key_has_note?(key, note)
+    end
+
+    def get_natural(note)
+      /[A-G]/.match(note).to_s
+    end
+
+    def sharpen(note)
+      if flat?(note)
+        get_natural(note)
+      elsif natural?(note)
+        note + "#"
+      else
+        CHROMATICS[(get_note_index(note) + 1) % 12][0] # get lower of the next chromatic
+      end
+    end
+
+    def flatten(note)
+      if sharp?(note)
+        get_natural(note)
+      elsif natural?(note)
+        note + "b"
+      else
+        CHROMATICS[(get_note_index(note) - 1) % 12][1] # get higher of the previous chromatic
+      end
+    end
+
+    # is note1 sharper than note2, must be same letter
+    def sharper?(note1, note2)
+      (flat?(note2) && (natural?(note1) || sharp?(note1))) ||
+        (natural?(note2) && sharp?(note1))
+    end
+
+    #is note 1 flatter than note2, must be same letter
+    def flatter?(note1, note2)
+      (flat?(note1) && (natural?(note2) || sharp?(note2))) ||
+        (natural?(note1) && sharp?(note2))
+    end
+
+    def sharp?(note)
+      note =~ /#/
+    end
+
+    def flat?(note)
+      note =~ /b/
+    end
+
+    def natural?(note)
+      !(note =~ /[b#]/)
     end
 
   end
@@ -203,10 +260,22 @@ class Parser
 
   def transpose_token(half_steps, token)
     return token unless token =~ /[A-G]/
+    return transpose_accidental(half_steps, token) if Parser.accidental_for_key?(@key, token)
     new_note_index = (Parser.get_note_index(token) + half_steps) % 12
     new_token = CHROMATICS[new_note_index]
     new_key = MAJOR_KEYS[(MAJOR_KEYS.index(@key) + half_steps) % 12]
     new_token.kind_of?(Array) ? Parser.which_note_in_key(new_token, new_key) : new_token
+  end
+
+  def transpose_accidental(half_steps, note)
+    # get note in original key
+    note_in_key = Parser.get_note_in_key(@key, note)
+    # is the accidental sharper or flatter than note_in_key
+    sharper = Parser.sharper?(note, note_in_key)
+    # transpose the note_in_key by half_steps
+    transposed_in_key = transpose_token(half_steps, note_in_key)
+    # then sharpen/flatten as accidental was sharper/flatter than note_in_key
+    sharper ? Parser.sharpen(transposed_in_key) : Parser.flatten(transposed_in_key)
   end
 
   def dump_sheet(sheet)
