@@ -68,7 +68,7 @@ class Parser
           sheet << line
         elsif line[:type] == :chords
           new_chords = transpose_line(half_steps, line[:content])
-          sheet << {type: :chords, content: new_chords, parsed: self.class.chords(new_chords)}
+          sheet << {type: :chords, content: new_chords, parsed: chords(new_chords)}
         end
       end
       sheet
@@ -83,7 +83,7 @@ class Parser
         scale = MAJOR_SCALES[key]
         key_matches = 0
         chords.each do |chord|
-          in_scale = self.class.scale_has_chord?(scale, chord)
+          in_scale = scale_has_chord?(scale, chord)
           key_matches += @chords[chord] if in_scale # accumulate the total number of chords in the song that match this key
         end
         { key: key, matches: key_matches }
@@ -107,50 +107,6 @@ class Parser
       !line.strip.empty? && !chords?(line) && !header?(line)
     end
 
-    def chords(line)
-      return nil unless chords?(line)
-      tokens = line.scan CHORD_TOKENIZER
-      tokens.map{|m| m[0] || m[2]}.flatten.compact
-    end
-
-    def format_chord(chord)
-      modifier = case
-      when chord.include?('dim')
-        chord.slice! 'dim'
-        :diminished
-      when chord.include?('m')
-        chord.slice! 'm'
-        :minor
-      when chord.include?('M') # drop the major
-        chord.slice! 'M'
-        nil
-      when chord.include?('/') # slash chord
-        chord = chord.split("/")
-        :inversion
-      else
-        nil
-      end
-      { base: chord, modifier: modifier }
-    end
-
-    def scale_has_chord?(scale, chord)
-      scale = MAJOR_SCALES.keys.detect {|s| s == scale } if scale.kind_of?(String)
-      return false unless scale
-      chord = format_chord(chord) if chord.kind_of?(String)
-      return false unless chord
-      if chord[:base].kind_of?(Array) # slash chord
-        chord[:base].all? do |note| # all notes are in the major
-          scale.any? do |n|
-            n[:base] == note || (n[:base].kind_of?(Array) && n[:base].include?(note))
-          end
-        end
-      else
-        scale.any? do |n| # chord is found in the scale with a proper major, minor, or diminished
-          (n[:base] == chord[:base] || (n[:base].kind_of?(Array) && n[:base].include?(chord[:base]))) && chord[:modifier] == n[:modifier]
-        end
-      end
-    end
-
   end
 
   private
@@ -161,7 +117,7 @@ class Parser
       parsed_chords = []
       key_change = false
       @chord_sheet.each_line do |line|
-        chords = self.class.chords(line)
+        chords = chords(line)
         key_change = true if line =~ /KEY (UP|DOWN)/
         parsed_sheet << (chords ? { type: :chords, content: line, parsed: chords } : { type: :lyrics, content: line })
         parsed_chords += chords if chords && !key_change
@@ -169,7 +125,7 @@ class Parser
       numbers = parsed_chords.any? {|chord| chord =~ /\d/ }
       letters = parsed_chords.any? {|chord| chord =~ /[A-Z]/ }
       parsed_chords = (numbers && letters) ? parsed_chords.select {|chord| chord =~ /[A-Z]/} : parsed_chords
-      formatted_chords = parsed_chords.map {|chord| self.class.format_chord(chord) }
+      formatted_chords = parsed_chords.map {|chord| format_chord(chord) }
       formatted_chords.each { |chord| @chords.store(chord, @chords[chord]+1) } # Ruby lets us use objects as keys...
       parsed_sheet
     end
@@ -211,6 +167,52 @@ class Parser
 
   def dump_sheet(sheet)
     sheet.map { |line| line[:content] }.join
+  end
+
+  # Chord utility methods #####################################################
+
+  def chords(line)
+    return nil unless self.class.chords?(line)
+    tokens = line.scan CHORD_TOKENIZER
+    tokens.map{|m| m[0] || m[2]}.flatten.compact
+  end
+
+  def format_chord(chord)
+    modifier = case
+    when chord.include?('dim')
+      chord.slice! 'dim'
+      :diminished
+    when chord.include?('m')
+      chord.slice! 'm'
+      :minor
+    when chord.include?('M') # drop the major
+      chord.slice! 'M'
+      nil
+    when chord.include?('/') # slash chord
+      chord = chord.split("/")
+      :inversion
+    else
+      nil
+    end
+    { base: chord, modifier: modifier }
+  end
+
+  def scale_has_chord?(scale, chord)
+    scale = MAJOR_SCALES.keys.detect {|s| s == scale } if scale.kind_of?(String)
+    return false unless scale
+    chord = format_chord(chord) if chord.kind_of?(String)
+    return false unless chord
+    if chord[:base].kind_of?(Array) # slash chord
+      chord[:base].all? do |note| # all notes are in the major
+        scale.any? do |n|
+          n[:base] == note || (n[:base].kind_of?(Array) && n[:base].include?(note))
+        end
+      end
+    else
+      scale.any? do |n| # chord is found in the scale with a proper major, minor, or diminished
+        (n[:base] == chord[:base] || (n[:base].kind_of?(Array) && n[:base].include?(chord[:base]))) && chord[:modifier] == n[:modifier]
+      end
+    end
   end
 
   # Note utility methods ######################################################
