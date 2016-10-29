@@ -70,7 +70,7 @@ $(function() {
   var showSongChords = function(songId, params) {
     var url = '/songs/' + songId + '.json';
 
-    $.get(url, params, function(data) {
+    $.getJSON(url, params, function(data) {
       var song = data.song;
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
