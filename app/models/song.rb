@@ -1,19 +1,16 @@
 class Song < ActiveRecord::Base
-  
   include PgSearch
   pg_search_scope(
-    :search_by_keywords, 
+    :search_by_keywords,
     against: {name: 'A', lyrics: 'B', artist: 'B'},
     using: {:tsearch => {any_word: true, prefix: true}}
   )
 
   has_many :tags, through: :song_tags
-  
-  VALID_KEYS = %w(Ab A Bb B C C# D Eb E F F# G G#)
+
+  VALID_KEYS = Parser::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
-  CHORD_GIVEAWAY_STRINGS = Set.new(%w(# / [ 2 4 6 7 9 11 13 14 ))
-  private_constant :CHORD_GIVEAWAY_STRINGS
-  
+
   validates :name, presence: true
   validates :chord_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false
@@ -30,23 +27,14 @@ class Song < ActiveRecord::Base
   def normalize
     self.name = self.name.titleize.strip
     self.artist = self.artist.titleize.strip if self.artist
-    
+
     normalized_lines = []
     self.chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
     self.chord_sheet = normalized_lines.join("\n")
   end
 
   def extract_lyrics
-    lyrics = self.chord_sheet.split("\n").find_all { |line| is_line_of_lyrics(line) }
+    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics?(line) }
     self.lyrics = lyrics.join("\n")
-  end
-
-  def is_line_of_lyrics(line)
-    # headers always end with :
-    return false if line[-1] == ":"
-    # chord lines contain these giveaway substrings
-    return false if line.split.any? {|word| CHORD_GIVEAWAY_STRINGS.include? word}
-    # chord lines have a high density of spaces or contain less than 3 words
-    return (line.count(" ") / line.length.to_f < 0.31) && (line.length > 6)
   end
 end

@@ -2,10 +2,6 @@ require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
 
-  # https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c#file-parser-rb-L19
-  CHORD_REGEX = /^(\s*(([A-G1-7][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  private_constant :CHORD_REGEX
-  
   test "should not save without name" do
     song = songs(:God_be_praised)
     song.name = nil
@@ -39,14 +35,14 @@ class SongTest < ActiveSupport::TestCase
     song.chord_sheet = " a b c             "
     song.save
     # leaving leading whitespaces untouched on purpose
-    assert_equal(song.chord_sheet, " a b c") 
+    assert_equal(song.chord_sheet, " a b c")
   end
 
   test "never leaves lyrics field blank" do
     song = songs(:God_be_praised)
     song.lyrics = nil
     song.save
-    assert_not_equal(song.lyrics, nil) 
+    assert_not_equal(song.lyrics, nil)
   end
 
   test "normalizes name and artist" do
@@ -68,7 +64,7 @@ class SongTest < ActiveSupport::TestCase
   test "extracted lyrics don't contain chords" do
     song = songs(:all_my_hope)
     force_lyrics_extraction(song)
-    assert_no_match CHORD_REGEX, song.lyrics
+    assert_no_match Parser::CHORD_REGEX, song.lyrics
   end
 
   test "extracted lyrics contains all of the lyric lines from chord_sheet" do
