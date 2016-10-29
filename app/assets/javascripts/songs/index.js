@@ -67,8 +67,8 @@ $(function() {
     }
   });
 
-  var showSongChords = function(songName, params = null) {
-    var url = '/songs/' + songName + '.json';
+  var showSongChords = function(songId, params) {
+    var url = '/songs/' + songId + '.json';
 
     $.get(url, params, function (data) {
       var song = data.song;
