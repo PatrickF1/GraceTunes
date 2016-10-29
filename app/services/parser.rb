@@ -268,7 +268,7 @@ class Parser
       (natural?(note2) && sharp?(note1))
   end
 
-  #is note 1 flatter than note2, must be same letter
+  # is note 1 flatter than note2, must be same letter
   def flatter?(note1, note2)
     (flat?(note1) && (natural?(note2) || sharp?(note2))) ||
       (natural?(note1) && sharp?(note2))
