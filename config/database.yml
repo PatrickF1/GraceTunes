@@ -14,6 +14,9 @@ test:
   <<: *default
   database: tunes_test
 
+# Production DB settings here are only for testing the app in production
+# mode locally and will not be used when deployed on Heroku.
+# devcenter.heroku.com/articles/rails-database-connection-behavior
 production:
   <<: *default
-  database: tunes
+  database: tunes_dev
