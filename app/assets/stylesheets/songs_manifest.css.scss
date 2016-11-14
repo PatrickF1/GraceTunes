@@ -78,6 +78,7 @@
   .preview-drawer .song-sheet {
     font-style: italic;
     white-space: pre;
+    font-size: 19px;
   }
 
   .preview-drawer .highlight {
@@ -158,5 +159,10 @@
 
   textarea {
     height: 300px;
+    font-size: 19px;
   }
+}
+
+.inconsolata {
+  font-family: Inconsolata;
 }
