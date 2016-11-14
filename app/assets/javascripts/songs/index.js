@@ -3,6 +3,7 @@ $(function() {
     serverSide: true,
     responsive: true,
     lengthChange: false,
+    ordering: false,
     dom: '',
     columns: [
       { data: 'name' },
