@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   
   root 'songs#index'
 
-  resources :songs
+  resources :songs do
+    member do
+      get 'print'
+    end
+  end
+  
   resources :tags
 
   # The priority is based upon order of creation: first created -> highest priority.

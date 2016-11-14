@@ -93,7 +93,8 @@ $(function() {
         artist: artist,
         chordSheet: chordSheet,
         key: song.key,
-        original_key: song.original_key,
+        originalKey: song.original_key,
+        printPath: song.print_path,
         tempo: song.tempo,
         editPath: song.edit_path
       });
@@ -137,12 +138,13 @@ $(function() {
     drawer.find('.name').html(song.name);
     drawer.find('.song-sheet').html(song.chordSheet);
     drawer.find('.actions .edit').attr('href', song.editPath);
+    drawer.find('.actions .print').attr('href', song.printPath);
 
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
 
-    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.original_key+'"]'));
+    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.originalKey+'"]'));
     var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
     $('#transpose_to option').each(function(index, el){
       if(currentKeyIndex == index){

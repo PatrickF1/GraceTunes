@@ -7,6 +7,8 @@ gem 'rails', '4.2.6'
 gem 'pg'
 gem 'pg_search'
 
+gem 'normalize-rails'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -29,7 +31,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'autoprefixer-rails'
 
 # Use ActiveModel has_secure_password

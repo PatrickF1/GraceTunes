@@ -1,4 +1,5 @@
 class SongsController < ApplicationController
+  
   def index
     @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
     @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
@@ -37,13 +38,14 @@ class SongsController < ApplicationController
       song = Song.find(params[:id])
       original_key = song.key
       if params[:new_key]
-        song.chord_sheet = Parser.new(song.chord_sheet, original_key).transpose_to(params[:new_key])
-        song.key = params[:new_key]
+        Transposer.transpose_song(song, params[:new_key])
       end
 
       format.json do
         render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song), original_key: original_key)
+          song: song.as_json.merge(edit_path: edit_song_path(song), 
+            print_path: print_song_path(song, new_key: params[:new_key]),
+            original_key: original_key)
         }
       end
     end
@@ -78,6 +80,14 @@ class SongsController < ApplicationController
       flash.now[:error] = "Error: #{@song.errors.messages}"
       render :edit
     end
+  end
+
+  def print
+    @song = Song.find(params[:id])
+    if params[:new_key].present?
+      Transposer.transpose_song(@song, params[:new_key])
+    end
+    render layout: false
   end
 
   private
