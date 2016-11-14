@@ -12,9 +12,9 @@
           <a class="navbar-brand" href="#">GraceTunes</a>
         </div>
         <ul class="nav navbar-nav navbar-right ">
-          <li><%= link_to "Upload Song", new_song_path %></li>
-          <li><%= link_to "View Tags", tags_path %></li>
-          <li class="search-page"><%= link_to "Search", songs_path %></li>
+          <li><%= link_to "Upload Song", new_song_path, method: :get %></li>
+          <li><%= link_to "View Tags", tags_path, method: :get %></li>
+          <li class="search-page"><%= link_to "Search", songs_path, method: :get %></li>
           <li><a href="#">About</a></li>
         </ul>
       </div><!-- /.container -->
