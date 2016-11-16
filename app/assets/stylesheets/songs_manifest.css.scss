@@ -1,6 +1,7 @@
 // Place all the styles related to the Songs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import url("https://fonts.googleapis.com/css?family=Inconsolata");
 
 .index-page {
   input[type=search] {
@@ -78,7 +79,6 @@
   .preview-drawer .song-sheet {
     font-style: italic;
     white-space: pre;
-    font-size: 19px;
   }
 
   .preview-drawer .highlight {
@@ -163,6 +163,6 @@
   }
 }
 
-.inconsolata {
+.fixed-width {
   font-family: Inconsolata;
 }
