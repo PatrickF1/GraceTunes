@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Print <%= @song %></title>
+  <%= stylesheet_link_tag 'print_songs', media: 'all' %>
+</head>
+<body>
+  <div id="heading">
+    <h1 class="title"><%= @song %></h1>
+    <p class="artist-key-tempo">
+      <% if @song.artist %>
+        <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
+      <% end %>
+      <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
+      <b>Tempo:</b> <%= @song.tempo %>
+    </p>
+    <p class="seq"><b>Standard Scan:</b> ...</p>
+  </br>
+  </div>
+
+  <table class="chord_sheet">
+    <tr>
+      <% get_lines_for_columns.each do |column_lines| %>
+        <td>
+          <% column_lines.each do |line| %>
+            <% class_for_line = get_class_for_line(line) %>
+            <% if class_for_line == "blank" %>
+              <br class=<%= class_for_line %>>
+            <% else %>
+              <p class=<%= class_for_line %>><%= line %></p>
+            <% end %>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  </table>
+</body>
+</html>

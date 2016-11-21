@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata");
+
+body {
+  margin: 15px;
+  font-family: Inconsolata;
+}
+
+p {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+#heading {
+  font-size: 19px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  h1 {
+    font-size: 25px;
+  }
+}
+
+.chord_sheet {
+  p {
+    font-size: 16px;
+    white-space: pre-wrap;
+  }
+  td {
+    vertical-align: top;
+  }
+  .header, .chord {
+    font-weight: bold;
+  }
+  border-spacing: 15px;
+}
