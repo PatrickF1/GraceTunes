@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20161120224823) do
     t.datetime "updated_at",    null: false
     t.string   "tempo",         null: false
     t.text     "lyrics",        null: false
-    t.text     "standard_scan"
+    t.string   "standard_scan"
   end
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
