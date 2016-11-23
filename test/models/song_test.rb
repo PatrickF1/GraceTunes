@@ -47,6 +47,15 @@ class SongTest < ActiveSupport::TestCase
     )
   end
 
+  test "should add a period to standard scan abbreviations if there isn't already one" do
+    song = songs(:God_be_praised)
+    song.standard_scan = "V1 V2 V3"
+    song.save
+    assert_equal(song.standard_scan,
+      "V1. V2. V3.",
+      "The abbreviations in the standard scan are not trailed by a period")
+  end
+
   test "should not save without a chord sheet" do
     song = songs(:God_be_praised)
     song.chord_sheet = nil
