@@ -13,7 +13,8 @@ module SongsHelper
 
   def get_lines_for_columns
     lines = @song.chord_sheet.split("\n")
-    # find a good place to split the two columns
+    return lines, [] unless lines.length > 20
+    # find a good place to split the two columns if there are more than 20 lines
     midpoint = lines.length / 2
     until ["lyric", "blank"].include? get_class_for_line(lines[midpoint]) do
       midpoint += 1

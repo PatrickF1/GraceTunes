@@ -83,6 +83,11 @@ class SongsControllerTest < ActionController::TestCase
     assert_equal updated_song.id, song.id
   end
 
+  test "the standard scan field should not appear if it is blank" do
+    get :print, id: songs(:relevant_1).id
+    assert_select ".standard-scan", false, "Standard scan should not appear if it is blank"
+  end
+
   private
   def load_songs
     JSON.parse(@response.body)["data"].map do |s|
@@ -92,7 +97,13 @@ class SongsControllerTest < ActionController::TestCase
   end
 
   def post_new_song_form
-    post :create, song: {name: "New Song Just Posted", key: "E", artist: "New Song Artist", tempo: "Fast", chord_sheet: "New Song Chords"}
+    post :create, song: {
+      name: "New Song Just Posted",
+      key: "E", 
+      artist: "New Song Artist", 
+      tempo: "Fast", 
+      chord_sheet: "New Song Chords"
+    }
   end
 
 end
