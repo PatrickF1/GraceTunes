@@ -24,6 +24,29 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a tempo"
   end
 
+  test "should upcase the standard scan" do
+    song = songs(:God_be_praised)
+    lowercased_standard_scan = "t. v1. v2. pc. c."
+    song.standard_scan = lowercased_standard_scan
+    song.save
+    assert_equal(
+      song.standard_scan,
+      lowercased_standard_scan.upcase, 
+      "The standard scan was not upcased on save"
+    )
+  end
+
+  test "should save with only one space between section abbreviations" do
+    song = songs(:God_be_praised)
+    spaced_out_standard_scan = "V1.          V2.        V3.        "
+    song.standard_scan = spaced_out_standard_scan
+    song.save
+    assert_nil(
+      song.standard_scan.index("  "),
+      "Extra spaces in the standard scan were not removed on save"
+    )
+  end
+
   test "should not save without a chord sheet" do
     song = songs(:God_be_praised)
     song.chord_sheet = nil
@@ -89,7 +112,11 @@ class SongTest < ActiveSupport::TestCase
   end
 
   test "search should not include songs without any occurances of the keyword" do
-    assert_not_includes(single_word_results, songs(:relevant_4), "Song without keyword appeared in search")
+    assert_not_includes(
+      single_word_results,
+      songs(:relevant_4),
+      "Song without keyword appeared in search"
+    )
   end
 
   test "search should include all songs where at least one keyword present" do

@@ -23,15 +23,14 @@ class Song < ActiveRecord::Base
 
   private
 
-  # Titlize important fields and strip away unnecessary spaces
+  # Titlize fields and strip away unnecessary spaces
   def normalize
     self.name = self.name.titleize.strip
     self.artist = self.artist.titleize.strip if self.artist
     if self.standard_scan
-      normalized_scan = self.standard_scan.split(" ").map do |section|
-        
-      end
+      self.standard_scan = self.standard_scan.upcase.split.join(" ")
     end
+
     normalized_lines = []
     self.chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
     self.chord_sheet = normalized_lines.join("\n")
