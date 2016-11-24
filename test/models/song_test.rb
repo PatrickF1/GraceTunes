@@ -30,6 +30,12 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a chord sheet"
   end
 
+  test "should not save with line that is too long" do
+    song = songs(:God_be_praised)
+    song.chord_sheet += "This is a really long line. It is more than 45 characters so it's too long"
+    assert_not song.save, "Saved with too long of a line"
+  end
+
   test "should save without trailing whitespaces in the chord sheet" do
     song = songs(:God_be_praised)
     song.chord_sheet = " a b c             "
