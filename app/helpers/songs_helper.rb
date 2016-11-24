@@ -16,10 +16,11 @@ module SongsHelper
   end
 
   def get_lines_for_columns
-    byebug
     lines = @song.chord_sheet.split("\n")
+    return lines, [] if lines.length <= MAX_LINES
+
     # find a good place to split the two columns
-    midpoint = [MAX_LINES, lines.length-1].min
+    midpoint = MAX_LINES
     until "blank" == get_class_for_line(lines[midpoint]) || lyric_line_far_from_blank?(midpoint, lines) do
       midpoint -= 1
     end
