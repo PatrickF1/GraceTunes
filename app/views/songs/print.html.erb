@@ -14,7 +14,9 @@
       <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
       <b>Tempo:</b> <%= @song.tempo %>
     </p>
-    <p class="seq"><b>Standard Scan:</b> ...</p>
+    <% if @song.standard_scan %>
+      <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
+    <% end %>
   </br>
   </div>
 
