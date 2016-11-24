@@ -31,4 +31,18 @@ p {
     font-weight: bold;
   }
   border-spacing: 15px;
+  width: 8in;
+  height: 9in;
+}
+
+@page {
+  size: 8.5in 11in;
+  margin: 0.5in;
+}
+
+@media print {
+  .chord_sheet {
+    width: 8in;
+    height: 9in;
+  }
 }
