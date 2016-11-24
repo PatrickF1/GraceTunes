@@ -27,9 +27,11 @@ module SongsHelper
     return lines[0 .. midpoint], lines[midpoint + 1 .. -1]
   end
 
+  private
+
   def lyric_line_far_from_blank?(line_num, lines)
     return false if "lyric" != get_class_for_line(lines[line_num])
-    # if both the end, and a blank line is more than 5 lines away in either direction, this line is good to break on
+    # if this line is not too close to the end, and there is no blank too close, this lyric line is far enough
     line_num < lines.length - LINE_PADDING &&
       !(line_type_in_range?(line_num, "blank", LINE_PADDING, lines) || line_type_in_range?(line_num, "blank", -LINE_PADDING, lines))
   end
