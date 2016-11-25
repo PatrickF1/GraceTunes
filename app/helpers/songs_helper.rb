@@ -2,6 +2,7 @@ module SongsHelper
   MAX_LINES = 50
   LINE_PADDING = 4
   private_constant :MAX_LINES
+  private_constant :LINE_PADDING
 
   def get_class_for_line(line)
     if line == ""
