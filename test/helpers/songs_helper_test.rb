@@ -3,6 +3,20 @@ require "test_helper"
 class SongsHelperTest < ActionView::TestCase
   include SongsHelper
 
+  test "get_lines_for_columns splits the song at the idea location" do
+    @song = songs(:God_be_praised)
+    lines = @song.chord_sheet.split("\n")
+    assert_equal [lines[0..48], lines[49..lines.length-1]], get_lines_for_columns
+
+    @song = songs(:forever_reign)
+    lines = @song.chord_sheet.split("\n")
+    assert_equal [lines[0..50], lines[51..lines.length-1]], get_lines_for_columns
+
+    @song = songs(:when_i_think_about_the_lord)
+    lines = @song.chord_sheet.split("\n")
+    assert_equal [lines[0..lines.length-1],[]], get_lines_for_columns
+  end
+
   test "lyric_line_far_from_blank? should indicate if a line is a lyric line that is far from a blank" do
     song = songs(:God_be_praised)
     lines = song.chord_sheet.split("\n")
