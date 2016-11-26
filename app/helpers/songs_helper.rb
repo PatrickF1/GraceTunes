@@ -38,8 +38,7 @@ module SongsHelper
   end
 
   def line_type_in_range?(line_num, line_type, range, lines)
-    end_range = limit_by_range(0, line_num + range, lines.length - 1)
-    (line_num..end_range).each do |num|
+    get_line_range(line_num, line_num + range, lines).each do |num|
       if(line_type == get_class_for_line(lines[num]))
         return true
       end
@@ -47,10 +46,12 @@ module SongsHelper
     false
   end
 
-  def limit_by_range(min, value, max)
-    return min if value < min
-    return max if value > max
-    value
+  def get_line_range(start, ending, lines)
+    if(ending < start)
+      return ([0, ending].max)..([start, lines.length-1].min)
+    else
+      return ([0, start].max)..([ending, lines.length-1].min)
+    end
   end
 
 end
