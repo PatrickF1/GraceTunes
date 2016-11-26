@@ -3,15 +3,19 @@ require "test_helper"
 class SongsHelperTest < ActionView::TestCase
   include SongsHelper
 
-  test "get_lines_for_columns splits the song at the idea location" do
+  test "split God Be Praised. Should happen 2 lines early since it's too close to the end" do
     @song = songs(:God_be_praised)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..48], lines[49..lines.length-1]], get_lines_for_columns
+  end
 
+  test "split Forever Reign. Should be at the default 50 line mark" do
     @song = songs(:forever_reign)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..50], lines[51..lines.length-1]], get_lines_for_columns
+  end
 
+  test "split When I think about the Lord. Should only be one column since it's shorter than 50 lines" do
     @song = songs(:when_i_think_about_the_lord)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..lines.length-1],[]], get_lines_for_columns
@@ -34,7 +38,7 @@ class SongsHelperTest < ActionView::TestCase
     assert_not lyric_line_far_from_blank?(19, lines)
   end
 
-  test "lyric_line_far_from_blank? should consider the end of a song like a blank" do
+  test "lyric_line_far_from_blank? should treat the end of a song like a blank" do
     song = songs(:God_be_praised)
     lines = song.chord_sheet.split("\n")
     assert_not lyric_line_far_from_blank?(lines.length - 3, lines)
@@ -62,12 +66,6 @@ class SongsHelperTest < ActionView::TestCase
     lines = song.chord_sheet.split("\n")
     assert_not line_type_in_range?(lines.length-1, "header", 5, lines)
     assert line_type_in_range?(lines.length-2, "chord", 5, lines)
-  end
-
-  test "get_line_range returns range" do
-    song = songs(:God_be_praised)
-    lines = song.chord_sheet.split("\n")
-    assert_equal 10..15, get_line_range(10, 15, lines)
   end
 
   test "get_line_range handles reverse ranges" do
