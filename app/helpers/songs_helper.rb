@@ -1,7 +1,7 @@
 module SongsHelper
-  MAX_LINES = 50
+  MAX_LINES_PER_COL = 50
   LINE_PADDING = 4
-  private_constant :MAX_LINES
+  private_constant :MAX_LINES_PER_COL
   private_constant :LINE_PADDING
 
   def get_class_for_line(line)
@@ -18,10 +18,10 @@ module SongsHelper
 
   def get_lines_for_columns
     lines = @song.chord_sheet.split("\n")
-    return lines, [] if lines.length <= MAX_LINES
+    return lines, [] if lines.length <= MAX_LINES_PER_COL
 
     # find a good place to split the two columns
-    midpoint = MAX_LINES
+    midpoint = MAX_LINES_PER_COL
     until "blank" == get_class_for_line(lines[midpoint]) || lyric_line_far_from_blank?(midpoint, lines) do
       midpoint -= 1
     end
