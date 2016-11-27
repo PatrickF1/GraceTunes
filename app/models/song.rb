@@ -10,11 +10,13 @@ class Song < ActiveRecord::Base
 
   VALID_KEYS = Parser::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
+  MAX_LINE_LENGTH = 45
 
   validates :name, presence: true
   validates :chord_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false
   validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false
+  validate :line_length, if: -> (song) { song.chord_sheet.present? }
   before_save :normalize, :extract_lyrics
 
   def to_s
@@ -41,5 +43,13 @@ class Song < ActiveRecord::Base
   def extract_lyrics
     lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics?(line) }
     self.lyrics = lyrics.join("\n")
+  end
+
+  def line_length
+    self.chord_sheet.split("\n").each do |line|
+      if(line.length > MAX_LINE_LENGTH)
+        errors.add(:chord_sheet, "has a line that exceeds " + MAX_LINE_LENGTH.to_s + " characters long: " + line)
+      end
+    end
   end
 end
