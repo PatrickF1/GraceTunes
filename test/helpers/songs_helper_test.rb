@@ -3,19 +3,19 @@ require "test_helper"
 class SongsHelperTest < ActionView::TestCase
   include SongsHelper
 
-  test "split God Be Praised. Should happen 2 lines early since it's too close to the end" do
+  test "get_lines_for_columns splits the song early when the end of the column occurs too close to the end" do
     @song = songs(:God_be_praised)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..48], lines[49..lines.length-1]], get_lines_for_columns
   end
 
-  test "split Forever Reign. Should be at the default 50 line mark" do
+  test "get_lines_for_columns splits the song at the end of the column when it is not too close to the end" do
     @song = songs(:forever_reign)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..50], lines[51..lines.length-1]], get_lines_for_columns
   end
 
-  test "split When I think about the Lord. Should only be one column since it's shorter than 50 lines" do
+  test "get_lines_for_columns leaves the second column empty when all the lines can fit in one column" do
     @song = songs(:when_i_think_about_the_lord)
     lines = @song.chord_sheet.split("\n")
     assert_equal [lines[0..lines.length-1],[]], get_lines_for_columns
