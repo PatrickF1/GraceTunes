@@ -76,6 +76,22 @@ class Parser
     dump_sheet(new_sheet)
   end
 
+  def to_numbers
+    new_sheet = begin
+      sheet = []
+      @parsed_sheet.each do |line|
+        if line[:type] == :lyrics
+          sheet << line
+        elsif line[:type] == :chords
+          new_chords = transpose_line(0, line[:content], true)
+          sheet << {type: :chords, content: new_chords, parsed: chords(new_chords)}
+        end
+      end
+      sheet
+    end
+    dump_sheet(new_sheet)
+  end
+
   def guess_key!
     @key ||= begin
       chords = @chords.keys
@@ -131,7 +147,7 @@ class Parser
     end
   end
 
-  def transpose_line(half_steps, line)
+  def transpose_line(half_steps, line, to_number = false)
     tokens = line.split("") # do this so that we can keep track of what we replace
     new_tokens = []
     tokens.each_with_index do |token, index|
@@ -140,29 +156,30 @@ class Parser
         token += second_token
         tokens[index + 1] = ''
       end
-      new_tokens << transpose_token(half_steps, token)
+      new_tokens << transpose_token(half_steps, token, to_number)
     end
     new_tokens.join("")
   end
 
-  def transpose_token(half_steps, token)
+  def transpose_token(half_steps, token, to_number = false)
     return token unless token =~ /[A-G]/
-    return transpose_accidental(half_steps, token) if accidental_for_key?(@key, token)
+    return transpose_accidental(half_steps, token, to_number) if accidental_for_key?(@key, token)
+    MAJOR_SCALES[@key].each_with_index { |note, index| return index+1 if note[:base] == token } if to_number
     new_note_index = (get_note_index(token) + half_steps) % 12
     new_token = CHROMATICS[new_note_index]
     new_key = MAJOR_KEYS[(MAJOR_KEYS.index(@key) + half_steps) % 12]
     new_token.kind_of?(Array) ? which_note_in_key(new_token, new_key) : new_token
   end
 
-  def transpose_accidental(half_steps, note)
+  def transpose_accidental(half_steps, note, to_number = false)
     # get note in original key
     note_in_key = get_note_in_key(@key, note)
     # is the accidental sharper or flatter than note_in_key
     sharper = sharper?(note, note_in_key)
     # transpose the note_in_key by half_steps
-    transposed_in_key = transpose_token(half_steps, note_in_key)
+    transposed_in_key = transpose_token(half_steps, note_in_key, to_number)
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
-    sharper ? sharpen(transposed_in_key) : flatten(transposed_in_key)
+    sharper ? sharpen(transposed_in_key, to_number) : flatten(transposed_in_key, to_number)
   end
 
   def dump_sheet(sheet)
@@ -242,21 +259,21 @@ class Parser
     /[A-G]/.match(note).to_s
   end
 
-  def sharpen(note)
-    if flat?(note)
+  def sharpen(note, number = false)
+    if natural?(note) || number
+      note.to_s + "#"
+    elsif flat?(note)
       get_natural(note)
-    elsif natural?(note)
-      note + "#"
     else
       CHROMATICS[(get_note_index(note) + 1) % 12][0] # get lower of the next chromatic
     end
   end
 
-  def flatten(note)
-    if sharp?(note)
+  def flatten(note, number = false)
+    if natural?(note) || number
+      note.to_s + "b"
+    elsif sharp?(note)
       get_natural(note)
-    elsif natural?(note)
-      note + "b"
     else
       CHROMATICS[(get_note_index(note) - 1) % 12][1] # get higher of the previous chromatic
     end

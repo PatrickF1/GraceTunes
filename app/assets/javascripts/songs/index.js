@@ -44,8 +44,12 @@ $(function() {
 
   $('#transpose_to').on('change', function(e){
     var newKey = $('#transpose_to option:selected').val();
-    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey })
-  })
+    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey });
+  });
+
+  $('#numbers').click(function() {
+    showSongChords($('.songs-table .selected').data('song-id'), { "to_numbers": true });
+  });
 
   $('.preview-drawer .close-button').click(function() {
     hideDrawer();

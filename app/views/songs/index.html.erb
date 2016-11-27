@@ -39,6 +39,7 @@
       <%= link_to 'Edit', nil, target: '_blank', class: 'edit' %>
       <%= link_to 'Print', nil, target: '_blank', class: 'print' %>
       <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
+      <%= link_to 'Use Numbers', 'javascript:void(0);', id: 'numbers' %>
     </div>
     <h3 class="artist"></h3>
     <div class="meta-info">
