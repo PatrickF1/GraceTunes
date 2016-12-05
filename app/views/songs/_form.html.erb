@@ -1,5 +1,5 @@
-<%= form_for @song do |f| %>
-  <div class="form-inline name-and-artist">
+<%= form_for @song, html: {class: 'form'} do |f| %>
+  <div class="form-inline form-2">
     <div class="form-group">
       <%= f.label :name, 'Song Title' %><br/>
       <%= f.text_field :name, class: 'form-control' %>
@@ -11,15 +11,15 @@
     </div>
   </div>
 
-  <div class="form-inline tempo-and-key">
+  <div class="form-inline form-2">
     <div class="form-group">
       <%= f.label :tempo %><br/>
-      <%= f.select :tempo, Song::VALID_TEMPOS, class: 'form-control' %>
+      <%= f.select :tempo, Song::VALID_TEMPOS, {}, class: 'form-control' %>
     </div>
 
     <div class="form-group">
       <%= f.label :key %><br/>
-      <%= f.select :key, Song::VALID_KEYS, class: 'form-control' %>
+      <%= f.select :key, Song::VALID_KEYS, {}, class: 'form-control' %>
     </div>
   </div>
 
@@ -33,5 +33,5 @@
     <%= f.text_area :chord_sheet, class: 'form-control fixed-width', cols: Song::MAX_LINE_LENGTH, wrap: 'hard' %>
   </div>
 
-  <%= f.submit 'Submit', class: 'btn btn-default' %>
+  <%= f.submit 'Submit', class: 'btn btn-warning' %>
 <% end %>
