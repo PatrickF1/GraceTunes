@@ -34,18 +34,19 @@ class SongsController < ApplicationController
   end
 
   def show
+    @song = Song.find(params[:id])
+
     respond_to do |format|
-      song = Song.find(params[:id])
-      original_key = song.key
-      if params[:new_key]
-        Transposer.transpose_song(song, params[:new_key])
+      format.html do
+        @original_key = @song.key
+        if params[:new_key]
+          Transposer.transpose_song(@song, params[:new_key])
+        end
       end
 
       format.json do
         render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song), 
-            print_path: print_song_path(song, new_key: params[:new_key]),
-            original_key: original_key)
+          song: @song.as_json.merge(show_path: song_path(@song))
         }
       end
     end
