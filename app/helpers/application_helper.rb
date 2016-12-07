@@ -8,7 +8,7 @@ module ApplicationHelper
     }[flash_type.to_sym] || flash_type.to_s
   end
 
-  def cp(path)
+  def set_active_if_path(path)
     "header_link-active" if current_page?(path)
   end
 end

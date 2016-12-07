@@ -9,7 +9,7 @@
 
       th {
         border-bottom: none;
-        padding: $default-padding / 3 $default-padding / 2;
+        padding: ($default-padding / 3) ($default-padding / 2);
       }
     }
   }
@@ -28,7 +28,7 @@
       }
 
       td {
-        padding: $default-padding / 3 $default-padding / 2;
+        padding: ($default-padding / 3) ($default-padding / 2);
       }
     }
   }

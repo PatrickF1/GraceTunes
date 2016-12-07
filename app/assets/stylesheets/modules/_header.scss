@@ -5,7 +5,7 @@ $header-logo-font-size: 25px;
   align-items: center;
   background-color: $blue;
   display: flex;
-  padding: $default-padding / 2 $default-padding;
+  padding: ($default-padding / 2) $default-padding;
   position: absolute;
   width: 100%;
 
@@ -32,7 +32,7 @@ $header-logo-font-size: 25px;
     .header_link a {
       color: $white;
       letter-spacing: 1px;
-      padding: $header-height / 3 $default-padding / 2;
+      padding: ($header-height / 3) ($default-padding / 2);
       position: relative;
       text-decoration: none;
       text-transform: uppercase;
