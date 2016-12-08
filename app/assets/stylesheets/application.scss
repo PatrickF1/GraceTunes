@@ -19,6 +19,12 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
- body {
-   padding-top: 40px;
- }
+ @import "variables/colors";
+ @import "variables/default";
+ @import "variables/fonts";
+
+ @import "modules/base";
+ @import "modules/form";
+ @import "modules/header";
+ @import "modules/search";
+ @import "modules/table";

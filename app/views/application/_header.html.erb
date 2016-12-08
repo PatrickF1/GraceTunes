@@ -1,21 +1,17 @@
-<%= stylesheet_link_tag 'header_manifest' %>
-<div class="container-fluid">
-  <div class="row">
-    <!-- Second navbar for categories -->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-          </button>
-          <a class="navbar-brand" href="#">GraceTunes</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right ">
-          <li><%= link_to "Upload Song", new_song_path, method: :get %></li>
-          <li class="search-page"><%= link_to "Search", songs_path, method: :get %></li>
-        </ul>
-      </div><!-- /.container -->
-    </nav><!-- /.navbar -->
+<div class="header">
+  <%= link_to root_path, { method: :get, class: "header_logo" } do %>
+    Grace<span class="header_logo-emphasized">Tunes</span>
+  <% end %>
+  <div class="header_links">
+    <div class="header_link">
+      <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
+        <i class="fa fa-music"></i>Upload Song
+      <% end %>
+    </div>
+    <div class="header_link">
+      <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
+        <i class="fa fa-search"></i>Search
+      <% end %>
+    </div>
   </div>
-</div><!-- /.container-fluid -->
+</div>

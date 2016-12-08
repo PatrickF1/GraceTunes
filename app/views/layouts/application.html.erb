@@ -6,14 +6,15 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+  <script src="https://use.fontawesome.com/29c432d1e5.js"></script>
 </head>
 <body>
-  <div class="header navbar-fixed-top" id='head'>
-    <%= render 'header' %>
-  </div>
+  <%= render 'header' %>
 
-  <%= render partial: "flash_messages", flash: flash %> 
-  <%= yield %>
+  <div class="content-push">
+    <%= render partial: "flash_messages", flash: flash %> 
+    <%= yield %>
+  </div>
 
 </body>
 </html>

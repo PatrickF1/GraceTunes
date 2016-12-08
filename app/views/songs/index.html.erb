@@ -6,19 +6,26 @@
     <div class="row">
       <div class="center-block">
         <h1>Songs</h1>
-        <input type="search" id="songs-search-field" class="form-control" placeholder="Search lyrics, song titles, and artists"/>
-        <table class="filter-selection" border="0">
-          <tbody>
-            <tr>
-              <td>Key:</td>
-              <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any') %></td>
-              <td>Tempo:</td>
-              <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any') %></td>
-            </tr>
-          </tbody>
-        </table>
 
-        <table class="songs-table">
+        <div class="search">
+          <div class="search_input_container">
+            <input type="search" id="songs-search-field" class="form-control search_input" placeholder="Search lyrics, song titles, and artists"/>
+            <i class="fa fa-search"></i>
+          </div>
+          <table class="search_filter filter-selection" border="0">
+            <tbody>
+              <tr>
+                <td>Key</td>
+                <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any'), class: 'form-control' %></td>
+                <td></td>
+                <td>Tempo</td>
+                <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any'), class: 'form-control' %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <table class="tbl songs-table">
           <thead>
             <tr>
               <th>Name</th>
