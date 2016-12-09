@@ -12,8 +12,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
-# dotenv
-# TODO Comment out this rule if environment variables can be committed
+# PUT SECRETS HERE AND NEVER CHECK IT INTO GIT
 .env
 
 ## Environment normalization:
