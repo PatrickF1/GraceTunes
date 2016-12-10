@@ -1,6 +1,7 @@
 require "test_helper"
+require_relative 'application_controller_test.rb'
 
-class SongsControllerTest < ActionController::TestCase
+class SongsControllerTest < ApplicationControllerTest
 
   # "index" action tests
   test "index should be retrieved successfully" do

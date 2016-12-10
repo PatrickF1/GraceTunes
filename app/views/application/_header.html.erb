@@ -13,5 +13,13 @@
         <i class="fa fa-search"></i>Search
       <% end %>
     </div>
+    <% if current_user.signed_in? %>
+      <div class="header_link">
+        <%= link_to "Sign Out", sign_out_path, method: :get %>
+      </div>
+    <% end %>
   </div>
+
+  <div class="welcome-message">Welcome, <%= current_user.name %></div>
+
 </div>

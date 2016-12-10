@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   
   resources :tags
 
+  # Authentication
+  get 'auth/:provider/callback', to: 'sessions#create'
+  get 'auth/failure', to: 'sessions#error'
+  get 'signout', to: 'sessions#destroy', as: 'sign_out'
+  get 'signin', to: 'sessions#new', as: 'sign_in'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
