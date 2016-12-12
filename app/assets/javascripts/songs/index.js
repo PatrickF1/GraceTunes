@@ -93,8 +93,8 @@ $(function() {
         artist: artist,
         chordSheet: chordSheet,
         key: song.key,
-        showPath: song.show_path,
         tempo: song.tempo,
+        showPath: song.show_path,
       });
 
       $('.preview-drawer').show();
@@ -130,47 +130,24 @@ $(function() {
 
   var populateDrawer = function(song) {
     wipeDrawer();
-    wipeTransposeSelect();
 
     var drawer = $('.preview-drawer');
     drawer.find('.name').html(song.name);
+    drawer.find('.name').attr('href', song.showPath);
     drawer.find('.song-sheet').html(song.chordSheet);
-    drawer.find('.actions .show').attr('href', song.showPath);
 
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
-
-    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.originalKey+'"]'));
-    var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
-    $('#transpose_to option').each(function(index, el){
-      if(currentKeyIndex == index){
-        $('#transpose_to').prop("selectedIndex", index);
-      }
-      var offset = index - originalKeyIndex;
-      if(offset == 0){
-        $(el).html($(el).html() + " (original)");
-      } else {
-        $(el).html($(el).html() + " (" + offset + ")");
-      }
-    });
   }
 
   var hideDrawer = function() {
     $('.preview-drawer').hide();
-    wipeDrawer();
     $('.songs-table tr.selected').removeClass('selected');
   }
 
   var wipeDrawer = function() {
     $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
       .html('');
-  }
-
-  var wipeTransposeSelect = function(){
-    $('#transpose_to option').each(function(index, el){
-      $(el).html($(el).html().split(" ")[0]);
-    });
-    $('#transpose_to').removeProp("selectedIndex");
   }
 });
