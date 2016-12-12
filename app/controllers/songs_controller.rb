@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  
+
   def index
     @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
     @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
@@ -35,15 +35,12 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
+    if params[:new_key]
+      Transposer.transpose_song(@song, params[:new_key])
+    end
 
     respond_to do |format|
-      format.html do
-        @original_key = @song.key
-        if params[:new_key]
-          Transposer.transpose_song(@song, params[:new_key])
-        end
-      end
-
+      format.html
       format.json do
         render json: {
           song: @song.as_json.merge(show_path: song_path(@song))
