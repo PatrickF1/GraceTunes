@@ -11,7 +11,7 @@
 <body>
   <%= render 'header' %>
 
-  <div class="content-push">
+  <div class="<%= 'content-push' if current_user.signed_in? %>">
     <%= render partial: "flash_messages", flash: flash %> 
     <%= yield %>
   </div>

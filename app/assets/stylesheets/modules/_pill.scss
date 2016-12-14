@@ -1,0 +1,18 @@
+.pill {
+  border-radius: 100px;
+  color: $white;
+  letter-spacing: 1px;
+	padding: ($default-padding / 4) ($default-padding / 2);
+  text-transform: uppercase;
+
+  &.pill_link-red {
+    background: $red;
+    transition: all .25s;
+
+    &:hover {
+      background: darken($red, 3%);
+      color: $white;
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+$sign-in-logo-font-size: 55px;
+
+.sign-in {
+  align-items: center;
+  background-image: url('https://s28.postimg.org/5kyr8ulu3/guitar.jpg');
+  background-position: center;
+  background-size: cover;
+  display: flex;
+	height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+
+  .sign-in_mask {
+    background-color: black;
+    height: 100%;
+    opacity: 0.6;
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+  }
+  .sign-in_content {
+    padding: $default-padding;
+    text-align: center;
+    z-index: 1;
+
+    .sign-in_logo {
+      color: $white;
+      font-size: $sign-in-logo-font-size;
+      letter-spacing: 2px;
+      margin-bottom: $default-margin / 2;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      .sign-in_logo-emphasized {
+        font-weight: 700;
+      }
+    }
+
+    .sign-in_button {
+      border: solid 1px $white;
+      color: white;
+      display: inline-block;
+      letter-spacing: 1px;
+      padding: $default-padding / 2;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all .25s;
+
+      .fa-google {
+        margin-right: $default-margin / 3;
+      }
+
+      &:hover {
+        background-color: transparentize(white, 0.8);
+      }
+    }
+  }
+}
