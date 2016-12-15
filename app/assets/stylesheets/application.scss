@@ -28,5 +28,7 @@
  @import "modules/header";
  @import "modules/pill";
  @import "modules/search";
- @import "modules/sign-in";
  @import "modules/table";
+
+ @import "controllers/sessions";
+ @import "controllers/songs";
