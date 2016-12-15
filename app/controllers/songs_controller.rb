@@ -3,7 +3,6 @@ class SongsController < ApplicationController
   def index
     @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
     @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
-
     respond_to do |format|
       format.json do
         songs = Song.all
@@ -40,7 +39,10 @@ class SongsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html
+      format.html do
+        @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
+        @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
+      end
       format.json do
         render json: {
           song: @song.as_json.merge(show_path: song_path(@song))

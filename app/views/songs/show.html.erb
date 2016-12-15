@@ -1,5 +1,8 @@
 <%= stylesheet_link_tag 'songs_manifest' %>
 
 <div class="show-page">
-  <%= @song %>
+  <%= link_to "Edit", edit_song_path %>
+  <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
+  <%= link_to "Print (uses current key)", print_song_path %>
+  Chord Sheet
 </div>
