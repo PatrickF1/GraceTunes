@@ -1,9 +1,10 @@
 class SessionsController < ApplicationController
-  
+
   skip_before_action :require_sign_in, except: :destroy
 
   def new
     redirect_to root_path if current_user.signed_in?
+    @no_header = true
   end
 
   def create
