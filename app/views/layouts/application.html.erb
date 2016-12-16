@@ -9,10 +9,10 @@
   <script src="https://use.fontawesome.com/29c432d1e5.js"></script>
 </head>
 <body>
-  <%= render 'header' %>
+  <%= render 'header' unless @no_header %>
 
-  <div class="content-push">
-    <%= render partial: "flash_messages", flash: flash %> 
+  <div class="<%= 'content-push' unless @no_header %>">
+    <%= render partial: "flash_messages", flash: flash %>
     <%= yield %>
   </div>
 

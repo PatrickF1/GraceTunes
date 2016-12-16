@@ -41,7 +41,7 @@ $header-logo-font-size: 25px;
         margin-right: $default-margin / 4;
       }
 
-      :after {
+      &:after {
         background-color: $white;
         bottom: 0;
         content: "";
@@ -56,14 +56,14 @@ $header-logo-font-size: 25px;
       &:hover {
         text-decoration: none;
 
-        :after {
+        &:after {
           opacity: 0.4;
         }
       }
 
       &.header_link-active {
 
-        :after {
+        &:after {
           background-color: $white;
           bottom: 0;
           content: "";
@@ -74,6 +74,15 @@ $header-logo-font-size: 25px;
           width: 100%;
         }
       }
+    }
+  }
+
+  .header_user {
+    color: $white;
+    margin-left: auto;
+
+    .header_username {
+      margin-right: $default-margin / 3;
     }
   }
 }
