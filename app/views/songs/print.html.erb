@@ -7,7 +7,7 @@
 <body>
   <div id="heading">
     <h1 class="title"><%= @song %></h1>
-    <p class="artist-key-tempo">
+    <p>
       <% if @song.artist %>
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
@@ -20,7 +20,7 @@
   </br>
   </div>
 
-  <table class="chord_sheet">
+  <table class="chord-sheet">
     <tr>
       <% get_lines_for_columns.each do |column_lines| %>
         <td>

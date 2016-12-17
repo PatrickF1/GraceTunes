@@ -2,11 +2,15 @@ require 'test_helper'
 require_relative 'application_controller_test.rb'
 
 class SessionsControllerTest < ApplicationControllerTest
-  
-  test "the sign-in page should mention using your Gpmail account" do
+
+  test "the sign-in button should mention using your Gpmail account" do
     logout
     get :new
-    assert_select '.sign-in-page', /Gpmail/
+    assert_select(
+      '.sign-in_button',
+      /Gpmail/i,
+      "No mention of Gpmail made on the sign in button."
+    )
   end
 
   test "the sign-in page should redirect the user to the root path if already signed in" do
