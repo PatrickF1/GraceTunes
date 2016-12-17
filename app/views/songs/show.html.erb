@@ -3,6 +3,7 @@
 <div class="show-page">
   <%= link_to "Edit", edit_song_path %>
   <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
-  <%= link_to "Print (uses current key)", print_song_path %>
+  <%= link_to "Print in current key", print_song_path %>
   Chord Sheet
+  <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
 </div>
