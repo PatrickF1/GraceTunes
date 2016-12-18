@@ -1,9 +1,16 @@
 <%= stylesheet_link_tag 'songs_manifest' %>
 
 <div class="show-page">
+  <h1><%= @song %></h1>
+  <div class="song-metadata">
+    <span>Artist<div><%= @song.artist %></div></span>
+    <span>Key<div><%= @song.key %></div></span>
+    <span>Tempo<div><%= @song.tempo %></div></span>
+  </div>
+
+
   <%= link_to "Edit", edit_song_path %>
-  <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
+  Transpose <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
   <%= link_to "Print in current key", print_song_path %>
-  Chord Sheet
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
 </div>
