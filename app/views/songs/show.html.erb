@@ -2,15 +2,27 @@
 
 <div class="show-page">
   <h1><%= @song %></h1>
-  <div class="song-metadata">
-    <span>Artist<div><%= @song.artist %></div></span>
-    <span>Key<div><%= @song.key %></div></span>
-    <span>Tempo<div><%= @song.tempo %></div></span>
-  </div>
-
-
   <%= link_to "Edit", edit_song_path %>
+  <table class="song-metadata">
+    <thead>
+      <td>Artist</td>
+      <td>Key</td>
+      <td>Tempo</td>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= @song.artist %></td>
+        <td><%= @song.key %></td>
+        <td><%= @song.tempo %></td>
+      </tr>
+    </tbody>
+  </table>
+
   Transpose <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
   <%= link_to "Print in current key", print_song_path %>
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
 </div>
+
+<%= content_for :javascript do %>
+  <%= javascript_include_tag 'songs/show' %>
+<% end %>
