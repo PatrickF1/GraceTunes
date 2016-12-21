@@ -46,10 +46,13 @@ class Song < ActiveRecord::Base
   end
 
   def line_length
+    lines = []
     self.chord_sheet.split("\n").each do |line|
       if(line.length > MAX_LINE_LENGTH)
-        errors.add(:chord_sheet, "has a line that exceeds " + MAX_LINE_LENGTH.to_s + " characters long: " + line)
+        lines << line
       end
     end
+    errors.add(:chord_sheet, "has " + lines.length.to_s + " line".pluralize(lines.length) +
+            " that exceeds " + MAX_LINE_LENGTH.to_s + " characters long: " + lines.to_s)
   end
 end
