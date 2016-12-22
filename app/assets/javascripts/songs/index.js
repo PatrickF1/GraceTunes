@@ -127,8 +127,9 @@ $(function() {
     wipeDrawer();
 
     var drawer = $('.preview-drawer');
-    drawer.find('.name').html(song.name);
-    drawer.find('.name').attr('href', song.showPath);
+    drawer.find('.name')
+      .html(song.name)
+      .attr('href', song.showPath);
     drawer.find('.song-sheet').html(song.chordSheet);
 
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
