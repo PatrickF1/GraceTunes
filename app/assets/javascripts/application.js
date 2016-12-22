@@ -17,4 +17,3 @@
 //= require dataTables/extras/dataTables.responsive
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .

@@ -42,11 +42,6 @@ $(function() {
     $(this).addClass('selected');
   });
 
-  $('#transpose_to').on('change', function(e){
-    var newKey = $('#transpose_to option:selected').val();
-    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey })
-  })
-
   $('.preview-drawer .close-button').click(function() {
     hideDrawer();
   });
