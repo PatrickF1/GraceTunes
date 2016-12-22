@@ -9,10 +9,9 @@ $(function() {
     var url = `/songs/${songId}.json`;
 
     $.getJSON(url, { "new_key": newKey }, function(data) {
-      var song = data.song;
-      var chordSheet = song.chord_sheet;
-      var artist = song.artist;
-      var name = song.name;
+      var chordSheet = data.song.chord_sheet;
+      console.log(chordSheet)
+      $('.chord-sheet').html(chordSheet);
     });
   }
 
