@@ -8,8 +8,7 @@ $(function() {
     var songId = window.location.pathname.split('/')[2];
     var url = `/songs/${songId}.json`;
 
-    $('.show-page .chord-sheet')
-    $.getJSON(url, { newKey }, function(data) {
+    $.getJSON(url, { "new_key": newKey }, function(data) {
       var song = data.song;
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
