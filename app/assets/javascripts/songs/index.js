@@ -37,7 +37,7 @@ $(function() {
 
   // show preview drawer on table row click
   $('.songs-table').on('click', 'tbody tr', function() {
-    showSongChords($(this).data('song-id'));
+    showSongPreview($(this).data('song-id'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
   });
@@ -63,7 +63,7 @@ $(function() {
     }
   });
 
-  var showSongChords = function(songId, params) {
+  var showSongPreview = function(songId, params) {
     var url = '/songs/' + songId + '.json';
 
     $.getJSON(url, params, function(data) {

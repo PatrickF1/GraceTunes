@@ -13,10 +13,10 @@
             <tbody>
               <tr>
                 <td>Key</td>
-                <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any'), class: 'form-control' %></td>
+                <td><%= select_tag :key, options_for_select(get_key_opts, selected: 'Any'), class: 'form-control' %></td>
                 <td></td>
                 <td>Tempo</td>
-                <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any'), class: 'form-control' %></td>
+                <td><%= select_tag :tempo, options_for_select(get_tempo_opts, selected: 'Any'), class: 'form-control' %></td>
               </tr>
             </tbody>
           </table>

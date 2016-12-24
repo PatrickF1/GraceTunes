@@ -4,6 +4,14 @@ module SongsHelper
   private_constant :MAX_LINES_PER_COL
   private_constant :LINE_PADDING
 
+  def get_tempo_opts
+    [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
+  end
+
+  def get_key_opts
+    [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
+  end
+
   def get_class_for_line(line)
     if line == ""
       "blank"
