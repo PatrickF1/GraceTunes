@@ -10,7 +10,6 @@ $(function() {
 
     $.getJSON(url, { "new_key": newKey }, function(data) {
       var chordSheet = data.song.chord_sheet;
-      console.log(chordSheet)
       $('.chord-sheet').html(chordSheet);
     });
   }

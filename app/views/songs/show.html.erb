@@ -4,7 +4,7 @@
   <table class="song-metadata">
     <thead>
       <td>Artist</td>
-      <td>Key</td>
+      <td>Recommended Key</td>
       <td>Tempo</td>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
   </table>
 
   Transpose <%= select_tag :transpose_to, get_key_opts(@song.key) %>
-  <%= link_to "Print in current key", print_song_path %>
+  <%= link_to "Print in current key", print_song_path, id: "print-btn" %>
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
 </div>
 
