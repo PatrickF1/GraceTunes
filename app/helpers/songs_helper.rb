@@ -4,12 +4,16 @@ module SongsHelper
   private_constant :MAX_LINES_PER_COL
   private_constant :LINE_PADDING
 
-  def get_tempo_opts
-    [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
+  def get_tempo_opts(selected, include_any = false)
+    options = Song::VALID_TEMPOS.map { |t| [t, t] }
+    options.insert(0, ['Any', '']) if include_any
+    options_for_select(options, selected: selected)
   end
 
-  def get_key_opts
-    [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
+  def get_key_opts(selected, include_any = false)
+    options = Song::VALID_KEYS.map { |k| [k, k] }
+    options.insert(0, ['Any', '']) if include_any
+    options_for_select(options, selected: selected)
   end
 
   def get_class_for_line(line)
