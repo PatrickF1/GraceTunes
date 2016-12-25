@@ -63,6 +63,11 @@ $(function() {
     }
   });
 
+  var hideDrawer = function() {
+    $('.preview-drawer').hide();
+    $('.songs-table tr.selected').removeClass('selected');
+  }
+
   var showSongPreview = function(songId, params) {
     var url = '/songs/' + songId + '.json';
 
@@ -135,11 +140,6 @@ $(function() {
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
-  }
-
-  var hideDrawer = function() {
-    $('.preview-drawer').hide();
-    $('.songs-table tr.selected').removeClass('selected');
   }
 
   var wipeDrawer = function() {
