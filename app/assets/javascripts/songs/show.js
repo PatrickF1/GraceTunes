@@ -3,7 +3,7 @@ $(function() {
     var newKey = $('#transpose_to option:selected').val();
     transposeChordSheet(newKey);
 
-  // using $.param to generate query param in order to escape sharps
+    // using $.param to generate query param in order to escape sharps
     var printUrl = $('#print-btn').data('print-url') + "?" +
       $.param({ new_key: newKey })
     $('#print-btn').attr('href', printUrl);
