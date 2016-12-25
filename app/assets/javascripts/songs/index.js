@@ -68,10 +68,10 @@ $(function() {
     $('.songs-table tr.selected').removeClass('selected');
   }
 
-  var showSongPreview = function(songId, params) {
+  var showSongPreview = function(songId) {
     var url = '/songs/' + songId + '.json';
 
-    $.getJSON(url, params, function(data) {
+    $.getJSON(url, function(data) {
       var song = data.song;
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
