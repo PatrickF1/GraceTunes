@@ -3,21 +3,18 @@ $(function() {
     var newKey = $('#transpose_to option:selected').val();
     transposeChordSheet(newKey);
 
-    var printUrl = getSongBaseUrl() + "/print?new_key=" + newKey;
+  // using $.param to generate query param in order to escape sharps
+    var printUrl = $('#print-btn').data('print-url') + "?" +
+      $.param({ new_key: newKey })
     $('#print-btn').attr('href', printUrl);
   });
 
   var transposeChordSheet = function(newKey) {
-    var url = getSongBaseUrl() + '.json';
+    var tranposeUrl = $("#transpose_to").data('transpose-url')
 
-    $.getJSON(url, { "new_key": newKey }, function(data) {
+    $.getJSON(tranposeUrl, { new_key: newKey }, function(data) {
       var chordSheet = data.song.chord_sheet;
       $('.chord-sheet').html(chordSheet);
     });
   }
-
-  var getSongBaseUrl = function() {
-    var songId = window.location.pathname.split('/')[2];
-    return `/songs/${songId}`;
-  };
 })

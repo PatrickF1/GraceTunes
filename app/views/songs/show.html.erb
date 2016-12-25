@@ -16,8 +16,9 @@
     </tbody>
   </table>
 
-  Transpose <%= select_tag :transpose_to, get_key_opts(@song.key) %>
-  <%= link_to "Print in current key", print_song_path, id: "print-btn" %>
+  Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), "data-transpose-url": song_path(@song, format: :json) %>
+
+  <%= link_to "Print in current key", print_song_path, id: "print-btn", "data-print-url": print_song_path %>
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
 </div>
 
