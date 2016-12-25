@@ -71,8 +71,7 @@ $(function() {
   var showSongPreview = function(songId) {
     var url = '/songs/' + songId + '.json';
 
-    $.getJSON(url, function(data) {
-      var song = data.song;
+    $.getJSON(url, function(song) {
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
       var name = song.name;
@@ -89,12 +88,12 @@ $(function() {
       }
 
       populateDrawer({
+        id: song.id,
         name: name,
         artist: artist,
         chordSheet: chordSheet,
         key: song.key,
         tempo: song.tempo,
-        showPath: song.show_path,
       });
 
       $('.preview-drawer').show();
@@ -134,7 +133,7 @@ $(function() {
     var drawer = $('.preview-drawer');
     drawer.find('.name')
       .html(song.name)
-      .attr('href', song.showPath);
+      .attr('href', '/songs/' + song.id);
     drawer.find('.song-sheet').html(song.chordSheet);
 
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);

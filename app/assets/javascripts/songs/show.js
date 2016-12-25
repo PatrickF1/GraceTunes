@@ -12,9 +12,8 @@ $(function() {
   var transposeChordSheet = function(newKey) {
     var tranposeUrl = $("#transpose_to").data('transpose-url')
 
-    $.getJSON(tranposeUrl, { new_key: newKey }, function(data) {
-      var chordSheet = data.song.chord_sheet;
-      $('.chord-sheet').html(chordSheet);
+    $.getJSON(tranposeUrl, { new_key: newKey }, function(song) {
+      $('.chord-sheet').html(song.chord_sheet);
     });
   }
 })

@@ -40,9 +40,7 @@ class SongsController < ApplicationController
       format.html do
       end
       format.json do
-        render json: {
-          song: @song.as_json.merge(show_path: song_path(@song))
-        }
+        render json: @song
       end
     end
   end
