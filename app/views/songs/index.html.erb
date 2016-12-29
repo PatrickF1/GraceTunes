@@ -13,10 +13,10 @@
             <tbody>
               <tr>
                 <td>Key</td>
-                <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any'), class: 'form-control' %></td>
+                <td><%= select_tag :key, get_key_opts('Any', include_any = true), class: 'form-control' %></td>
                 <td></td>
                 <td>Tempo</td>
-                <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any'), class: 'form-control' %></td>
+                <td><%= select_tag :tempo, get_tempo_opts('Any', include_any = true), class: 'form-control' %></td>
               </tr>
             </tbody>
           </table>
@@ -38,12 +38,7 @@
 
   <div class="preview-drawer">
     <div class="close-button">x</div>
-    <h1 class="name"></h1>
-    <div class="actions">
-      <%= link_to 'Edit', nil, target: '_blank', class: 'edit' %>
-      <%= link_to 'Print', nil, target: '_blank', class: 'print' %>
-      <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
-    </div>
+    <a target="_blank" class="name"></a>
     <h3 class="artist"></h3>
     <div class="meta-info">
       <span class="key"></span><span class="tempo"></span>
@@ -52,6 +47,4 @@
   </div>
 </div>
 
-<%= content_for :javascript do %>
-  <%= javascript_include_tag 'songs/index' %>
-<% end %>
+<%= javascript_include_tag 'songs/index' %>

@@ -1,9 +1,6 @@
 class SongsController < ApplicationController
-  
-  def index
-    @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
-    @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
 
+  def index
     respond_to do |format|
       format.json do
         songs = Song.all
@@ -34,19 +31,16 @@ class SongsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      song = Song.find(params[:id])
-      original_key = song.key
-      if params[:new_key]
-        Transposer.transpose_song(song, params[:new_key])
-      end
+    @song = Song.find(params[:id])
+    if params[:new_key]
+      Transposer.transpose_song(@song, params[:new_key])
+    end
 
+    respond_to do |format|
+      format.html do
+      end
       format.json do
-        render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song), 
-            print_path: print_song_path(song, new_key: params[:new_key]),
-            original_key: original_key)
-        }
+        render json: @song
       end
     end
   end

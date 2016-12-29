@@ -33,6 +33,7 @@
     max-width: 65%;
     margin-top: 0;
     margin-bottom: 5px;
+    font-size: 32px;
   }
 
   .preview-drawer .artist {
@@ -68,32 +69,36 @@
     margin-right: 10px;
   }
 
-  .preview-drawer .actions, .preview-drawer .meta-info {
+  .preview-drawer .meta-info {
     display: inline-block;
   }
 
-  .preview-drawer .actions {
-    float: right;
-    margin-right: 25px;
-    margin-top: 8px;
-  }
-
-  .preview-drawer .actions a, .songs-table tbody tr {
+  .songs-table tbody tr {
     transition: background-color 0.2s ease;
   }
 
-  .preview-drawer .actions a:hover {
-    text-decoration: none;
-    color: black;
-    background-color: lightgray;
+}
+
+.show-page {
+  padding: 10px;
+  width: 70%;
+  margin: auto;
+  text-align: center;
+
+  .song-metadata {
+    background-color: $light-gray;
+    width: 500px;
+    margin: auto;
   }
 
-  .preview-drawer .actions a {
-    color: black;
-    text-decoration: none;
-    box-shadow: 0 0 1px 0;
-    padding: 5px 15px;
-    box-shadow: 0px 0px 2px 0 gray;
+  .chord-sheet {
+    text-align: left;
+    font-size: 16px;
+    white-space: pre-wrap;
+    border: 1px solid $border-color;
+    padding: 10px;
+    width: 500px;
+    margin: auto;
   }
 }
 

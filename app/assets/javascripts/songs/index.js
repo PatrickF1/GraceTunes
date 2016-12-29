@@ -37,15 +37,10 @@ $(function() {
 
   // show preview drawer on table row click
   $('.songs-table').on('click', 'tbody tr', function() {
-    showSongChords($(this).data('song-id'));
+    showSongPreview($(this).data('song-id'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
   });
-
-  $('#transpose_to').on('change', function(e){
-    var newKey = $('#transpose_to option:selected').val();
-    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey })
-  })
 
   $('.preview-drawer .close-button').click(function() {
     hideDrawer();
@@ -68,11 +63,15 @@ $(function() {
     }
   });
 
-  var showSongChords = function(songId, params) {
+  var hideDrawer = function() {
+    $('.preview-drawer').hide();
+    $('.songs-table tr.selected').removeClass('selected');
+  }
+
+  var showSongPreview = function(songId) {
     var url = '/songs/' + songId + '.json';
 
-    $.getJSON(url, params, function(data) {
-      var song = data.song;
+    $.getJSON(url, function(song) {
       var chordSheet = song.chord_sheet;
       var artist = song.artist;
       var name = song.name;
@@ -89,14 +88,12 @@ $(function() {
       }
 
       populateDrawer({
+        id: song.id,
         name: name,
         artist: artist,
         chordSheet: chordSheet,
         key: song.key,
-        originalKey: song.original_key,
-        printPath: song.print_path,
         tempo: song.tempo,
-        editPath: song.edit_path
       });
 
       $('.preview-drawer').show();
@@ -132,48 +129,20 @@ $(function() {
 
   var populateDrawer = function(song) {
     wipeDrawer();
-    wipeTransposeSelect();
 
     var drawer = $('.preview-drawer');
-    drawer.find('.name').html(song.name);
+    drawer.find('.name')
+      .html(song.name)
+      .attr('href', '/songs/' + song.id);
     drawer.find('.song-sheet').html(song.chordSheet);
-    drawer.find('.actions .edit').attr('href', song.editPath);
-    drawer.find('.actions .print').attr('href', song.printPath);
 
     if (song.artist) drawer.find('.artist').html('by ' + song.artist);
     if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
     if (song.key) drawer.find('.key').text('Key: ' + song.key);
-
-    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.originalKey+'"]'));
-    var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
-    $('#transpose_to option').each(function(index, el){
-      if(currentKeyIndex == index){
-        $('#transpose_to').prop("selectedIndex", index);
-      }
-      var offset = index - originalKeyIndex;
-      if(offset == 0){
-        $(el).html($(el).html() + " (original)");
-      } else {
-        $(el).html($(el).html() + " (" + offset + ")");
-      }
-    });
-  }
-
-  var hideDrawer = function() {
-    $('.preview-drawer').hide();
-    wipeDrawer();
-    $('.songs-table tr.selected').removeClass('selected');
   }
 
   var wipeDrawer = function() {
     $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
       .html('');
-  }
-
-  var wipeTransposeSelect = function(){
-    $('#transpose_to option').each(function(index, el){
-      $(el).html($(el).html().split(" ")[0]);
-    });
-    $('#transpose_to').removeProp("selectedIndex");
   }
 });
