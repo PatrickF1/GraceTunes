@@ -52,8 +52,10 @@ class Song < ActiveRecord::Base
         line_numbers << (i + 1)
       end
     end
-    line_pluralized = 'line'.pluralize(line_numbers.length)
-    line_numbers_string = line_numbers.join(',')
-    errors.add(:chord_sheet, "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
+    if line_numbers.any?
+      line_pluralized = 'line'.pluralize(line_numbers.length)
+      line_numbers_string = line_numbers.join(',')
+      errors.add(:chord_sheet, "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
+    end
   end
 end
