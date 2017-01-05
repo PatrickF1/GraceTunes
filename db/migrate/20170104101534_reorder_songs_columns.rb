@@ -1,7 +1,7 @@
 class ReorderSongsColumns < ActiveRecord::Migration
   def change
     drop_table :songs
-    # associated indexes automatically removed?
+    # associated indices automatically removed
 
     create_table "songs", force: :cascade do |t|
       t.datetime "created_at",    null: false
@@ -15,6 +15,9 @@ class ReorderSongsColumns < ActiveRecord::Migration
       t.text     "lyrics",        null: false
     end
 
-    # readd columns
+    # add indices back in
+    add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
+    add_index "songs", ["lyrics"], name: "index_songs_on_lyrics", using: :gin
+    add_index "songs", ["name"], name: "index_songs_on_name", using: :gin
   end
 end
