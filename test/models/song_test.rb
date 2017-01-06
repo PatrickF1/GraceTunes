@@ -31,7 +31,7 @@ class SongTest < ActiveSupport::TestCase
     song.save
     assert_equal(
       song.standard_scan,
-      lowercased_standard_scan.upcase, 
+      lowercased_standard_scan.upcase,
       "The standard scan was not upcased on save"
     )
   end
@@ -70,10 +70,10 @@ class SongTest < ActiveSupport::TestCase
 
   test "should save without trailing whitespaces in the chord sheet" do
     song = songs(:God_be_praised)
-    song.chord_sheet = " a b c             "
-    song.save
+    song.chord_sheet = "     E                            G#m                 "
+    assert song.save, "Song was not saved successfully"
     # leaving leading whitespaces untouched on purpose
-    assert_equal(song.chord_sheet, " a b c")
+    assert_equal(song.chord_sheet, "     E                            G#m")
   end
 
   test "never leaves lyrics field blank" do
