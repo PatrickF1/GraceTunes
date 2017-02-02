@@ -1,10 +1,12 @@
 $(function() {
+  // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
+    dom: 'lrtip', // no f option removes the default table filter
     serverSide: true,
     responsive: true,
+    pageLength: 25,
     lengthChange: false,
     ordering: false,
-    dom: '',
     columns: [
       { data: 'name' },
       { data: 'artist' },

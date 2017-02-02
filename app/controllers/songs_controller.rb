@@ -4,7 +4,7 @@ class SongsController < ApplicationController
     respond_to do |format|
       format.json do
         songs = Song.all
-        total_songs = songs.count
+        recordsTotal = songs.size
 
         if params[:search][:value].present?
           songs = Song.search_by_keywords(params[:search][:value])
@@ -13,11 +13,19 @@ class SongsController < ApplicationController
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
         songs = songs.select('id, artist, tempo, key, name')
+        recordsFiltered = songs.length
+
+        if params[:start].present?
+          page_size = (params[:length] || 25).to_i
+          page_num = (params[:start].to_i / page_size.to_i) + 1
+
+          songs = songs.paginate(page: page_num, per_page: page_size)
+        end
 
         song_data = {
           draw: params[:draw].to_i,
-          recordsTotal: total_songs,
-          recordsFiltered: total_songs - songs.size,
+          recordsTotal: recordsTotal,
+          recordsFiltered: recordsFiltered,
           data: songs
         }
 
