@@ -20,10 +20,10 @@
   </br>
   </div>
 
-  <table class="chord-sheet">
-    <tr>
+  <div class="chord-sheet">
+    <div>
       <% get_lines_for_columns.each do |column_lines| %>
-        <td>
+        <div>
           <% column_lines.each do |line| %>
             <% class_for_line = get_class_for_line(line) %>
             <% if class_for_line == "blank" %>
@@ -32,9 +32,9 @@
               <p class=<%= class_for_line %>><%= line %></p>
             <% end %>
           <% end %>
-        </td>
+        </div>
       <% end %>
-    </tr>
-  </table>
+    </div>
+  </div>
 </body>
 </html>

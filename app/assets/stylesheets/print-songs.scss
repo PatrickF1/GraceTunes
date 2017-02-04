@@ -24,7 +24,8 @@ p {
     font-size: 16px;
     white-space: pre-wrap;
   }
-  td {
+  div {
+    display: inline-block;
     vertical-align: top;
   }
   .header, .chord {
@@ -37,5 +38,5 @@ p {
 
 @page {
   size: 8.5in 11in;
-  margin: 0.5in;
+  margin: 0.28in;
 }
