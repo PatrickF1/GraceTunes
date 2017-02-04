@@ -4,7 +4,7 @@ $(function() {
     dom: 'lrtip', // no f option removes the default table filter
     serverSide: true,
     responsive: true,
-    pageLength: 25,
+    pageLength: 10,
     lengthChange: false,
     ordering: false,
     columns: [
