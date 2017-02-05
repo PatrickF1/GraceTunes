@@ -66,7 +66,6 @@ class SongsController < ApplicationController
       # TODO: redirect to @song once show action implemented
       redirect_to action: :index
     else
-      flash.now[:error] = "Error: #{@song.errors.messages}"
       render :new
     end
   end
