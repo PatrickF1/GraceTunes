@@ -7,6 +7,7 @@
 
   &.pill_link-red {
     background: $red;
+    display: inline-block;
     transition: all .25s;
 
     &:hover {
@@ -14,5 +15,38 @@
       color: $white;
       text-decoration: none;
     }
+  }
+
+  &.pill_link-blue {
+    background: $blue;
+    display: inline-block;
+    transition: all .25s;
+
+    &:hover {
+      background: darken($blue, 3%);
+      color: $white;
+      text-decoration: none;
+    }
+  }
+
+  &.pill_link-dark-blue {
+    background: $dark-blue;
+    display: inline-block;
+    transition: all .25s;
+
+    &:hover {
+      background: darken($dark-blue, 3%);
+      color: $white;
+      text-decoration: none;
+    }
+  }
+
+  &.pill-small {
+    font-size: 10px;
+    padding: ($default-padding / 8) ($default-padding / 2);
+  }
+
+  &.pill-red {
+    background: $red;
   }
 }
