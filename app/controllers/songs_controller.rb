@@ -1,5 +1,7 @@
 class SongsController < ApplicationController
 
+  SONGS_PER_PAGE_DEFAULT = 10
+
   def index
     respond_to do |format|
       format.json do
@@ -16,7 +18,7 @@ class SongsController < ApplicationController
         recordsFiltered = songs.length
 
         if params[:start].present?
-          page_size = (params[:length] || 25).to_i
+          page_size = (params[:length] || SONGS_PER_PAGE_DEFAULT).to_i
           page_num = (params[:start].to_i / page_size.to_i) + 1
 
           songs = songs.paginate(page: page_num, per_page: page_size)
