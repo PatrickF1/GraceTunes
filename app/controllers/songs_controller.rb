@@ -80,7 +80,6 @@ class SongsController < ApplicationController
       flash[:success] = "#{@song} successfully updated!"
       redirect_to action: :index
     else
-      flash.now[:error] = "Error: #{@song.errors.messages}"
       render :edit
     end
   end
