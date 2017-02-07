@@ -8,11 +8,11 @@ module ApplicationHelper
     }[flash_type.to_sym] || flash_type.to_s
   end
 
-  def field_class(resource, field_name)
+  def highlight_if_errors(resource, field_name)
     if resource.errors[field_name].present?
-      return "has-error".html_safe
+      return "has-error"
     else
-      return "".html_safe
+      return ""
     end
   end
 

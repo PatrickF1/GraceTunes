@@ -14,24 +14,24 @@
   <% end %>
 
   <div class="row">
-    <div class="form-group col-md-6 required <%= field_class(@song, :name) %>">
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :name) %>">
       <%= f.label :name, 'Song Title' %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
 
-    <div class="form-group col-md-6 required <%= field_class(@song, :artist) %>">
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :artist) %>">
       <%= f.label :artist %>
       <%= f.text_field :artist, class: 'form-control' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="form-group col-md-6 required <%= field_class(@song, :tempo) %>">
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :tempo) %>">
       <%= f.label :tempo %>
       <%= f.select :tempo, Song::VALID_TEMPOS, { prompt: "Choose tempo" }, class: 'form-control' %>
     </div>
 
-    <div class="form-group col-md-6 required <%= field_class(@song, :key) %>">
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :key) %>">
       <%= f.label :key %>
       <%= f.select :key, Song::VALID_KEYS, { prompt: "Choose key" }, class: 'form-control' %>
     </div>
@@ -42,7 +42,7 @@
     <%= f.text_field :standard_scan, placeholder: "e.g. V1. V2. PC. C. V3. V4.", class: 'form-control' %>
   </div>
 
-  <div class="form-group required <%= field_class(@song, :chord_sheet) %>">
+  <div class="form-group required <%= highlight_if_errors(@song, :chord_sheet) %>">
     <%= f.label :chord_sheet %>
     <%= f.text_area :chord_sheet, class: 'form-control' %>
   </div>
