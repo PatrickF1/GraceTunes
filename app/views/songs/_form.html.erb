@@ -19,21 +19,21 @@
       <%= f.text_field :name, class: 'form-control' %>
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6 required <%= field_class(@song, :artist) %>">
       <%= f.label :artist %>
       <%= f.text_field :artist, class: 'form-control' %>
     </div>
   </div>
 
   <div class="row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6 required <%= field_class(@song, :tempo) %>">
       <%= f.label :tempo %>
-      <%= f.select :tempo, Song::VALID_TEMPOS, {}, class: 'form-control' %>
+      <%= f.select :tempo, Song::VALID_TEMPOS, { prompt: "Choose tempo" }, class: 'form-control' %>
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-6 required <%= field_class(@song, :key) %>">
       <%= f.label :key %>
-      <%= f.select :key, Song::VALID_KEYS, {}, class: 'form-control' %>
+      <%= f.select :key, Song::VALID_KEYS, { prompt: "Choose key" }, class: 'form-control' %>
     </div>
   </div>
 

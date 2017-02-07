@@ -13,9 +13,12 @@ class Song < ActiveRecord::Base
   MAX_LINE_LENGTH = 45
 
   validates :name, presence: true
+  validates :artist, presence: true
+  validates :tempo, presence: true
+  validates :key, presence: true
   validates :chord_sheet, presence: true
-  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false
-  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false
+  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false, if: -> (song) { song.key.present? }
+  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false, if: -> (song) { song.tempo.present? }
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
   before_save :normalize, :extract_lyrics
 
