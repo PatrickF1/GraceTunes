@@ -3,8 +3,12 @@
 
   textarea {
     height: 300px;
-    width: initial;
     font-size: 19px;
     resize: vertical;
+  }
+
+  .form-group.required label:after {
+    content:"*";
+    color:red;
   }
 }

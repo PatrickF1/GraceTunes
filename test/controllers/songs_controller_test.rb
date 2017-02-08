@@ -50,9 +50,9 @@ class SongsControllerTest < ApplicationControllerTest
     assert_template :new
   end
 
-  test "should notify user appropriately when song creation unsuccessful" do
+  test "should show error messages when song creation unsuccessful" do
     post :create, song: {problem: true}
-    assert_not_nil flash[:error]
+    assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
   end
 
   test "submitting a valid song should result in a new song in the database with the same name" do
@@ -100,9 +100,9 @@ class SongsControllerTest < ApplicationControllerTest
   def post_new_song_form
     post :create, song: {
       name: "New Song Just Posted",
-      key: "E", 
-      artist: "New Song Artist", 
-      tempo: "Fast", 
+      key: "E",
+      artist: "New Song Artist",
+      tempo: "Fast",
       chord_sheet: "New Song Chords"
     }
   end
