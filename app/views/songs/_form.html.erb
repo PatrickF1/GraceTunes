@@ -42,7 +42,7 @@
     <%= f.text_field :standard_scan, placeholder: "e.g. V1. V2. PC. C. V3. V4.", class: 'form-control' %>
   </div>
 
-  <div class="form-group required <%= highlight_if_errors(@song, :chord_sheet) %>">
+  <div class="form-group required fixed-width <%= highlight_if_errors(@song, :chord_sheet) %>">
     <%= f.label :chord_sheet %>
     <%= f.text_area :chord_sheet, class: 'form-control' %>
   </div>
