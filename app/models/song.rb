@@ -16,8 +16,8 @@ class Song < ActiveRecord::Base
   validates :tempo, presence: true
   validates :key, presence: true
   validates :chord_sheet, presence: true
-  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false, if: -> (song) { song.key.present? }
-  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false, if: -> (song) { song.tempo.present? }
+  validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
+  validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
   before_save :normalize, :extract_lyrics
 
