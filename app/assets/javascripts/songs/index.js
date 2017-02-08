@@ -140,7 +140,7 @@ $(function() {
     drawer.find('.song-sheet').html(song.chordSheet);
 
     if (song.artist) drawer.find('.artist').html(song.artist);
-    if (song.tempo) drawer.find('.tempo').append(song.tempo);
+    if (song.tempo) drawer.find('.tempo').html(song.tempo);
     if (song.key) drawer.find('.key').text(song.key);
   }
 
