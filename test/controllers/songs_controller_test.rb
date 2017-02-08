@@ -50,6 +50,11 @@ class SongsControllerTest < ApplicationControllerTest
     assert_template :new
   end
 
+  test "should show error messages when song creation unsuccessful" do
+    post :create, song: {problem: true}
+    assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
+  end
+
   test "submitting a valid song should result in a new song in the database with the same name" do
     assert_difference('Song.count', difference = 1) do
       post_new_song_form
