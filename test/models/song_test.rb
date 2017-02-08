@@ -8,10 +8,10 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a name"
   end
 
-  test "should not save without artist" do
+  test "should save without artist" do
     song = songs(:God_be_praised)
     song.artist = nil
-    assert_not song.save, "Saved without artist"
+    assert song.save, "Did not save without artist"
   end
 
   test "should not save without a valid key" do

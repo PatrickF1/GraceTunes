@@ -13,7 +13,6 @@ class Song < ActiveRecord::Base
   MAX_LINE_LENGTH = 45
 
   validates :name, presence: true
-  validates :artist, presence: true
   validates :tempo, presence: true
   validates :key, presence: true
   validates :chord_sheet, presence: true
