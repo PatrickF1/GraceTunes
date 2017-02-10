@@ -10,8 +10,8 @@ $(function() {
     columns: [
       { data: 'name' },
       { data: 'artist' },
-      { data: 'tempo' },
       { data: 'key' },
+      { data: 'tempo' },
     ],
     createdRow: function(row, data, index) {
       $(row).data('song-id', data.id);
