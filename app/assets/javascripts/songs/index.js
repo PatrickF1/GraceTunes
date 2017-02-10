@@ -134,13 +134,14 @@ $(function() {
 
     var drawer = $('.preview-drawer');
     drawer.find('.name')
-      .html(song.name)
+      .html(song.name);
+    drawer.find('.page-link')
       .attr('href', '/songs/' + song.id);
     drawer.find('.song-sheet').html(song.chordSheet);
 
-    if (song.artist) drawer.find('.artist').html('by ' + song.artist);
-    if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
-    if (song.key) drawer.find('.key').text('Key: ' + song.key);
+    if (song.artist) drawer.find('.artist').html(song.artist);
+    drawer.find('.tempo').html(song.tempo);
+    drawer.find('.key').text(song.key);
   }
 
   var wipeDrawer = function() {

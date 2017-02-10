@@ -7,12 +7,58 @@
 
   &.pill_link-red {
     background: $red;
+    display: inline-block;
     transition: all .25s;
 
     &:hover {
-      background: darken($red, 3%);
+      background: lighten($red, 5%);
       color: $white;
       text-decoration: none;
     }
+
+    &:active {
+      background: darken($red, 5%);
+    }
+  }
+
+  &.pill_link-blue {
+    background: $blue;
+    display: inline-block;
+    transition: all .25s;
+
+    &:hover {
+      background: lighten($blue, 9%);
+      color: $white;
+      text-decoration: none;
+    }
+
+    &:active {
+      background: darken($blue, 7%);
+    }
+  }
+
+  &.pill_link-dark-blue {
+    background: $dark-blue;
+    display: inline-block;
+    transition: all .25s;
+
+    &:hover {
+      background: lighten($dark-blue, 9%);
+      color: $white;
+      text-decoration: none;
+    }
+
+    &:active {
+      background: darken($dark-blue, 7%);
+    }
+  }
+
+  &.pill-small {
+    font-size: 10px;
+    padding: ($default-padding / 8) ($default-padding / 2);
+  }
+
+  &.pill-red {
+    background: $red;
   }
 }

@@ -15,62 +15,74 @@
     animation: 0.3s slide-in;
     display: none;
     position: fixed;
-    top: 50px;
+    top: 65px;
     right: 0;
-    padding: 20px;
+    padding: ($default-padding * 1.5) ($default-padding * 2);
     padding-bottom: 70px;
     background-color: white;
     height: 100%;
-    width:  50vw;
-    max-width:  500px;
+    width:  40vw;
+    max-width:  40vw;
     border-left: 1px solid whitesmoke;
-    box-shadow: 1px 1px 20px gray;
+    box-shadow: 0px 10px 40px -10px grey;
     overflow-y: scroll;
-  }
 
-  .preview-drawer .name {
-    display: inline-block;
-    max-width: 65%;
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: 32px;
-  }
+    .title {
+      align-items: center;
+      display: flex;
+      margin-bottom: $default-margin / 2;
 
-  .preview-drawer .artist {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 20px;
-  }
+      .name {
+        margin: 0
+      }
+    }
 
-  .preview-drawer .song-sheet {
-    font-style: italic;
-    white-space: pre;
-  }
+    .page-link {
+      margin-bottom: $default-margin / 2;
+    }
 
-  .preview-drawer .highlight {
-    background-color: yellow;
-  }
+    .artist {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: $default-margin / 3;
+      text-transform: uppercase;
+    }
 
-  .preview-drawer .close-button
-  {
-    position: absolute;
-    top: -5px;
-    right: 5px;
-    font-size: 30px;
-    cursor: pointer;
-  }
+    .song-sheet {
+      font-style: italic;
+      white-space: pre;
+      padding-bottom: $default-padding * 2;
+    }
 
-  .preview-drawer .meta-info {
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
+    .highlight {
+      background-color: $light-blue;
+    }
 
-  .preview-drawer .meta-info .key {
-    margin-right: 10px;
-  }
+    .close-button {
+      color: $light-gray;
+      cursor: pointer;
+      font-size: 40px;
+      position: absolute;
+      right: $default-margin;
+      top: 0px;
+      transform: scaleY(0.9);
+      transition: all .25s;
 
-  .preview-drawer .meta-info {
-    display: inline-block;
+      &:hover {
+        color: darken($light-gray, 10%);
+      }
+    }
+
+    .meta-info {
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: $default-margin;
+      text-transform: uppercase;
+
+      .key {
+        text-transform: initial;
+      }
+    }
   }
 
   .songs-table tbody tr {
@@ -85,17 +97,48 @@
   margin: auto;
   text-align: center;
 
+  .title {
+    margin-bottom: $default-margin / 3;
+  }
+
+  .artist {
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: $default-margin;
+    text-transform: uppercase;
+  }
+
+  .transpose {
+    display: inline-block;
+    margin-left: $default-margin / 6;
+    width: initial;
+  }
+
+  .buttons-container {
+    margin-bottom: $default-margin;
+
+    .button-spacing {
+      margin-right: $default-margin / 4;
+    }
+  }
+
   .song-metadata {
-    background-color: $light-gray;
     width: 500px;
     margin: auto;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: $default-margin / 2;
+
+    .key {
+      text-transform: initial;
+    }
   }
 
   .chord-sheet {
     text-align: left;
     font-size: 16px;
     white-space: pre-wrap;
-    border: 1px solid $border-color;
     padding: 10px;
     width: 500px;
     margin: auto;

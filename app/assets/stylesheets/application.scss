@@ -24,9 +24,11 @@
  @import "variables/default";
  @import "variables/fonts";
 
+ @import "modules/alert";
  @import "modules/base";
  @import "modules/form";
  @import "modules/header";
+ @import "modules/pagination";
  @import "modules/pill";
  @import "modules/search";
  @import "modules/table";

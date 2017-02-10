@@ -4,13 +4,13 @@
   <% end %>
   <div class="header_links">
     <div class="header_link">
-      <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
-        <i class="fa fa-music"></i>Upload Song
+      <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
+        <i class="fa fa-search"></i>Search
       <% end %>
     </div>
     <div class="header_link">
-      <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
-        <i class="fa fa-search"></i>Search
+      <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
+        <i class="fa fa-music"></i>Upload Song
       <% end %>
     </div>
   </div>
