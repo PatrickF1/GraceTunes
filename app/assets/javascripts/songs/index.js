@@ -134,18 +134,18 @@ $(function() {
 
     var drawer = $('.preview-drawer');
     drawer.find('.name')
-      .html(song.name);
+      .text(song.name);
     drawer.find('.page-link')
       .attr('href', '/songs/' + song.id);
-    drawer.find('.song-sheet').html(song.chordSheet);
+    drawer.find('.chord-sheet').html(song.chordSheet);
 
-    if (song.artist) drawer.find('.artist').html(song.artist);
-    drawer.find('.tempo').html(song.tempo);
+    if (song.artist) drawer.find('.artist').text(song.artist);
+    drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
   }
 
   var wipeDrawer = function() {
-    $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
+    $('.preview-drawer').find('.name, .artist, .tempo, .key, .chord-sheet')
       .html('');
   }
 });
