@@ -63,8 +63,7 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     if @song.save
       flash[:success] = "#{@song} successfully created!"
-      # TODO: redirect to @song once show action implemented
-      redirect_to action: :index
+      redirect_to @song
     else
       render :new
     end
@@ -78,7 +77,7 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
       flash[:success] = "#{@song} successfully updated!"
-      redirect_to action: :index
+      redirect_to @song
     else
       render :edit
     end

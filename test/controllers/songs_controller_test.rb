@@ -62,10 +62,9 @@ class SongsControllerTest < ApplicationControllerTest
     assert_not_nil Song.find_by_name("New Song Just Posted")
   end
 
-  test "should redirect to index when song successfully created" do
+  test "after creating a new song should redirect to its show song page" do
     post_new_song_form
-    # TODO: will redirect to show action once it's implemented
-    assert_redirected_to action: "index"
+    assert_redirected_to song_path(assigns(:song))
   end
 
   test "should notify user appropriately when song created successfully" do
@@ -82,6 +81,12 @@ class SongsControllerTest < ApplicationControllerTest
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
+  end
+
+  test "after editing a song should redirect to its show song page" do
+    song = songs(:God_be_praised)
+    patch :update, song: song.as_json, id: song.id
+    assert_redirected_to song_path(song)
   end
 
   test "the standard scan field should not appear if it is blank" do
