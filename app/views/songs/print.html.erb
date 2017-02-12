@@ -8,13 +8,13 @@
   <div id="heading">
     <h1 class="title"><%= @song %></h1>
     <p>
-      <% if @song.artist %>
+      <% if @song.artist.present? %>
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
       <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
       <b>Tempo:</b> <%= @song.tempo %>
     </p>
-    <% if @song.standard_scan %>
+    <% if @song.standard_scan.present? %>
       <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
     <% end %>
   </br>
