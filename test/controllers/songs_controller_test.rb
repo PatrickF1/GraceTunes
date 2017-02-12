@@ -77,7 +77,7 @@ class SongsControllerTest < ApplicationControllerTest
 
     song = songs(:God_be_praised)
     song.name = new_song_name
-    patch :update, song: song.as_json, id: song.id
+    post :update, song: song.as_json, id: song.id
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
@@ -85,7 +85,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "after editing a song should redirect to its show song page" do
     song = songs(:God_be_praised)
-    patch :update, song: song.as_json, id: song.id
+    post :update, song: song.as_json, id: song.id
     assert_redirected_to song_path(song)
   end
 
