@@ -1,3 +1,4 @@
+max_line_length = ARGV[0].to_i || 45
 PADDING = "  "
 
 def is_header_line(line)
@@ -12,7 +13,7 @@ Dir.glob('/Users/patrick/Downloads/GraceTunesSongs/*.txt') do |song_file|
   lines_too_long = []
   IO.readlines(song_file).each_with_index do |line, line_index|
     if not is_header_line(line)
-      if line.length > 50
+      if line.length > max_line_length
         lines_too_long << (line_index + 1)
       end
     end
@@ -24,4 +25,4 @@ Dir.glob('/Users/patrick/Downloads/GraceTunesSongs/*.txt') do |song_file|
     end
   end
 end
-
+puts "Done checking."
