@@ -10,7 +10,7 @@ class Song < ActiveRecord::Base
 
   VALID_KEYS = Parser::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
-  MAX_LINE_LENGTH = 45
+  MAX_LINE_LENGTH = 47
 
   validates :name, presence: true
   validates :tempo, presence: true

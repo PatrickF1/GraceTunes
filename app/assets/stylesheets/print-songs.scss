@@ -20,6 +20,8 @@ p {
 }
 
 .chord-sheet {
+  width: 8in;
+  border-collapse: collapse;
   p {
     font-size: 16px;
     white-space: pre-wrap;
@@ -30,12 +32,9 @@ p {
   .header, .chord {
     font-weight: bold;
   }
-  border-spacing: 15px;
-  width: 8in;
-  height: 9in;
 }
 
 @page {
   size: 8.5in 11in;
-  margin: 0.5in;
+  margin: 0.28in;
 }
