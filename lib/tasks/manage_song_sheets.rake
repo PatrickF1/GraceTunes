@@ -6,9 +6,9 @@ def is_header_line(line)
     line.start_with?("Standard Scan:")
 end
 
-namespace :songsheet do
-
-  desc 'Check line lengths of a directory of song sheets'
+namespace :songsheets do
+  #TODO: use environment variables instead
+  desc 'Check line lengths of all the song sheets in a directory.'
   task :check_line_lengths, [:max_line_length, :directory_path] do |t, args|
     # process arguments
     abort("Must specify max_line_length.") if args.max_line_length.nil?
@@ -22,8 +22,8 @@ namespace :songsheet do
     directory_path = args.directory_path.chomp("/")
 
     # check line lengths of all .txt files in the specified directory
-    PADDING = "  "
-
+    padding = "  "
+    num_lines_too_long = 0
     Dir.glob("#{directory_path}/*.txt") do |song_file|
       lines_too_long = []
       IO.readlines(song_file).each_with_index do |line, line_index|
@@ -36,14 +36,15 @@ namespace :songsheet do
       if lines_too_long.any?
         puts "#{File.basename(song_file)}"
         lines_too_long.reverse.each do |line_number|
-          puts "#{PADDING}#{line_number}"
+          puts "#{padding}#{line_number}"
         end
+        num_lines_too_long += lines_too_long.length
       end
     end
-    puts "Done checking."
+    puts "Done checking. There were #{num_lines_too_long} lines that were too long."
   end
 
-  desc 'Check line lengths of a directory of song sheets'
+  desc 'Load all the song sheets in a directory into the database.'
   task load_into_db: :environment do
 
   end
