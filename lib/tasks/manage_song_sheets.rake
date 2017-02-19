@@ -37,10 +37,4 @@ namespace :songsheets do
     end
     puts "Done. There were #{num_lines_too_long} lines over #{max_line_length} chars long."
   end
-
-  desc 'Load all the song sheets in a directory into the database.'
-  task :load_into_db, [:directory_path] => :environment do |t, args|
-    Dir.glob("#{directory_path}/*.txt") do |song_file|
-    end
-  end
 end
