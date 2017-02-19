@@ -7,7 +7,7 @@ def is_header_line(line)
 end
 
 namespace :songsheets do
-  #TODO: use environment variables instead
+
   desc 'Check line lengths of all the song sheets in a directory.'
   task :check_line_lengths, [:max_line_length, :directory_path] do |t, args|
     # process arguments
@@ -22,7 +22,6 @@ namespace :songsheets do
     directory_path = args.directory_path.chomp("/")
 
     # check line lengths of all .txt files in the specified directory
-    padding = "  "
     num_lines_too_long = 0
     Dir.glob("#{directory_path}/*.txt") do |song_file|
       lines_too_long = []
@@ -34,9 +33,9 @@ namespace :songsheets do
         end
       end
       if lines_too_long.any?
-        puts "#{File.basename(song_file)}"
+        puts "#{File.basename(song_file, '.*')}"
         lines_too_long.reverse.each do |line_number|
-          puts "#{padding}#{line_number}"
+          puts "\t#{line_number}"
         end
         num_lines_too_long += lines_too_long.length
       end
