@@ -15,7 +15,6 @@ namespace :songsheets do
     abort("\"#{args.directory_path}\" does not exist or is not a directory.") unless File.directory?(args.directory_path)
     directory_path = args.directory_path.chomp("/")
 
-
     # check line lengths of all .txt files in the specified directory
     max_line_length = Song::MAX_LINE_LENGTH
     num_lines_too_long = 0
@@ -36,11 +35,12 @@ namespace :songsheets do
         num_lines_too_long += lines_too_long.length
       end
     end
-    puts "Done. There were #{num_lines_too_long} lines that were over #{max_line_length} chars long."
+    puts "Done. There were #{num_lines_too_long} lines over #{max_line_length} chars long."
   end
 
   desc 'Load all the song sheets in a directory into the database.'
-  task load_into_db: :environment do
-
+  task :load_into_db, [:directory_path] => :environment do |t, args|
+    Dir.glob("#{directory_path}/*.txt") do |song_file|
+    end
   end
 end
