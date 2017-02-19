@@ -9,7 +9,7 @@ end
 namespace :songsheets do
 
   desc 'Check line lengths of all the song sheets in a directory.'
-  task :check_line_lengths, [:max_line_length, :directory_path] do |t, args|
+  task :check_line_lengths, [:max_line_length, :directory_path] => :environment do |t, args|
     # process arguments
     abort("Must specify max_line_length.") if args.max_line_length.nil?
     begin
@@ -20,7 +20,7 @@ namespace :songsheets do
     abort("Must specify directory_path.") if args.directory_path.nil?
     abort("\"#{args.directory_path}\" does not exist or is not a directory.") unless File.directory?(args.directory_path)
     directory_path = args.directory_path.chomp("/")
-
+    # TODO default to Song::MAX_LINE_LENGTH
     # check line lengths of all .txt files in the specified directory
     num_lines_too_long = 0
     Dir.glob("#{directory_path}/*.txt") do |song_file|
