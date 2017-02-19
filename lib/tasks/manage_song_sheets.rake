@@ -9,19 +9,15 @@ end
 namespace :songsheets do
 
   desc 'Check line lengths of all the song sheets in a directory.'
-  task :check_line_lengths, [:max_line_length, :directory_path] => :environment do |t, args|
-    # process arguments
-    abort("Must specify max_line_length.") if args.max_line_length.nil?
-    begin
-      max_line_length = Integer(args.max_line_length)
-    rescue
-      abort("max_line_length must be an integer")
-    end
+  task :check_line_lengths, [:directory_path] => :environment do |t, args|
+    # make sure directory_path is a valid directory
     abort("Must specify directory_path.") if args.directory_path.nil?
     abort("\"#{args.directory_path}\" does not exist or is not a directory.") unless File.directory?(args.directory_path)
     directory_path = args.directory_path.chomp("/")
-    # TODO default to Song::MAX_LINE_LENGTH
+
+
     # check line lengths of all .txt files in the specified directory
+    max_line_length = Song::MAX_LINE_LENGTH
     num_lines_too_long = 0
     Dir.glob("#{directory_path}/*.txt") do |song_file|
       lines_too_long = []
@@ -33,14 +29,14 @@ namespace :songsheets do
         end
       end
       if lines_too_long.any?
-        puts "#{File.basename(song_file, '.*')}"
+        puts "#{File.basename(song_file, '.txt')}"
         lines_too_long.reverse.each do |line_number|
           puts "\t#{line_number}"
         end
         num_lines_too_long += lines_too_long.length
       end
     end
-    puts "Done checking. There were #{num_lines_too_long} lines that were too long."
+    puts "Done. There were #{num_lines_too_long} lines that were over #{max_line_length} chars long."
   end
 
   desc 'Load all the song sheets in a directory into the database.'
