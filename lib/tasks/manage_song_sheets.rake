@@ -30,6 +30,7 @@ namespace :songsheets do
       if lines_too_long.any?
         puts "#{File.basename(song_file, '.txt')}"
         lines_too_long.reverse.each do |line_number|
+          # print line numbers bottom up so as lines are split in two, the next line numbers are not affected
           puts "\t#{line_number}"
         end
         num_lines_too_long += lines_too_long.length
