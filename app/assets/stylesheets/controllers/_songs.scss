@@ -54,7 +54,7 @@
       padding-bottom: $default-padding * 2;
     }
 
-    .highlight {
+    [data-markjs=true] {
       background-color: $light-blue;
     }
 
