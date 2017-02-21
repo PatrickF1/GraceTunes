@@ -54,8 +54,8 @@
       padding-bottom: $default-padding * 2;
     }
 
-    .highlight {
-      background-color: $light-blue;
+    [data-markjs=true] {
+      background-color: $blue;
     }
 
     .close-button {

@@ -74,73 +74,37 @@ $(function() {
     var url = '/songs/' + songId + '.json';
 
     $.getJSON(url, function(song) {
-      var chordSheet = song.chord_sheet;
-      var artist = song.artist;
-      var name = song.name;
-      var keywords = $('#songs-search-field').val();
-
-      if (keywords !== '') {
-        chordSheet = highlightedKeywords(keywords, chordSheet);
-
-        if (artist) {
-          artist = highlightedKeywords(keywords, artist);
-        }
-
-        name = highlightedKeywords(keywords, name);
-      }
-
       populateDrawer({
         id: song.id,
-        name: name,
-        artist: artist,
-        chordSheet: chordSheet,
+        name: song.name,
+        artist: song.artist,
+        chordSheet: song.chord_sheet,
         key: song.key,
         tempo: song.tempo,
       });
 
-      $('.preview-drawer').show();
+      // highlight text matching the search query terms
+      var keywords = $('#songs-search-field').val();
+      var options = {
+        element: 'span',
+        caseSensitive: false,
+        done: function(counter) {
+          $('.preview-drawer').show();
+        }
+      }
+      $('.name, .artist, .chord-sheet', '.preview-drawer').mark(keywords, options);
     });
-  }
-
-  var uniqueMatches = function(matches) {
-    var uniqueWords = {};
-    $.each(matches, function(i, match) {
-      uniqueWords[match] = null;
-    });
-
-    return Object.keys(uniqueWords);
-  };
-
-  // highlight the keywords they searched for in some text
-  var highlightedKeywords = function(keywords, text) {
-    var highlightedSheet = text;
-
-    $.each(keywords.split(' '), function(i, keyword) {
-      var matches = text.match(new RegExp(keyword, 'ig'));
-      if (!matches) return;
-      var matches = uniqueMatches(matches);
-
-      $.each(matches, function(i, match) {
-        var highlightedMatch = '<span class="highlight">' + match + '</span>';
-        highlightedSheet = highlightedSheet.replace(new RegExp(match, 'g'), highlightedMatch);
-      });
-    });
-
-    return highlightedSheet;
   }
 
   var populateDrawer = function(song) {
     wipeDrawer();
 
     var drawer = $('.preview-drawer');
-    // use .html for fields that can be highlighted
-    drawer.find('.name')
-      .html(song.name);
-    drawer.find('.page-link')
-      .attr('href', '/songs/' + song.id);
-    drawer.find('.chord-sheet').html(song.chordSheet);
+    drawer.find('.name').text(song.name);
+    drawer.find('.page-link').attr('href', '/songs/' + song.id);
+    drawer.find('.chord-sheet').text(song.chordSheet);
 
-    if (song.artist) drawer.find('.artist').html(song.artist);
+    drawer.find('.artist').text(song.artist);
     drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
   }
