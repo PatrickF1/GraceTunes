@@ -83,7 +83,7 @@ $(function() {
         tempo: song.tempo,
       });
 
-      // highlight text matching the search query
+      // highlight text matching the search query terms
       var keywords = $('#songs-search-field').val();
       var options = {
         element: 'span',
