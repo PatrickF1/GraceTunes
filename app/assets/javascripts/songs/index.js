@@ -100,14 +100,11 @@ $(function() {
     wipeDrawer();
 
     var drawer = $('.preview-drawer');
-    // use .html for fields that can be highlighted
-    drawer.find('.name')
-      .html(song.name);
-    drawer.find('.page-link')
-      .attr('href', '/songs/' + song.id);
-    drawer.find('.chord-sheet').html(song.chordSheet);
+    drawer.find('.name').text(song.name);
+    drawer.find('.page-link').attr('href', '/songs/' + song.id);
+    drawer.find('.chord-sheet').text(song.chordSheet);
 
-    if (song.artist) drawer.find('.artist').html(song.artist);
+    drawer.find('.artist').text(song.artist);
     drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
   }
