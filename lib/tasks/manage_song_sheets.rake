@@ -2,13 +2,13 @@ def song_name_from_path(song_path)
   "#{File.basename(song_path, '.yaml')}"
 end
 
+# serialize songs from .yaml files at directory_path and save into database if flag is set
 def serialize_song_sheets(directory_path, save_into_db=false)
   # make sure directory_path is a valid directory
   abort("Must specify directory_path.") if directory_path.nil?
   abort("\"#{directory_path}\" does not exist or is not a directory.") unless File.directory?(directory_path)
   directory_path = directory_path.chomp("/")
 
-  # parse all the .yaml files in the specified directory and print out any errors
   num_invalid_songs = 0
   Dir.glob("#{directory_path}/*.yaml") do |song_path|
     begin
