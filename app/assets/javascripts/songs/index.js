@@ -8,6 +8,8 @@ $(function() {
     lengthChange: false,
     ordering: false,
     columns: [
+      // render.text() prevents an XSS vulnerability in dataTables
+      // https://datatables.net/manual/security
       { data: 'name', render: $.fn.dataTable.render.text() },
       { data: 'artist', render: $.fn.dataTable.render.text() },
       { data: 'key' },
