@@ -8,8 +8,8 @@ $(function() {
     lengthChange: false,
     ordering: false,
     columns: [
-      { data: 'name' },
-      { data: 'artist' },
+      { data: 'name', render: $.fn.dataTable.render.text() },
+      { data: 'artist', render: $.fn.dataTable.render.text() },
       { data: 'key' },
       { data: 'tempo' },
     ],
