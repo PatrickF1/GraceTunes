@@ -1,41 +1,53 @@
-def is_header_line(line)
-  line.start_with?("Title:") ||
-    line.start_with?("Arist:") ||
-    line.start_with?("Suggested Key:") ||
-    line.start_with?("Tempo:") ||
-    line.start_with?("Standard Scan:")
+def song_name_from_path(song_path)
+  "#{File.basename(song_path, '.yaml')}"
+end
+
+# serialize songs from .yaml files at directory_path and save into database if flag is set
+def serialize_song_sheets(directory_path, save_into_db=false)
+  # make sure directory_path is a valid directory
+  abort("Must specify directory_path.") if directory_path.nil?
+  abort("\"#{directory_path}\" does not exist or is not a directory.") unless File.directory?(directory_path)
+  directory_path = directory_path.chomp("/")
+
+  num_invalid_songs = 0
+  Dir.glob("#{directory_path}/*.yaml") do |song_path|
+    begin
+      song_file = File.open(song_path)
+      song_yaml = YAML.load(song_file)
+      song = Song.new(
+        name: song_yaml["Title"],
+        artist: song_yaml["Artist"],
+        key: song_yaml["Suggested Key"],
+        tempo: song_yaml["Tempo"],
+        standard_scan: song_yaml["Standard Scan"],
+        chord_sheet: song_yaml["Chord Sheet"]
+      )
+      if not song.valid?
+        num_invalid_songs += 1
+        puts song_name_from_path(song_path)
+        song.errors.full_messages.each do |msg|
+          puts "\t#{msg}"
+        end
+      elsif save_into_db
+        song.save!
+      end
+    rescue Psych::SyntaxError => err
+      puts song_name_from_path(song_path)
+      puts "\tCould not parse as yaml: #{err}"
+    end
+  end
+  puts "Done #{save_into_db ? "saving" : "validating"} songs. There were #{num_invalid_songs} invalid songs."
 end
 
 namespace :songsheets do
 
-  desc 'Check line lengths of all the song sheets in a directory.'
-  task :check_line_lengths, [:directory_path] => :environment do |t, args|
-    # make sure directory_path is a valid directory
-    abort("Must specify directory_path.") if args.directory_path.nil?
-    abort("\"#{args.directory_path}\" does not exist or is not a directory.") unless File.directory?(args.directory_path)
-    directory_path = args.directory_path.chomp("/")
+  desc 'Validate the format of all the yaml song sheets in a directory.'
+  task :validate, [:directory_path] => :environment do |t, args|
+    serialize_song_sheets(args.directory_path, save_into_db=false)
+  end
 
-    # check line lengths of all .txt files in the specified directory
-    max_line_length = Song::MAX_LINE_LENGTH
-    num_lines_too_long = 0
-    Dir.glob("#{directory_path}/*.txt") do |song_file|
-      lines_too_long = []
-      IO.readlines(song_file).each_with_index do |line, line_index|
-        if not is_header_line(line)
-          if line.length > max_line_length
-            lines_too_long << (line_index + 1)
-          end
-        end
-      end
-      if lines_too_long.any?
-        puts "#{File.basename(song_file, '.txt')}"
-        lines_too_long.reverse.each do |line_number|
-          # print line numbers bottom up so as lines are split in two, the next line numbers are not affected
-          puts "\t#{line_number}"
-        end
-        num_lines_too_long += lines_too_long.length
-      end
-    end
-    puts "Done. There were #{num_lines_too_long} lines over #{max_line_length} chars long."
+  desc 'Load all the yaml song sheets in a directory into the database.'
+  task :save_into_db, [:directory_path] => :environment do |t, args|
+    serialize_song_sheets(args.directory_path, save_into_db=true)
   end
 end
