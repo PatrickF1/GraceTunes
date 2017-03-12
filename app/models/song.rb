@@ -19,6 +19,9 @@ class Song < ActiveRecord::Base
   validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
+
+  validates_uniqueness_of :name, scope: [:artist, :tempo], message: "Another song with the same name, artist, and tempo already exists"
+
   before_save :normalize, :extract_lyrics
 
   def to_s
