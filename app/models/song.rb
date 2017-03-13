@@ -15,7 +15,7 @@ class Song < ActiveRecord::Base
   before_validation :normalize
 
   validates :name, presence: true
-  validates_uniqueness_of :name, scope: [:artist, :tempo], message: "is already being used by another song with the same artist and tempo"
+  validates_uniqueness_of :name, scope: [:artist, :tempo], message: "is already taken by another song with the same artist and tempo"
   validates :key, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
   validates :tempo, presence: true
