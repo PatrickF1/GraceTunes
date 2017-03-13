@@ -15,14 +15,13 @@ class Song < ActiveRecord::Base
   before_validation :normalize
 
   validates :name, presence: true
+  validates_uniqueness_of :name, scope: [:artist, :tempo], message: "is already being used by another song with the same artist and tempo"
   validates :key, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
   validates :tempo, presence: true
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-
-  validates_uniqueness_of :name, scope: [:artist, :tempo], message: "Another song with the same name, artist, and tempo already exists"
 
   before_save :extract_lyrics
 
