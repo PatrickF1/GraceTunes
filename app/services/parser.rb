@@ -2,7 +2,7 @@
 
 class Parser
   CHROMATICS = ['A', ['A#','Bb'], ['B', 'Cb'], ['B#', 'C'], ['C#','Db'], 'D', ['D#','Eb'], ['E', 'Fb'], ['E#', 'F'], ['F#','Gb'], 'G', ['G#','Ab']].freeze
-  MAJOR_KEYS = ['Ab', 'A', 'Bb', 'B', 'C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G'].freeze # choose sharp versions of 3 enharmonic equivalent keys
+  MAJOR_KEYS = ['Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G'].freeze # use Db, F#, B for 3 enharmonic equivalent keys
   MAJOR_STEPS = [0, 2, 2, 1, 2, 2, 2].freeze
   MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11].freeze
 
