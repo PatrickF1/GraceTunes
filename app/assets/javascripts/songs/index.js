@@ -96,7 +96,7 @@ $(function() {
         $('.preview-drawer').show();
       }
     }
-    drawer.find('.name, .artist, .chord-sheet', '.preview-drawer')
+    drawer.find('.name, .artist, .chord-sheet')
       .mark(keywords, options);
   }
 
