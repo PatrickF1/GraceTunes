@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20170312211307) do
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
   add_index "songs", ["lyrics"], name: "index_songs_on_lyrics", using: :gin
-  add_index "songs", ["name", "artist", "tempo"], name: "index_songs_on_name_and_artist_and_tempo", unique: true, using: :btree
+  add_index "songs", ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true, using: :btree
   add_index "songs", ["name"], name: "index_songs_on_name", using: :gin
 
   create_table "tags", force: :cascade do |t|
