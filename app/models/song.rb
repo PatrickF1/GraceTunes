@@ -12,14 +12,17 @@ class Song < ActiveRecord::Base
   VALID_TEMPOS = %w(Fast Medium Slow)
   MAX_LINE_LENGTH = 47
 
-  validates :name, presence: true
-  validates :tempo, presence: true
+  before_validation :normalize
+
+  validates :name, presence: true, uniqueness: { scope: :artist, message: "is taken by another song by this artist" }
   validates :key, presence: true
-  validates :chord_sheet, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
+  validates :tempo, presence: true
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
+  validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-  before_save :normalize, :extract_lyrics
+
+  before_save :extract_lyrics
 
   def to_s
     name
@@ -29,17 +32,21 @@ class Song < ActiveRecord::Base
 
   # Titlize fields and remove unnecessary spaces
   def normalize
-    self.name = self.name.titleize.strip
-    self.artist = self.artist.titleize.strip if self.artist
-    if self.standard_scan
-      self.standard_scan = self.standard_scan.upcase.split.each do |section_abbr|
+    self.name = name.titleize.strip if name
+
+    self.artist = artist.titleize.strip if artist
+
+    if standard_scan
+      self.standard_scan = standard_scan.upcase.split.each do |section_abbr|
         section_abbr.concat(".") if section_abbr[-1] != "."
       end.join(" ")
     end
 
-    normalized_lines = []
-    self.chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
-    self.chord_sheet = normalized_lines.join("\n")
+    if chord_sheet
+      normalized_lines = []
+      chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
+      self.chord_sheet = normalized_lines.join("\n")
+    end
   end
 
   def extract_lyrics

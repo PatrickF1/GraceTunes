@@ -118,6 +118,29 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(num_lyric_lines, 18)
   end
 
+  test "should not allow two songs with the same name and artist" do
+    existing_song = songs(:glorious_day)
+    new_song = Song.new(
+      name: existing_song.name,
+      artist: existing_song.artist,
+      tempo: Song::VALID_TEMPOS.first,
+      key: Song::VALID_KEYS.first,
+      chord_sheet: "testing"
+    )
+    assert_not new_song.save, "Saved a duplicate song with the same name and artist"
+  end
+
+  test "should allow two songs with the same name but different artists" do
+    existing_song = songs(:glorious_day)
+    new_song = Song.new(
+      name: existing_song.name,
+      artist: existing_song.artist + " testing", # make sure artist is different
+      tempo: Song::VALID_TEMPOS.first,
+      key: Song::VALID_KEYS.first,
+      chord_sheet: "testing"
+    )
+    assert new_song.save, "Did not allow two songs with the same name but different artist"
+  end
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
   multi_word_results = Song.search_by_keywords "truth live life hands"
