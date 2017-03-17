@@ -74,9 +74,9 @@ $(function() {
   }
 
   var showSongPreview = function(song) {
-    // wipe and populate drawer
     var drawer = $('.preview-drawer');
 
+    // wipe and populate drawer
     drawer.find('.name, .artist, .tempo, .key, .chord-sheet')
       .html('');
 
@@ -87,7 +87,7 @@ $(function() {
     drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
 
-    // highlight text matching the search query terms
+    // highlight text matching the search query terms in drawer
     var keywords = $('#songs-search-field').val();
     var options = {
       element: 'span',
@@ -96,7 +96,8 @@ $(function() {
         $('.preview-drawer').show();
       }
     }
-    drawer.find('.name, .artist, .chord-sheet', '.preview-drawer').mark(keywords, options);
+    drawer.find('.name, .artist, .chord-sheet', '.preview-drawer')
+      .mark(keywords, options);
   }
 
 });
