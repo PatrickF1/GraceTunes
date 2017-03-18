@@ -56,6 +56,7 @@ class Parser
 
   def transpose_to(new_key)
     return dump_sheet(@parsed_sheet) if new_key.nil?
+    return to_numbers if new_key == "numbers"
     integer = Integer(new_key) rescue false
     half_steps = integer if integer
     current_index = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(@key) : (note == @key)}) unless half_steps

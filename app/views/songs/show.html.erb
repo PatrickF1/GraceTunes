@@ -14,7 +14,8 @@
   </div>
 
   <div>
-    Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-transpose-url": song_path(@song, format: :json) %>
+    Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %>
+    <%= content_tag :div, "Switch to Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, new_key: "numbers", format: :json) %>
   </div>
 
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
