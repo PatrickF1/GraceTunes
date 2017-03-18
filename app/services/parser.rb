@@ -163,9 +163,9 @@ class Parser
   end
 
   def transpose_token(half_steps, token, to_number = false)
+    return token_to_number(token) if to_number
     return token unless token =~ /[A-G]/
     return transpose_accidental(half_steps, token, to_number) if accidental_for_key?(@key, token)
-    MAJOR_SCALES[@key].each_with_index { |note, index| return index+1 if note[:base] == token } if to_number
     new_note_index = (get_note_index(token) + half_steps) % 12
     new_token = CHROMATICS[new_note_index]
     new_key = MAJOR_KEYS[(MAJOR_KEYS.index(@key) + half_steps) % 12]
@@ -181,6 +181,13 @@ class Parser
     transposed_in_key = transpose_token(half_steps, note_in_key, to_number)
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
     sharper ? sharpen(transposed_in_key, to_number) : flatten(transposed_in_key, to_number)
+  end
+
+  def token_to_number(token)
+    return MAJOR_SCALES[@key].each_with_index { |note, index| return index+1 if note[:base] == token } if token =~ /[A-G]/
+    return "-" if token == "m"
+    return "Δ"
+    return token
   end
 
   def dump_sheet(sheet)
