@@ -13,9 +13,11 @@
     <span>Recommended Key: <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
   </div>
 
-  <div>
-    Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %>
-    <%= content_tag :div, "Switch to Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, new_key: "numbers", format: :json) %>
+  <div class="song-controls">
+    <span class="transpose-container">Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %></span>
+    <span class="to-numbers-container"><%= content_tag :div, "Switch to Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, new_key: "numbers", format: :json) %></span>
+    <span class="to-chords-container" style="display:none;"><%= content_tag :div, "Switch to Chords", class: "pill pill_link-dark-blue", id: "to_chords", "data-song-url": song_path(@song, format: :json) %></span>
+
   </div>
 
   <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
