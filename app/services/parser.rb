@@ -32,8 +32,8 @@ class Parser
     [ key, scale ]
   end.to_h.freeze
 
-  CHORD_REGEX = /^(\s*(([A-G1-9][#b]?(m|M|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_TOKENIZER = /\s*\(?([A-G1-9][#b]?\/[A-G1-9][#b]?)|(([A-G1-9][#b]?(m|M|dim)?)\d*)\)?\s*/
+  CHORD_REGEX = /^(\s*(([A-G1-9][#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  CHORD_TOKENIZER = /\s*\(?([A-G1-9][#b]?\/[A-G1-9][#b]?)|(([A-G1-9][#b]?(m|M|maj|dim)?)\d*)\)?\s*/
 
   attr_reader :chord_sheet, :chords, :key, :parsed_sheet
 
