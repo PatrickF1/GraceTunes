@@ -8,6 +8,12 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a name"
   end
 
+  test "should save without artist" do
+    song = songs(:God_be_praised)
+    song.artist = nil
+    assert song.save, "Did not save without artist"
+  end
+
   test "should not save without a valid key" do
     song = songs(:God_be_praised)
     song.key = "ab"
@@ -31,7 +37,7 @@ class SongTest < ActiveSupport::TestCase
     song.save
     assert_equal(
       song.standard_scan,
-      lowercased_standard_scan.upcase, 
+      lowercased_standard_scan.upcase,
       "The standard scan was not upcased on save"
     )
   end
@@ -70,10 +76,10 @@ class SongTest < ActiveSupport::TestCase
 
   test "should save without trailing whitespaces in the chord sheet" do
     song = songs(:God_be_praised)
-    song.chord_sheet = " a b c             "
-    song.save
+    song.chord_sheet = "     E                            G#m                 "
+    assert song.save, "Song was not saved successfully"
     # leaving leading whitespaces untouched on purpose
-    assert_equal(song.chord_sheet, " a b c")
+    assert_equal(song.chord_sheet, "     E                            G#m")
   end
 
   test "never leaves lyrics field blank" do
@@ -112,6 +118,29 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(num_lyric_lines, 18)
   end
 
+  test "should not allow two songs with the same name and artist" do
+    existing_song = songs(:glorious_day)
+    new_song = Song.new(
+      name: existing_song.name,
+      artist: existing_song.artist,
+      tempo: Song::VALID_TEMPOS.first,
+      key: Song::VALID_KEYS.first,
+      chord_sheet: "testing"
+    )
+    assert_not new_song.save, "Saved a duplicate song with the same name and artist"
+  end
+
+  test "should allow two songs with the same name but different artists" do
+    existing_song = songs(:glorious_day)
+    new_song = Song.new(
+      name: existing_song.name,
+      artist: existing_song.artist + " testing", # make sure artist is different
+      tempo: Song::VALID_TEMPOS.first,
+      key: Song::VALID_KEYS.first,
+      chord_sheet: "testing"
+    )
+    assert new_song.save, "Did not allow two songs with the same name but different artist"
+  end
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
   multi_word_results = Song.search_by_keywords "truth live life hands"

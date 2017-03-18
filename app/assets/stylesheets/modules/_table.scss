@@ -1,0 +1,39 @@
+.tbl {
+  border-bottom: none !important;
+
+  thead {
+
+    tr {
+      background-color: $blue;
+      color: $white;
+
+      th {
+        border-bottom: none;
+        padding: ($default-padding / 3) ($default-padding / 2);
+      }
+    }
+  }
+
+  tbody {
+
+    tr {
+      cursor: pointer;
+
+      &.selected {
+        background-color: $light-blue !important;
+      }
+
+      &:not(.selected):hover {
+        background-color: $lighter-gray;
+      }
+
+      td {
+        padding: ($default-padding / 3) ($default-padding / 2);
+      }
+    }
+  }
+
+  &.tbl-bottom-spacing {
+    margin-bottom: $default-margin;
+  }
+}

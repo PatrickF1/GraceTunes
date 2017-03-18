@@ -10,14 +10,19 @@ class Song < ActiveRecord::Base
 
   VALID_KEYS = Parser::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
-  MAX_LINE_LENGTH = 45
+  MAX_LINE_LENGTH = 47
 
-  validates :name, presence: true
+  before_validation :normalize
+
+  validates :name, presence: true, uniqueness: { scope: :artist, message: "is taken by another song by this artist" }
+  validates :key, presence: true
+  validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
+  validates :tempo, presence: true
+  validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validates :chord_sheet, presence: true
-  validates_inclusion_of :key, in: VALID_KEYS, allow_nil: false
-  validates_inclusion_of :tempo, in: VALID_TEMPOS, allow_nil: false
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-  before_save :normalize, :extract_lyrics
+
+  before_save :extract_lyrics
 
   def to_s
     name
@@ -27,17 +32,21 @@ class Song < ActiveRecord::Base
 
   # Titlize fields and remove unnecessary spaces
   def normalize
-    self.name = self.name.titleize.strip
-    self.artist = self.artist.titleize.strip if self.artist
-    if self.standard_scan
-      self.standard_scan = self.standard_scan.upcase.split.each do |section_abbr|
+    self.name = name.titleize.strip if name
+
+    self.artist = artist.titleize.strip if artist
+
+    if standard_scan
+      self.standard_scan = standard_scan.upcase.split.each do |section_abbr|
         section_abbr.concat(".") if section_abbr[-1] != "."
       end.join(" ")
     end
 
-    normalized_lines = []
-    self.chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
-    self.chord_sheet = normalized_lines.join("\n")
+    if chord_sheet
+      normalized_lines = []
+      chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
+      self.chord_sheet = normalized_lines.join("\n")
+    end
   end
 
   def extract_lyrics
@@ -46,10 +55,16 @@ class Song < ActiveRecord::Base
   end
 
   def line_length
-    self.chord_sheet.split("\n").each do |line|
-      if(line.length > MAX_LINE_LENGTH)
-        errors.add(:chord_sheet, "has a line that exceeds " + MAX_LINE_LENGTH.to_s + " characters long: " + line)
+    line_numbers = []
+    self.chord_sheet.split("\n").each_with_index do |line, i|
+      if(line.rstrip.length > MAX_LINE_LENGTH)
+        line_numbers << (i + 1)
       end
+    end
+    if line_numbers.any?
+      line_pluralized = 'line'.pluralize(line_numbers.length)
+      line_numbers_string = line_numbers.join(',')
+      errors.add(:chord_sheet, "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
     end
   end
 end

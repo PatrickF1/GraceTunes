@@ -18,7 +18,20 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import "font-awesome";
 
- body {
-   padding-top: 40px;
- }
+ @import "variables/colors";
+ @import "variables/default";
+ @import "variables/fonts";
+
+ @import "modules/alert";
+ @import "modules/base";
+ @import "modules/form";
+ @import "modules/header";
+ @import "modules/pagination";
+ @import "modules/pill";
+ @import "modules/search";
+ @import "modules/table";
+
+ @import "controllers/sessions";
+ @import "controllers/songs";

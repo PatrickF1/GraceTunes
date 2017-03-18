@@ -1,0 +1,23 @@
+<div class="show-page">
+  <h1 class="title"><%= @song %></h1>
+  <div class="artist"><%= @song.artist %></div>
+  <div class="buttons-container">
+    <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
+      <i class="fa fa-edit"></i> Edit
+    <% end %>
+    <%= link_to print_song_path, { method: :get, class: "pill pill_link-dark-blue", id: "print-btn", "data-print-url": print_song_path } do %>
+      <i class="fa fa-print"></i> Print in current key
+    <% end %>
+  </div>
+  <div class="song-metadata">
+    <span>Recommended Key: <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
+  </div>
+
+  <div>
+    Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-transpose-url": song_path(@song, format: :json) %>
+  </div>
+
+  <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
+</div>
+
+<%= javascript_include_tag 'songs/show' %>

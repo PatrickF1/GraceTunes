@@ -1,6 +1,7 @@
 require 'test_helper'
+require_relative 'application_controller_test.rb'
 
-class TagsControllerTest < ActionController::TestCase
+class TagsControllerTest < ApplicationControllerTest
   # test "should get index" do
   #   get :index
   #   assert_response :success

@@ -2,25 +2,25 @@
 <html>
 <head>
   <title>Print <%= @song %></title>
-  <%= stylesheet_link_tag 'print_songs', media: 'all' %>
+  <%= stylesheet_link_tag 'print-songs', media: 'all' %>
 </head>
 <body>
   <div id="heading">
     <h1 class="title"><%= @song %></h1>
-    <p class="artist-key-tempo">
-      <% if @song.artist %>
+    <p>
+      <% if @song.artist.present? %>
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
       <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
       <b>Tempo:</b> <%= @song.tempo %>
     </p>
-    <% if @song.standard_scan %>
+    <% if @song.standard_scan.present? %>
       <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
     <% end %>
   </br>
   </div>
 
-  <table class="chord_sheet">
+  <table class="chord-sheet">
     <tr>
       <% get_lines_for_columns.each do |column_lines| %>
         <td>

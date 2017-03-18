@@ -1,6 +1,7 @@
 require "test_helper"
+require_relative 'application_controller_test.rb'
 
-class SongsControllerTest < ActionController::TestCase
+class SongsControllerTest < ApplicationControllerTest
 
   # "index" action tests
   test "index should be retrieved successfully" do
@@ -49,9 +50,9 @@ class SongsControllerTest < ActionController::TestCase
     assert_template :new
   end
 
-  test "should notify user appropriately when song creation unsuccessful" do
+  test "should show error messages when song creation unsuccessful" do
     post :create, song: {problem: true}
-    assert_not_nil flash[:error]
+    assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
   end
 
   test "submitting a valid song should result in a new song in the database with the same name" do
@@ -61,10 +62,9 @@ class SongsControllerTest < ActionController::TestCase
     assert_not_nil Song.find_by_name("New Song Just Posted")
   end
 
-  test "should redirect to index when song successfully created" do
+  test "after creating a new song should redirect to its show song page" do
     post_new_song_form
-    # TODO: will redirect to show action once it's implemented
-    assert_redirected_to action: "index"
+    assert_redirected_to song_path(assigns(:song))
   end
 
   test "should notify user appropriately when song created successfully" do
@@ -77,10 +77,16 @@ class SongsControllerTest < ActionController::TestCase
 
     song = songs(:God_be_praised)
     song.name = new_song_name
-    patch :update, song: song.as_json, id: song.id
+    post :update, song: song.as_json, id: song.id
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
+  end
+
+  test "after editing a song should redirect to its show song page" do
+    song = songs(:God_be_praised)
+    post :update, song: song.as_json, id: song.id
+    assert_redirected_to song_path(song)
   end
 
   test "the standard scan field should not appear if it is blank" do
@@ -99,9 +105,9 @@ class SongsControllerTest < ActionController::TestCase
   def post_new_song_form
     post :create, song: {
       name: "New Song Just Posted",
-      key: "E", 
-      artist: "New Song Artist", 
-      tempo: "Fast", 
+      key: "E",
+      artist: "New Song Artist",
+      tempo: "Fast",
       chord_sheet: "New Song Chords"
     }
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161120224823) do
+ActiveRecord::Schema.define(version: 20170312211307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,19 +28,20 @@ ActiveRecord::Schema.define(version: 20161120224823) do
   add_index "song_tags", ["tag_id"], name: "index_song_tags_on_tag_id", using: :btree
 
   create_table "songs", force: :cascade do |t|
-    t.string   "name",          null: false
-    t.string   "key",           null: false
-    t.string   "artist"
-    t.text     "chord_sheet",   null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "name",          null: false
+    t.string   "key",           null: false
     t.string   "tempo",         null: false
-    t.text     "lyrics",        null: false
+    t.string   "artist"
     t.string   "standard_scan"
+    t.text     "chord_sheet",   null: false
+    t.text     "lyrics",        null: false
   end
 
   add_index "songs", ["artist"], name: "index_songs_on_artist", using: :gin
   add_index "songs", ["lyrics"], name: "index_songs_on_lyrics", using: :gin
+  add_index "songs", ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true, using: :btree
   add_index "songs", ["name"], name: "index_songs_on_name", using: :gin
 
   create_table "tags", force: :cascade do |t|

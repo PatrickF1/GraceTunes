@@ -1,30 +1,34 @@
-
-<%= stylesheet_link_tag 'songs_manifest' %>
-
 <div class="index-page">
   <div class="container">
     <div class="row">
       <div class="center-block">
         <h1>Songs</h1>
-        <input type="search" id="songs-search-field" class="form-control" placeholder="Search lyrics, song titles, and artists"/>
-        <table class="filter-selection" border="0">
-          <tbody>
-            <tr>
-              <td>Key:</td>
-              <td><%= select_tag :key, options_for_select(@key_opts, selected: 'Any') %></td>
-              <td>Tempo:</td>
-              <td><%= select_tag :tempo, options_for_select(@tempo_opts, selected: 'Any') %></td>
-            </tr>
-          </tbody>
-        </table>
 
-        <table class="songs-table">
+        <div class="search">
+          <div class="search_input_container">
+            <input type="search" id="songs-search-field" class="form-control search_input" placeholder="Search lyrics, song titles, and artists"/>
+            <i class="fa fa-search"></i>
+          </div>
+          <table class="search_filter filter-selection" border="0">
+            <tbody>
+              <tr>
+                <td>Key</td>
+                <td><%= select_tag :key, get_key_opts('Any', include_any = true), class: 'form-control' %></td>
+                <td></td>
+                <td>Tempo</td>
+                <td><%= select_tag :tempo, get_tempo_opts('Any', include_any = true), class: 'form-control' %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <table class="tbl tbl-bottom-spacing songs-table">
           <thead>
             <tr>
               <th>Name</th>
               <th>Artist</th>
-              <th>Tempo</th>
               <th>Key</th>
+              <th>Tempo</th>
             </tr>
           </thead>
         </table>
@@ -34,21 +38,16 @@
 
   <div class="preview-drawer">
     <div class="close-button">x</div>
-    <h1 class="name"></h1>
-    <div class="actions">
-      <%= link_to 'Edit', nil, target: '_blank', class: 'edit' %>
-      <%= link_to 'Print', nil, target: '_blank', class: 'print' %>
-      <%= select_tag :transpose_to, options_for_select(@key_opts[1..-1]) %>
-      <%= link_to 'Use Numbers', 'javascript:void(0);', id: 'numbers' %>
+    <div class="title">
+      <h1 target="_blank" class="name"></h1>
     </div>
-    <h3 class="artist"></h3>
+    <a class="pill pill-small pill_link-dark-blue page-link"><i class="fa fa-eye"></i> View Full Page</a>
+    <div class="artist"></div>
     <div class="meta-info">
-      <span class="key"></span><span class="tempo"></span>
+      <div>Key: <span class="key"></span>&nbsp;&nbsp;|&nbsp;&nbsp;Tempo: <span class="tempo"></span></div>
     </div>
-    <div class="song-sheet fixed-width"></div>
+    <div class="chord-sheet fixed-width"></div>
   </div>
 </div>
 
-<%= content_for :javascript do %>
-  <%= javascript_include_tag 'songs/index' %>
-<% end %>
+<%= javascript_include_tag 'songs/index' %>

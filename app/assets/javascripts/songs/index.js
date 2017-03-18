@@ -1,18 +1,23 @@
 $(function() {
+  // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
+    dom: 'lrtip', // no f option removes the default table filter
     serverSide: true,
     responsive: true,
+    pageLength: 10,
     lengthChange: false,
     ordering: false,
-    dom: '',
     columns: [
-      { data: 'name' },
-      { data: 'artist' },
-      { data: 'tempo' },
+      // render.text() patches an XSS vulnerability in dataTables
+      // https://datatables.net/manual/security
+      { data: 'name', render: $.fn.dataTable.render.text() },
+      { data: 'artist', render: $.fn.dataTable.render.text() },
       { data: 'key' },
+      { data: 'tempo' },
     ],
     createdRow: function(row, data, index) {
-      $(row).data('song-id', data.id);
+      // store song object to use later for showing song preview
+      $(row).data('song', data);
     },
     ajax: {
       sAjaxSource: '<%= songs_path(format: :json) %>',
@@ -37,19 +42,11 @@ $(function() {
 
   // show preview drawer on table row click
   $('.songs-table').on('click', 'tbody tr', function() {
-    showSongChords($(this).data('song-id'));
+    showSongPreview($(this).data('song'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
   });
 
-  $('#transpose_to').on('change', function(e){
-    var newKey = $('#transpose_to option:selected').val();
-    showSongChords($('.songs-table .selected').data('song-id'), { "new_key": newKey });
-  });
-
-  $('#numbers').click(function() {
-    showSongChords($('.songs-table .selected').data('song-id'), { "to_numbers": true });
-  });
 
   $('.preview-drawer .close-button').click(function() {
     hideDrawer();
@@ -72,112 +69,36 @@ $(function() {
     }
   });
 
-  var showSongChords = function(songId, params) {
-    var url = '/songs/' + songId + '.json';
-
-    $.getJSON(url, params, function(data) {
-      var song = data.song;
-      var chordSheet = song.chord_sheet;
-      var artist = song.artist;
-      var name = song.name;
-      var keywords = $('#songs-search-field').val();
-
-      if (keywords !== '') {
-        chordSheet = highlightedKeywords(keywords, chordSheet);
-
-        if (artist) {
-          artist = highlightedKeywords(keywords, artist);
-        }
-
-        name = highlightedKeywords(keywords, name);
-      }
-
-      populateDrawer({
-        name: name,
-        artist: artist,
-        chordSheet: chordSheet,
-        key: song.key,
-        originalKey: song.original_key,
-        printPath: song.print_path,
-        tempo: song.tempo,
-        editPath: song.edit_path
-      });
-
-      $('.preview-drawer').show();
-    });
-  }
-
-  var uniqueMatches = function(matches) {
-    var uniqueWords = {};
-    $.each(matches, function(i, match) {
-      uniqueWords[match] = null;
-    });
-
-    return Object.keys(uniqueWords);
-  };
-
-  // highlight the keywords they searched for in some text
-  var highlightedKeywords = function(keywords, text) {
-    var highlightedSheet = text;
-
-    $.each(keywords.split(' '), function(i, keyword) {
-      var matches = text.match(new RegExp(keyword, 'ig'));
-      if (!matches) return;
-      var matches = uniqueMatches(matches);
-
-      $.each(matches, function(i, match) {
-        var highlightedMatch = '<span class="highlight">' + match + '</span>';
-        highlightedSheet = highlightedSheet.replace(new RegExp(match, 'g'), highlightedMatch);
-      });
-    });
-
-    return highlightedSheet;
-  }
-
-  var populateDrawer = function(song) {
-    wipeDrawer();
-    wipeTransposeSelect();
-
-    var drawer = $('.preview-drawer');
-    drawer.find('.name').html(song.name);
-    drawer.find('.song-sheet').html(song.chordSheet);
-    drawer.find('.actions .edit').attr('href', song.editPath);
-    drawer.find('.actions .print').attr('href', song.printPath);
-
-    if (song.artist) drawer.find('.artist').html('by ' + song.artist);
-    if (song.tempo) drawer.find('.tempo').text('Tempo: ' + song.tempo);
-    if (song.key) drawer.find('.key').text('Key: ' + song.key);
-
-    var originalKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.originalKey+'"]'));
-    var currentKeyIndex = $('#transpose_to option').index($('#transpose_to option[value="'+song.key+'"]'));
-    $('#transpose_to option').each(function(index, el){
-      if(currentKeyIndex == index){
-        $('#transpose_to').prop("selectedIndex", index);
-      }
-      var offset = index - originalKeyIndex;
-      if(offset == 0){
-        $(el).html($(el).html() + " (original)");
-      } else {
-        $(el).html($(el).html() + " (" + offset + ")");
-      }
-    });
-  }
-
   var hideDrawer = function() {
     $('.preview-drawer').hide();
-    wipeDrawer();
     $('.songs-table tr.selected').removeClass('selected');
   }
 
-  var wipeDrawer = function() {
-    $('.preview-drawer').find('.name, .artist, .tempo, .key, .song-sheet')
+  var showSongPreview = function(song) {
+    var drawer = $('.preview-drawer');
+
+    // wipe and populate drawer
+    drawer.find('.name, .artist, .tempo, .key, .chord-sheet')
       .html('');
+
+    drawer.find('.name').text(song.name);
+    drawer.find('.page-link').attr('href', '/songs/' + song.id);
+    drawer.find('.chord-sheet').text(song.chord_sheet);
+    drawer.find('.artist').text(song.artist);
+    drawer.find('.tempo').text(song.tempo);
+    drawer.find('.key').text(song.key);
+
+    // highlight text matching the search query terms in drawer
+    var keywords = $('#songs-search-field').val();
+    var options = {
+      element: 'span',
+      caseSensitive: false,
+      done: function(counter) {
+        $('.preview-drawer').show();
+      }
+    }
+    drawer.find('.name, .artist, .chord-sheet')
+      .mark(keywords, options);
   }
 
-  var wipeTransposeSelect = function(){
-    $('#transpose_to option').each(function(index, el){
-      $(el).html($(el).html().split(" ")[0]);
-    });
-    $('#transpose_to').removeProp("selectedIndex");
-  }
 });

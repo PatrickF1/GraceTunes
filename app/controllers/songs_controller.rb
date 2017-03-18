@@ -1,13 +1,13 @@
 class SongsController < ApplicationController
 
-  def index
-    @tempo_opts = [['Any', '']] + Song::VALID_TEMPOS.map { |t| [t, t] }
-    @key_opts = [['Any', '']] + Song::VALID_KEYS.map { |k| [k, k] }
 
+  SONGS_PER_PAGE_DEFAULT = 10
+
+  def index
     respond_to do |format|
       format.json do
         songs = Song.all
-        total_songs = songs.count
+        recordsTotal = songs.size
 
         if params[:search][:value].present?
           songs = Song.search_by_keywords(params[:search][:value])
@@ -15,12 +15,20 @@ class SongsController < ApplicationController
 
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
-        songs = songs.select('id, artist, tempo, key, name')
+        songs = songs.select('id, artist, tempo, key, name, chord_sheet')
+        recordsFiltered = songs.length
+
+        if params[:start].present?
+          page_size = (params[:length] || SONGS_PER_PAGE_DEFAULT).to_i
+          page_num = (params[:start].to_i / page_size.to_i) + 1
+
+          songs = songs.paginate(page: page_num, per_page: page_size)
+        end
 
         song_data = {
           draw: params[:draw].to_i,
-          recordsTotal: total_songs,
-          recordsFiltered: total_songs - songs.size,
+          recordsTotal: recordsTotal,
+          recordsFiltered: recordsFiltered,
           data: songs
         }
 
@@ -34,22 +42,16 @@ class SongsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      song = Song.find(params[:id])
-      original_key = song.key
-      if params[:new_key]
-        Transposer.transpose_song(song, params[:new_key])
-      end
-      if params[:to_numbers]
-        Transposer.to_numbers(song)
-      end
+    @song = Song.find(params[:id])
+    if params[:new_key]
+      Transposer.transpose_song(@song, params[:new_key])
+    end
 
+    respond_to do |format|
+      format.html do
+      end
       format.json do
-        render json: {
-          song: song.as_json.merge(edit_path: edit_song_path(song),
-            print_path: print_song_path(song, new_key: params[:new_key]),
-            original_key: original_key)
-        }
+        render json: @song
       end
     end
   end
@@ -62,10 +64,8 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     if @song.save
       flash[:success] = "#{@song} successfully created!"
-      # TODO: redirect to @song once show action implemented
-      redirect_to action: :index
+      redirect_to @song
     else
-      flash.now[:error] = "Error: #{@song.errors.messages}"
       render :new
     end
   end
@@ -78,9 +78,8 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
       flash[:success] = "#{@song} successfully updated!"
-      redirect_to action: :index
+      redirect_to @song
     else
-      flash.now[:error] = "Error: #{@song.errors.messages}"
       render :edit
     end
   end

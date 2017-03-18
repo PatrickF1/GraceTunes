@@ -1,0 +1,88 @@
+$header-height: 75px;
+$header-logo-font-size: 25px;
+
+.header {
+  align-items: center;
+  background-color: $blue;
+  display: flex;
+  padding: ($default-padding / 2) $default-padding;
+  position: absolute;
+  width: 100%;
+
+  .header_logo {
+    color: $white;
+    font-size: $header-logo-font-size;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    .header_logo-emphasized {
+      font-weight: 700;
+    }
+  }
+
+  .header_links {
+    display: flex;
+    margin-left: $default-margin;
+
+    .header_link_icon {
+     color: $white;
+    }
+
+    .header_link a {
+      color: $white;
+      letter-spacing: 1px;
+      padding: ($header-height / 3) ($default-padding / 2);
+      position: relative;
+      text-decoration: none;
+      text-transform: uppercase;
+
+      .fa {
+        margin-right: $default-margin / 4;
+      }
+
+      &:after {
+        background-color: $white;
+        bottom: 0;
+        content: "";
+        height: 5px;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        transition: all .25s;
+        width: 100%;
+      }
+
+      &:hover {
+        text-decoration: none;
+
+        &:after {
+          opacity: 0.4;
+        }
+      }
+
+      &.header_link-active {
+
+        &:after {
+          background-color: $white;
+          bottom: 0;
+          content: "";
+          height: 5px;
+          left: 0;
+          opacity: 0.7;
+          position: absolute;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .header_user {
+    color: $white;
+    margin-left: auto;
+
+    .header_username {
+      margin-right: $default-margin / 3;
+    }
+  }
+}
