@@ -2,19 +2,14 @@ require "test_helper"
 
 class ParserTest < ActiveSupport::TestCase
 
-  def parser_setup
-    song = songs(:God_be_praised)
-    @parser = Parser.new(song.chord_sheet)
-  end
-
-  test "chord regex should return false for lyric lines" do
+  test "parser does not identify lyric lines as chords" do
     song = songs(:God_be_praised)
     song.lyrics.split("\n").each do |line|
       assert_not Parser.chords?(line), "lyric line was interpretted as chord"
     end
   end
 
-  test "chord regext should return true for line fully composed of chords" do
+  test "parser identifies only lines consisting of only chords as chord lines" do
     assert Parser.chords?("        G        D")
     assert Parser.chords?("A      Em      C# D B")
     assert Parser.chords?("A      G/C    G")
