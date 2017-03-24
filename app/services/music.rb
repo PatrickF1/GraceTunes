@@ -30,9 +30,6 @@ module Music
     [ key, scale ]
   end.to_h.freeze
 
-  CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
-
   def self.key_has_note?(key, note)
     MAJOR_SCALES[key].find { |n| n[:base] == note }.present?
   end

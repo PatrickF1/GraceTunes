@@ -108,7 +108,7 @@ class SongTest < ActiveSupport::TestCase
   test "extracted lyrics don't contain chords" do
     song = songs(:all_my_hope)
     force_lyrics_extraction(song)
-    assert_no_match Music::CHORD_REGEX, song.lyrics
+    assert_no_match Parser::CHORD_REGEX, song.lyrics
   end
 
   test "extracted lyrics contains all of the lyric lines from chord_sheet" do

@@ -3,6 +3,9 @@ class Parser
 
   attr_reader :chord_sheet, :chords, :key, :parsed_sheet
 
+  CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
+
   def initialize(sheet, key = nil)
     @chord_sheet = sheet
     @chords = Hash.new(0) # hash  of { chord => count of that chord }
@@ -21,7 +24,7 @@ class Parser
   end
 
   def self.chords?(line)
-    line =~ Music::CHORD_REGEX
+    line =~ CHORD_REGEX
   end
 
   def self.header?(line)
@@ -34,7 +37,7 @@ class Parser
 
   def self.chords_from_line(line)
     return [] unless chords?(line)
-    line.scan Music::CHORD_TOKENIZER
+    line.scan CHORD_TOKENIZER
   end
 
   def self.dump_sheet(sheet)
