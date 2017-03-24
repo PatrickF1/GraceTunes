@@ -33,7 +33,7 @@ class Parser
   end.to_h.freeze
 
   CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_TOKENIZER = /(\b([A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?(?=\s|$|\/)(?! \w))/
+  CHORD_TOKENIZER = /(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?(?=\s|$|\/)(?!\w)/
 
   attr_reader :chord_sheet, :chords, :key, :parsed_sheet
 
@@ -163,8 +163,8 @@ class Parser
   end
 
   def transpose_token(half_steps, token, to_number = false)
-    return token_to_number(token) if to_number
     return token unless token =~ /[A-G]/
+    return MAJOR_SCALES[@key].each_with_index { |note, index| return index+1 if note[:base] == token } if to_numbers
     return transpose_accidental(half_steps, token, to_number) if accidental_for_key?(@key, token)
     new_note_index = (get_note_index(token) + half_steps) % 12
     new_token = CHROMATICS[new_note_index]
@@ -183,13 +183,6 @@ class Parser
     sharper ? sharpen(transposed_in_key, to_number) : flatten(transposed_in_key, to_number)
   end
 
-  def token_to_number(token)
-    return MAJOR_SCALES[@key].each_with_index { |note, index| return index+1 if note[:base] == token } if token =~ /[A-G]/
-    return "-" if token == "m"
-    return "Δ"
-    return token
-  end
-
   def dump_sheet(sheet)
     sheet.map { |line| line[:content] }.join
   end
@@ -197,9 +190,8 @@ class Parser
   # Chord utility methods #####################################################
 
   def chords(line)
-    return nil unless self.class.chords?(line)
-    tokens = line.scan CHORD_TOKENIZER
-    tokens.map{|m| m[0] || m[2]}.flatten.compact
+    return [] unless self.class.chords?(line)
+    line.scan CHORD_TOKENIZER
   end
 
   def format_chord(chord)
