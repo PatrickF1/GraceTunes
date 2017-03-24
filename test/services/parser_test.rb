@@ -25,19 +25,17 @@ class ParserTest < ActiveSupport::TestCase
   end
 
   test "parser gets list of chords from line" do
-    song = songs(:God_be_praised)
-    parser = Parser.new(song.chord_sheet)
-    assert_equal ["G", "D"], parser.send(:chords, "   G    D")
-    assert_equal ["A", "Em", "C#", "D", "B"],  parser.send(:chords, "A      Em      C# D B")
-    assert_equal ["A", "G/C", "G"], parser.send(:chords, "A      G/C    G")
-    assert_equal ["D#m", "Bb", "F#", "C#/E#", "D#m", "Bb", "C#"], parser.send(:chords, " D#m  Bb    F#     C#/E#   D#m    Bb   C#")
-    assert_equal ["Em7", "D#2", "B9"], parser.send(:chords, "Em7   D#2     B9")
-    assert_equal ["Cmaj7", "Ebmaj3", "D#maj5"],  parser.send(:chords, "Cmaj7       Ebmaj3      D#maj5")
-    assert_equal ["DM5", "C#M7", "AbM3"], parser.send(:chords, "DM5       C#M7       AbM3")
-    assert_equal ["Em7/G#", "F/Cmaj7", "DM/Cb3"], parser.send(:chords, "Em7/G#       F/Cmaj7        DM/Cb3")
-    assert_equal ["A(5)", "B(7)"], parser.send(:chords, "A(5)     B(7)")
-    assert_equal ["D(b5)", "E(#)"], parser.send(:chords, "D(b5)         E(#)")
-    assert_equal [], parser.send(:chords, "A    C#   text")
+    assert_equal ["G", "D"], Parser.chords_from_line("   G    D")
+    assert_equal ["A", "Em", "C#", "D", "B"],  Parser.chords_from_line("A      Em      C# D B")
+    assert_equal ["A", "G/C", "G"], Parser.chords_from_line("A      G/C    G")
+    assert_equal ["D#m", "Bb", "F#", "C#/E#", "D#m", "Bb", "C#"], Parser.chords_from_line(" D#m  Bb    F#     C#/E#   D#m    Bb   C#")
+    assert_equal ["Em7", "D#2", "B9"], Parser.chords_from_line("Em7   D#2     B9")
+    assert_equal ["Cmaj7", "Ebmaj3", "D#maj5"],  Parser.chords_from_line("Cmaj7       Ebmaj3      D#maj5")
+    assert_equal ["DM5", "C#M7", "AbM3"], Parser.chords_from_line("DM5       C#M7       AbM3")
+    assert_equal ["Em7/G#", "F/Cmaj7", "DM/Cb3"], Parser.chords_from_line("Em7/G#       F/Cmaj7        DM/Cb3")
+    assert_equal ["A(5)", "B(7)"], Parser.chords_from_line("A(5)     B(7)")
+    assert_equal ["D(b5)", "E(#)"], Parser.chords_from_line("D(b5)         E(#)")
+    assert_equal [], Parser.chords_from_line("A    C#   text")
   end
 
 end

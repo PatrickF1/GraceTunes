@@ -8,7 +8,7 @@ class Song < ActiveRecord::Base
 
   has_many :tags, through: :song_tags
 
-  VALID_KEYS = Parser::MAJOR_KEYS
+  VALID_KEYS = Music::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
   MAX_LINE_LENGTH = 47
 
