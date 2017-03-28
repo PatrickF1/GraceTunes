@@ -11,6 +11,11 @@ class SessionsController < ApplicationController
     auth_hash = request.env["omniauth.auth"]
     email = auth_hash["info"]["email"]
     full_name = auth_hash["info"]["name"]
+
+    if !@current_user = User.find_by_name(username)
+      @current_user = User.create(email: email, name: full_name)
+    end
+
     session[:user_email] = email
     session[:user_name] = full_name.split.first # only save the first name
     redirect_to root_url
