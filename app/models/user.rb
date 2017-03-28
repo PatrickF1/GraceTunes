@@ -1,4 +1,4 @@
-class User < ActiveRecord::Bases
+class User < ActiveRecord::Base
 
   # No difference between Praise and Admin roles for now
   # I created an extra one for future-proofing
