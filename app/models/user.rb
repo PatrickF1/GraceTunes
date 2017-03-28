@@ -18,11 +18,11 @@ class User < ActiveRecord::Bases
   end
 
   def can_edit?
-    role == ROLES[1] || role == ROLES[2]
+    role.in? %w(Praise Admin)
   end
 
   def can_delete?
-    role == ROLES[2]
+    role == "Admin"
   end
 
   def to_s
