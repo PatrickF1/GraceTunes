@@ -12,12 +12,12 @@ class SessionsController < ApplicationController
     email = auth_hash["info"]["email"]
     full_name = auth_hash["info"]["name"]
 
-    if !@current_user = User.find_by_name(username)
+    if !@current_user = User.find_by_email(username)
       @current_user = User.create(email: email, name: full_name)
     end
 
     session[:user_email] = email
-    session[:user_name] = full_name.split.first # only save the first name
+    session[:name] = full_name.split('(')[0].strip # remove churchplant extention from name
     redirect_to root_url
   end
 
