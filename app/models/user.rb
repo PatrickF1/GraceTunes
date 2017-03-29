@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
   end
 
   def can_edit?
-    role.in? [Role::Praise, Role::Admin]
+    role.in? [Role::PRAISE, Role::ADMIN]
   end
 
   def can_delete?
-    role == Role::Admin
+    role == Role::ADMIN
   end
 
   def to_s
