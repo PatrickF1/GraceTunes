@@ -14,6 +14,7 @@ class SessionsControllerTest < ApplicationControllerTest
   end
 
   test "the sign-in page should redirect the user to the root path if already signed in" do
+    setup
     get :new
     assert_redirected_to root_path
   end
