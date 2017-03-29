@@ -40,10 +40,6 @@ class Parser
     line.scan CHORD_TOKENIZER
   end
 
-  def self.dump_sheet(sheet)
-    sheet.map { |line| line[:content] }.join
-  end
-
   private
 
   def parse_sheet!

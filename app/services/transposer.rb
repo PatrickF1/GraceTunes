@@ -1,15 +1,22 @@
 module Transposer
 
   def self.transpose_song(song, new_key)
-    parser = Parser.new(song.chord_sheet, song.key)
-    song.chord_sheet = Parser::dump_sheet(transpose_to(parser, new_key))
-    song.key = new_key
+    if new_key == "numbers"
+      transpose_to_numbers(song)
+    else
+      parser = Parser.new(song.chord_sheet, song.key)
+      song.chord_sheet = Formatter::dump_sheet(transpose_to(parser, new_key))
+      song.key = new_key
+    end
   end
 
-  def self.to_numbers(song)
+  def self.transpose_to_numbers(song)
     parser = Parser.new(song.chord_sheet, song.key)
-    song.chord_sheet = Parser.dump_sheet(to_numbers(parser))
+    parsed_number_sheet = to_numbers(parser)
+    song.chord_sheet = Formatter::format_sheet_for_numbers(parsed_number_sheet)
   end
+
+  private
 
   def self.transpose_to(parser, new_key = nil)
     return parser.parsed_sheet if new_key.nil?
