@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-     @current_user ||= (User.find_by_email(session[:user_email]) || nil)
+     @current_user ||= User.find_by_email(session[:user_email])
   end
 
   def require_sign_in
@@ -18,14 +18,14 @@ class ApplicationController < ActionController::Base
   end
 
   def require_edit_privileges
-    if not current_user.can_edit?
+    if !current_user.can_edit?
       flash[:error] = "You don't have edit privileges."
       redirect_to root_path
     end
   end
 
   def require_delete_privileges
-    if not current_user.can_delete?
+    if !current_user.can_delete?
       flash[:error] = "You don't have deleting privileges."
       redirect_to root_path
     end
