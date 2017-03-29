@@ -3,27 +3,29 @@ class SessionsController < ApplicationController
   skip_before_action :require_sign_in, except: :destroy
 
   def new
-    redirect_to root_path if current_user.signed_in?
+    redirect_to root_path if @current_user.nil?
     @no_header = true
   end
 
   def create
     auth_hash = request.env["omniauth.auth"]
-    email = auth_hash["info"]["email"]
-    full_name = auth_hash["info"]["name"]
+    email = auth_hash["info"]["email"].strip
 
-    if !@current_user = User.find_by_email(username)
-      @current_user = User.create(email: email, name: full_name)
+    # person has never signed into GraceTunes before so create a user for him
+    if !@current_user = User.find_by_email(email)
+      full_name = auth_hash["info"]["name"].split('(')[0].strip # remove churchplant extention
+      @current_user = User.create(email: email, name: full_name, role: Role::READER)
     end
 
-    session[:user_email] = email
-    session[:name] = full_name.split('(')[0].strip # remove churchplant extention from name
+    session[:user_email] = {
+      value: @current_user.email,
+      :expires => 1.week.from_now
+    }
     redirect_to root_url
   end
 
   def destroy
     session.delete(:user_email)
-    session.delete(:user_name)
     redirect_to sign_in_path
   end
 
