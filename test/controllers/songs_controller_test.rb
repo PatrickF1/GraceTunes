@@ -40,7 +40,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   # "new" action tests
   test "new song page should load successfully if logged in as praise member" do
-    login_as_praise
+    get_edit_privileges
     get :new
     assert_response :success
   end
@@ -52,19 +52,19 @@ class SongsControllerTest < ApplicationControllerTest
 
   # "create" action tests
   test "should load the new song template when song creation unsuccessful" do
-    login_as_praise
+    get_edit_privileges
     post :create, song: {problem: true}
     assert_template :new
   end
 
   test "should show error messages when song creation unsuccessful" do
-    login_as_praise
+    get_edit_privileges
     post :create, song: {problem: true}
     assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
   end
 
   test "submitting a valid song should result in a new song in the database with the same name" do
-    login_as_praise
+    get_edit_privileges
     assert_difference('Song.count', difference = 1) do
       post_new_song_form
     end
@@ -72,20 +72,20 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "after creating a new song should redirect to its show song page" do
-    login_as_praise
+    get_edit_privileges
     post_new_song_form
     assert_redirected_to song_path(assigns(:song))
   end
 
   test "should notify user appropriately when song created successfully" do
-    login_as_praise
+    get_edit_privileges
     post_new_song_form
     assert_not_nil flash[:success]
   end
 
   # "edit" action tests
   test "editing a song should result in the song in the database with a different name" do
-    login_as_praise
+    get_edit_privileges
     new_song_name = "Newer Song Just Updated"
 
     song = songs(:God_be_praised)
@@ -97,14 +97,14 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "after editing a song should redirect to its show song page" do
-    login_as_praise
+    get_edit_privileges
     song = songs(:God_be_praised)
     post :update, song: song.as_json, id: song.id
     assert_redirected_to song_path(song)
   end
 
   test "edit song page should load successfully if logged in as praise member" do
-    login_as_praise
+    get_edit_privileges
     get :edit, id: songs(:forever_reign).id
     assert_response :success
   end

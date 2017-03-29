@@ -7,11 +7,11 @@ class ApplicationControllerTest < ActionController::TestCase
     session[:user_email] = users(:reader).email
   end
 
-  def login_as_praise
+  def get_edit_privileges
     session[:user_email] = users(:praise_member).email
   end
 
-  def logout
+  def sign_out
     session.delete(:user_email)
   end
 

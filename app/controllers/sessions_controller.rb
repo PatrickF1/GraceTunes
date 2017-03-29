@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :require_sign_in, except: :destroy
 
   def new
-    redirect_to root_path if @current_user.nil?
+    redirect_to root_path if @current_user
     @no_header = true
   end
 
@@ -17,10 +17,7 @@ class SessionsController < ApplicationController
       @current_user = User.create(email: email, name: full_name, role: Role::READER)
     end
 
-    session[:user_email] = {
-      value: @current_user.email,
-      :expires => 1.week.from_now
-    }
+    session[:user_email] = @current_user.email
     redirect_to root_url
   end
 

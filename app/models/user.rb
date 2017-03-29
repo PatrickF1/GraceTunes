@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   before_validation :normalize
 
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :role, presence: true
   validates_inclusion_of :role, in: Role::VALID_ROLES, if: -> (user) { user.role.present? }
 

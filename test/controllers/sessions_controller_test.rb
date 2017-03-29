@@ -4,7 +4,7 @@ require_relative 'application_controller_test.rb'
 class SessionsControllerTest < ApplicationControllerTest
 
   test "the sign-in button should mention using your Gpmail account" do
-    logout
+    sign_out
     get :new
     assert_select(
       '.sign-in_button',
@@ -24,7 +24,7 @@ class SessionsControllerTest < ApplicationControllerTest
   end
 
   test "signing in should set user_email in the session and redirect to root" do
-    logout
+    sign_out
     email = "gpmember@gpmail.org"
     # manually mock the info that would be sent by Google servers
     request.env['omniauth.auth'] = {
