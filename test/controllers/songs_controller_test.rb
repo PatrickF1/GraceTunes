@@ -105,11 +105,11 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "edit song page should load successfully if logged in as praise member" do
     login_as_praise
-    get :edit
+    get :edit, id: songs(:forever_reign).id
     assert_response :success
   end
   test "readers should be redirected to root if they try to access the edit song page" do
-    get :edit
+    get :edit, id: songs(:forever_reign).id
     assert_redirected_to root_path
   end
 
