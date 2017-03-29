@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   def create
     user_info = request.env["omniauth.auth"]["info"]
     # Gmail emails are case insensitive so okay to lowercase it
-    email = user_info["email"].lowercase.strip
+    email = user_info["email"].downcase.strip
 
     # if person has never signed into GraceTunes before, create a user for him
     if !@current_user = User.find_by_email(email)
