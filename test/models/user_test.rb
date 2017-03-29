@@ -16,6 +16,15 @@ class UserTest < ActiveSupport::TestCase
     assert_not user_blank_email.save, "saved with a blank email"
   end
 
+  test "should not be able to save a user with an existing email" do
+    duplicate_user = User.new(
+      email: users(:praise_member).email,
+      name: "Duplicate User",
+      role: "Reader"
+    )
+    assert_not duplicate_user.save, "saved a user with an existing email"
+  end
+
   test "should not save without a name" do
     user_nil_name = User.new(
       email: "test@email.com",
