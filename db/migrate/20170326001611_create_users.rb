@@ -1,15 +1,11 @@
 class CreateUsers < ActiveRecord::Migration
-  def up
-    create_table :users, id: false, primary_key: "email" do |t|
-      t.string "email", null: false
+  def change
+    create_table :users, id: false do |t|
+      # email is supposed to be the primary key but a Rails limitation prevents it from working fully
+      t.string "email", null: false, unique: true
       t.timestamps null: false
       t.string "name", null: false
       t.string "role", null: false
     end
-    execute "ALTER TABLE users ADD PRIMARY KEY (email);"
-  end
-
-  def down
-    drop_table :users
   end
 end

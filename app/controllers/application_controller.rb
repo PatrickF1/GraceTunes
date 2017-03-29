@@ -8,11 +8,16 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    @current_user ||= User.new(session[:user_email], session[:user_name])
+    # TODO actually implement
+    @current_user ||= User.new(
+      email: "test@email.com",
+      name: "GraceTunes Test",
+      role: Role::ADMIN
+    )
   end
 
   def require_sign_in
-    if current_user.guest?
+    if current_user.nil?
       redirect_to sign_in_path
     end
   end
