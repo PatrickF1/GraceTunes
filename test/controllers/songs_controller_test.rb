@@ -83,8 +83,13 @@ class SongsControllerTest < ApplicationControllerTest
     assert_not_nil flash[:success]
   end
 
-  # "edit" action tests
-  test "editing a song should result in the song in the database with a different name" do
+  test "readers should be redirected to root if they try to create" do
+    post_new_song_form
+    assert_redirected_to root_path
+  end
+
+  # "update" action tests
+  test "updating a song should result in the song having a different name in the DB" do
     get_edit_privileges
     new_song_name = "Newer Song Just Updated"
 
@@ -103,11 +108,19 @@ class SongsControllerTest < ApplicationControllerTest
     assert_redirected_to song_path(song)
   end
 
+  test "readers should be directed to root if they try to update a song" do
+    song = songs(:God_be_praised)
+    post :update, song: song.as_json, id: song.id
+    assert_redirected_to root_path
+  end
+
+  # "edit" action tests
   test "edit song page should load successfully if logged in as praise member" do
     get_edit_privileges
     get :edit, id: songs(:forever_reign).id
     assert_response :success
   end
+
   test "readers should be redirected to root if they try to access the edit song page" do
     get :edit, id: songs(:forever_reign).id
     assert_redirected_to root_path
