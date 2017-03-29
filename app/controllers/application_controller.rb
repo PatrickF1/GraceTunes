@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  # returns the current user if signed in or nil if not signed in
   def current_user
     @current_user ||= User.find_by_email(session[:user_email])
   end
