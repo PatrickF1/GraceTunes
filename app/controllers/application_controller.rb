@@ -21,14 +21,14 @@ class ApplicationController < ActionController::Base
   def require_edit_privileges
     if !current_user.can_edit?
       flash[:error] = "You don't have edit privileges."
-      redirect_to root_path
+      redirect_to(request.referrer || root_path)
     end
   end
 
   def require_delete_privileges
     if !current_user.can_delete?
       flash[:error] = "You don't have deleting privileges."
-      redirect_to root_path
+      redirect_to(request.referrer || root_path)
     end
   end
 end
