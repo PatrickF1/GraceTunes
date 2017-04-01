@@ -65,6 +65,10 @@ module Music
     CHROMATICS.index(CHROMATICS.detect {|n| n.kind_of?(Array) ? n.include?(note) : (n == note)})
   end
 
+  def self.get_note_scale_index(note, key)
+    MAJOR_SCALES[key].each_with_index { |scale_note, index| return index + 1 if scale_note[:base] == note }
+  end
+
   def self.which_note_in_key(note_array, key)
     note_array.find { |note| key_has_note?(key, note) }
   end

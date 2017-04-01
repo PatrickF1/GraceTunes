@@ -14,12 +14,6 @@ module Transposer
     song.key = new_key
   end
 
-  def self.transpose_to_numbers(song)
-    parser = Parser.new(song.chord_sheet, song.key)
-    parsed_number_sheet = to_numbers(parser)
-    song.chord_sheet = Formatter::format_sheet_for_numbers(parsed_number_sheet)
-  end
-
   private
 
   def self.transpose_line(old_key, half_steps, line)
@@ -56,18 +50,5 @@ module Transposer
     transposed_in_key = transpose_chord(old_key, half_steps, note_in_key)
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
     sharper ? Music::sharpen(transposed_in_key, to_number) : Music::flatten(transposed_in_key, to_number)
-  end
-
-  def self.to_numbers(parser)
-    new_sheet = []
-    parser.parsed_sheet.each do |line|
-      if line[:type] == :lyrics
-        new_sheet << line
-      elsif line[:type] == :chords
-        new_chords = transpose_line(parser.key, 0, line[:content], true)
-        new_sheet << {type: :chords, content: new_chords, parsed: Parser::chords_from_line(new_chords)}
-      end
-    end
-    return new_sheet
   end
 end
