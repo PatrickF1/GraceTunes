@@ -50,7 +50,7 @@ class Song < ActiveRecord::Base
   end
 
   def extract_lyrics
-    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics?(line) }
+    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
     self.lyrics = lyrics.join("\n")
   end
 

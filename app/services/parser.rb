@@ -1,43 +1,71 @@
 # based off of https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c
 class Parser
 
-  attr_reader :chord_sheet, :chords, :key, :parsed_sheet
+  attr_reader :chord_sheet, :chords_nums_by_chord, :key, :parsed_sheet, :parsed_chords
 
   CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
+  CHORD_INCLUDE_INVERSION_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
+  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
+  BASE_REGEX = /[A-G][b#]?/
+  MINOR_CHORD = /m(?!aj)/
 
   def initialize(sheet, key = nil)
     @chord_sheet = sheet
-    @chords = Hash.new(0) # hash  of { chord => count of that chord }
+    @chord_nums_by_chord = Hash.new(0) # hash  of { chord => count of that chord }
     @key = key if key
-    @parsed_sheet = [] # list of lines [ { :type, :content } ]
+    @parsed_sheet = [] # list of lines [ { :type, :content, :parsed } ]
+    @parsed_chords = [] # list of all chords in order, with their modifiers [ { :chord, :modifiers } ]
+    byebug
     parse_sheet!
     guess_key! unless key || (key == false)
   end
 
   def statistics
-    total = @chords.values.reduce(0, :+)
+    total = @chord_nums_by_chord.values.reduce(0, :+)
     @key_stats.map do |stat|
       short_key = stat[:key].kind_of?(Array) ? stat[:key][1] : stat[:key]
       "#{short_key}: #{stat[:matches]/total.to_f * 100}%"
     end.join("\n")
   end
 
-  def self.chords?(line)
+  def self.chords_line?(line)
     line =~ CHORD_REGEX
   end
 
-  def self.header?(line)
+  def self.header_line?(line)
     line[-1] == ":"
   end
 
-  def self.lyrics?(line)
-    !line.strip.empty? && !chords?(line) && !header?(line)
+  def self.lyrics_line?(line)
+    !line.strip.empty? && !chords_line?(line) && !header_line?(line)
   end
 
   def self.chords_from_line(line)
-    return [] unless chords?(line)
+    return [] unless chords_line?(line)
     line.scan CHORD_TOKENIZER
+  end
+
+  def self.parse_chord(chord)
+    modifiers = []
+    if chord.include?('dim')
+      modifiers << :diminished
+    end
+    if chord.include?('sus')
+      modifiers << :suspended
+    end
+    if chord.include?('aug')
+      modifiers << :augmented
+    end
+    if chord.include?('maj7')
+      modifiers << :major_seventh
+    end
+    if chord =~ MINOR_CHORD
+      modifiers << :minor
+    end
+    if  chord =~ /\d/
+      modifiers << :number
+    end
+    { base: BASE_REGEX.match(chord).to_s, chord: chord, modifiers: modifiers }
   end
 
   private
@@ -45,32 +73,26 @@ class Parser
   def parse_sheet!
     @parsed_sheet = begin
       parsed_sheet = []
-      parsed_chords = []
-      key_change = false
       @chord_sheet.each_line do |line|
         chords = self.class.chords_from_line(line)
-        key_change = true if line =~ /KEY (UP|DOWN)/
         parsed_sheet << (!chords.empty? ? { type: :chords, content: line, parsed: chords } : { type: :lyrics, content: line })
-        parsed_chords += chords if chords && !key_change
+        @parsed_chords += chords if chords
       end
-      numbers = parsed_chords.any? {|chord| chord =~ /\d/ }
-      letters = parsed_chords.any? {|chord| chord =~ /[A-Z]/ }
-      parsed_chords = (numbers && letters) ? parsed_chords.select {|chord| chord =~ /[A-Z]/} : parsed_chords
-      formatted_chords = parsed_chords.map {|chord| format_chord(chord) }
-      formatted_chords.each { |chord| @chords.store(chord, @chords[chord]+1) } # Ruby lets us use objects as keys...
+      @parsed_chords = parsed_chords.map {|chord| parse_chord(chord) }
+      @parsed_chords.each { |chord| @chord_nums_by_chord.store(chord, @chord_nums_by_chord[chord]+1) } # Ruby lets us use objects as keys...
       parsed_sheet
     end
   end
 
   def guess_key!
     @key ||= begin
-      chords = @chords.keys
+      chords = @chord_nums_by_chord.keys
       counts = Music::MAJOR_SCALES.keys.map do |key|
         scale = Music::MAJOR_SCALES[key]
         key_matches = 0
         chords.each do |chord|
           in_scale = Music::scale_has_chord?(scale, chord)
-          key_matches += @chords[chord] if in_scale # accumulate the total number of chords in the song that match this key
+          key_matches += @chord_nums_by_chord[chord] if in_scale # accumulate the total number of chords in the song that match this key
         end
         { key: key, matches: key_matches }
       end
@@ -78,28 +100,6 @@ class Parser
       key = @key_stats.first[:key]
       key.kind_of?(Array) ? key[1] : key
     end
-  end
-
-  # Chord utility methods #####################################################
-
-  def format_chord(chord)
-    modifier = case
-    when chord.include?('dim')
-      chord.slice! 'dim'
-      :diminished
-    when chord.include?('m')
-      chord.slice! 'm'
-      :minor
-    when chord.include?('M') # drop the major
-      chord.slice! 'M'
-      nil
-    when chord.include?('/') # slash chord
-      chord = chord.split("/")
-      :inversion
-    else
-      nil
-    end
-    { base: chord, modifier: modifier }
   end
 
 end

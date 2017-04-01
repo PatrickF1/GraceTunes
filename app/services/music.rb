@@ -3,7 +3,15 @@ module Music
   MAJOR_KEYS = ['Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G'].freeze # use Db, F#, B for 3 enharmonic equivalent keys
   MAJOR_STEPS = [0, 2, 2, 1, 2, 2, 2].freeze
   MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11].freeze
-  # MAJOR_NASHVILLE_NUMBERS = ["I", "II", "III", "IV", "V", "VI", "VII"]
+  ROMAN_NUMERALS = {
+    1 => "I",
+    2 => "II",
+    3 => "III",
+    4 => "IV",
+    5 => "V",
+    6 => "VI",
+    7 => "VII"
+  }
 
   # { key => scale }
   MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, index|

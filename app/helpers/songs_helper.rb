@@ -19,9 +19,9 @@ module SongsHelper
   def get_class_for_line(line)
     if line == ""
       "blank"
-    elsif Parser.header? line
+    elsif Parser.header_line? line
       "header"
-    elsif Parser.chords? line
+    elsif Parser.chords_line? line
       "chord"
     else
       "lyric"
