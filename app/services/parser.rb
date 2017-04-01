@@ -3,11 +3,11 @@ class Parser
 
   attr_reader :chord_sheet, :chords_nums_by_chord, :key, :parsed_sheet, :parsed_chords
 
-  CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|M|maj|dim)?(no|add|s|sus)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
-  CHORD_INCLUDE_INVERSION_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|M|min|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
-  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|sus|maj|m|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
+  CHORD_REGEX = /^(\s*(([A-G1-9]?[#b]?(m|maj|dim)?(no|add|s|sus|aug)?\d*)|:\]|\[:|:?\|:?|-|\/|\}|\(|\))\s*)+$/
+  CHORD_INCLUDE_INVERSION_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)\/?(?:(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?)?(?=\s|$)(?!\w)/
+  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
   BASE_REGEX = /[A-G][b#]?/
-  MINOR_CHORD = /m(?!aj)/
+  MINOR_CHORD = /(?<!di)m(?!aj)/
 
   def initialize(sheet, key = nil)
     @chord_sheet = sheet
@@ -50,7 +50,7 @@ class Parser
     if chord.include?('dim')
       modifiers << :diminished
     end
-    if chord.include?('sus')
+    if chord.include?('sus') || chord.include?('s')
       modifiers << :suspended
     end
     if chord.include?('aug')
