@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  
-  root 'songs#index'
+
+  root to: redirect('/songs')
 
   resources :songs do
     member do
       get 'print'
     end
   end
-  
+
   resources :tags
 
   # Authentication
