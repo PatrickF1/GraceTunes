@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
       @current_user = User.create(email: email, name: full_name, role: Role::READER)
       logger.info "New user created: #{@current_user}"
     end
-    logger.info "Signed in: #{@current_user}"
+
     session[:user_email] = @current_user.email
     redirect_to songs_path
   end
