@@ -92,7 +92,8 @@ module Music
     elsif flat?(note)
       get_natural(note)
     else
-      CHROMATICS[(get_note_index(note) + 1) % 12][0] # get lower of the next chromatic
+      new_chromatic = CHROMATICS[(get_note_index(note) + 1) % 12]
+      new_chromatic.kind_of?(Array) ? new_chromatic[0] : new_chromatic # get lower of the next chromatic
     end
   end
 
@@ -102,7 +103,8 @@ module Music
     elsif sharp?(note)
       get_natural(note)
     else
-      CHROMATICS[(get_note_index(note) - 1) % 12][1] # get higher of the previous chromatic
+      new_chromatic = CHROMATICS[(get_note_index(note) - 1) % 12]
+      new_chromatic.kind_of?(Array) ? new_chromatic[1] : new_chromatic # get higher of the previous chromatic
     end
   end
 

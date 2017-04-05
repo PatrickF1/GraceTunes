@@ -40,6 +40,6 @@ module Formatter
     # transpose the note_in_key by half_steps
     roman_numeral_in_key = Music::ROMAN_NUMERALS[Music::get_note_scale_index(note_in_key, key)]
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
-    sharper ? roman_numeral_in_key + "#" : roman_numeral_in_key + "b"
+    sharper ? Music::sharpen(roman_numeral_in_key, true) : Music::flatten(roman_numeral_in_key, true)
   end
 end

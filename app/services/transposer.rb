@@ -41,7 +41,7 @@ module Transposer
     parsed_chord[:chord].sub(parsed_chord[:base], new_base_note)
   end
 
-  def self.transpose_accidental(old_key, half_steps, note, to_number = false)
+  def self.transpose_accidental(old_key, half_steps, note)
     # get note in original key
     note_in_key = Music::get_note_in_key(old_key, note)
     # is the accidental sharper or flatter than note_in_key
@@ -49,6 +49,6 @@ module Transposer
     # transpose the note_in_key by half_steps
     transposed_in_key = transpose_chord(old_key, half_steps, note_in_key)
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
-    sharper ? Music::sharpen(transposed_in_key, to_number) : Music::flatten(transposed_in_key, to_number)
+    sharper ? Music::sharpen(transposed_in_key) : Music::flatten(transposed_in_key)
   end
 end
