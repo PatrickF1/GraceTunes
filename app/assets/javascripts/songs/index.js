@@ -47,7 +47,6 @@ $(function() {
     $(this).addClass('selected');
   });
 
-
   $('.preview-drawer .close-button').click(function() {
     hideDrawer();
   });

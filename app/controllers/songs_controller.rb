@@ -1,6 +1,5 @@
 class SongsController < ApplicationController
 
-
   SONGS_PER_PAGE_DEFAULT = 10
 
   def index
