@@ -25,7 +25,7 @@ class Song < ActiveRecord::Base
   before_save :extract_lyrics
 
   def to_s
-    name
+    artist.blank? ? name : "#{name} by #{artist}"
   end
 
   private
