@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  skip_before_action :require_sign_in, except: :destroy
+  skip_before_action :require_sign_in
 
   def new
     redirect_to root_path if current_user
