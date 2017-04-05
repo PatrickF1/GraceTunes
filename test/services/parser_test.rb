@@ -20,8 +20,6 @@ class ParserTest < ActiveSupport::TestCase
     assert Parser.chords_line?("Em7/G#       F/Cmaj7        D/Cb3")
     assert Parser.chords_line?("A(5)     B(7)")
     assert Parser.chords_line?("D(b5)         E(#)")
-    assert Parser.chords_line?(" Dms   Fdimaug") # absurd examples but technically legal
-    assert Parser.chords_line?("Amaj7aug       D")
     assert_not Parser.chords_line?("AM     DM") # don't allow 'M' for major since it's confusing
     assert_not Parser.chords_line?("Amin    Dmin") # don't allow 'min' for minor since it's confusing
     assert_not Parser.chords_line?("A    C#   text")
