@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   skip_before_action :require_sign_in
 
   def new
-    redirect_to root_path if current_user
+    redirect_to songs_path if current_user
     @no_header = true
   end
 
@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     end
 
     session[:user_email] = @current_user.email
-    redirect_to root_url
+    redirect_to songs_path
   end
 
   def destroy

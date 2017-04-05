@@ -45,9 +45,9 @@ class SongsControllerTest < ApplicationControllerTest
     assert_response :success
   end
 
-  test "readers should be redirected to root if they try to access the new song page" do
+  test "readers should be redirected to songs index if they try to access the new song page" do
     get :new
-    assert_redirected_to root_path
+    assert_redirected_to songs_path
   end
 
   # "create" action tests
@@ -83,9 +83,9 @@ class SongsControllerTest < ApplicationControllerTest
     assert_not_nil flash[:success]
   end
 
-  test "readers should be redirected to root if they try to create" do
+  test "readers should be redirected to songs index if they try to create" do
     post_new_song_form
-    assert_redirected_to root_path
+    assert_redirected_to songs_path
   end
 
   # "update" action tests
@@ -108,10 +108,10 @@ class SongsControllerTest < ApplicationControllerTest
     assert_redirected_to song_path(song)
   end
 
-  test "readers should be directed to root if they try to update a song" do
+  test "readers should be directed to songs index if they try to update a song" do
     song = songs(:God_be_praised)
     post :update, song: song.as_json, id: song.id
-    assert_redirected_to root_path
+    assert_redirected_to songs_path
   end
 
   # "edit" action tests
@@ -121,9 +121,9 @@ class SongsControllerTest < ApplicationControllerTest
     assert_response :success
   end
 
-  test "readers should be redirected to root if they try to access the edit song page" do
+  test "readers should be redirected to songs index if they try to access the edit song page" do
     get :edit, id: songs(:forever_reign).id
-    assert_redirected_to root_path
+    assert_redirected_to songs_path
   end
 
   # "print" action tests
