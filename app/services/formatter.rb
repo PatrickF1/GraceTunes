@@ -27,9 +27,10 @@ module Formatter
         : Music::ROMAN_NUMERALS[Music::get_note_scale_index(parsed_chord[:base], key)]
 
     formatted_chord = parsed_chord[:chord].sub(parsed_chord[:base], roman_numeral)
-    if parsed_chord[:modifiers].include? :minor
+    if parsed_chord[:modifiers].include?(:minor) || parsed_chord[:modifiers].include?(:diminished)
       formatted_chord.downcase!
       formatted_chord.sub!(Parser::MINOR_CHORD, '')
+      formatted_chord.sub!('dim', '')
     end
     formatted_chord
   end
