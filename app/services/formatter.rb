@@ -21,15 +21,25 @@ module Formatter
 
   def self.format_chord_nashville(chord, key)
     parsed_chord = Parser::parse_chord(chord)
-    if Music::accidental_for_key?(key, parsed_chord[:base])
-      return chord + "// accidental //"
-    end
-    roman_numeral = Music::ROMAN_NUMERALS[Music::get_note_scale_index(parsed_chord[:base], key)]
+    roman_numeral = Music::accidental_for_key?(key, parsed_chord[:base]) ? format_accidental_nashville(parsed_chord[:base], key)
+        : Music::ROMAN_NUMERALS[Music::get_note_scale_index(parsed_chord[:base], key)]
+
     formatted_chord = parsed_chord[:chord].sub(parsed_chord[:base], roman_numeral)
     if parsed_chord[:modifiers].include? :minor
       formatted_chord.downcase!
       formatted_chord.sub!(Parser::MINOR_CHORD, '')
     end
     formatted_chord
+  end
+
+  def self.format_accidental_nashville(note, key)
+    # get note in original key
+    note_in_key = Music::get_note_in_key(key, note)
+    # is the accidental sharper or flatter than note_in_key
+    sharper = Music::sharper?(note, note_in_key)
+    # transpose the note_in_key by half_steps
+    roman_numeral_in_key = Music::ROMAN_NUMERALS[Music::get_note_scale_index(note_in_key, key)]
+    # then sharpen/flatten as accidental was sharper/flatter than note_in_key
+    sharper ? roman_numeral_in_key + "#" : roman_numeral_in_key + "b"
   end
 end
