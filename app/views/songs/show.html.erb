@@ -2,8 +2,10 @@
   <h1 class="title"><%= @song %></h1>
   <div class="artist"><%= @song.artist %></div>
   <div class="buttons-container">
-    <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
-      <i class="fa fa-edit"></i> Edit
+    <% if current_user.can_edit? %>
+      <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
+        <i class="fa fa-edit"></i> Edit
+      <% end %>
     <% end %>
     <%= link_to print_song_path, { method: :get, class: "pill pill_link-dark-blue", id: "print-btn", "data-print-url": print_song_path } do %>
       <i class="fa fa-print"></i> Print in current key

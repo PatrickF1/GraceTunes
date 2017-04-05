@@ -1,5 +1,8 @@
 class SongsController < ApplicationController
 
+  before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
+  before_action :require_delete_privileges, only: [:destroy] # implement destroy later
+
   SONGS_PER_PAGE_DEFAULT = 10
 
   def index
@@ -63,6 +66,7 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     if @song.save
       flash[:success] = "#{@song} successfully created!"
+      logger.info "New song created: #{current_user} created #{@song}"
       redirect_to @song
     else
       render :new
@@ -77,6 +81,7 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
       flash[:success] = "#{@song} successfully updated!"
+      logger.info "Song updated: #{current_user} updated #{@song}"
       redirect_to @song
     else
       render :edit

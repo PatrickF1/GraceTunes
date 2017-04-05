@@ -1,28 +1,35 @@
 class SessionsController < ApplicationController
 
-  skip_before_action :require_sign_in, except: :destroy
+  skip_before_action :require_sign_in
 
   def new
-    redirect_to root_path if current_user.signed_in?
+    redirect_to songs_path if current_user
     @no_header = true
   end
 
   def create
-    auth_hash = request.env["omniauth.auth"]
-    email = auth_hash["info"]["email"]
-    full_name = auth_hash["info"]["name"]
-    session[:user_email] = email
-    session[:user_name] = full_name.split.first # only save the first name
-    redirect_to root_url
+    user_info = request.env["omniauth.auth"]["info"]
+    # Gmail emails are case insensitive so okay to lowercase it
+    email = user_info["email"].downcase.strip
+
+    # if person has never signed into GraceTunes before, create a user for him
+    if !@current_user = User.find_by_email(email)
+      full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
+      @current_user = User.create(email: email, name: full_name, role: Role::READER)
+      logger.info "New user created: #{@current_user}"
+    end
+
+    session[:user_email] = @current_user.email
+    redirect_to songs_path
   end
 
   def destroy
     session.delete(:user_email)
-    session.delete(:user_name)
     redirect_to sign_in_path
   end
 
   def error
+    logger.info "Error authenticating user: #{params[:message]}"
     case params[:message]
     when 'invalid_credentials'
       flash[:error] = "Invalid credentials: you must sign in with a Gpmail account."

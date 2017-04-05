@@ -7,13 +7,29 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
+  # returns the current user if signed in or nil if not signed in
   def current_user
-    @current_user ||= User.new(session[:user_email], session[:user_name])
+    return nil if session[:user_email].nil?
+    @current_user ||= User.find_by_email(session[:user_email])
   end
 
   def require_sign_in
-    if current_user.guest?
+    if current_user.nil?
       redirect_to sign_in_path
+    end
+  end
+
+  def require_edit_privileges
+    if !current_user.can_edit?
+      flash[:error] = "You don't have edit privileges."
+      redirect_to(request.referrer || songs_path)
+    end
+  end
+
+  def require_delete_privileges
+    if !current_user.can_delete?
+      flash[:error] = "You don't have deleting privileges."
+      redirect_to(request.referrer || songs_path)
     end
   end
 end
