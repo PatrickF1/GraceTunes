@@ -42,12 +42,11 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    if params[:new_key]
-      if params[:new_key] == "numbers"
-        Formatter.format_song_nashville(@song)
-      else
-        Transposer.transpose_song(@song, params[:new_key])
-      end
+    if params[:new_key].present?
+      Transposer.transpose_song(@song, params[:new_key])
+    end
+    if params[:numbers]
+      Formatter.format_song_nashville(@song)
     end
 
     respond_to do |format|
@@ -91,6 +90,9 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if params[:new_key].present?
       Transposer.transpose_song(@song, params[:new_key])
+    end
+    if params[:numbers]
+      Formatter.format_song_nashville(@song)
     end
     render layout: false
   end
