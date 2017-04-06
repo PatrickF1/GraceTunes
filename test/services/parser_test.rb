@@ -25,6 +25,15 @@ class ParserTest < ActiveSupport::TestCase
     assert_not Parser.chords_line?("A    C#   text")
   end
 
+  test "parser identifies roman numeral lines" do
+    assert Parser.chords_line?("    I    ii  iii   IV")
+    assert Parser.chords_line?("   V     vi    vii    I")
+    assert Parser.chords_line?("   iii2    Vmaj7     Isus")
+    assert Parser.chords_line?("    VIb    III#3     ")
+    assert Parser.chords_line?("    I(b5)     iii(3)    ")
+    assert_not Parser.chords_line?("     I     ii     text")
+  end
+
   test "parser gets list of chords from line" do
     assert_equal ["G", "D"], Parser.chords_from_line("   G    D")
     assert_equal ["A", "Em", "C#", "D", "B"],  Parser.chords_from_line("A      Em      C# D B")
