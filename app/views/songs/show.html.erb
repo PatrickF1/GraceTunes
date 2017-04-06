@@ -1,5 +1,5 @@
 <div class="show-page">
-  <h1 class="title"><%= @song %></h1>
+  <h1 class="title"><%= @song.name %></h1>
   <div class="artist"><%= @song.artist %></div>
   <div class="buttons-container">
     <% if current_user.can_edit? %>
