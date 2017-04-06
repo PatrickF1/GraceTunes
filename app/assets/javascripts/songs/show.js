@@ -5,9 +5,6 @@ $(function() {
     var tranposeUrl = $("#transpose_to").data('song-url');
     transposeChordSheet(newKey, tranposeUrl);
     updatePrintLink(newKey);
-    showTransposeControls();
-    showToNumbersButton();
-    hideToChordsButton();
   });
 
   $('#to_numbers').click(function(e){
