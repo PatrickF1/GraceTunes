@@ -12,7 +12,10 @@
     <% end %>
   </div>
   <div class="song-metadata">
-    <span>Recommended Key: <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
+    <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>
+    <% if @song.standard_scan.present? %>
+      <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
+    <% end %>
   </div>
 
   <div>
