@@ -1,13 +1,13 @@
 # based off of https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c
 module Parser
 
-  CHORD_REGEX = /^(?:\s*(?:(?:(?:[A-G]|I|II|III|IV|V|VI|VII|i|ii|iii|iv|v|vi|vii)[#b]?(?:m|maj|dim)?(?:no|add|s|sus|aug)?\d?)|\/|(?:\([b#]?\d?\)))\s*)+$/
+  CHORD_LINE_REGEX = /^(?:\s*(?:(?:(?:[A-G]|I|II|III|IV|V|VI|VII|i|ii|iii|iv|v|vi|vii)[#b]?(?:m|maj|dim)?(?:no|add|s|sus|aug)?\d?)|\/|(?:\([b#]?\d?\)))\s*)+$/
   CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
-  BASE_REGEX = /[A-G][b#]?/
-  MINOR_CHORD = /(?<!di)m(?!aj)/
+  BASE_NOTE_REGEX = /[A-G][b#]?/
+  MINOR_CHORD_REGEX = /(?<!di)m(?!aj)/
 
   def self.chords_line?(line)
-    line =~ CHORD_REGEX
+    line =~ CHORD_LINE_REGEX
   end
 
   def self.header_line?(line)
@@ -37,13 +37,13 @@ module Parser
     if chord.include?('maj7')
       modifiers << :major_seventh
     end
-    if chord =~ MINOR_CHORD
+    if chord =~ MINOR_CHORD_REGEX
       modifiers << :minor
     end
     if  chord =~ /\d/
       modifiers << :number
     end
-    { base: BASE_REGEX.match(chord).to_s, chord: chord, modifiers: modifiers }
+    { base: BASE_NOTE_REGEX.match(chord).to_s, chord: chord, modifiers: modifiers }
   end
 
 end
