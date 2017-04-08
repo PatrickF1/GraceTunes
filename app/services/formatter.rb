@@ -29,7 +29,7 @@ module Formatter
     formatted_chord = parsed_chord[:chord].sub(parsed_chord[:base], roman_numeral)
     if parsed_chord[:modifiers].include?(:minor) || parsed_chord[:modifiers].include?(:diminished)
       formatted_chord.downcase!
-      formatted_chord.sub!(Parser::MINOR_CHORD, '')
+      formatted_chord.sub!(Parser::MINOR_CHORD_REGEX, '')
       formatted_chord.sub!('dim', '')
     end
     formatted_chord
@@ -43,6 +43,6 @@ module Formatter
     # transpose the note_in_key by half_steps
     roman_numeral_in_key = Music::ROMAN_NUMERALS[Music::get_note_scale_index(note_in_key, key)]
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
-    sharper ? Music::sharpen(roman_numeral_in_key, true) : Music::flatten(roman_numeral_in_key, true)
+    sharper ? Music::sharpen(roman_numeral_in_key) : Music::flatten(roman_numeral_in_key)
   end
 end
