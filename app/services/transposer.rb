@@ -28,7 +28,6 @@ module Transposer
 
   def self.transpose_chord(chord, half_steps, old_key)
     parsed_chord = Parser::parse_chord(chord)
-    new_base_note = ""
     if Music::accidental_for_key?(old_key, parsed_chord[:base])
       new_base_note = transpose_accidental(parsed_chord[:base], half_steps, old_key,)
     else
