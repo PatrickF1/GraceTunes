@@ -13,32 +13,6 @@ module Music
     7 => "VII"
   }
 
-  # { key => scale }
-  MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, index|
-    scale = []
-    offset = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(key) : (note == key)})
-    MAJOR_INTERVALS.each_with_index do |increment, interval_index|
-      chromatic = CHROMATICS[(offset + increment) % 12]
-      if !chromatic.kind_of?(Array)
-        note = { base: chromatic }
-      elsif chromatic.include? key
-        note = { base: key }
-      else
-        natural_last_note = /[A-G]/.match(scale.last[:base]).to_s
-        next_note = chromatic.each do |possible_note|
-          natural_possible_note = /[A-G]/.match(possible_note).to_s
-          break possible_note unless natural_possible_note == natural_last_note
-        end
-        note = { base: next_note }
-      end
-
-      note[:modifier] = :minor if [1, 2, 5].include? interval_index
-      note[:modifier] = :diminished if interval_index == 6
-      scale << note
-    end
-    [ key, scale ]
-  end.to_h.freeze
-
   def self.key_has_note?(key, note)
     MAJOR_SCALES[key].find { |n| n[:base] == note }.present?
   end
@@ -131,5 +105,32 @@ module Music
   def self.natural?(note)
     !(note =~ /[b#]/)
   end
+
+  # needs to be after method definitions
+  # { key => scale }
+  MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, index|
+    scale = []
+    offset = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(key) : (note == key)})
+    MAJOR_INTERVALS.each_with_index do |increment, interval_index|
+      chromatic = CHROMATICS[(offset + increment) % 12]
+      if !chromatic.kind_of?(Array)
+        note = { base: chromatic }
+      elsif chromatic.include? key
+        note = { base: key }
+      else
+        natural_last_note = get_natural(scale.last[:base])
+        next_note = chromatic.each do |possible_note|
+          natural_possible_note = get_natural(possible_note)
+          break possible_note unless natural_possible_note == natural_last_note
+        end
+        note = { base: next_note }
+      end
+
+      note[:modifier] = :minor if [1, 2, 5].include? interval_index
+      note[:modifier] = :diminished if interval_index == 6
+      scale << note
+    end
+    [ key, scale ]
+  end.to_h.freeze
 
 end
