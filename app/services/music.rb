@@ -42,8 +42,8 @@ module Music
     /[A-G]/.match(note).to_s
   end
 
-  def self.sharpen(note, number = false)
-    if natural?(note) || number
+  def self.sharpen(note)
+    if natural?(note) || number?(note)
       note.to_s + "#"
     elsif flat?(note)
       get_natural(note)
@@ -53,8 +53,8 @@ module Music
     end
   end
 
-  def self.flatten(note, number = false)
-    if natural?(note) || number
+  def self.flatten(note)
+    if natural?(note) || number?(note)
       note.to_s + "b"
     elsif sharp?(note)
       get_natural(note)
@@ -77,15 +77,19 @@ module Music
   end
 
   def self.sharp?(note)
-    note =~ /#/
+    note[-1] == "#"
   end
 
   def self.flat?(note)
-    note =~ /b/
+    note[-1] == "b"
   end
 
   def self.natural?(note)
-    !(note =~ /[b#]/)
+    note[-1] != "#" && note[-1] != "b"
+  end
+
+  def self.number?(note)
+    ROMAN_NUMERALS.has_value?(note.upcase)
   end
 
   # needs to be after method definitions
