@@ -17,24 +17,6 @@ module Music
     MAJOR_SCALES[key].find { |n| n[:base] == note }.present?
   end
 
-  def self.scale_has_chord?(scale, chord)
-    scale = Music::MAJOR_SCALES.keys.detect {|s| s == scale } if scale.kind_of?(String)
-    return false unless scale
-    chord = format_chord(chord) if chord.kind_of?(String)
-    return false unless chord
-    if chord[:base].kind_of?(Array) # slash chord
-      chord[:base].all? do |note| # all notes are in the major
-        scale.any? do |n|
-          n[:base] == note || (n[:base].kind_of?(Array) && n[:base].include?(note))
-        end
-      end
-    else
-      scale.any? do |n| # chord is found in the scale with a proper major, minor, or diminished
-        (n[:base] == chord[:base] || (n[:base].kind_of?(Array) && n[:base].include?(chord[:base]))) && chord[:modifier] == n[:modifier]
-      end
-    end
-  end
-
   def self.get_note_index(note)
     CHROMATICS.index(CHROMATICS.detect {|n| n.kind_of?(Array) ? n.include?(note) : (n == note)})
   end
