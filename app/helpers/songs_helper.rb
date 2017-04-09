@@ -29,7 +29,7 @@ module SongsHelper
   end
 
   def get_lines_for_columns
-    lines = @song.chord_sheet.split("\n")
+    lines = @sheet.chord_sheet.split("\n")
     return lines, [] if lines.length <= MAX_LINES_PER_COL
 
     # find a good place to split the two columns

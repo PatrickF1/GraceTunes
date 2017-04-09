@@ -10,7 +10,7 @@
     <% end %>
   </div>
   <div class="song-metadata">
-    <span>Recommended Key: <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
+    <span>Recommended Key: <span class="key"><%= @sheet.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
   </div>
 
   <div class="song-controls">
@@ -20,7 +20,7 @@
 
   </div>
 
-  <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
+  <div class="fixed-width chord-sheet "><%= @sheet.chord_sheet %></div>
 </div>
 
 <%= javascript_include_tag 'songs/show' %>
