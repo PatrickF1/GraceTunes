@@ -28,6 +28,10 @@ class Song < ActiveRecord::Base
     name
   end
 
+  def sheet
+    @sheet ||= ChordSheet.new(chord_sheet, key)
+  end
+
   private
 
   # Titlize fields and remove unnecessary spaces

@@ -1,30 +1,37 @@
-module Formatter
+require 'services/parser'
 
-  def self.format_song_nashville(song)
-    new_chord_sheet_list = []
-    song.chord_sheet.each_line do |line|
-      new_chord_sheet_list << format_line_nashville(line, song.key)
-    end
+class ChordSheet
+  attr_reader :chord_sheet
+  attr_reader :key
 
-    song.chord_sheet = new_chord_sheet_list.join
+  def initialize(chord_sheet, key)
+    @chord_sheet = chord_sheet
+    @key = key
+  end
+
+  def as_nashville_format(other_key=nil)
+    chord_sheet
+      .each_line
+      .map { |line| format_line_nashville(line, other_key.presence || key) }
+      .join
   end
 
   private
 
-  def self.format_line_nashville(line, key)
-    if !Parser::chords_line?(line)
-      return line
-    end
+  def format_line_nashville(line, key)
+    return line unless Parser::chords_line?(line)
 
-    line.gsub(Parser::CHORD_TOKENIZER) do |chord|
-      format_chord_nashville(chord, key)
-    end
+    line.gsub(Parser::CHORD_TOKENIZER) { |chord| format_chord_nashville(chord, key) }
   end
 
-  def self.format_chord_nashville(chord, key)
+  def format_chord_nashville(chord, key)
     parsed_chord = Parser::parse_chord(chord)
-    roman_numeral = Music::accidental_for_key?(key, parsed_chord[:base]) ? format_accidental_nashville(parsed_chord[:base], key)
-        : Music::ROMAN_NUMERALS[Music::get_note_scale_index(parsed_chord[:base], key)]
+
+    roman_numeral = if Music::accidental_for_key?(key, parsed_chord[:base])
+      format_accidental_nashville(parsed_chord[:base])
+    else
+      Music::ROMAN_NUMERALS[Music::get_note_scale_index(parsed_chord[:base], key)]
+    end
 
     formatted_chord = parsed_chord[:chord].sub(parsed_chord[:base], roman_numeral)
     if parsed_chord[:modifiers].include?(:minor) || parsed_chord[:modifiers].include?(:diminished)
@@ -32,10 +39,11 @@ module Formatter
       formatted_chord.sub!(Parser::MINOR_CHORD_REGEX, '')
       formatted_chord.sub!('dim', '')
     end
+
     formatted_chord
   end
 
-  def self.format_accidental_nashville(note, key)
+  def format_accidental_nashville(note)
     # get note in original key
     note_in_key = Music::get_note_in_key(key, note)
     # is the accidental sharper or flatter than note_in_key
