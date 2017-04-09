@@ -38,6 +38,17 @@ class SongsControllerTest < ApplicationControllerTest
     assert_includes(songs_data, songs(:glorious_day))
   end
 
+  # "show" action tests
+  test "show song page should display the standard scan when it is not blank" do
+    get :show, id: songs(:forever_reign).id
+    assert_select ".song-metadata", /Standard Scan:/, "Standard scan should appear if it is not blank"
+  end
+
+  test "show song page should not display the standard scan when it is blank" do
+    get :show, id: songs(:relevant_1).id
+    assert_select ".song-metadata", {text: /Standard Scan:/, count: 0}, "Standard scan should not appear if it is blank"
+  end
+
   # "new" action tests
   test "new song page should load successfully if logged in as praise member" do
     get_edit_privileges

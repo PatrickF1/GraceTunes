@@ -89,6 +89,7 @@ forever_reign:
   artist: "Hillsong Worship"
   key: "C"
   tempo: "Medium"
+  standard_scan: "V1. V2. C. V3. C. C. B. C. C. C."
   chord_sheet: |
     Verse 1:
               C
@@ -187,6 +188,7 @@ ten_thousand_reasons:
   artist: "Matt Redman"
   key: "G"
   tempo: "Medium"
+  standard_scan: "I. C1. V1. C1. V2. C1. V3. C1. C2. T."
   chord_sheet: |
     Chorus:
               F          C     G/B Am
