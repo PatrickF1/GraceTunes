@@ -42,9 +42,7 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    @sheet = @song.sheet
-    @sheet = @sheet.transpose(params[:new_key]) if params[:new_key].present?
-    @sheet = @sheet.as_nashville_format         if params[:numbers].present?
+    @sheet = song_sheet
 
     respond_to do |format|
       format.html do
@@ -85,15 +83,23 @@ class SongsController < ApplicationController
 
   def print
     @song = Song.find(params[:id])
-    @sheet = @song.sheet
-    @sheet = @sheet.transpose(params[:new_key]) if params[:new_key].present?
-    @sheet = @sheet.as_nashville_format         if params[:numbers].present?
-
+    @sheet = song_sheet
+    
     render layout: false
   end
 
   private
   def song_params
     params.require(:song).permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet)
+  end
+
+  def song_sheet
+    if params[:new_key].present?
+      @song.sheet.transpose(params[:new_key])
+    elsif params[:numbers].present?
+      @song.sheet.as_nashville_format
+    else
+      @song.sheet
+    end
   end
 end
