@@ -41,7 +41,7 @@ $(function() {
   $('.search-page').addClass('active');
 
   // show preview drawer on table row click
-  $('.songs-table').on('click', 'tbody tr', function() {
+  $('.songs-table').on('click', 'tbody tr[role="row"]', function() {
     showSongPreview($(this).data('song'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
