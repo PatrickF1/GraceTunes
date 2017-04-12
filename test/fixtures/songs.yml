@@ -551,7 +551,21 @@ when_i_think_about_the_lord:
     All the praise
     All the praise
     All the praise
-
+just_a_test:
+  name: "Just a Test"
+  artist: "The Testersons"
+  key: "G"
+  tempo: "Fast"
+  chord_sheet: |
+    Verse 1:
+         G             D/F#
+    This is but a simple test
+    Chorus:
+         E7
+    Jessussssssssss
+  lyrics: |
+    This is but a simple test
+    Jessussssssssss
 relevant_1:
   name: "relevant"
   key: "F#"
