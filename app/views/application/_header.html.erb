@@ -15,13 +15,11 @@
         <% end %>
       </div>
     <% end %>
-    <% if ENV['FEEDBACK_URL'] %>
-      <div class="header_link">
-        <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
-          <i class="fa fa-comment"></i>Contact
-        <% end %>
-      </div>
-    <% end %>
+    <div class="header_link">
+      <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
+        <i class="fa fa-comment"></i>Contact
+      <% end %>
+    </div>
   </div>
 
   <div class="header_user">
