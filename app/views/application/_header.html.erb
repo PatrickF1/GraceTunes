@@ -15,6 +15,11 @@
         <% end %>
       </div>
     <% end %>
+    <div class="header_link">
+      <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
+        <i class="fa fa-comment"></i>Feedback
+      <% end %>
+    </div>
   </div>
 
   <div class="header_user">
