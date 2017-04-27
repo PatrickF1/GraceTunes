@@ -31,7 +31,7 @@ class Song < ActiveRecord::Base
 
   private
 
-  # Titlize fields and remove unnecessary spaces
+  # Titlize fields, remove unnecessary spaces, make headers all caps
   def normalize
     self.name = name.titleize.strip if name
 
@@ -44,9 +44,12 @@ class Song < ActiveRecord::Base
     end
 
     if chord_sheet
-      normalized_lines = []
-      chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
-      self.chord_sheet = normalized_lines.join("\n")
+      self.chord_sheet = chord_sheet.split("\n").each do |line|
+        if Parser.header?(line)
+          line = line.upcase
+        end
+        line.rstrip
+      end.join("\n")
     end
   end
 
