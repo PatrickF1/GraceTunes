@@ -30,6 +30,16 @@ $(function() {
     }
   });
 
+  /*
+    If the DataTable is not destroyed before Turbolinks caches it,
+    on the next page load a new DataTable will try to create itself
+    within an already initialized DataTable. This prevents double rendering.
+    https://github.com/turbolinks/turbolinks/issues/106
+  */
+  $(document).on('turbolinks:before-cache', function() {
+    table.destroy();
+  });
+
   $('#songs-search-field').keyup(function() {
     table.search(this.value).draw();
   });
