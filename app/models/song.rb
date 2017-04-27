@@ -44,7 +44,7 @@ class Song < ActiveRecord::Base
     end
 
     if chord_sheet
-      self.chord_sheet = chord_sheet.split("\n").each do |line|
+      self.chord_sheet = chord_sheet.split("\n").map do |line|
         if Parser.header?(line)
           line = line.upcase
         end
