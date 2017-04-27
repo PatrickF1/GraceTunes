@@ -52,13 +52,13 @@ $(function() {
   });
 
   // hide drawer when escape key is pressed
-  $('body').keyup(function(e) {
+  $('html').keyup(function(e) {
     var escKey = 27;
     if (e.keyCode == escKey) hideDrawer();
   });
 
   // hide drawer if anything outside of the table & drawer are clicked
-  $('body').click(function(e) {
+  $('html').click(function(e) {
     var drawer = $('.preview-drawer');
     var target = $(e.target);
 
