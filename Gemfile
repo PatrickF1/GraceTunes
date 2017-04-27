@@ -41,6 +41,7 @@ gem 'autoprefixer-rails'
 
 # Use Unicorn as the app server
 gem 'unicorn'
+gem 'rack-timeout'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
