@@ -119,6 +119,7 @@ GEM
     rack (1.6.5)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-timeout (0.4.2)
     rails (4.2.8)
       actionmailer (= 4.2.8)
       actionpack (= 4.2.8)
@@ -206,6 +207,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   pg
   pg_search
+  rack-timeout
   rails (= 4.2.8)
   rails_12factor
   sass-rails (~> 5.0)
