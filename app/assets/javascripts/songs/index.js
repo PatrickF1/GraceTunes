@@ -1,4 +1,8 @@
+//= require songs/play_back_widget
+
 $(function() {
+  var playBackWidget = new PlayBackWidget();
+  
   // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
     dom: 'lrtip', // no f option removes the default table filter
@@ -89,6 +93,8 @@ $(function() {
     // wipe and populate drawer
     drawer.find('.name, .artist, .tempo, .key, .chord-sheet')
       .html('');
+
+    playBackWidget.load('.playback-widget:visible', song);
 
     drawer.find('.name').text(song.name);
     drawer.find('.page-link').attr('href', '/songs/' + song.id);
