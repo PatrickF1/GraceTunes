@@ -1,5 +1,5 @@
 var PlayBackWidget = function() {
-  this.trackList = {}; // keep the last 100 tracks
+  this.trackList = {};
 }
 
 PlayBackWidget.prototype.search = function(song, callback) {
