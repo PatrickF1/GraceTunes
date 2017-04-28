@@ -51,7 +51,7 @@
     .chord-sheet {
       font-style: italic;
       white-space: pre;
-      padding-bottom: $default-padding * 2;
+      padding-bottom: $default-padding * 3;
     }
 
     [data-markjs=true] {
@@ -73,7 +73,13 @@
       }
     }
 
+    .info {
+      display: inline-block;
+      margin-right: 50px;
+    }
+
     .meta-info {
+      display: inline-block;
       font-size: 12px;
       letter-spacing: 1px;
       margin-bottom: $default-margin;
@@ -82,6 +88,14 @@
       .key {
         text-transform: initial;
       }
+    }
+
+    .playback-widget {
+      display: inline-block;
+    }
+
+    iframe {
+      border: none;
     }
   }
 
