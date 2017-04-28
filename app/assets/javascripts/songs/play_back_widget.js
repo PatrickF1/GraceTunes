@@ -5,8 +5,9 @@ var PlayBackWidget = function() {
 PlayBackWidget.prototype.search = function(song, callback) {
   if (this.trackList[song.id]) return callback(this.trackList[song.id]);
 
-  // Example query: "https://api.spotify.com/v1/search?q=artist:kari+jobe%20track:hands+to+the+heavens&type=track&market=US&limit=1"
+  // Example query string: "https://api.spotify.com/v1/search?q=artist:kari+jobe%20track:hands+to+the+heavens&type=track&market=US&limit=1"
   var uri;
+  var self = this;
   var query = 'https://api.spotify.com/v1/search?q=';
   query += 'track:' + song.name.split(' ').join('+');
   if (song.artist)
@@ -19,24 +20,29 @@ PlayBackWidget.prototype.search = function(song, callback) {
     dataType: 'json'
   }).done(function(data) {
     if (data.tracks.items.length) {
-      uri = data.tracks.items[0].uri; // blindly return the first track, even if it's non existant
+      uri = data.tracks.items[0].uri;
+      self.trackList[song.id] = uri;
     }
 
     callback(uri);
   }).fail(function(a, b, c) {
-    alert('failed!');
+    callback(uri);
   });
 }
 
 PlayBackWidget.prototype.load = function(selector, song) {
   this.search(song, function(uri) {
-    var widget = document.createElement('iframe');
-    widget.frameborder = 0;
-    widget.allowtransparency = true;
-    widget.height = 80;
-    widget.width = 300;
-    widget.src = 'https://open.spotify.com/embed?theme=white&uri=' + uri;
+    if (uri) {
+      var widget = document.createElement('iframe');
+      widget.frameborder = 0;
+      widget.allowtransparency = true;
+      widget.height = 80;
+      widget.width = 300;
+      widget.src = 'https://open.spotify.com/embed?theme=white&uri=' + uri;
 
-    $(selector).append(widget);
+      $(selector).append(widget);
+    } else {
+      $(selector).text('An error ocurred while trying to load the song preview.')
+    }
   });
 }
