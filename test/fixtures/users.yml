@@ -1,0 +1,12 @@
+reader:
+  email: "random_member@gpmail.org"
+  name: "Gracepoint Member"
+  role: <%= Role::READER %>
+praise_member:
+  email: "praise_member@gpmail.org"
+  name: "Praise Member"
+  role: <%= Role::PRAISE %>
+admin:
+  email: "admin@gpmail.org"
+  name: "GraceTunes Admin"
+  role: <%= Role::ADMIN %>

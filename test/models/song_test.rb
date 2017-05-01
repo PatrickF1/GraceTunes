@@ -82,6 +82,13 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.chord_sheet, "     E                            G#m")
   end
 
+  test "should uppercase header lines" do
+    song = songs(:glorious_day)
+    song.chord_sheet = "this is a header:"
+    assert song.save, "Song was not saved successfully"
+    assert_equal(song.chord_sheet, "THIS IS A HEADER:", "Header not uppercased")
+  end
+
   test "never leaves lyrics field blank" do
     song = songs(:God_be_praised)
     song.lyrics = nil
@@ -102,7 +109,7 @@ class SongTest < ActiveSupport::TestCase
     song = songs(:all_my_hope)
     force_lyrics_extraction(song)
     assert_no_match(/Verse \d:/, song.lyrics, "Lyrics contained verse headers")
-    assert_not_includes(song.lyrics, "Chorus:", "Lyrics contained chorus header")
+    assert_not_includes(song.lyrics, "CHORUS:", "Lyrics contained chorus header")
   end
 
   test "extracted lyrics don't contain chords" do

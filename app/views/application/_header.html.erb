@@ -8,9 +8,16 @@
         <i class="fa fa-search"></i>Search
       <% end %>
     </div>
+    <% if current_user.can_edit? %>
+      <div class="header_link">
+        <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
+          <i class="fa fa-music"></i>Upload Song
+        <% end %>
+      </div>
+    <% end %>
     <div class="header_link">
-      <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
-        <i class="fa fa-music"></i>Upload Song
+      <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
+        <i class="fa fa-comment"></i>Feedback
       <% end %>
     </div>
   </div>

@@ -30,6 +30,16 @@ $(function() {
     }
   });
 
+  /*
+    If the DataTable is not destroyed before Turbolinks caches it,
+    on the next page load a new DataTable will try to create itself
+    within an already initialized DataTable. This prevents double rendering.
+    https://github.com/turbolinks/turbolinks/issues/106
+  */
+  $(document).on('turbolinks:before-cache', function() {
+    table.destroy();
+  });
+
   $('#songs-search-field').keyup(function() {
     table.search(this.value).draw();
   });
@@ -41,7 +51,7 @@ $(function() {
   $('.search-page').addClass('active');
 
   // show preview drawer on table row click
-  $('.songs-table').on('click', 'tbody tr', function() {
+  $('.songs-table').on('click', 'tbody tr[role="row"]', function() {
     showSongPreview($(this).data('song'));
     $('.songs-table .selected').removeClass('selected');
     $(this).addClass('selected');
@@ -52,13 +62,13 @@ $(function() {
   });
 
   // hide drawer when escape key is pressed
-  $('body').keyup(function(e) {
+  $('html').keyup(function(e) {
     var escKey = 27;
     if (e.keyCode == escKey) hideDrawer();
   });
 
   // hide drawer if anything outside of the table & drawer are clicked
-  $('body').click(function(e) {
+  $('html').click(function(e) {
     var drawer = $('.preview-drawer');
     var target = $(e.target);
 

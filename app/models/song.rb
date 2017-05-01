@@ -25,12 +25,13 @@ class Song < ActiveRecord::Base
   before_save :extract_lyrics
 
   def to_s
-    name
+    name_and_artist = artist.blank? ? name : "#{name} by #{artist}"
+    "#{name_and_artist} (id: #{id})"
   end
 
   private
 
-  # Titlize fields and remove unnecessary spaces
+  # Titlize fields, remove unnecessary spaces, make headers all caps
   def normalize
     self.name = name.titleize.strip if name
 
@@ -43,9 +44,12 @@ class Song < ActiveRecord::Base
     end
 
     if chord_sheet
-      normalized_lines = []
-      chord_sheet.split("\n").each { |line| normalized_lines << line.rstrip }
-      self.chord_sheet = normalized_lines.join("\n")
+      self.chord_sheet = chord_sheet.split("\n").map do |line|
+        if Parser.header?(line)
+          line = line.upcase
+        end
+        line.rstrip
+      end.join("\n")
     end
   end
 

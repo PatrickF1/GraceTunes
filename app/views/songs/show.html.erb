@@ -1,16 +1,21 @@
 <div class="show-page">
-  <h1 class="title"><%= @song %></h1>
+  <h1 class="title"><%= @song.name %></h1>
   <div class="artist"><%= @song.artist %></div>
   <div class="buttons-container">
-    <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
-      <i class="fa fa-edit"></i> Edit
+    <% if current_user.can_edit? %>
+      <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
+        <i class="fa fa-edit"></i> Edit
+      <% end %>
     <% end %>
     <%= link_to print_song_path, { method: :get, class: "pill pill_link-dark-blue", id: "print-btn", "data-print-url": print_song_path } do %>
       <i class="fa fa-print"></i> Print in current key
     <% end %>
   </div>
   <div class="song-metadata">
-    <span>Recommended Key: <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
+    <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>
+     <% if @song.standard_scan.present? %>
+       <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
+     <% end %>
   </div>
 
   <div class="song-controls">

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Print <%= @song %></title>
+  <title>Print <%= @song.name %></title>
   <%= stylesheet_link_tag 'print-songs', media: 'all' %>
 </head>
 <body>
   <div id="heading">
-    <h1 class="title"><%= @song %></h1>
+    <h1 class="title"><%= @song.name %></h1>
     <p>
       <% if @song.artist.present? %>
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
