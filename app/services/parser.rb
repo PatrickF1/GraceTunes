@@ -23,6 +23,7 @@ module Parser
     line.scan CHORD_TOKENIZER
   end
 
+  # returns { base: base note of chord, chord: original chord, modifiers: list of chord modifiers }
   def self.parse_chord(chord)
     modifiers = []
     if chord.include?('dim')
