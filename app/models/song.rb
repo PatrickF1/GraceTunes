@@ -8,7 +8,7 @@ class Song < ActiveRecord::Base
 
   has_many :tags, through: :song_tags
 
-  VALID_KEYS = Parser::MAJOR_KEYS
+  VALID_KEYS = Music::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
   MAX_LINE_LENGTH = 47
 
@@ -45,7 +45,7 @@ class Song < ActiveRecord::Base
 
     if chord_sheet
       self.chord_sheet = chord_sheet.split("\n").map do |line|
-        if Parser.header?(line)
+        if Parser.header_line?(line)
           line = line.upcase
         end
         line.rstrip
@@ -54,7 +54,7 @@ class Song < ActiveRecord::Base
   end
 
   def extract_lyrics
-    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics?(line) }
+    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
     self.lyrics = lyrics.join("\n")
   end
 
