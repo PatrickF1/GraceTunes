@@ -9,29 +9,23 @@ $(function() {
   });
 
   $('#to_numbers').click(function(e) {
-    formatAsNumbers($(this).data("song-url"));
+    updateChordSheet({ numbers: true }, $(this).data("song-url"));
     updatePrintLink("numbers");
     hideToNumbersButton();
     showToChordsButton();
   });
 
-  var viewWithChords = function(){
+  var viewWithChords = function() {
     var newKey = $('#transpose_to option:selected').val();
     var tranposeUrl = $("#transpose_to").data('song-url');
-    transposeChordSheet(newKey, tranposeUrl);
+    updateChordSheet({ new_key : newKey }, tranposeUrl);
     updatePrintLink(newKey);
     showToNumbersButton();
     hideToChordsButton();
   }
 
-  var transposeChordSheet = function(newKey, songUrl) {
-    $.getJSON(songUrl, { new_key: newKey }, function(song) {
-      $('.chord-sheet').html(song.chord_sheet);
-    });
-  }
-
-  var formatAsNumbers = function(songUrl) {
-    $.getJSON(songUrl, { numbers: true }, function(song) {
+  var updateChordSheet = function(options, songUrl) {
+    $.getJSON(songUrl, options, function(song) {
       $('.chord-sheet').html(song.chord_sheet);
     });
   }
