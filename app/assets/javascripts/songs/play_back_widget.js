@@ -19,8 +19,12 @@ PlayBackWidget.prototype.search = function(song, callback) {
     url: query,
     dataType: 'json'
   }).done(function(data) {
-    if (data.tracks.items.length) {
-      uri = data.tracks.items[0].uri;
+    var validTracks = $.grep(data.tracks.items, function(track, i) {
+      return self._validateTrack(track, song);
+    });
+
+    if (validTracks.length) {
+      uri = validTracks[0].uri;
       self.trackList[song.id] = uri;
     }
 
@@ -45,4 +49,14 @@ PlayBackWidget.prototype.load = function(selector, song) {
       $(selector).text('An error ocurred while trying to load the song preview.')
     }
   });
+
+  PlayBackWidget.prototype._validateTrack = function(trackResult, song) {
+    if (song.artist && trackResult.artists.length &&
+        song.artist.toLowerCase() !== trackResult.artists[0].name.toLowerCase()) {
+      console.log(song.artist, 'did not match result', trackResult.artist);
+      return false;
+    }
+
+    return true;
+  }
 }
