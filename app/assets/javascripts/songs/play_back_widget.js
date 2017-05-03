@@ -6,6 +6,7 @@ PlayBackWidget.prototype.search = function(song, callback) {
   if (this.trackList[song.id]) return callback(this.trackList[song.id]);
 
   // Example query string: "https://api.spotify.com/v1/search?q=artist:kari+jobe%20track:hands+to+the+heavens&type=track&market=US&limit=1"
+  // Docs: https://developer.spotify.com/web-api/search-item/
   var uri;
   var self = this;
   var query = 'https://api.spotify.com/v1/search?q=';
