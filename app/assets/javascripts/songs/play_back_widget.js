@@ -13,7 +13,7 @@ PlayBackWidget.prototype.search = function(song, callback) {
   if (song.artist)
     query += '%20artist:' + song.artist.split(' ').join('+');
 
-  query += '&type=track&market=US&limit=1';
+  query += '&type=track&market=US&limit=5';
 
   $.ajax({
     url: query,
