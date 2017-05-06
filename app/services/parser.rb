@@ -7,7 +7,7 @@ module Parser
   MINOR_CHORD_REGEX = /(?<!di)m(?!aj)/
 
   def self.chords_line?(line)
-    line =~ CHORD_LINE_REGEX
+    CHORD_LINE_REGEX.match?(line)
   end
 
   def self.header_line?(line)
@@ -38,10 +38,10 @@ module Parser
     if chord.include?('maj7')
       modifiers << :major_seventh
     end
-    if chord =~ MINOR_CHORD_REGEX
+    if MINOR_CHORD_REGEX.match?(chord)
       modifiers << :minor
     end
-    if  chord =~ /\d/
+    if /\d/.match?(chord)
       modifiers << :number
     end
     { base: BASE_NOTE_REGEX.match(chord).to_s, chord: chord, modifiers: modifiers }
