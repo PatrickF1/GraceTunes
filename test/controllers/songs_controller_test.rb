@@ -152,12 +152,14 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   def post_new_song_form
-    post :create, song: {
-      name: "New Song Just Posted",
-      key: "E",
-      artist: "New Song Artist",
-      tempo: "Fast",
-      chord_sheet: "New Song Chords"
+    post :create, params: {
+      song: {
+        name: "New Song Just Posted",
+        key: "E",
+        artist: "New Song Artist",
+        tempo: "Fast",
+        chord_sheet: "New Song Chords"
+      }
     }
   end
 

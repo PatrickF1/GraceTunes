@@ -34,7 +34,7 @@ class SessionsControllerTest < ApplicationControllerTest
           "email" => email
       }
     }
-    get :create, provider: "google_oauth2"
+    get :create, params: { provider: "google_oauth2" }
     assert_equal(email, session[:user_email] , "Email not set correctly in the session")
     assert_redirected_to songs_path
   end
