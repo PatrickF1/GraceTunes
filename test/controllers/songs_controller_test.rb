@@ -106,7 +106,10 @@ class SongsControllerTest < ApplicationControllerTest
 
     song = songs(:God_be_praised)
     song.name = new_song_name
-    post :update, song: song.as_json, id: song.id
+    post :update, params: {
+      song: song.as_json,
+      id: song.id
+    }
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
@@ -115,31 +118,34 @@ class SongsControllerTest < ApplicationControllerTest
   test "after editing a song should redirect to its show song page" do
     get_edit_privileges
     song = songs(:God_be_praised)
-    post :update, song: song.as_json, id: song.id
+    post :update, params: {
+      song: song.as_json,
+      id: song.id
+    }
     assert_redirected_to song_path(song)
   end
 
   test "readers should be directed to songs index if they try to update a song" do
     song = songs(:God_be_praised)
-    post :update, song: song.as_json, id: song.id
+    post :update, params: { song: song.as_json, id: song.id }
     assert_redirected_to songs_path
   end
 
   # "edit" action tests
   test "edit song page should load successfully if logged in as praise member" do
     get_edit_privileges
-    get :edit, id: songs(:forever_reign).id
+    get :edit, params: { id: songs(:forever_reign).id }
     assert_response :success
   end
 
   test "readers should be redirected to songs index if they try to access the edit song page" do
-    get :edit, id: songs(:forever_reign).id
+    get :edit, params: { id: songs(:forever_reign).id }
     assert_redirected_to songs_path
   end
 
   # "print" action tests
   test "the standard scan field should not appear if it is blank" do
-    get :print, id: songs(:relevant_1).id
+    get :print, params: { id: songs(:relevant_1).id }
     assert_select ".standard-scan", false, "Standard scan should not appear if it is blank"
   end
 
