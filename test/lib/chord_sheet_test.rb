@@ -43,7 +43,7 @@ class ChordSheetTest < ActiveSupport::TestCase
     assert_equal "Dm4", chord_sheet("G").send(:transpose_chord, "Bm4", 3)
     assert_equal "C(b5)", chord_sheet("D").send(:transpose_chord, "D(b5)", -2)
     assert_equal "Bb(b5)", chord_sheet("D").send(:transpose_chord, "D(b5)", -4)
-    assert_equal "(E)", chord_sheet("D").send(:transpose_chord, "(E)", 2)
+    assert_equal "(E)", chord_sheet("D").send(:transpose_chord, "(D)", 2)
   end
 
 
