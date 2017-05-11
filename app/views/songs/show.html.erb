@@ -1,23 +1,28 @@
 <div class="show-page">
-  <h1 class="title"><%= @song %></h1>
+  <h1 class="title"><%= @song.name %></h1>
   <div class="artist"><%= @song.artist %></div>
   <div class="buttons-container">
-    <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
-      <i class="fa fa-edit"></i> Edit
+    <% if current_user.can_edit? %>
+      <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
+        <i class="fa fa-edit"></i> Edit
+      <% end %>
     <% end %>
     <%= link_to print_song_path, { method: :get, class: "pill pill_link-dark-blue", id: "print-btn", "data-print-url": print_song_path } do %>
       <i class="fa fa-print"></i> Print in current key
     <% end %>
   </div>
   <div class="song-metadata">
-    <span>Recommended Key: <span class="key"><%= @sheet.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span>Tempo: <%= @song.tempo %></span>
+    <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>
+     <% if @song.standard_scan.present? %>
+       <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
+     <% end %>
   </div>
 
   <div class="song-controls">
-    <span class="transpose-container">Transpose to <%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %></span>
-    <span class="to-numbers-container"><%= content_tag :div, "Switch to Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, format: :json) %></span>
-    <span class="to-chords-container" style="display:none;"><%= content_tag :div, "Switch to Chords", class: "pill pill_link-dark-blue", id: "to_chords", "data-song-url": song_path(@song, format: :json) %></span>
-
+    <span class="transpose-container">View in Key of<%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %></span>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <span class="to-numbers-container"><%= content_tag :div, "View with Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, format: :json) %></span>
+    <span class="to-chords-container" style="display:none;"><%= content_tag :div, "View with Chords", class: "pill pill_link-dark-blue", id: "to_chords", "data-song-url": song_path(@song, format: :json) %></span>
   </div>
 
   <div class="fixed-width chord-sheet "><%= @sheet.chord_sheet %></div>

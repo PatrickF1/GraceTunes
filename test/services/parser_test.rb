@@ -17,9 +17,12 @@ class ParserTest < ActiveSupport::TestCase
     assert Parser.chords_line?("A7 D5       C2")
     assert Parser.chords_line?("Em7   D#2     B9")
     assert Parser.chords_line?("Cmaj7       Ebmaj3      D#maj5")
+    assert Parser.chords_line?("    Eb      Gbaug   ")
     assert Parser.chords_line?("Em7/G#       F/Cmaj7        D/Cb3")
     assert Parser.chords_line?("A(5)     B(7)")
     assert Parser.chords_line?("D(b5)         E(#)")
+    assert Parser.chords_line?("D2       A/C#        E    (A)")
+    assert Parser.chords_line?("    E     (D(b5))")
     assert_not Parser.chords_line?("AM     DM") # don't allow 'M' for major since it's confusing
     assert_not Parser.chords_line?("Amin    Dmin") # don't allow 'min' for minor since it's confusing
     assert_not Parser.chords_line?("A    C#   text")
@@ -44,6 +47,7 @@ class ParserTest < ActiveSupport::TestCase
     assert_equal ["Em7", "G#", "F", "Cmaj7", "D", "Cb3"], Parser.chords_from_line("Em7/G#       F/Cmaj7        D/Cb3")
     assert_equal ["A(5)", "B(7)"], Parser.chords_from_line("A(5)     B(7)")
     assert_equal ["D(b5)", "E(#)"], Parser.chords_from_line("D(b5)         E(#)")
+    assert_equal ["Eb", "(A)"], Parser.chords_from_line("   Eb     (A)")
     assert_equal [], Parser.chords_from_line("A    C#   text")
   end
 

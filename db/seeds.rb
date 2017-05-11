@@ -1,7 +1,31 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# Add GraceTunes team to users table with admin privileges so they can access all parts of the app
+User.create(
+  email: "patrick.fong@gpmail.org",
+  name: "Patrick Fong",
+  role: Role::ADMIN
+)
+User.create(
+  email: "nathan.connor@gpmail.org",
+  name: "Nathan Connor",
+  role: Role::ADMIN
+)
+User.create(
+  email: "winston.kim@gpmail.org",
+  name: "Winston Kim",
+  role: Role::ADMIN
+)
+User.create(
+  email: "steven.chang2@gpmail.org",
+  name: "Steven Chang",
+  role: Role::ADMIN
+)
+User.create(
+  email: "ivan.yung@gpmail.org",
+  name: "Ivan Yung",
+  role: Role::ADMIN
+)
+User.create(
+  email: "andrew.martinez@gpmail.org",
+  name: "Andrew Martinez",
+  role: Role::ADMIN
+)

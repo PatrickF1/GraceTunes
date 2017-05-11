@@ -1,13 +1,13 @@
 # based off of https://gist.github.com/andrewstucki/106c9704be9233e197350ceabec6a32c
 module Parser
 
-  CHORD_LINE_REGEX = /^(?:\s*(?:(?:(?:[A-G]|I{1,3}|IV|V|VI|VII|i{1,3}|iv|v|vi|vii)[#b]?(?:m|maj|dim)?(?:no|add|s|sus|aug)?\d?)|\/|(?:\([b#]?\d?\)))\s*)+$/
-  CHORD_TOKENIZER = /(?:(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
+  CHORD_LINE_REGEX = /^(?:\s*\(?(?:(?:(?:[A-G]|I{1,3}|IV|V|VI|VII|i{1,3}|iv|v|vi|vii)[#b]?(?:m|maj|dim)?(?:no|add|s|sus|aug)?\d?)|\/|(?:\([b#]?\d?\)))\)?\s*)+$/
+  CHORD_TOKENIZER = /(?:\(?(?:[A-G](?:b)?(?:#)?(?:|maj|m|dim)?(?:|s|sus|aug)*[\d]*)\(?(?:b)?(?:#)?[\d]*?\)?\(?(?:b)?(?:#)?[\d]*?\)?)(?=\/|\s|$)/
   BASE_NOTE_REGEX = /[A-G][b#]?/
   MINOR_CHORD_REGEX = /(?<!di)m(?!aj)/
 
   def self.chords_line?(line)
-    line =~ CHORD_LINE_REGEX
+    CHORD_LINE_REGEX.match?(line)
   end
 
   def self.header_line?(line)
@@ -23,6 +23,7 @@ module Parser
     line.scan CHORD_TOKENIZER
   end
 
+  # returns { base: base note of chord, chord: original chord, modifiers: list of chord modifiers }
   def self.parse_chord(chord)
     modifiers = []
     if chord.include?('dim')
@@ -37,10 +38,10 @@ module Parser
     if chord.include?('maj7')
       modifiers << :major_seventh
     end
-    if chord =~ MINOR_CHORD_REGEX
+    if MINOR_CHORD_REGEX.match?(chord)
       modifiers << :minor
     end
-    if  chord =~ /\d/
+    if /\d/.match?(chord)
       modifiers << :number
     end
     { base: BASE_NOTE_REGEX.match(chord).to_s, chord: chord, modifiers: modifiers }
