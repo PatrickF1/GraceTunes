@@ -1,3 +1,0 @@
-== README
-
-Dev environment setup guide is on the GitHub wiki.
