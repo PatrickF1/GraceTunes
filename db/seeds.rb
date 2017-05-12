@@ -10,7 +10,7 @@ User.create(
   role: Role::ADMIN
 )
 User.create(
-  email: "winstons.kim@gpmail.org",
+  email: "winston.kim@gpmail.org",
   name: "Winston Kim",
   role: Role::ADMIN
 )
