@@ -29,6 +29,10 @@ class Song < ActiveRecord::Base
     "#{name_and_artist} (id: #{id})"
   end
 
+  def sheet
+    @sheet ||= ChordSheet.new(chord_sheet, key)
+  end
+
   private
 
   # Titlize fields, remove unnecessary spaces, make headers all caps

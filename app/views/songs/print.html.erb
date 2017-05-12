@@ -11,7 +11,7 @@
       <% if @song.artist.present? %>
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
-      <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
+      <b>Key:</b> <%= @sheet.key %> &nbsp;|&nbsp;
       <b>Tempo:</b> <%= @song.tempo %>
     </p>
     <% if @song.standard_scan.present? %>

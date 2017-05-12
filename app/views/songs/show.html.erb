@@ -25,7 +25,7 @@
     <span class="to-chords-container" style="display:none;"><%= content_tag :div, "View with Chords", class: "pill pill_link-dark-blue", id: "to_chords", "data-song-url": song_path(@song, format: :json) %></span>
   </div>
 
-  <div class="fixed-width chord-sheet "><%= @song.chord_sheet %></div>
+  <div class="fixed-width chord-sheet "><%= @sheet.chord_sheet %></div>
 </div>
 
 <%= javascript_include_tag 'songs/show' %>

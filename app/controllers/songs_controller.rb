@@ -45,17 +45,13 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    if params[:new_key].present?
-      Transposer.transpose_song(@song, params[:new_key])
-    elsif params[:numbers]
-      Formatter.format_song_nashville(@song)
-    end
+    @sheet = song_sheet
 
     respond_to do |format|
       format.html do
       end
       format.json do
-        render json: @song
+        render json: @song.as_json.merge(chord_sheet: @sheet.chord_sheet, key: @sheet.key)
       end
     end
   end
@@ -92,16 +88,23 @@ class SongsController < ApplicationController
 
   def print
     @song = Song.find(params[:id])
-    if params[:new_key].present?
-      Transposer.transpose_song(@song, params[:new_key])
-    elsif params[:numbers]
-      Formatter.format_song_nashville(@song)
-    end
+    @sheet = song_sheet
+
     render layout: false
   end
 
   private
   def song_params
     params.require(:song).permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet)
+  end
+
+  def song_sheet
+    if params[:new_key].present?
+      @song.sheet.transpose(params[:new_key])
+    elsif params[:numbers].present?
+      @song.sheet.as_nashville_format
+    else
+      @song.sheet
+    end
   end
 end
