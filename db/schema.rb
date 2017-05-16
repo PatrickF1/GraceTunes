@@ -11,11 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326001611) do
+ActiveRecord::Schema.define(version: 20170516220758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
+
+  create_table "praise_set_songs", force: :cascade do |t|
+    t.integer "praise_set_id"
+    t.integer "song_id"
+  end
+
+  add_index "praise_set_songs", ["praise_set_id"], name: "index_praise_set_songs_on_praise_set_id", using: :btree
+  add_index "praise_set_songs", ["song_id"], name: "index_praise_set_songs_on_song_id", using: :btree
+
+  create_table "praise_sets", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "praise_sets", ["name"], name: "index_praise_sets_on_name", using: :btree
 
   create_table "song_tags", force: :cascade do |t|
     t.integer  "song_id"
