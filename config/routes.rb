@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :praise_sets
+
   resources :tags
 
   # Authentication

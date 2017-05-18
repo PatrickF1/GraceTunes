@@ -13,4 +13,10 @@ class PraiseSetTest < ActiveSupport::TestCase
     set.owner = nil
     assert_not set.save, "Saved without owner"
   end
+
+  test "should save without date" do
+    set = praise_sets(:hillsong)
+    set.date = nil
+    assert set.save!, "Did not save without date"
+  end
 end

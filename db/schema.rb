@@ -28,10 +28,12 @@ ActiveRecord::Schema.define(version: 20170516220758) do
   create_table "praise_sets", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "owner",      null: false
+    t.date     "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_index "praise_sets", ["date"], name: "index_praise_sets_on_date", using: :btree
   add_index "praise_sets", ["name"], name: "index_praise_sets_on_name", using: :btree
   add_index "praise_sets", ["owner"], name: "index_praise_sets_on_owner", using: :btree
 
