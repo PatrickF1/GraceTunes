@@ -7,3 +7,8 @@ relevant_songs:
   name: Relevant Songs Set,
   owner: praise_member
   songs: relevant_1, relevant_2, relevant_3, relevant_4
+
+sws_05142017:
+  name: "Sunday Worship Service May 5, 2017"
+  owner: praise_member
+  songs: God_be_praised, forever_reign, ten_thousand_reasons
