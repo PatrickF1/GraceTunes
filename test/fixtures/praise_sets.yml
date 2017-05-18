@@ -1,10 +1,10 @@
 hillsong:
-  name: Hillsong set
+  name: "Hillsong set"
   owner: admin
   songs: forever_reign, all_my_hope
 
 relevant_songs:
-  name: Relevant Songs Set,
+  name: "Relevant Songs Set"
   owner: praise_member
   songs: relevant_1, relevant_2, relevant_3, relevant_4
 
