@@ -1,7 +1,9 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+hillsong:
+  name: Hillsong set
+  owner: admin
+  songs: forever_reign, all_my_hope
 
-one:
-  name: MyString
-
-two:
-  name: MyString
+relevant_songs:
+  name: Relevant Songs Set,
+  owner: praise_member
+  songs: relevant_1, relevant_2, relevant_3, relevant_4
