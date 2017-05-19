@@ -1,0 +1,22 @@
+<div class="index-page">
+  <div class="container">
+    <div class="center-block">
+      <h1 class="page-header">Praise Set History</h1>
+
+      <div class="history">
+        <% @praise_sets.each do |set| %>
+          <div class="row">
+            <h3><%= set.name %></h3>
+            <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.date %></p>
+            <ol>
+              <% set.songs.each do |song| %>
+                <li><%= song.name %></li>
+              <% end %>
+            </ol>
+            <hr>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
