@@ -10,7 +10,11 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "index should retrieve relevant keyword search results" do
-    get :index, search: { value: "hand" }, format: :json, xhr: true
+    get :index, params: {
+      search: { value: "hand" },
+      format: :json,
+      xhr: true,
+    }
 
     songs_data = load_songs
 
@@ -19,15 +23,13 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "index should stack filters" do
-    http_params = {
+    get :index, params: {
       search: { value: "forever" },
       tempo: "Medium",
       key: "B",
       format: :json,
       xhr: :true
     }
-
-    get :index, http_params
     songs_data = load_songs
 
     # these songs almost match but have different keys
@@ -40,12 +42,12 @@ class SongsControllerTest < ApplicationControllerTest
 
   # "show" action tests
   test "show song page should display the standard scan when it is not blank" do
-    get :show, id: songs(:forever_reign).id
+    get :show, params: { id: songs(:forever_reign).id }
     assert_select ".song-metadata", /Standard Scan:/, "Standard scan should appear if it is not blank"
   end
 
   test "show song page should not display the standard scan when it is blank" do
-    get :show, id: songs(:relevant_1).id
+    get :show, params: { id: songs(:relevant_1).id }
     assert_select ".song-metadata", {text: /Standard Scan:/, count: 0}, "Standard scan should not appear if it is blank"
   end
 
@@ -64,13 +66,13 @@ class SongsControllerTest < ApplicationControllerTest
   # "create" action tests
   test "should load the new song template when song creation unsuccessful" do
     get_edit_privileges
-    post :create, song: {problem: true}
+    post :create, params: { song: { problem: true } }
     assert_template :new
   end
 
   test "should show error messages when song creation unsuccessful" do
     get_edit_privileges
-    post :create, song: {problem: true}
+    post :create, params: { song: { problem: true } }
     assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
   end
 
