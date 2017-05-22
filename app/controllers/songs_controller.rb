@@ -67,7 +67,7 @@ class SongsController < ApplicationController
   def create
     @song = Song.new(song_params)
     if @song.save
-      flash[:success] = "#{@song} successfully created!"
+      flash[:success] = "#{@song.name} successfully created!"
       logger.info "New song created: #{current_user} created #{@song}"
       redirect_to @song
     else
@@ -82,7 +82,7 @@ class SongsController < ApplicationController
   def update
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
-      flash[:success] = "#{@song} successfully updated!"
+      flash[:success] = "#{@song.name} successfully updated!"
       logger.info "Song updated: #{current_user} updated #{@song}"
       redirect_to @song
     else

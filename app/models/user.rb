@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   self.primary_key = :email
 
   before_validation :normalize
