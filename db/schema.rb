@@ -16,6 +16,24 @@ ActiveRecord::Schema.define(version: 20170523052905) do
   enable_extension "plpgsql"
   enable_extension "btree_gin"
 
+  create_table "praise_set_songs", id: :serial, force: :cascade do |t|
+    t.integer "praise_set_id"
+    t.integer "song_id"
+    t.index ["praise_set_id"], name: "index_praise_set_songs_on_praise_set_id"
+    t.index ["song_id"], name: "index_praise_set_songs_on_song_id"
+  end
+
+  create_table "praise_sets", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "owner", null: false
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_praise_sets_on_date"
+    t.index ["name"], name: "index_praise_sets_on_name"
+    t.index ["owner"], name: "index_praise_sets_on_owner"
+  end
+
   create_table "song_tags", id: :serial, force: :cascade do |t|
     t.integer "song_id"
     t.integer "tag_id"
