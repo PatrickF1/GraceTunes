@@ -1,4 +1,4 @@
-class Song < ActiveRecord::Base
+class Song < ApplicationRecord
   include PgSearch
   pg_search_scope(
     :search_by_keywords,

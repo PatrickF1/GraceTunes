@@ -10,7 +10,11 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "index should retrieve relevant keyword search results" do
-    get :index, search: { value: "hand" }, format: :json, xhr: true
+    get :index, params: {
+      search: { value: "hand" },
+      format: :json,
+      xhr: true,
+    }
 
     songs_data = load_songs
 
@@ -19,15 +23,13 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "index should stack filters" do
-    http_params = {
+    get :index, params: {
       search: { value: "forever" },
       tempo: "Medium",
       key: "B",
       format: :json,
       xhr: :true
     }
-
-    get :index, http_params
     songs_data = load_songs
 
     # these songs almost match but have different keys
@@ -40,12 +42,12 @@ class SongsControllerTest < ApplicationControllerTest
 
   # "show" action tests
   test "show song page should display the standard scan when it is not blank" do
-    get :show, id: songs(:forever_reign).id
+    get :show, params: { id: songs(:forever_reign).id }
     assert_select ".song-metadata", /Standard Scan:/, "Standard scan should appear if it is not blank"
   end
 
   test "show song page should not display the standard scan when it is blank" do
-    get :show, id: songs(:relevant_1).id
+    get :show, params: { id: songs(:relevant_1).id }
     assert_select ".song-metadata", {text: /Standard Scan:/, count: 0}, "Standard scan should not appear if it is blank"
   end
 
@@ -64,13 +66,13 @@ class SongsControllerTest < ApplicationControllerTest
   # "create" action tests
   test "should load the new song template when song creation unsuccessful" do
     get_edit_privileges
-    post :create, song: {problem: true}
+    post :create, params: { song: { problem: true } }
     assert_template :new
   end
 
   test "should show error messages when song creation unsuccessful" do
     get_edit_privileges
-    post :create, song: {problem: true}
+    post :create, params: { song: { problem: true } }
     assert_select ".song-errors", true, "Error messages did not appear when song creation failed"
   end
 
@@ -106,7 +108,10 @@ class SongsControllerTest < ApplicationControllerTest
 
     song = songs(:God_be_praised)
     song.name = new_song_name
-    post :update, song: song.as_json, id: song.id
+    post :update, params: {
+      song: song.as_json,
+      id: song.id
+    }
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
@@ -115,31 +120,34 @@ class SongsControllerTest < ApplicationControllerTest
   test "after editing a song should redirect to its show song page" do
     get_edit_privileges
     song = songs(:God_be_praised)
-    post :update, song: song.as_json, id: song.id
+    post :update, params: {
+      song: song.as_json,
+      id: song.id
+    }
     assert_redirected_to song_path(song)
   end
 
   test "readers should be directed to songs index if they try to update a song" do
     song = songs(:God_be_praised)
-    post :update, song: song.as_json, id: song.id
+    post :update, params: { song: song.as_json, id: song.id }
     assert_redirected_to songs_path
   end
 
   # "edit" action tests
   test "edit song page should load successfully if logged in as praise member" do
     get_edit_privileges
-    get :edit, id: songs(:forever_reign).id
+    get :edit, params: { id: songs(:forever_reign).id }
     assert_response :success
   end
 
   test "readers should be redirected to songs index if they try to access the edit song page" do
-    get :edit, id: songs(:forever_reign).id
+    get :edit, params: { id: songs(:forever_reign).id }
     assert_redirected_to songs_path
   end
 
   # "print" action tests
   test "the standard scan field should not appear if it is blank" do
-    get :print, id: songs(:relevant_1).id
+    get :print, params: { id: songs(:relevant_1).id }
     assert_select ".standard-scan", false, "Standard scan should not appear if it is blank"
   end
 
@@ -152,12 +160,14 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   def post_new_song_form
-    post :create, song: {
-      name: "New Song Just Posted",
-      key: "E",
-      artist: "New Song Artist",
-      tempo: "Fast",
-      chord_sheet: "New Song Chords"
+    post :create, params: {
+      song: {
+        name: "New Song Just Posted",
+        key: "E",
+        artist: "New Song Artist",
+        tempo: "Fast",
+        chord_sheet: "New Song Chords"
+      }
     }
   end
 

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   self.primary_key = :email
 
   has_many :praise_sets, :foreign_key => "owner", :primary_key => "email"
