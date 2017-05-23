@@ -58,4 +58,9 @@ class SessionsControllerTest < ApplicationControllerTest
     end
     assert_equal(Role::READER, User.find(email).role, "New users should have a role of Reader")
   end
+
+  test "destroy should clear the user's cookie" do
+    get :destroy
+    assert_nil(session[:user_email], "Destroy did not clear the user's cookie")
+  end
 end
