@@ -16,7 +16,7 @@ class UserTest < ActiveSupport::TestCase
     assert_not user_blank_email.save, "saved with a blank email"
   end
 
-  test "should not be able to save a user with an existing email" do
+  test "should not be able to save a new user with an existing email" do
     duplicate_user = User.new(
       email: users(:praise_member).email,
       name: "Duplicate User",
