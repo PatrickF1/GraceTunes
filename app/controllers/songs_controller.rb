@@ -8,11 +8,13 @@ class SongsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        if params[:search][:value].present?
-          songs = Song.search_by_keywords(params[:search][:value])
+
+        songs = if params[:search][:value].present?
+          # if searching, sort songs by relevance
+          Song.search_by_keywords(params[:search][:value])
         else
-          # if no search terms, show songs alphabetically
-          songs = Song.order(name: :asc)
+          # if not searching, sort songs alphabetically
+          Song.order(name: :asc)
         end
 
         songs = songs.where(key: params[:key]) if params[:key].present?
