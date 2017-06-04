@@ -13,6 +13,9 @@ class SongsController < ApplicationController
 
         if params[:search][:value].present?
           songs = Song.search_by_keywords(params[:search][:value])
+        else
+          # if no search terms, show songs alphabetically
+          songs = Song.order(name: :asc)
         end
 
         songs = songs.where(key: params[:key]) if params[:key].present?
