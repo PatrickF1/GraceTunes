@@ -2,8 +2,8 @@ class Song < ApplicationRecord
   include PgSearch
   pg_search_scope(
     :search_by_keywords,
-    against: {name: 'A', lyrics: 'B', artist: 'B'},
-    using: {:tsearch => {any_word: false, prefix: true}}
+    against: {name: 'A', artist: 'B', lyrics: 'C'},
+    using: {tsearch: {any_word: false, prefix: true}}
   )
 
   has_many :tags, through: :song_tags
