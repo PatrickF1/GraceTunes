@@ -8,11 +8,13 @@ class SongsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        songs = Song.all
-        recordsTotal = songs.size
 
-        if params[:search][:value].present?
-          songs = Song.search_by_keywords(params[:search][:value])
+        songs = if params[:search][:value].present?
+          # if searching, sort songs by relevance
+          Song.search_by_keywords(params[:search][:value])
+        else
+          # if not searching, sort songs alphabetically
+          Song.order(name: :asc)
         end
 
         songs = songs.where(key: params[:key]) if params[:key].present?
@@ -29,7 +31,7 @@ class SongsController < ApplicationController
 
         song_data = {
           draw: params[:draw].to_i,
-          recordsTotal: recordsTotal,
+          recordsTotal: Song.count,
           recordsFiltered: recordsFiltered,
           data: songs
         }

@@ -148,32 +148,34 @@ class SongTest < ActiveSupport::TestCase
     )
     assert new_song.save, "Did not allow two songs with the same name but different artist"
   end
+
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
-  multi_word_results = Song.search_by_keywords "truth live life hands"
-  partial_word_results = Song.search_by_keywords "hand"
+  multi_word_results = Song.search_by_keywords "Holy Lord"
 
   test "search should prioritize songs with the keyword in the title" do
     assert_equal(single_word_results.first, songs(:relevant_1))
   end
 
-  test "search should prioritize songs with more occurances of the keyword" do
+  test "search should prioritize songs with more occurrences of the keyword" do
     assert_equal(single_word_results.second, songs(:relevant_2))
     assert_equal(single_word_results.third, songs(:relevant_3))
   end
 
-  test "search should not include songs without any occurances of the keyword" do
-    assert_not_includes(
-      single_word_results,
-      songs(:relevant_4),
-      "Song without keyword appeared in search"
-    )
+  test "search should not include songs without occurrences of all keywords" do
+    # these songs only contain the word "Lord"
+    [songs(:forever_reign), songs(:God_be_praised), songs(:glorious_day)].each do |song|
+      assert_not_includes(
+        multi_word_results,
+        song,
+        "Song without both keywords appeared in search"
+      )
+    end
   end
 
-  test "search should include all songs where at least one keyword present" do
-    assert_includes(multi_word_results, songs(:God_be_praised))
-    assert_includes(multi_word_results, songs(:forever_reign))
-    assert_includes(multi_word_results, songs(:hands_to_the_heaven))
+  test "search should include all songs where all the keywords are present" do
+    assert_includes(multi_word_results, songs(:ten_thousand_reasons))
+    assert_includes(multi_word_results, songs(:when_i_think_about_the_lord))
   end
 
   test "empty search should return no results" do
@@ -182,8 +184,9 @@ class SongTest < ActiveSupport::TestCase
   end
 
   test "search should include partial matches" do
-    assert_includes(partial_word_results, songs(:hands_to_the_heaven))
-    assert_includes(partial_word_results, songs(:glorious_day))
+    results = Song.search_by_keywords "hand"
+    assert_includes(results, songs(:hands_to_the_heaven))
+    assert_includes(results, songs(:glorious_day))
   end
 
   test "search should include artist column" do
@@ -192,9 +195,8 @@ class SongTest < ActiveSupport::TestCase
   end
 
   test "search should include songs that match on different individual columns" do
-    songs = Song.search_by_keywords("church reasons")
-    assert_includes(songs, songs(:hands_to_the_heaven))
-    assert_includes(songs, songs(:ten_thousand_reasons))
+    songs = Song.search_by_keywords("praised forever")
+    assert_includes(songs, songs(:God_be_praised))
   end
 
   test "search should be case insensitive" do
