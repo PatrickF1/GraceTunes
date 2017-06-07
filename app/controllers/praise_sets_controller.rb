@@ -32,6 +32,6 @@ class PraiseSetsController < ApplicationController
   private
 
   def praise_set_params
-    params.require(:praise_set).permit(:name, :owner)
+    params.require(:praise_set).permit(:name, :owner, :date)
   end
 end
