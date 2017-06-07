@@ -1,4 +1,13 @@
 module ApplicationHelper
+
+  def set_page_title(page_title)
+    content_for :title, page_title
+  end
+
+  def get_page_title
+    [content_for(:title), 'GraceTunes'].compact.join(" | ")
+  end
+
   def alert_class_for(flash_type)
     {
       success: 'alert-success',
