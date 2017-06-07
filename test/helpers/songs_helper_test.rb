@@ -1,7 +1,6 @@
 require "test_helper"
 
 class SongsHelperTest < ActionView::TestCase
-  include SongsHelper
 
   test "get_lines_for_columns splits the song early when the end of the column occurs too close to the end" do
     @song = songs(:God_be_praised)
