@@ -4,7 +4,7 @@ class PraiseSet < ActiveRecord::Base
 
   belongs_to :owner, :foreign_key => "owner", :primary_key => "email", :class_name => "User"
 
-  validates :name, presence: true
+  validates :event_name, presence: true
+  validates :event_date, presence: true
   validates :owner, presence: true
-  validates :date, presence: true
 end

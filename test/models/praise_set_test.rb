@@ -4,7 +4,7 @@ class PraiseSetTest < ActiveSupport::TestCase
 
   test "should not save without name" do
     set = praise_sets(:hillsong)
-    set.name = nil
+    set.event_name = nil
     assert_not set.save, "Saved without a name"
   end
 
@@ -16,7 +16,7 @@ class PraiseSetTest < ActiveSupport::TestCase
 
   test "should not save without date" do
     set = praise_sets(:hillsong)
-    set.date = nil
+    set.event_date = nil
     assert_not set.save, "Saved without date"
   end
 end

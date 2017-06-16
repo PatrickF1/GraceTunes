@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170523232514) do
+ActiveRecord::Schema.define(version: 20170616040459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
 
-  create_table "praise_set_songs", id: :serial, force: :cascade do |t|
-    t.integer "praise_set_id"
-    t.integer "song_id"
+  create_table "praise_set_songs", force: :cascade do |t|
+    t.bigint "praise_set_id"
+    t.bigint "song_id"
     t.index ["praise_set_id"], name: "index_praise_set_songs_on_praise_set_id"
     t.index ["song_id"], name: "index_praise_set_songs_on_song_id"
   end
@@ -26,11 +26,12 @@ ActiveRecord::Schema.define(version: 20170523232514) do
   create_table "praise_sets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name", null: false
     t.string "owner", null: false
-    t.date "date"
-    t.index ["date"], name: "index_praise_sets_on_date"
-    t.index ["name"], name: "index_praise_sets_on_name"
+    t.string "event_name", null: false
+    t.date "event_date", null: false
+    t.text "notes"
+    t.index ["event_date"], name: "index_praise_sets_on_event_date"
+    t.index ["event_name"], name: "index_praise_sets_on_event_name"
     t.index ["owner"], name: "index_praise_sets_on_owner"
   end
 
