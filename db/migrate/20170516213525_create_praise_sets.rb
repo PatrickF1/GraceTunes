@@ -1,11 +1,11 @@
-class CreatePraiseSets < ActiveRecord::Migration
+class CreatePraiseSets < ActiveRecord::Migration[5.1]
   def change
     create_table :praise_sets do |t|
+      t.timestamps null: false
       t.string :name, null: false
       t.string :owner, null: false
       t.date :date
 
-      t.timestamps null: false
     end
 
     add_index :praise_sets, :name

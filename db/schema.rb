@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(version: 20170523232514) do
     t.index ["song_id"], name: "index_praise_set_songs_on_song_id"
   end
 
-  create_table "praise_sets", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "owner", null: false
-    t.date "date", null: false
+  create_table "praise_sets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name", null: false
+    t.string "owner", null: false
+    t.date "date"
     t.index ["date"], name: "index_praise_sets_on_date"
     t.index ["name"], name: "index_praise_sets_on_name"
     t.index ["owner"], name: "index_praise_sets_on_owner"
