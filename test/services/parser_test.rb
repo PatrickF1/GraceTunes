@@ -18,6 +18,7 @@ class ParserTest < ActiveSupport::TestCase
     assert Parser.chords_line?("Em7   D#2     B9")
     assert Parser.chords_line?("Cmaj7       Ebmaj3      D#maj5")
     assert Parser.chords_line?("    Eb      Gbaug   ")
+    assert Parser.chords_line?("  A7sus        Fm7sus       G#msus")
     assert Parser.chords_line?("Em7/G#       F/Cmaj7        D/Cb3")
     assert Parser.chords_line?("A(5)     B(7)")
     assert Parser.chords_line?("D(b5)         E(#)")
