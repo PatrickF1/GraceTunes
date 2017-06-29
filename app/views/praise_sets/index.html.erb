@@ -6,8 +6,8 @@
       <div class="history">
         <% @praise_sets.each do |set| %>
           <div class="row">
-            <h3><%= set.name %></h3>
-            <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.date %></p>
+            <h3><%= set.event_name %></h3>
+            <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
             <ol>
               <% set.songs.each do |song| %>
                 <li><%= song.name %></li>

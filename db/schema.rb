@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20170616040459) do
   create_table "praise_set_songs", force: :cascade do |t|
     t.bigint "praise_set_id"
     t.bigint "song_id"
+    t.integer "position", null: false
     t.index ["praise_set_id"], name: "index_praise_set_songs_on_praise_set_id"
     t.index ["song_id"], name: "index_praise_set_songs_on_song_id"
   end
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170616040459) do
     t.string "owner", null: false
     t.string "event_name", null: false
     t.date "event_date", null: false
+    t.integer "song_ids", array: true
     t.text "notes"
     t.index ["event_date"], name: "index_praise_sets_on_event_date"
     t.index ["event_name"], name: "index_praise_sets_on_event_name"

@@ -5,7 +5,7 @@ class PraiseSetsController < ApplicationController
 
   def index
     respond_to do |format|
-      @praise_sets = PraiseSet.order(date: :desc)
+      @praise_sets = PraiseSet.order(event_date: :desc)
       format.json do
         render json: @praise_sets and return
       end
