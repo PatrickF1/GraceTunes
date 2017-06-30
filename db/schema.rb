@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170616040459) do
+ActiveRecord::Schema.define(version: 20170630201424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20170616040459) do
     t.string "owner", null: false
     t.string "event_name", null: false
     t.date "event_date", null: false
-    t.integer "song_ids", array: true
     t.text "notes"
     t.index ["event_date"], name: "index_praise_sets_on_event_date"
     t.index ["event_name"], name: "index_praise_sets_on_event_name"
