@@ -1,18 +1,17 @@
+# songs are defined in praise_set_song.yml
+
 hillsong:
   owner: admin@gpmail.org
-  songs: forever_reign, all_my_hope
   event_name: "Hillsong set"
   event_date: "2017-01-01"
 
 relevant_songs:
   owner: praise_member@gpmail.org
-  songs: relevant_1, relevant_2, relevant_3, relevant_4
   event_name: "Relevant Songs Set"
   event_date: "2017-03-25"
 
 sws_05142017:
   owner: praise_member@gpamil.org
-  songs: God_be_praised, forever_reign, ten_thousand_reasons
   event_name: "Sunday Worship Service May 5, 2017"
   event_date: "2017-05-14"
   notes: |
