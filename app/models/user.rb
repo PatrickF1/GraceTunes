@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   self.primary_key = :email
 
-  has_many :praise_sets, :foreign_key => "owner", :primary_key => "email"
+  has_many :praise_sets, :foreign_key => "owner_email", :primary_key => "email"
 
   before_validation :normalize
 
@@ -21,6 +21,10 @@ class User < ApplicationRecord
   end
 
   def can_delete?
+    role == Role::ADMIN
+  end
+
+  def can_see_beta_features?
     role == Role::ADMIN
   end
 

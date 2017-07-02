@@ -27,13 +27,13 @@ ActiveRecord::Schema.define(version: 20170630201424) do
   create_table "praise_sets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "owner", null: false
+    t.string "owner_email", null: false
     t.string "event_name", null: false
     t.date "event_date", null: false
     t.text "notes"
     t.index ["event_date"], name: "index_praise_sets_on_event_date"
     t.index ["event_name"], name: "index_praise_sets_on_event_name"
-    t.index ["owner"], name: "index_praise_sets_on_owner"
+    t.index ["owner_email"], name: "index_praise_sets_on_owner_email"
   end
 
   create_table "song_tags", id: :serial, force: :cascade do |t|

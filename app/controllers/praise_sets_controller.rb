@@ -23,15 +23,15 @@ class PraiseSetsController < ApplicationController
     if @praise_set.save
       flash[:success] = "#{@praise_set} successfully created!"
       logger.info "New praise set created: #{current_user} created #{@praise_set}"
-      redirect_to root
+      redirect_to action: :index
     else
-      render :index
+      render :new
     end
   end
 
   private
 
   def praise_set_params
-    params.require(:praise_set).permit(:name, :owner, :date)
+    params.require(:praise_set).permit(:owner_email, :event_name, :event_date, :notes)
   end
 end
