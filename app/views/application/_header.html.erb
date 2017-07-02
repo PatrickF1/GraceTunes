@@ -15,6 +15,13 @@
         <% end %>
       </div>
     <% end %>
+    <% if current_user.can_see_beta_features? %>
+      <div class="header_link">
+        <%= link_to praise_sets_path, { method: :get, class: "#{set_active_if_path(praise_sets_path)}" } do %>
+          <i class="fa fa-list"></i>Praise Sets
+        <% end %>
+      </div>
+    <% end %>
     <div class="header_link">
       <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
         <i class="fa fa-comment"></i>Feedback
