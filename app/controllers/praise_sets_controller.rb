@@ -20,9 +20,11 @@ class PraiseSetsController < ApplicationController
 
   def create
     @praise_set = PraiseSet.new(praise_set_params)
-    if @praise_set.save
-      flash[:success] = "#{@praise_set} successfully created!"
-      logger.info "New praise set created: #{current_user} created #{@praise_set}"
+    # we need to save the PraiseSet record before adding songs so song position can be handled by acts_as_list
+    if @praise_set.save!
+      @praise_set.songs << Song.where(id: praise_set_song_ids[:song_ids])
+      flash[:success] = "#{@praise_set.event_name} set successfully created!"
+      logger.info "New praise set created: #{current_user} created #{@praise_set.event_name} set"
       redirect_to action: :index
     else
       render :new
@@ -33,5 +35,9 @@ class PraiseSetsController < ApplicationController
 
   def praise_set_params
     params.require(:praise_set).permit(:owner_email, :event_name, :event_date, :notes)
+  end
+
+  def praise_set_song_ids
+    params.require(:praise_set).permit(:song_ids => [])
   end
 end

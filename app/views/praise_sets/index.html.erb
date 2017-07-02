@@ -15,6 +15,10 @@
                 <li><%= song.name %></li>
               <% end %>
             </ol>
+            <% if set.notes %>
+              Notes:
+              <%= simple_format set.notes %>
+            <% end %>
             <hr>
           </div>
         <% end %>
