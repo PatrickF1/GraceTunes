@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :praise_sets
+  resources :praise_sets do
+    member do
+      put 'add_song'
+    end
+  end
 
   resources :tags
 

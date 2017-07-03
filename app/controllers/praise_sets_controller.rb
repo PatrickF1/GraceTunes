@@ -18,26 +18,47 @@ class PraiseSetsController < ApplicationController
     @praise_set = PraiseSet.new
   end
 
+  def show
+    @praise_set = PraiseSet.find(params[:id])
+
+    respond_to do |format|
+      format.html do
+      end
+      format.json do
+        render json: @praise_set
+      end
+    end
+  end
+
   def create
     @praise_set = PraiseSet.new(praise_set_params)
-    # we need to save the PraiseSet record before adding songs so song position can be handled by acts_as_list
     if @praise_set.save!
-      @praise_set.songs << Song.where(id: praise_set_song_ids[:song_ids])
       flash[:success] = "#{@praise_set.event_name} set successfully created!"
       logger.info "New praise set created: #{current_user} created #{@praise_set.event_name} set"
-      redirect_to action: :index
+      redirect_to edit_praise_set_path(@praise_set)
     else
       render :new
+    end
+  end
+
+  def edit
+    @praise_set = PraiseSet.find(params[:id])
+  end
+
+  def add_song
+    @praise_set = PraiseSet.find(params[:id])
+    @song = Song.find(params[:song_id])
+    @praise_set.songs << @song
+
+    if request.xhr?
+      render partial: "praise_set_song", locals: { song: @song }
     end
   end
 
   private
 
   def praise_set_params
+    # don't permit song_ids since songs need to be added after the praise set is created for act_as_list to work
     params.require(:praise_set).permit(:owner_email, :event_name, :event_date, :notes)
-  end
-
-  def praise_set_song_ids
-    params.require(:praise_set).permit(:song_ids => [])
   end
 end
