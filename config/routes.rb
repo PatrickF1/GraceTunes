@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :praise_sets do
     member do
       put 'add_song'
+      put 'remove_song'
     end
   end
 

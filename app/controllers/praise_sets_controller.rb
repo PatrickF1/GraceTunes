@@ -55,6 +55,13 @@ class PraiseSetsController < ApplicationController
     end
   end
 
+  def remove_song
+    praise_set = PraiseSet.find(params[:id])
+    deleted_song = praise_set.songs.delete(params[:song_id])
+
+    render json: deleted_song
+  end
+
   private
 
   def praise_set_params
