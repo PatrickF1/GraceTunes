@@ -1,8 +1,5 @@
 class PraiseSetsController < ApplicationController
 
-  before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
-  before_action :require_delete_privileges, only: [:destroy] # implement destroy later
-
   def index
     respond_to do |format|
       @praise_sets = PraiseSet.order(event_date: :desc)
@@ -32,7 +29,7 @@ class PraiseSetsController < ApplicationController
 
   def create
     @praise_set = PraiseSet.new(praise_set_params)
-    if @praise_set.save!
+    if @praise_set.save
       flash[:success] = "#{@praise_set.event_name} set successfully created!"
       logger.info "New praise set created: #{current_user} created #{@praise_set.event_name} set"
       redirect_to edit_praise_set_path(@praise_set)
@@ -43,6 +40,17 @@ class PraiseSetsController < ApplicationController
 
   def edit
     @praise_set = PraiseSet.find(params[:id])
+  end
+
+  def update
+    @praise_set = PraiseSet.find(params[:id])
+    if @praise_set.update_attributes(praise_set_params)
+      flash[:success] = "#{@praise_set.event_name} set successfully updated!"
+      logger.info "Praise Set updated: #{current_user} updated #{@praise_set}"
+      redirect_to edit_praise_set_path(@praise_set)
+    else
+      render :edit
+    end
   end
 
   def add_song

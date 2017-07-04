@@ -1,17 +1,17 @@
 # songs are defined in praise_set_song.yml
 
 hillsong:
-  owner: admin@gpmail.org
+  owner_email: "admin@gpmail.org"
   event_name: "Hillsong set"
   event_date: "2017-01-01"
 
 relevant_songs:
-  owner: praise_member@gpmail.org
+  owner_email: "praise_member@gpmail.org"
   event_name: "Relevant Songs Set"
   event_date: "2017-03-25"
 
 sws_05142017:
-  owner: praise_member@gpamil.org
+  owner_email: "praise_member@gpmail.org"
   event_name: "Sunday Worship Service May 5, 2017"
   event_date: "2017-05-14"
   notes: |
