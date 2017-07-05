@@ -23,5 +23,13 @@ $(function(){
     }).done(function(data){
       $("a[data-song-id=\""+data[0].id+"\"]").parents(".praise-set-song").slideToggle('slow');
     });
-  })
+  });
+
+  $(".praise-set-songs").sortable({
+    sort: true,
+    animation: 500,
+    draggable: ".praise-set-song",
+    handle: ".fa-bars",
+    ghostClass: "drop-placeholder"
+  });
 });

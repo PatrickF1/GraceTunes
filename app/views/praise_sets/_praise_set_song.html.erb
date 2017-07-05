@@ -1,10 +1,13 @@
 <div class="row praise-set-song">
-  <div class="col-md-6">
-    <h3><%= song.name %></h3>
-    <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
+  <div class="col-md-6 praise-set-song-content">
+    <i class="fa fa-bars fa-2x drag-handle"></i>
+    <div class="song-info">
+      <h3><%= song.name %></h3>
+      <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
+    </div>
     <%= link_to "#", { class: "remove-song", data: { path: remove_song_praise_set_path, song_id: song.id } } do %>
       <i class="fa fa-trash-o"></i> Remove Song
     <% end %>
-    <hr>
+  <hr>
   </div>
 </div>

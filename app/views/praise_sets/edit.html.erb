@@ -6,9 +6,9 @@
 
   <%= render partial: "form" %>
 
+  <h2>Songs</h2>
+  <%= render partial: "add_song_form" %>
   <div class="praise-set-songs">
-    <h2>Songs</h2>
-    <%= render partial: "add_song_form" %>
     <% @praise_set.songs.each do |song| %>
       <%= render partial: "praise_set_song", locals: { song: song } %>
     <% end %>

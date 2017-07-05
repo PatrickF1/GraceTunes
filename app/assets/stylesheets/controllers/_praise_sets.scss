@@ -1,3 +1,20 @@
 .remove-song {
   float: right;
 }
+
+.drag-handle {
+  padding-right: 10px;
+
+  &:hover {
+    cursor: move;
+    cursor: -webkit-grabbing;
+  }
+}
+
+.drop-placeholder .praise-set-song-content {
+  background-color: lightgray;
+}
+
+.song-info {
+  display: inline-block;
+}
