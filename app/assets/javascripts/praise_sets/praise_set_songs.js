@@ -30,6 +30,15 @@ $(function(){
     animation: 500,
     draggable: ".praise-set-song",
     handle: ".fa-bars",
-    ghostClass: "drop-placeholder"
+    ghostClass: "drop-placeholder",
+    onUpdate: function(e){
+      $.ajax({
+        url: $(e.item).find(".drag-handle").data("set-position-path"),
+        method: "PUT",
+        data: { song_id: $(e.item).find(".drag-handle").data("song-id"), new_position: e.newIndex }
+      }).done(function(data){
+        console.log("updated song position");
+      });
+    }
   });
 });

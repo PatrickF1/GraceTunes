@@ -70,6 +70,13 @@ class PraiseSetsController < ApplicationController
     render json: deleted_song
   end
 
+  def set_song_position
+    praise_set_song = PraiseSetSong.find_by(praise_set_id: params[:id], song_id: params[:song_id])
+    if params[:new_position]
+      praise_set_song.insert_at(params[:new_position].to_i)
+    end
+  end
+
   private
 
   def praise_set_params
