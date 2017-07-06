@@ -109,6 +109,17 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     assert_equal songs(:forever_reign).id, JSON.parse(@response.body)[0]["id"]
   end
 
+  test "set_song_position should set the song's position in the praise set song's list" do
+    praise_set_song = praise_set_songs(:relevant_songs_3)
+    assert_difference('PraiseSetSong.find_by(praise_set_id: praise_set_song.praise_set_id, song_id: praise_set_song.song_id).position', difference = -2) do
+      put :set_song_position, params: {
+        id: praise_set_song.praise_set_id,
+        song_id: praise_set_song.song_id,
+        new_position: 0
+      }
+    end
+  end
+
   private
   def post_new_praise_set
     post :create, params: {
