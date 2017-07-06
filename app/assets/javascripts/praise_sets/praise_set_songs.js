@@ -1,6 +1,7 @@
 $(function(){
   $songSelect = $(".song-select").select2({
     placeholder: "Select the song you want to add to this praise set",
+    allowClear: true,
     theme: "bootstrap"
   });
 
@@ -11,8 +12,11 @@ $(function(){
       data: { song_id: e.params.data.id }
     }).done(function(data){
       $(".praise-set-songs").append($(data).hide().fadeIn());
+      clearSelect();
     });
   });
+
+  clearSelect();
 
   $(".praise-set-songs").on("click", ".remove-song", function(e){
     e.preventDefault();
@@ -41,4 +45,9 @@ $(function(){
       });
     }
   });
+
 });
+
+var clearSelect = function(){
+  $(".song-select").val(null).trigger("change");
+}
