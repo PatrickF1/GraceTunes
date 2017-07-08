@@ -1,3 +1,7 @@
+var clearSelect = function(){
+  $(".song-select").val(null).trigger("change");
+}
+
 $(function(){
   $songSelect = $(".song-select").select2({
     placeholder: "Select the song you want to add to this praise set",
@@ -23,9 +27,9 @@ $(function(){
     $.ajax({
       url: $(this).data("path"),
       method: "PUT",
-      data: { song_id: $(this).data("song-id") }
+      data: { praise_set_song_id: $(this).data("praise-set-song-id") }
     }).done(function(data){
-      $("a[data-song-id=\""+data[0].id+"\"]").parents(".praise-set-song").slideToggle('slow');
+      $("a[data-praise-set-song-id=\""+data[0].id+"\"]").parents(".praise-set-song").slideToggle('slow');
     });
   });
 
@@ -39,7 +43,7 @@ $(function(){
       $.ajax({
         url: $(e.item).find(".drag-handle").data("set-position-path"),
         method: "PUT",
-        data: { song_id: $(e.item).find(".drag-handle").data("song-id"), new_position: e.newIndex }
+        data: { praise_set_song_id: $(e.item).find(".drag-handle").data("praise-set-song-id"), new_position: e.newIndex }
       }).done(function(data){
         console.log("updated song position");
       });
@@ -47,7 +51,3 @@ $(function(){
   });
 
 });
-
-var clearSelect = function(){
-  $(".song-select").val(null).trigger("change");
-}

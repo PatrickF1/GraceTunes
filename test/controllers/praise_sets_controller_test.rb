@@ -95,7 +95,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     assert_difference('PraiseSet.find(praise_set.id).songs.size', difference = -1) do
       put :remove_song, params: {
         id: praise_set.id,
-        song_id: songs(:forever_reign).id
+        praise_set_song_id: praise_set_songs(:hillsong_song_2).id
       }
     end
   end
@@ -104,17 +104,17 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     praise_set = praise_sets(:hillsong)
     put :remove_song, params: {
       id: praise_set.id,
-      song_id: songs(:forever_reign).id
+      praise_set_song_id: praise_set_songs(:hillsong_song_1).id
     }
-    assert_equal songs(:forever_reign).id, JSON.parse(@response.body)[0]["id"]
+    assert_equal praise_set_songs(:hillsong_song_1).id, JSON.parse(@response.body)[0]["id"]
   end
 
   test "set_song_position should set the song's position in the praise set song's list" do
     praise_set_song = praise_set_songs(:relevant_songs_3)
-    assert_difference('PraiseSetSong.find_by(praise_set_id: praise_set_song.praise_set_id, song_id: praise_set_song.song_id).position', difference = -2) do
+    assert_difference('PraiseSetSong.find(praise_set_song.id).position', difference = -2) do
       put :set_song_position, params: {
         id: praise_set_song.praise_set_id,
-        song_id: praise_set_song.song_id,
+        praise_set_song_id: praise_set_song.id,
         new_position: 0
       }
     end

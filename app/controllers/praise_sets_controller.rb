@@ -59,19 +59,19 @@ class PraiseSetsController < ApplicationController
     @praise_set.songs << @song
 
     if request.xhr?
-      render partial: "praise_set_song", locals: { song: @song }
+      render partial: "praise_set_song", locals: { song: @song, praise_set_song: @praise_set.praise_set_songs.last }
     end
   end
 
   def remove_song
     praise_set = PraiseSet.find(params[:id])
-    deleted_song = praise_set.songs.delete(params[:song_id])
+    deleted_praise_set_song = praise_set.praise_set_songs.delete(params[:praise_set_song_id])
 
-    render json: deleted_song
+    render json: deleted_praise_set_song
   end
 
   def set_song_position
-    praise_set_song = PraiseSetSong.find_by(praise_set_id: params[:id], song_id: params[:song_id])
+    praise_set_song = PraiseSetSong.find_by(id: params[:praise_set_song_id])
     if params[:new_position]
       praise_set_song.insert_at(params[:new_position].to_i)
     end

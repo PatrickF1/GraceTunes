@@ -1,12 +1,12 @@
 <div class="row praise-set-song">
   <div class="col-md-6 praise-set-song-content">
-    <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle", data: { set_position_path: set_song_position_praise_set_path, song_id: song.id }  do %>
+    <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle", data: { set_position_path: set_song_position_praise_set_path, praise_set_song_id: praise_set_song.id }  do %>
     <% end %>
     <div class="song-info">
       <h3><%= song.name %></h3>
       <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
     </div>
-    <%= link_to "#", { class: "remove-song", data: { path: remove_song_praise_set_path, song_id: song.id } } do %>
+    <%= link_to "", { class: "remove-song", data: { path: remove_song_praise_set_path, praise_set_song_id: praise_set_song.id } } do %>
       <i class="fa fa-trash-o"></i> Remove Song
     <% end %>
   <hr>

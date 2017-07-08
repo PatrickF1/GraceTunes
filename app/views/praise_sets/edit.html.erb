@@ -9,8 +9,8 @@
   <h2>Songs</h2>
   <%= render partial: "add_song_form" %>
   <div class="praise-set-songs">
-    <% @praise_set.songs.each do |song| %>
-      <%= render partial: "praise_set_song", locals: { song: song } %>
+    <% @praise_set.songs.zip(@praise_set.praise_set_songs).each do |song, praise_set_song| %>
+      <%= render partial: "praise_set_song", locals: { song: song, praise_set_song: praise_set_song } %>
     <% end %>
   </div>
 </div>
