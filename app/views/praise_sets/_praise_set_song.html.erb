@@ -3,7 +3,7 @@
     <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle", data: { set_position_path: set_song_position_praise_set_path, praise_set_song_id: praise_set_song.id }  do %>
     <% end %>
     <div class="song-info">
-      <h3><%= song.name %></h3>
+      <h3><%= link_to song.name, song %></h3>
       <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
     </div>
     <%= link_to "", { class: "remove-song", data: { path: remove_song_praise_set_path, praise_set_song_id: praise_set_song.id } } do %>
