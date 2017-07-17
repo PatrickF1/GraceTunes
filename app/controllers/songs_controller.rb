@@ -92,6 +92,13 @@ class SongsController < ApplicationController
     end
   end
 
+  def destroy
+    @song = Song.find(params[:id])
+    @song.destroy
+    flash[:succcess] = "#{@song.name} successfully deleted!"
+    redirect_to songs_path
+  end
+
   def print
     @song = Song.find(params[:id])
     if params[:new_key].present?
