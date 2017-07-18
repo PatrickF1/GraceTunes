@@ -94,9 +94,12 @@ class SongsController < ApplicationController
 
   def destroy
     @song = Song.find(params[:id])
-    @song.destroy
-    flash[:success] = "#{@song.name} successfully deleted!"
-    redirect_to songs_path
+    if @song.destroy
+      flash[:success] = "#{@song.name} successfully deleted!"
+      redirect_to songs_path
+    else
+      logger.info "#{current_user} tried to delete #{@song} but failed"
+      flash[:error] = "Unable to delete #{@song.name}"
   end
 
   def print

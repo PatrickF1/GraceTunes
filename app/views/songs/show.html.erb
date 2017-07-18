@@ -10,7 +10,7 @@
       <% end %>
     <% end %>
     <% if current_user.can_delete? %>
-      <%= link_to @song, { method: :delete, data: { confirm: "Are you sure?" }, class: "pill pill_link-red button-spacing" } do %>
+      <%= link_to @song, { method: :delete, data: { confirm: "Are you sure you want to delete this song?" }, class: "pill pill_link-red button-spacing" } do %>
         <i class="fa fa-trash-o"></i> Delete
       <% end %>
     <% end %>
