@@ -138,6 +138,25 @@ class SongsControllerTest < ApplicationControllerTest
     assert_redirected_to songs_path
   end
 
+  # "destroy" action tests
+  test "admins should be able to delete songs" do
+    get_deleting_privileges
+
+    assert_difference("Song.count", difference = -1) do
+      delete :destroy, params: { id: songs(:forever_reign).id }
+    end
+
+    assert_redirected_to songs_path
+  end
+
+  test "non-admins should not be able to delete songs" do
+    assert_no_difference("Song.count") do
+      delete :destroy, params: { id: songs(:forever_reign).id }
+    end
+
+    assert_redirected_to songs_path
+  end
+
   # "print" action tests
   test "the standard scan field should not appear if it is blank" do
     get :print, params: { id: songs(:relevant_1).id }
