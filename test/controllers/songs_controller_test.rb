@@ -148,20 +148,17 @@ class SongsControllerTest < ApplicationControllerTest
   # "destroy" action tests
   test "admins should be able to delete songs" do
     get_deleting_privileges
-    song = songs(:forever_reign)
 
-    assert_difference('Song.count', difference = 1) do
-      delete song_url(song)
+    assert_difference("Song.count", difference = -1) do
+      delete :destroy, params: { id: songs(:forever_reign).id }
     end
 
     assert_redirected_to songs_path
   end
 
   test "non-admins should not be able to delete songs" do
-    song = songs(:forever_reign)
-
-    assert_no_difference('Song.count') do
-      delete song_url(song)
+    assert_no_difference("Song.count") do
+      delete :destroy, params: { id: songs(:forever_reign).id }
     end
 
     assert_redirected_to songs_path
