@@ -100,6 +100,7 @@ class SongsController < ApplicationController
     else
       logger.info "#{current_user} tried to delete #{@song} but failed"
       flash[:error] = "Unable to delete #{@song.name}"
+    end
   end
 
   def print
