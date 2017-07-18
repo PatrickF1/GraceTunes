@@ -1,4 +1,8 @@
+//= require songs/play_back_widget
+
 $(function() {
+  var playBackWidget = new PlayBackWidget();
+
   // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
     dom: 'lrtip', // no f option removes the default table filter
@@ -87,8 +91,11 @@ $(function() {
     var drawer = $('.preview-drawer');
 
     // wipe and populate drawer
-    drawer.find('.name, .artist, .tempo, .key, .chord-sheet')
+    drawer.find('.name, .artist, .tempo, .key, .chord-sheet, .playback-widget')
       .html('');
+
+    drawer.find('.playback-widget').attr('data-current-song-id', song.id);
+    playBackWidget.load('.playback-widget[data-current-song-id="' + song.id + '"]', song);
 
     drawer.find('.name').text(song.name);
     drawer.find('.page-link').attr('href', '/songs/' + song.id);
