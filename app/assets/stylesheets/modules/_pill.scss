@@ -56,6 +56,25 @@
     }
   }
 
+  &.pill_link-gray {
+    background: $light-gray;
+    color: $dark-gray;
+    display: inline-block;
+    transition: all .25s;
+
+    &:hover {
+      background: $lighter-gray;
+      color: $dark-gray;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    &:active {
+      background: $gray;
+      color: $dark-gray;
+    }
+  }
+
   &.pill-small {
     font-size: 10px;
     padding: ($default-padding / 8) ($default-padding / 2);
