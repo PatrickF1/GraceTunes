@@ -29,6 +29,7 @@ class PraiseSetsController < ApplicationController
 
   def create
     @praise_set = PraiseSet.new(praise_set_params)
+    @praise_set.owner_email = session[:user_email]
     if @praise_set.save
       flash[:success] = "#{@praise_set.event_name} set successfully created!"
       logger.info "New praise set created: #{current_user} created #{@praise_set.event_name} set"
@@ -81,6 +82,6 @@ class PraiseSetsController < ApplicationController
 
   def praise_set_params
     # don't permit song_ids since songs need to be added after the praise set is created for act_as_list to work
-    params.require(:praise_set).permit(:owner_email, :event_name, :event_date, :notes)
+    params.require(:praise_set).permit(:event_name, :event_date, :notes)
   end
 end
