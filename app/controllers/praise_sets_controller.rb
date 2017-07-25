@@ -2,7 +2,7 @@ class PraiseSetsController < ApplicationController
 
   def index
     respond_to do |format|
-      @praise_sets = PraiseSet.order(event_date: :desc)
+      @praise_sets = PraiseSet.order(event_date: :desc).where(owner_email: session[:user_email])
       format.json do
         render json: @praise_sets and return
       end
