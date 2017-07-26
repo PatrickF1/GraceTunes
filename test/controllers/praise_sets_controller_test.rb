@@ -31,7 +31,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
 
   test "show praise set should load successfully for owners of the praise set" do
     get_hillsong_set_owner
-    get :show, format: :json, params: { id: praise_sets(:hillsong).id }
+    get :show, params: { id: praise_sets(:hillsong).id }
     assert_response :success
   end
 
