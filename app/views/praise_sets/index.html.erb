@@ -10,18 +10,20 @@
       <div class="history">
         <% @praise_sets.each do |set| %>
           <div class="row">
-            <h3><%= link_to set.event_name, edit_praise_set_path(set) %></h3>
-            <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
-            <ol>
-              <% set.songs.each do |song| %>
-                <li><%= song.name %></li>
+            <div class="col-md-12">
+              <h3><%= link_to set.event_name, edit_praise_set_path(set) %></h3>
+              <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
+              <ol>
+                <% set.songs.each do |song| %>
+                  <li><%= song.name %></li>
+                <% end %>
+              </ol>
+              <% if set.notes %>
+                Notes:
+                <%= simple_format set.notes %>
               <% end %>
-            </ol>
-            <% if set.notes %>
-              Notes:
-              <%= simple_format set.notes %>
-            <% end %>
-            <hr>
+              <hr>
+            </div>
           </div>
         <% end %>
       </div>
