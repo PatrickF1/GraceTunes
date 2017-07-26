@@ -32,4 +32,12 @@ class ApplicationController < ActionController::Base
       redirect_to songs_path
     end
   end
+
+  # @praise_set needs to be set before calling this method
+  def require_praise_set_permission
+    if @praise_set.owner != current_user
+      flash[:error] = "You dont have permission to see this praise set"
+      redirect_to praise_sets_path
+    end
+  end
 end
