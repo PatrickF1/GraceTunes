@@ -1,18 +1,17 @@
-.remove-song {
-  float: right;
+.ghost .song_content {
+  background-color: lighten($light-gray, 10%);
 }
 
-.drag-handle {
-  padding-right: 10px;
+[draggable="true"] {
+  opacity: 1;
 
-  &:hover {
-    cursor: move;
-    cursor: -webkit-grabbing;
+  &.chosen {
+    opacity: 1;
   }
-}
 
-.drop-placeholder .praise-set-song-content {
-  background-color: lightgray;
+  &.ghost {
+    opacity: 0;
+  }
 }
 
 .song-info {

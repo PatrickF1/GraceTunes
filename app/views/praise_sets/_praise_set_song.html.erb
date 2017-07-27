@@ -1,14 +1,15 @@
-<div class="row praise-set-song">
-  <div class="col-md-6 praise-set-song-content">
-    <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle", data: { set_position_path: set_song_position_praise_set_path, praise_set_song_id: praise_set_song.id }  do %>
-    <% end %>
-    <div class="song-info">
-      <h3><%= link_to song.name, song %></h3>
-      <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
+<div class="song row praise-set-song">
+  <div class="col-md-12 song_content praise-set-song-content flex-row flex-align-items-center flex-justify-space-between">
+    <div class="flex-row flex-align-items-center">
+      <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle song_dragIcon l-h-right-spaced", data: { set_position_path: set_song_position_praise_set_path, praise_set_song_id: praise_set_song.id }  do %>
+      <% end %>
+      <div class="song-info">
+        <div class="song_title"><%= link_to song.name, song, :class => "link" %></div>
+        <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
+      </div>
     </div>
-    <%= link_to "", { class: "remove-song", data: { path: remove_song_praise_set_path, praise_set_song_id: praise_set_song.id } } do %>
-      <i class="fa fa-trash-o"></i> Remove Song
+    <%= link_to "", { class: "remove-song song_trashIcon", data: { path: remove_song_praise_set_path, praise_set_song_id: praise_set_song.id } } do %>
+      <i class="fa fa-trash-o fa-2x"></i>
     <% end %>
-  <hr>
   </div>
 </div>

@@ -35,15 +35,16 @@ $(function(){
 
   $(".praise-set-songs").sortable({
     sort: true,
-    animation: 500,
+    animation: 250,
     draggable: ".praise-set-song",
     handle: ".fa-bars",
-    ghostClass: "drop-placeholder",
+    ghostClass: "ghost",
+    chosenClass: "chosen",
     onUpdate: function(e){
       $.ajax({
-        url: $(e.item).find(".drag-handle").data("set-position-path"),
+        url: $(e.item).find(".song_dragIcon").data("set-position-path"),
         method: "PUT",
-        data: { praise_set_song_id: $(e.item).find(".drag-handle").data("praise-set-song-id"), new_position: e.newIndex }
+        data: { praise_set_song_id: $(e.item).find(".song_dragIcon").data("praise-set-song-id"), new_position: e.newIndex }
       }).done(function(data){
         console.log("updated song position");
       });

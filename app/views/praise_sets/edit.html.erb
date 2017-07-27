@@ -1,16 +1,27 @@
 <% set_page_title "Edit #{@praise_set.event_name} Set" %>
 
 <div class="form-page container">
-  <h1>Edit <%= @praise_set.event_name %> Set</h1>
-  <hr>
-
-  <%= render partial: "form" %>
-
-  <h2>Songs</h2>
-  <%= render partial: "add_song_form" %>
-  <div class="praise-set-songs">
-    <% @praise_set.songs.zip(@praise_set.praise_set_songs).each do |song, praise_set_song| %>
-      <%= render partial: "praise_set_song", locals: { song: song, praise_set_song: praise_set_song } %>
-    <% end %>
+  <div class="row">
+    <div class="col-md-12">
+      <h1><%= @praise_set.event_name %> Set</h1>
+      <hr>
+    </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="l-v-bottom-spaced">Details</h3>
+      <%= render partial: "form" %>
+    </div>
+
+    <div class="col-md-6">
+      <h3 class="l-v-bottom-spaced">Songs</h3>
+      <%= render partial: "add_song_form" %>
+      <div class="praise-set-songs">
+        <% @praise_set.songs.zip(@praise_set.praise_set_songs).each do |song, praise_set_song| %>
+          <%= render partial: "praise_set_song", locals: { song: song, praise_set_song: praise_set_song } %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div style="height: 90px"></div>
 </div>
