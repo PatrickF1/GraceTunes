@@ -1,5 +1,8 @@
 class PraiseSetsController < ApplicationController
 
+  before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position]
+  before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position]
+
   def index
     respond_to do |format|
       @praise_sets = PraiseSet.order(event_date: :desc).where(owner_email: session[:user_email])
@@ -11,13 +14,7 @@ class PraiseSetsController < ApplicationController
     end
   end
 
-  def new
-    @praise_set = PraiseSet.new
-  end
-
   def show
-    @praise_set = PraiseSet.find(params[:id])
-
     respond_to do |format|
       format.html do
       end
@@ -25,6 +22,10 @@ class PraiseSetsController < ApplicationController
         render json: @praise_set
       end
     end
+  end
+
+  def new
+    @praise_set = PraiseSet.new
   end
 
   def create
@@ -40,11 +41,9 @@ class PraiseSetsController < ApplicationController
   end
 
   def edit
-    @praise_set = PraiseSet.find(params[:id])
   end
 
   def update
-    @praise_set = PraiseSet.find(params[:id])
     if @praise_set.update_attributes(praise_set_params)
       flash[:success] = "#{@praise_set.event_name} set successfully updated!"
       logger.info "Praise Set updated: #{current_user} updated #{@praise_set}"
@@ -55,7 +54,6 @@ class PraiseSetsController < ApplicationController
   end
 
   def add_song
-    @praise_set = PraiseSet.find(params[:id])
     @song = Song.find(params[:song_id])
     @praise_set.songs << @song
 
@@ -65,9 +63,7 @@ class PraiseSetsController < ApplicationController
   end
 
   def remove_song
-    praise_set = PraiseSet.find(params[:id])
-    deleted_praise_set_song = praise_set.praise_set_songs.delete(params[:praise_set_song_id])
-
+    deleted_praise_set_song = @praise_set.praise_set_songs.delete(params[:praise_set_song_id])
     render json: deleted_praise_set_song
   end
 
@@ -83,5 +79,9 @@ class PraiseSetsController < ApplicationController
   def praise_set_params
     # don't permit song_ids since songs need to be added after the praise set is created for act_as_list to work
     params.require(:praise_set).permit(:event_name, :event_date, :notes)
+  end
+
+  def set_praise_set
+    @praise_set = PraiseSet.find(params[:id])
   end
 end

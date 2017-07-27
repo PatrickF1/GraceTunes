@@ -18,9 +18,26 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     end
   end
 
+  test "index should only get praise sets user has access to" do
+    get_relevant_set_owner # praise member
+    get :index
+    assert_equal 2, assigns(:praise_sets).size
+  end
+
   test "new praise set page should load successfully for normal users" do
     get :new
     assert_response :success
+  end
+
+  test "show praise set should load successfully for owners of the praise set" do
+    get_hillsong_set_owner
+    get :show, params: { id: praise_sets(:hillsong).id }
+    assert_response :success
+  end
+
+  test "users should be redirected to praise set index if they aren't the owner" do
+    get :show, params: { id: praise_sets(:hillsong).id }
+    assert_redirected_to praise_sets_path
   end
 
   test "should load the new praise set template when praise set creation unsuccessful" do
@@ -45,9 +62,15 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     assert_redirected_to edit_praise_set_path(assigns(:praise_set))
   end
 
-  test "edit praise set page should load successfully if logged in as any user" do
+  test "edit praise set page should load successfully if owner" do
+    get_relevant_set_owner
     get :edit, params: { id: praise_sets(:relevant_songs).id }
     assert_response :success
+  end
+
+  test "users should be redirected to praise set index page if they aren't the owner" do
+    get :edit, params: { id: praise_sets(:relevant_songs).id }
+    assert_redirected_to praise_sets_path
   end
 
   test "should notify user appropriately when praise set created successfully" do
@@ -56,6 +79,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "updating a praise set should result in the song having a different event_name in the DB" do
+    get_hillsong_set_owner
     new_praise_set_name = "Newer Praise Set!!"
     praise_set = praise_sets(:hillsong)
     praise_set.event_name = new_praise_set_name
@@ -66,12 +90,14 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "after editing a praise set should redirect to its edit page" do
+    get_hillsong_set_owner
     praise_set = praise_sets(:hillsong)
     update_praise_set(praise_set)
     assert_redirected_to edit_praise_set_path(praise_set)
   end
 
   test "add_song should add a song to the praise set songs" do
+    get_hillsong_set_owner
     praise_set = praise_sets(:hillsong)
     assert_difference('PraiseSet.find(praise_set.id).songs.size', difference = 1) do
       put :add_song, params: {
@@ -82,6 +108,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "add_song should return the praise_set_song partial if xhr" do
+    get_hillsong_set_owner
     praise_set = praise_sets(:hillsong)
     put :add_song, xhr: true,  params: {
       id: praise_set.id,
@@ -91,6 +118,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "remove_song should remove a song from the praise set songs" do
+    get_hillsong_set_owner
     praise_set = praise_sets(:hillsong)
     assert_difference('PraiseSet.find(praise_set.id).songs.size', difference = -1) do
       put :remove_song, params: {
@@ -101,6 +129,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "remove_song should render the json of the removed song" do
+    get_hillsong_set_owner
     praise_set = praise_sets(:hillsong)
     put :remove_song, params: {
       id: praise_set.id,
@@ -110,6 +139,7 @@ class PraiseSetsControllerTest < ApplicationControllerTest
   end
 
   test "set_song_position should set the song's position in the praise set song's list" do
+    get_relevant_set_owner
     praise_set_song = praise_set_songs(:relevant_songs_3)
     assert_difference('PraiseSetSong.find(praise_set_song.id).position', difference = -2) do
       put :set_song_position, params: {
