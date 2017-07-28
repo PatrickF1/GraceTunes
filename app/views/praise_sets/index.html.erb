@@ -28,7 +28,7 @@
                 <% end %>
               </ol>
             <% end %>
-            <% if not set.notes.empty? %>
+            <% if not set.notes.nil? %>
               <hr>
               <strong>Notes:</strong>
               <%= simple_format set.notes %>
