@@ -4,7 +4,7 @@
       <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle song_dragIcon l-h-right-spaced", data: { set_position_path: set_song_position_praise_set_path, praise_set_song_id: praise_set_song.id }  do %>
       <% end %>
       <div class="song-info">
-        <div class="song_title"><%= link_to song.name, song, :class => "link" %></div>
+        <div class="song_title"><%= link_to song.name, song, class: "link" %></div>
         <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
       </div>
     </div>

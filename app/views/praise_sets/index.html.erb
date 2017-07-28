@@ -15,7 +15,7 @@
         You have no praise sets.
       <% else %>
         <% @praise_sets.each do |set| %>
-          <%= link_to edit_praise_set_path(set), :class => "card card-clickable" do %>
+          <%= link_to edit_praise_set_path(set), class: "card card-clickable" do %>
             <div class="card_header"><%= set.event_name %></div>
             <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
             <hr>
