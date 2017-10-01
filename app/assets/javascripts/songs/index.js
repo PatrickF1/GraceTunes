@@ -2,6 +2,10 @@ $(function() {
   // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
     dom: 'irtlp', // no f option removes the default table filter
+    oLanguage: { // https://legacy.datatables.net/ref#oLanguage
+      sLengthMenu: "Show _MENU_ per page",
+      sInfo: "Showing _START_ to _END_ out of _TOTAL_ total matches"
+    },
     serverSide: true,
     responsive: true,
     pageLength: Cookies.get('pageLength') || 10,
