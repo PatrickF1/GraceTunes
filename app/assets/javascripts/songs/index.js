@@ -1,11 +1,11 @@
 $(function() {
   // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
-    dom: 'lrtip', // no f option removes the default table filter
+    dom: 'irtlp', // no f option removes the default table filter
     serverSide: true,
     responsive: true,
     pageLength: 10,
-    lengthChange: false,
+    lengthMenu: [10, 15, 20, 50, 100],
     ordering: false,
     columns: [
       // render.text() patches an XSS vulnerability in dataTables
