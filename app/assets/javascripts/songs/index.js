@@ -4,7 +4,7 @@ $(function() {
     dom: 'irtlp', // no f option removes the default table filter
     serverSide: true,
     responsive: true,
-    pageLength: 10,
+    pageLength: Cookies.get('pageLength') || 10,
     lengthMenu: [10, 15, 20, 50, 100],
     ordering: false,
     columns: [
@@ -38,6 +38,11 @@ $(function() {
   */
   $(document).on('turbolinks:before-cache', function() {
     table.destroy();
+  });
+
+  // https://datatables.net/reference/event/length
+  $('.songs-table').on('length.dt', function(event, settings, newLength) {
+    Cookies.set('pageLength', newLength);
   });
 
   $('#songs-search-field').keyup(function() {
