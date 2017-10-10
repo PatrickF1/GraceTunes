@@ -46,6 +46,7 @@ class ParserTest < ActiveSupport::TestCase
     assert_equal ["Em7", "D#2", "B9"], Parser.chords_from_line("Em7   D#2     B9")
     assert_equal ["Cmaj7", "Ebmaj3", "D#maj5"],  Parser.chords_from_line("Cmaj7       Ebmaj3      D#maj5")
     assert_equal ["Em7", "G#", "F", "Cmaj7", "D", "Cb3"], Parser.chords_from_line("Em7/G#       F/Cmaj7        D/Cb3")
+    assert_equal ["E7sus4"], Parser.chords_from_line("E7sus4    ")
     assert_equal ["A(5)", "B(7)"], Parser.chords_from_line("A(5)     B(7)")
     assert_equal ["D(b5)", "E(#)"], Parser.chords_from_line("D(b5)         E(#)")
     assert_equal ["Eb", "(A)"], Parser.chords_from_line("   Eb     (A)")
