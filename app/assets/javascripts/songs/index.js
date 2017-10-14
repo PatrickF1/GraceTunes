@@ -1,11 +1,15 @@
 $(function() {
   // https://datatables.net/reference/option/
   var table = $('.songs-table').DataTable({
-    dom: 'lrtip', // no f option removes the default table filter
+    dom: 'irtlp', // no f option removes the default table filter
+    oLanguage: { // https://legacy.datatables.net/ref#oLanguage
+      sLengthMenu: "Show _MENU_ per page",
+      sInfo: "Showing _START_ to _END_ out of _TOTAL_ total matches"
+    },
     serverSide: true,
     responsive: true,
-    pageLength: 10,
-    lengthChange: false,
+    pageLength: Cookies.get('pageLength') || 10,
+    lengthMenu: [10, 15, 20, 50, 100],
     ordering: false,
     columns: [
       // render.text() patches an XSS vulnerability in dataTables
@@ -38,6 +42,11 @@ $(function() {
   */
   $(document).on('turbolinks:before-cache', function() {
     table.destroy();
+  });
+
+  // https://datatables.net/reference/event/length
+  $('.songs-table').on('length.dt', function(event, settings, newLength) {
+    Cookies.set('pageLength', newLength);
   });
 
   $('#songs-search-field').keyup(function() {

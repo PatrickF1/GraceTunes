@@ -5,6 +5,10 @@
 	padding: ($default-padding / 4) ($default-padding / 2);
   text-transform: uppercase;
 
+  &:focus {
+    color: $white
+  }
+
   &.pill_link-red {
     background: $red;
     display: inline-block;

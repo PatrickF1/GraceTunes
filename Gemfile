@@ -22,9 +22,10 @@ gem 'coffee-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
 # Use datatables for rendering and searching songs
 gem 'jquery-datatables-rails', '~> 3.4.0'
+# Use js-cookie to handle cookies
+gem 'js_cookie_rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
