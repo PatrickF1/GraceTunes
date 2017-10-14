@@ -4,6 +4,7 @@ class CreatePraiseSetSongs < ActiveRecord::Migration[5.1]
       t.references :praise_set
       t.references :song
       t.integer :position, null: false
+      t.string :key, null: false
     end
   end
 end

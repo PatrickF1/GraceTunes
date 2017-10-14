@@ -1,7 +1,7 @@
 class PraiseSetsController < ApplicationController
 
   before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position]
-  before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position]
+  before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key]
 
   def index
     respond_to do |format|
@@ -31,6 +31,7 @@ class PraiseSetsController < ApplicationController
   def create
     @praise_set = PraiseSet.new(praise_set_params)
     @praise_set.owner_email = session[:user_email]
+    @praise_set.archived = false
     if @praise_set.save
       flash[:success] = "#{@praise_set.event_name} set successfully created!"
       logger.info "New praise set created: #{current_user} created #{@praise_set.event_name} set"
@@ -55,7 +56,7 @@ class PraiseSetsController < ApplicationController
 
   def add_song
     @song = Song.find(params[:song_id])
-    @praise_set.songs << @song
+    @praise_set.add_song(@song)
 
     if request.xhr?
       render partial: "praise_set_song", locals: { song: @song, praise_set_song: @praise_set.praise_set_songs.last }
@@ -71,6 +72,14 @@ class PraiseSetsController < ApplicationController
     praise_set_song = PraiseSetSong.find_by(id: params[:praise_set_song_id])
     if params[:new_position]
       praise_set_song.insert_at(params[:new_position].to_i)
+    end
+  end
+
+  def set_song_key
+    praise_set_song = PraiseSetSong.find_by(id: params[:praise_set_song_id])
+    if params[:new_key]
+      praise_set_song.key = params[:new_key]
+      praise_set_song.save!
     end
   end
 

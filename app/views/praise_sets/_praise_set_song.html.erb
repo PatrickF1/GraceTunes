@@ -5,7 +5,9 @@
       <% end %>
       <div class="song-info">
         <div class="song_title"><%= link_to song.name, song, class: "link" %></div>
-        <span><strong>Suggested Key:</strong> <span class="key"><%= song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= song.tempo %></span>
+        <span><strong>Key:</strong> <span class="key"><%= select_tag :praise_set_song_key, get_key_opts(praise_set_song.key), class: "form-control input-sm praise-set-song-key", data: { path: set_song_key_praise_set_path, praise_set_song_id: praise_set_song.id } %></span></span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span><strong>Tempo:</strong> <%= song.tempo %></span>
       </div>
     </div>
     <%= link_to "", { class: "remove-song song_trashIcon", data: { path: remove_song_praise_set_path, praise_set_song_id: praise_set_song.id } } do %>

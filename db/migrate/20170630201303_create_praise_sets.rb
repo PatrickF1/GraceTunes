@@ -6,6 +6,7 @@ class CreatePraiseSets < ActiveRecord::Migration[5.1]
       t.string :event_name, null: false
       t.date :event_date, null: false
       t.text :notes
+      t.boolean :archived, null: false
     end
 
     add_index :praise_sets, :owner_email

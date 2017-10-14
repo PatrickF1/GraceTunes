@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       put 'add_song'
       put 'remove_song'
       put 'set_song_position'
+      put 'set_song_key'
     end
   end
 

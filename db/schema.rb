@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20170630201424) do
     t.bigint "praise_set_id"
     t.bigint "song_id"
     t.integer "position", null: false
+    t.string "key", null: false
     t.index ["praise_set_id"], name: "index_praise_set_songs_on_praise_set_id"
     t.index ["song_id"], name: "index_praise_set_songs_on_song_id"
   end
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(version: 20170630201424) do
     t.string "event_name", null: false
     t.date "event_date", null: false
     t.text "notes"
+    t.boolean "archived", null: false
     t.index ["event_date"], name: "index_praise_sets_on_event_date"
     t.index ["event_name"], name: "index_praise_sets_on_event_name"
     t.index ["owner_email"], name: "index_praise_sets_on_owner_email"
