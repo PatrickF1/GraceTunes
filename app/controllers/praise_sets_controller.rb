@@ -1,7 +1,7 @@
 class PraiseSetsController < ApplicationController
 
-  before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key]
-  before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key]
+  before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key, :archive, :unarchive]
+  before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key, :archive, :unarchive]
 
   def index
     respond_to do |format|
@@ -79,8 +79,20 @@ class PraiseSetsController < ApplicationController
     praise_set_song = PraiseSetSong.find_by(id: params[:praise_set_song_id])
     if params[:new_key]
       praise_set_song.key = params[:new_key]
-      praise_set_song.save!
+      praise_set_song.save
     end
+  end
+
+  def archive
+    @praise_set.archived = true
+    @praise_set.save
+    redirect_to edit_praise_set_path(@praise_set)
+  end
+
+  def unarchive
+    @praise_set.archived = false
+    @praise_set.save
+    redirect_to edit_praise_set_path(@praise_set)
   end
 
   private

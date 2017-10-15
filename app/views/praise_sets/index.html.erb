@@ -16,7 +16,7 @@
       <% else %>
         <% @praise_sets.each do |set| %>
           <%= link_to edit_praise_set_path(set), class: "card card-clickable" do %>
-            <div class="card_header"><%= set.event_name %></div>
+            <div class="card_header"><%= set.event_name %> <% if set.archived %><small><span class="label label-success">Archived</span></small><% end %></div>
             <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
             <hr>
             <% if set.songs.empty? %>

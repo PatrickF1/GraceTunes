@@ -3,7 +3,7 @@
 <div class="form-page container">
   <div class="row">
     <div class="col-md-12">
-      <h1><%= @praise_set.event_name %> Set</h1>
+      <h1><%= @praise_set.event_name %> Set <% if @praise_set.archived %><small><span class="label label-success">Archived</span></small><% end %></h1>
       <hr>
     </div>
   </div>

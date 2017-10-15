@@ -34,6 +34,13 @@
 
   <div class="footer">
     <%= link_to 'Back', praise_sets_path, class: "btn btn-lg btn-default l-h-right-half-spaced" %>
+    <% if @praise_set.id %>
+      <% if @praise_set.archived? %>
+        <%= link_to 'Unarchive', unarchive_praise_set_path(@praise_set), method: :put, class: "btn btn-lg btn-success l-h-right-half-spaced" %>
+      <% else %>
+        <%= link_to 'Archive', archive_praise_set_path(@praise_set), method: :put,  class: "btn btn-lg btn-success l-h-right-half-spaced" %>
+      <% end %>
+    <% end %>
     <%= f.submit 'Save', class: 'btn btn-lg btn-warning' %>
   </div>
 <% end %>

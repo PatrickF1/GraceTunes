@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       put 'remove_song'
       put 'set_song_position'
       put 'set_song_key'
+      put 'archive'
+      put 'unarchive'
     end
   end
 

@@ -162,6 +162,26 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     end
   end
 
+  test "archive praise_set should archive the praise_set" do
+    get_relevant_set_owner
+    praise_set = praise_sets(:relevant_songs)
+    assert_changes 'PraiseSet.find(praise_set.id).archived', from: false, to: true do
+      put :archive, params: {
+        id: praise_set.id
+      }
+    end
+  end
+
+  test "unarchive praise_set should unarchive the praise_set" do
+    get_relevant_set_owner
+    praise_set = praise_sets(:sws_05142017)
+    assert_changes 'PraiseSet.find(praise_set.id).archived', from: true, to: false do
+      put :unarchive, params: {
+        id: praise_set.id
+      }
+    end
+  end
+
   private
   def post_new_praise_set
     post :create, params: {
