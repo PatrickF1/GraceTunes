@@ -1,6 +1,6 @@
 class PraiseSetsController < ApplicationController
 
-  before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position]
+  before_action :set_praise_set, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key]
   before_action :require_praise_set_permission, only: [:show, :edit, :update, :add_song, :remove_song, :set_song_position, :set_song_key]
 
   def index

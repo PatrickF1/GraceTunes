@@ -150,6 +150,18 @@ class PraiseSetsControllerTest < ApplicationControllerTest
     end
   end
 
+  test "set_song_key should set the praise_set_song's key" do
+    get_hillsong_set_owner
+    praise_set_song = praise_set_songs(:hillsong_song_2)
+    assert_changes 'PraiseSetSong.find(praise_set_song.id).key', to: "C" do
+      put :set_song_key, params: {
+        id: praise_set_song.praise_set_id,
+        praise_set_song_id: praise_set_song.id,
+        new_key: "C"
+      }
+    end
+  end
+
   private
   def post_new_praise_set
     post :create, params: {
