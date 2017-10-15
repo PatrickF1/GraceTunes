@@ -16,7 +16,7 @@ def defragment_ids
 end
 
 namespace :songs do
-  desc 'Degragment song ids so that the lowest id starts at 1 and there are no gaps.'
+  desc 'Defragment song ids so that the lowest id starts at 1 and there are no gaps.'
   task :defrag_ids  => :environment do |t, args|
     defragment_ids()
   end
