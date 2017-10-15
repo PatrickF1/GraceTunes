@@ -2,43 +2,52 @@ hillsong_song_1:
   praise_set: hillsong
   song: forever_reign
   position: 0
+  key: "C"
 
 hillsong_song_2:
   praise_set: hillsong
   song: all_my_hope
   position: 1
+  key: "B"
 
 relevant_songs_1:
   praise_set: relevant_songs
   song: relevant_1
   position: 0
+  key: "F#"
 
 relevant_songs_2:
   praise_set: relevant_songs
   song: relevant_2
   position: 1
+  key: "G"
 
 relevant_songs_3:
   praise_set: relevant_songs
   song: relevant_3
   position: 2
+  key: "A"
 
 relevant_songs_4:
   praise_set: relevant_songs
   song: relevant_4
   position: 3
+  key: "F#"
 
 sws_05142017_1:
   praise_set: sws_05142017
   song: God_be_praised
   position: 0
+  key: "Bb"
 
 sws_05142017_2:
   praise_set: sws_05142017
   song: forever_reign
   position: 1
+  key: "C"
 
 sws_05142017_3:
   praise_set: sws_05142017
   song: ten_thousand_reasons
   position: 2
+  key: "G"

@@ -4,11 +4,13 @@ hillsong:
   owner_email: "admin@gpmail.org"
   event_name: "Hillsong set"
   event_date: "2017-01-01"
+  archived: true
 
 relevant_songs:
   owner_email: "praise_member@gpmail.org"
   event_name: "Relevant Songs Set"
   event_date: "2017-03-25"
+  archived: false
 
 sws_05142017:
   owner_email: "praise_member@gpmail.org"
@@ -16,3 +18,4 @@ sws_05142017:
   event_date: "2017-05-14"
   notes: |
     blah blah notes
+  archived: true
