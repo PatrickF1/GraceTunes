@@ -16,9 +16,27 @@ module Formatter
       return line
     end
 
-    line.gsub(Parser::CHORD_TOKENIZER) do |chord|
-      format_chord_nashville(chord, key)
+    space_slice_args = [] # list of pairs of string::slice args to delete spaces for chord size differences
+
+    line.gsub!(Parser::CHORD_TOKENIZER) do |chord|
+      formatted_chord = format_chord_nashville(chord, key)
+      formatted_chord_length_difference = formatted_chord.length - chord.length
+      if formatted_chord_length_difference < 0
+        formatted_chord += " " * (chord.length - formatted_chord.length)
+      elsif formatted_chord_length_difference > 0
+        after_chord_index = Regexp.last_match.offset(0)[1] + formatted_chord_length_difference
+        num_spaces_to_delete = get_num_spaces_can_delete(line, after_chord_index, formatted_chord_length_difference)
+        if num_spaces_to_delete > 0
+          space_slice_args << [after_chord_index, num_spaces_to_delete]
+        end
+      end
+      formatted_chord
     end
+
+    space_slice_args.each do |slice_args|
+      line.slice!(slice_args[0], slice_args[1])
+    end
+    line
   end
 
   def self.format_chord_nashville(chord, key)
@@ -44,5 +62,24 @@ module Formatter
     roman_numeral_in_key = Music::ROMAN_NUMERALS[Music::get_note_scale_index(note_in_key, key)]
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
     sharper ? Music::sharpen(roman_numeral_in_key) : Music::flatten(roman_numeral_in_key)
+  end
+
+  def self.get_num_spaces_can_delete(line, start_index, max_num_to_delete)
+    char_range = line[start_index..-1]
+    if char_range.nil?
+      return 0
+    end
+    count = 0
+    char_range.each_char do |char|
+      if char == " "
+        count += 1
+        if count == max_num_to_delete
+          return count
+        end
+      else
+        return count - 1
+      end
+    end
+    count
   end
 end

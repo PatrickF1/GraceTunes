@@ -32,4 +32,18 @@ class FormatterTest < ActiveSupport::TestCase
     assert_equal "iii4", Formatter.send(:format_chord_nashville, "Bm4", "G")
     assert_equal "V(b5)", Formatter.send(:format_chord_nashville, "D(b5)", "G")
   end
+
+  test "formatting line removes extra spaces after chord when nashville is longer than original chord" do
+    assert_equal "iii   I", Formatter.send(:format_line_nashville, "Bm    G", "G")
+    assert_equal "III   I", Formatter.send(:format_line_nashville, "B     G", "G")
+  end
+
+  test "formatting line adds extra spaces after chord when nashville is shorter than original chord" do
+    assert_equal "vii    I  V", Formatter.send(:format_line_nashville, "F#dim  G  D", "G")
+  end
+
+  test "formatting line doesn't remove spaces if there's only 1 space left between chords" do
+    assert_equal "VII IV", Formatter.send(:format_line_nashville, "F# C", "G")
+    assert_equal "III I", Formatter.send(:format_line_nashville, "B G", "G")
+  end
 end
