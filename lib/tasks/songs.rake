@@ -35,9 +35,9 @@ def generate_spotify_search_request(song, token)
   req
 end
 
-# For all songs on GraceTunes without a Spotify URI, search Spotify for
-# a song with the same name and artist and fill it in for Spotify URI
-# if one exists. If multiple matches exists, picks the first one.
+# For all songs on GraceTunes without a Spotify URI, searches Spotify for
+# a song with the same name and artist and fills in Spotify URI
+# with the first match found.
 def fill_in_spotify_uris(token)
   abort("Must provide Spotify access token.") if token.nil?
 
@@ -47,8 +47,14 @@ def fill_in_spotify_uris(token)
       # byebug
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
-        json_resp = JSON.parse(response.body)
-
+        resp_body_json = JSON.parse(response.body)
+        if matching_track_uri = resp_body_json.dig("tracks", "items", 0, "uri")
+          song.spotify_uri = matching_track_uri
+          song.save!
+          puts "Found a matching Spotify track for #{song}"
+        else
+          puts "No matching Spotify track for #{song}"
+        end
       elsif response.instance_of? Net::HTTPUnauthorized
         abort("Invalid Spotify access token provided.")
       else
