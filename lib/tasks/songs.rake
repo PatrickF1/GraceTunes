@@ -1,3 +1,5 @@
+require 'net/http'
+
 # Turns off record_timestamps temporarily so that the updated_at field
 # will not be touched. Preserves current order of songs.
 def defragment_ids
@@ -15,9 +17,58 @@ def defragment_ids
   end
 end
 
+def generate_spotify_search_request(song, token)
+  q_query_param = "track:#{song.name}"
+  q_query_param += "+artist:#{song.artist}" if song.artist.present?
+
+  params = {
+    q: q_query_param,
+    market: "US",
+    type: "track",
+    limit: 1
+  }
+  uri = URI('https://api.spotify.com/v1/search')
+  uri.query = URI.encode_www_form(params)
+  req = Net::HTTP::Get.new(uri)
+  req['Authorization'] = "Bearer #{token}"
+  req
+end
+
+# For all songs on GraceTunes without a Spotify URI, search Spotify for
+# a song with the same name and artist and fill it in for Spotify URI
+# if one exists. If multiple matches exists, picks the first one.
+def fill_in_spotify_uris(token)
+  abort("Must provide Spotify access token.") if token.nil?
+
+  Net::HTTP.start("api.spotify.com", use_ssl: true) do |http|
+    Song.where(spotify_uri: nil).find_each do |song|
+      request = generate_spotify_search_request(song, token)
+      response = http.request(request)
+      if response.instance_of? Net::HTTPOK
+        puts response
+      elsif response.instance_of? Net::HTTPUnauthorized
+        abort("Invalid Spotify access token provided.")
+      else
+        abort("Unexpected error code returned while querying Spotify API: #{response}") # TODO fill in later
+      end
+    end
+  end
+end
+
+# Removes Spotify URIs that are broken
+def clean_up_broken_spotify_uris
+
+end
+
 namespace :songs do
   desc 'Defragment song ids so that the lowest id starts at 1 and there are no gaps.'
   task :defrag_ids  => :environment do |t, args|
     defragment_ids()
   end
+
+  desc "Attempt to fill in blank Spotify URIs."
+  task :fill_in_spotify_uris, [:token] => :environment do |t, args|
+    fill_in_spotify_uris(args.token)
+  end
+
 end
