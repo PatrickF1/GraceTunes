@@ -1,4 +1,5 @@
 require 'net/http'
+require 'json'
 
 # Turns off record_timestamps temporarily so that the updated_at field
 # will not be touched. Preserves current order of songs.
@@ -18,8 +19,8 @@ def defragment_ids
 end
 
 def generate_spotify_search_request(song, token)
-  q_query_param = "track:#{song.name}"
-  q_query_param += "+artist:#{song.artist}" if song.artist.present?
+  q_query_param = "track:\"#{song.name}\""
+  q_query_param += "+artist:\"#{song.artist}\"" if song.artist.present?
 
   params = {
     q: q_query_param,
@@ -43,13 +44,15 @@ def fill_in_spotify_uris(token)
   Net::HTTP.start("api.spotify.com", use_ssl: true) do |http|
     Song.where(spotify_uri: nil).find_each do |song|
       request = generate_spotify_search_request(song, token)
+      # byebug
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
-        puts response
+        json_resp = JSON.parse(response.body)
+
       elsif response.instance_of? Net::HTTPUnauthorized
         abort("Invalid Spotify access token provided.")
       else
-        abort("Unexpected error code returned while querying Spotify API: #{response}") # TODO fill in later
+        abort("Unexpected response while querying Spotify API: #{response.message}")
       end
     end
   end
