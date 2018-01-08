@@ -18,9 +18,15 @@ def defragment_ids
   end
 end
 
+# generates a request to this API endpoint
+# https://developer.spotify.com/web-api/search-item/
 def generate_spotify_search_request(song, token)
-  q_query_param = "track:\"#{song.name}\""
-  q_query_param += "+artist:\"#{song.artist}\"" if song.artist.present?
+  q_query_param = %Q(track:"#{song.name}")
+  if song.artist.present?
+    q_query_param << %Q(+artist:"#{song.artist}")
+  else
+    puts "! WARNING: no artist provided for #{song}. Spotify may return an invalid song."
+  end
 
   params = {
     q: q_query_param,
@@ -36,8 +42,9 @@ def generate_spotify_search_request(song, token)
 end
 
 # For all songs on GraceTunes without a Spotify URI, searches Spotify for
-# a song with the same name and artist and fills in Spotify URI
-# with the first match found.
+# a song with the same name and artist and fills in the Spotify URI field
+# with the first match found. Very strict in that name and artist must match
+# exactly in order to lower the risk of adding unholy songs to GraceTunes.
 def fill_in_spotify_uris(token)
   abort("Must provide Spotify access token.") if token.nil?
 
@@ -48,12 +55,16 @@ def fill_in_spotify_uris(token)
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
         resp_body_json = JSON.parse(response.body)
-        if matching_track_uri = resp_body_json.dig("tracks", "items", 0, "uri")
-          song.spotify_uri = matching_track_uri
-          song.save!
-          puts "Found a matching Spotify track for #{song}"
+        if matching_track = resp_body_json.dig("tracks", "items", 0)
+          if matching_track["explicit"]
+            puts "! WARNING: explicit Spotify track found for #{song}. Not filling in!"
+          else
+            song.spotify_uri = matching_track["uri"]
+            song.save!
+            puts "\u2713 Matching Spotify track found for #{song}."
+          end
         else
-          puts "No matching Spotify track for #{song}"
+          puts "\u2718 No matching Spotify track for #{song}."
         end
       elsif response.instance_of? Net::HTTPUnauthorized
         abort("Invalid Spotify access token provided.")
