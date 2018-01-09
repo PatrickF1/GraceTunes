@@ -107,9 +107,9 @@ $(function() {
     drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
 
-    if (song.spotify_uri) {
+    if (song.spotify_widget_source) {
       drawer.find('.spotify-widget')
-        .attr('src', 'https://open.spotify.com/embed?uri=' + song.spotify_uri)
+        .attr('src', song.spotify_widget_source)
         .css('display', 'block');
     }
 

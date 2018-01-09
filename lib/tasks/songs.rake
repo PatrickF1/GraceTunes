@@ -78,7 +78,7 @@ end
 def remove_broken_spotify_uris
   Net::HTTP.start("open.spotify.com", use_ssl: true) do |http|
     Song.where.not(spotify_uri: nil).find_each do |song|
-      widget_source = URI(song.spotify_widget_url)
+      widget_source = URI(song.spotify_widget_source)
       request = Net::HTTP::Get.new(widget_source)
       response = http.request(request)
       if response.instance_of? Net::HTTPNotFound
@@ -103,7 +103,7 @@ namespace :songs do
     fill_in_spotify_uris(args.token)
   end
 
-  desc "Remove Spotify URIs that are broken."
+  desc "Find and remove broken Spotify URIs."
   task :remove_broken_spotify_uris => :environment do |t, args|
     remove_broken_spotify_uris()
   end
