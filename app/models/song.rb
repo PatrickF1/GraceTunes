@@ -29,6 +29,14 @@ class Song < ApplicationRecord
     "#{name_and_artist} (id: #{id})"
   end
 
+  def spotify_widget_url
+    if spotify_uri
+      "https://open.spotify.com/embed?uri=#{spotify_uri}"
+    else
+      ""
+    end
+  end
+
   private
 
   # Titlize fields, remove unnecessary spaces, make headers all caps
