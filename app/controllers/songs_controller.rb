@@ -115,6 +115,7 @@ class SongsController < ApplicationController
 
   private
   def song_params
-    params.require(:song).permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet)
+    params.require(:song)
+      .permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet, :spotify_uri)
   end
 end
