@@ -21,7 +21,7 @@ class Song < ApplicationRecord
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-
+  validates :spotify_uri, format: { with: /\Aspotify:track:\w{22}\z/ }, if: -> (song) { song.spotify_uri.present? }
   before_save :extract_lyrics
 
   def to_s
