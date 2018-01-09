@@ -98,6 +98,7 @@ $(function() {
     // wipe and populate drawer
     drawer.find('.name, .artist, .tempo, .key, .chord-sheet')
       .html('');
+    drawer.find('.spotify-widget').css('display', 'none')
 
     drawer.find('.name').text(song.name);
     drawer.find('.page-link').attr('href', '/songs/' + song.id);
@@ -105,6 +106,12 @@ $(function() {
     drawer.find('.artist').text(song.artist);
     drawer.find('.tempo').text(song.tempo);
     drawer.find('.key').text(song.key);
+
+    if (song.spotify_uri) {
+      drawer.find('.spotify-widget')
+        .attr('src', 'https://open.spotify.com/embed?uri=' + song.spotify_uri)
+        .css('display', 'block');
+    }
 
     // highlight text matching the search query terms in drawer
     var keywords = $('#songs-search-field').val();
