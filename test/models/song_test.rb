@@ -30,6 +30,12 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved without a tempo"
   end
 
+  test "should not save with a Spotify URI containing spaces" do
+    song = songs(:ten_thousand_reasons)
+    song.spotify_uri = "obviously invalid Spotify URI"
+    assert_not song.save, "Saved with an invalid Spotify URI"
+  end
+
   test "should upcase the standard scan" do
     song = songs(:God_be_praised)
     lowercased_standard_scan = "t. v1. v2. pc. c."
