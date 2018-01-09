@@ -29,19 +29,16 @@ class Song < ApplicationRecord
     "#{name_and_artist} (id: #{id})"
   end
 
-  # include spotify_widget_source when serialized as JSON
+  # include spotify_widget_source and remove spotify_uri when serialized as JSON hash
   # https://blog.arkency.com/how-to-overwrite-to-json-as-json-in-active-record-models-in-rails/
   def as_json(*)
-    super.tap do |hash|
-      hash["spotify_widget_source"] = spotify_widget_source
+    super.except("spotify_uri").tap do |json_hash|
+      json_hash[:spotify_widget_source] = spotify_widget_source
     end
   end
+
   def spotify_widget_source
-    if spotify_uri
-      "https://open.spotify.com/embed?uri=#{spotify_uri}"
-    else
-      nil
-    end
+    "https://open.spotify.com/embed?uri=#{spotify_uri}" if spotify_uri
   end
 
   private

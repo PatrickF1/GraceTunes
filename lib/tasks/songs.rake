@@ -74,7 +74,6 @@ def fill_in_spotify_uris(token)
   end
 end
 
-
 def remove_broken_spotify_uris
   Net::HTTP.start("open.spotify.com", use_ssl: true) do |http|
     Song.where.not(spotify_uri: nil).find_each do |song|
