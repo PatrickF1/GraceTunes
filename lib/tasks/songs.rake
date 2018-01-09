@@ -51,7 +51,6 @@ def fill_in_spotify_uris(token)
   Net::HTTP.start("api.spotify.com", use_ssl: true) do |http|
     Song.where(spotify_uri: nil).find_each do |song|
       request = generate_spotify_search_request(song, token)
-      # byebug
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
         resp_body_json = JSON.parse(response.body)
@@ -75,9 +74,22 @@ def fill_in_spotify_uris(token)
   end
 end
 
-# Removes Spotify URIs that are broken
-def clean_up_broken_spotify_uris
 
+def remove_broken_spotify_uris
+  Net::HTTP.start("open.spotify.com", use_ssl: true) do |http|
+    Song.where.not(spotify_uri: nil).find_each do |song|
+      widget_source = URI(song.spotify_widget_url)
+      request = Net::HTTP::Get.new(widget_source)
+      response = http.request(request)
+      if response.instance_of? Net::HTTPNotFound
+        song.spotify_uri = nil
+        song.save!
+        puts "\u2326 Removed broken Spotify URI for #{song}."
+      elsif !response.instance_of? Net::HTTPOK
+        abort("Unexpected response opening link: #{response.message}")
+      end
+    end
+  end
 end
 
 namespace :songs do
@@ -89,6 +101,11 @@ namespace :songs do
   desc "Attempt to fill in blank Spotify URIs."
   task :fill_in_spotify_uris, [:token] => :environment do |t, args|
     fill_in_spotify_uris(args.token)
+  end
+
+  desc "Remove Spotify URIs that are broken."
+  task :remove_broken_spotify_uris => :environment do |t, args|
+    remove_broken_spotify_uris()
   end
 
 end
