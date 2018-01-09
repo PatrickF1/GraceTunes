@@ -149,10 +149,9 @@
   font-family: Inconsolata;
 }
 
-// initialize Spotify widget as hidden iframe until filled in
 .spotify-widget {
-  display: none;
   width: 350px;
   height: 80px;
+  margin: 0 0 $default-margin;
   border: none;
 }
