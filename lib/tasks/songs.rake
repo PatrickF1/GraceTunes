@@ -67,6 +67,11 @@ def fill_in_spotify_uris(token)
         end
       elsif response.instance_of? Net::HTTPUnauthorized
         abort("Invalid Spotify access token provided.")
+      elsif response.instance_of? Net::HTTPTooManyRequests
+        wait_time_seconds = response['Retry-After'].to_i
+        puts "! Too many requests, pausing for #{wait_time_seconds} seconds"
+        sleep wait_time_seconds
+        redo
       else
         abort("Unexpected response while querying Spotify API: #{response.message}")
       end
