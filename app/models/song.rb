@@ -38,7 +38,7 @@ class Song < ApplicationRecord
   end
 
   def spotify_widget_source
-    "https://open.spotify.com/embed?uri=#{spotify_uri}" if spotify_uri
+    "https://open.spotify.com/embed?uri=#{spotify_uri}" if spotify_uri.present?
   end
 
   private
