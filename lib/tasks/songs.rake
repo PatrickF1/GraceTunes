@@ -41,15 +41,17 @@ def generate_spotify_search_request(song, token)
   req
 end
 
-# For all songs on GraceTunes without a Spotify URI, searches Spotify for
-# a song with the same name and artist and fills in the Spotify URI field
-# with the first match found. Very strict in that name and artist must match
+# For all songs on GraceTunes for which spotify_uri is an empty string, searches
+# Spotify for a song with the same name and artist and fills in the Spotify URI
+# field with the first match found. Very strict in that name and artist must match
 # exactly in order to lower the risk of adding unholy songs to GraceTunes.
 def fill_in_spotify_uris(token)
   abort("Must provide Spotify access token.") if token.nil?
 
   Net::HTTP.start("api.spotify.com", use_ssl: true) do |http|
-    Song.where(spotify_uri: nil).find_each do |song|
+    # not processing songs where spotify_uri is NULL intentionally so that we can
+    # exclude songs from ever having a Spotify widget by marking them with NULL
+    Song.where(spotify_uri: "").find_each do |song|
       request = generate_spotify_search_request(song, token)
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
@@ -81,12 +83,12 @@ end
 
 def remove_broken_spotify_uris
   Net::HTTP.start("open.spotify.com", use_ssl: true) do |http|
-    Song.where.not(spotify_uri: nil).find_each do |song|
+    Song.where.not(spotify_uri: [nil, ""]).find_each do |song|
       widget_source = URI(song.spotify_widget_source)
       request = Net::HTTP::Get.new(widget_source)
       response = http.request(request)
       if response.instance_of? Net::HTTPNotFound
-        song.spotify_uri = nil
+        song.spotify_uri = ""
         song.save!
         puts "\u2326 Removed broken Spotify URI for #{song}."
       elsif !response.instance_of? Net::HTTPOK
