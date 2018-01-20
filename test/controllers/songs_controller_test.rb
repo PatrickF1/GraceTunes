@@ -174,6 +174,7 @@ class SongsControllerTest < ApplicationControllerTest
   def load_songs
     JSON.parse(@response.body)["data"].map do |s|
       s.delete('relevance')
+      s.delete('spotify_widget_source')
       Song.new(s)
     end
   end

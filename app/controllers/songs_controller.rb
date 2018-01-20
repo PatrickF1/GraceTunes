@@ -19,7 +19,7 @@ class SongsController < ApplicationController
 
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
-        songs = songs.select('id, artist, tempo, key, name, chord_sheet')
+        songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
         recordsFiltered = songs.length
 
         if params[:start].present?
@@ -115,6 +115,7 @@ class SongsController < ApplicationController
 
   private
   def song_params
-    params.require(:song).permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet)
+    params.require(:song)
+      .permit(:name, :key, :artist, :tempo, :standard_scan, :chord_sheet, :spotify_uri)
   end
 end
