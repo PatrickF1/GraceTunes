@@ -1,5 +1,11 @@
-$header-height: 75px;
+$header-height: 70px;
 $header-logo-font-size: 25px;
+
+// used to push other content down since .header has an absolute position
+// and so does not have spacing influence of elements outside of it
+.header-container {
+  height: $header-height;
+}
 
 .header {
   align-items: center;
@@ -8,6 +14,7 @@ $header-logo-font-size: 25px;
   padding: ($default-padding / 2) $default-padding;
   position: absolute;
   width: 100%;
+  height: $header-height;
 
   .header_logo {
     color: $white;
