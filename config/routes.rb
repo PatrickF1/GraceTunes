@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :tags
+  get "feedback", to: "feedback#show"
 
   # Authentication
   get 'auth/:provider/callback', to: 'sessions#create'
