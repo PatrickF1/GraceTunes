@@ -24,7 +24,7 @@
             <% else %>
               <ol>
                 <% set.songs.each do |song| %>
-                  <li><%= song.name %></li>
+                  <li><strong><%= song.name %></strong> (<%= set.praise_set_songs.find_by_song_id(song.id).key %>)</li>
                 <% end %>
               </ol>
             <% end %>
