@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20180106224234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
-  enable_extension "pg_stat_statements"
 
   create_table "praise_set_songs", force: :cascade do |t|
     t.bigint "praise_set_id"
