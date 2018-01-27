@@ -39,7 +39,7 @@ def serialize_song_sheets(directory_path, save_into_db=false)
   puts "Done #{save_into_db ? "saving" : "validating"} songs. There were #{num_invalid_songs} invalid songs."
 end
 
-namespace :songsheets do
+namespace :song_sheets do
 
   desc 'Validate the format of all the yaml song sheets in a directory.'
   task :validate, [:directory_path] => :environment do |t, args|

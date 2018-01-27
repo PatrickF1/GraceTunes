@@ -10,10 +10,8 @@
 <body>
   <%= render 'header' unless @no_header %>
 
-  <div class="<%= 'content-push' unless @no_header %>">
-    <%= render partial: "flash_messages", flash: flash %>
-    <%= yield %>
-  </div>
+  <%= render partial: "flash_messages", flash: flash %>
+  <%= yield %>
 
 </body>
 </html>

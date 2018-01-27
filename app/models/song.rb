@@ -23,12 +23,24 @@ class Song < ApplicationRecord
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-
+  validates :spotify_uri, format: { with: /\Aspotify:track:\w{22}\z/ }, if: -> (song) { song.spotify_uri.present? }
   before_save :extract_lyrics
 
   def to_s
     name_and_artist = artist.blank? ? name : "#{name} by #{artist}"
     "#{name_and_artist} (id: #{id})"
+  end
+
+  # include spotify_widget_source and remove spotify_uri when serialized as JSON hash
+  # https://blog.arkency.com/how-to-overwrite-to-json-as-json-in-active-record-models-in-rails/
+  def as_json(*)
+    super.except("spotify_uri").tap do |json_hash|
+      json_hash[:spotify_widget_source] = spotify_widget_source
+    end
+  end
+
+  def spotify_widget_source
+    "https://open.spotify.com/embed?uri=#{spotify_uri}" if spotify_uri.present?
   end
 
   private

@@ -32,7 +32,7 @@ $(function() {
 
   var updatePrintLink = function(newKey) {
     var param = {}
-    if(newKey == "numbers") {
+    if (newKey == "numbers") {
       var buttonHtml = $('#print-btn').html();
       $('#print-btn').html(buttonHtml.replace("in current key", "with numbers"));
       param = { numbers: true }

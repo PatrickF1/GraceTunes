@@ -47,5 +47,12 @@
     <%= f.text_area :chord_sheet, class: 'fixed-width form-control' %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :spotify_uri, "Spotify URI" %>
+    <br>
+    <i>Open Spotify > Right Click On Track > Share > Copy Spotify URI</i>
+    <%= f.text_field :spotify_uri, placeholder: "e.g. spotify:track:6qdpQ6jPiaCYE9Qw4nZVuD", class: 'form-control' %>
+  </div>
+
   <%= f.submit 'Submit', class: 'btn btn-warning' %>
 <% end %>

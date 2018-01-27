@@ -148,3 +148,10 @@
 .fixed-width {
   font-family: Inconsolata;
 }
+
+.spotify-widget {
+  width: 350px;
+  height: 80px;
+  margin: 0 0 $default-margin;
+  border: none;
+}

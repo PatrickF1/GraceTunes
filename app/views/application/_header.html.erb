@@ -1,37 +1,39 @@
-<div class="header">
-  <%= link_to root_path, { method: :get, class: "header_logo" } do %>
-    Grace<span class="header_logo-emphasized">Tunes</span>
-  <% end %>
-  <div class="header_links">
-    <div class="header_link">
-      <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
-        <i class="fa fa-search"></i>Search
-      <% end %>
-    </div>
-    <% if current_user.can_edit? %>
+<div class="header-container">
+  <div class="header">
+    <%= link_to root_path, { method: :get, class: "header_logo" } do %>
+      Grace<span class="header_logo-emphasized">Tunes</span>
+    <% end %>
+    <div class="header_links">
       <div class="header_link">
-        <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
-          <i class="fa fa-music"></i>Upload Song
+        <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
+          <i class="fa fa-search"></i>Search
         <% end %>
       </div>
-    <% end %>
-    <% if current_user.can_see_beta_features? %>
+      <% if current_user.can_edit? %>
+        <div class="header_link">
+          <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
+            <i class="fa fa-music"></i>Upload Song
+          <% end %>
+        </div>
+      <% end %>
+      <% if current_user.can_see_beta_features? %>
+        <div class="header_link">
+          <%= link_to praise_sets_path, { method: :get, class: "#{set_active_if_path(praise_sets_path)}" } do %>
+            <i class="fa fa-list"></i>Praise Sets
+          <% end %>
+        </div>
+      <% end %>
       <div class="header_link">
-        <%= link_to praise_sets_path, { method: :get, class: "#{set_active_if_path(praise_sets_path)}" } do %>
-          <i class="fa fa-list"></i>Praise Sets
+        <%= link_to feedback_path, class: "#{set_active_if_path(feedback_path)}" do %>
+          <i class="fa fa-comment"></i>Feedback
         <% end %>
       </div>
-    <% end %>
-    <div class="header_link">
-      <%= link_to ENV['FEEDBACK_URL'], target: "_blank" do %>
-        <i class="fa fa-comment"></i>Feedback
-      <% end %>
     </div>
-  </div>
 
-  <div class="header_user">
-    <span class="header_username">Welcome, <%= current_user.name %>!</span>
-    <%= link_to "Sign Out", sign_out_path, { method: :get, class: "pill pill_link-red" } %>
-  </div>
+    <div class="header_user">
+      <span class="header_username">Welcome, <%= current_user.name %>!</span>
+      <%= link_to "Sign Out", sign_out_path, { method: :get, class: "pill pill_link-red" } %>
+    </div>
 
+  </div>
 </div>

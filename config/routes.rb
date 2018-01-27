@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "feedback", to: "feedback#show"
+
   resources :praise_sets do
     member do
       put 'add_song'
@@ -18,8 +20,6 @@ Rails.application.routes.draw do
       put 'unarchive'
     end
   end
-
-  resources :tags
 
   # Authentication
   get 'auth/:provider/callback', to: 'sessions#create'

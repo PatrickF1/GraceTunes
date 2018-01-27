@@ -18,6 +18,9 @@
       <i class="fa fa-print"></i> Print in current key
     <% end %>
   </div>
+  <% if @song.spotify_uri.present? %>
+      <iframe class="spotify-widget" src=<%= @song.spotify_widget_source %>></iframe>
+  <% end %>
   <div class="song-metadata">
     <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>
      <% if @song.standard_scan.present? %>
