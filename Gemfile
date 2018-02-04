@@ -49,6 +49,15 @@ gem 'rack-timeout'
 
 gem "omniauth-google-oauth2"
 
+# adds position logic in praise_set.songs
+gem 'acts_as_list'
+
+# select fields with typing and querying
+gem 'select2-rails'
+
+# drag and drop sorting, including touch
+gem 'sortable-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

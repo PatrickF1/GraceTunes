@@ -1,0 +1,41 @@
+<div class="index-page">
+  <div class="container">
+    <div class="flex-row flex-justify-space-between flex-align-items-center">
+      <h1>Your Praise Sets</h1>
+
+      <%= link_to new_praise_set_path, class: "btn btn-primary btn-lg" do %>
+        <i class="fa fa-plus-circle"></i>  Create new praise set
+      <% end %>
+    </div>
+
+    <hr class="l-v-half-spaced">
+
+    <div class="history flex-row flex-wrap">
+      <% if @praise_sets.empty? %>
+        You have no praise sets.
+      <% else %>
+        <% @praise_sets.each do |set| %>
+          <%= link_to edit_praise_set_path(set), class: "card card-clickable" do %>
+            <div class="card_header"><%= set.event_name %> <% if set.archived %><small><span class="label label-success">Archived</span></small><% end %></div>
+            <p><%= set.owner.name %>&nbsp;&nbsp;|&nbsp;&nbsp;<%= set.event_date %></p>
+            <hr>
+            <% if set.songs.empty? %>
+              There are no songs in this praise set yet.
+            <% else %>
+              <ol>
+                <% set.songs.each do |song| %>
+                  <li><strong><%= song.name %></strong> (<%= set.praise_set_songs.find_by_song_id(song.id).key %>)</li>
+                <% end %>
+              </ol>
+            <% end %>
+            <% if not set.notes.nil? %>
+              <hr>
+              <strong>Notes:</strong>
+              <%= simple_format set.notes %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

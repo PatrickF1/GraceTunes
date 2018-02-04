@@ -14,6 +14,8 @@
  *= require dataTables/extras/dataTables.responsive
  *= require dataTables/jquery.dataTables
  *= require_self
+ *= require select2
+ *= require select2-bootstrap
  */
 
  @import "bootstrap-sprockets";
@@ -26,13 +28,19 @@
 
  @import "modules/alert";
  @import "modules/base";
+ @import "modules/card";
+ @import "modules/flex";
+ @import "modules/footer";
  @import "modules/form";
  @import "modules/header";
+ @import "modules/layout";
  @import "modules/pagination";
  @import "modules/pill";
  @import "modules/search";
+ @import "modules/song";
  @import "modules/table";
 
  @import "controllers/sessions";
  @import "controllers/songs";
- @import "controllers/feedback"
+ @import "controllers/feedback";
+ @import "controllers/praise_sets";

@@ -19,4 +19,12 @@ class ApplicationControllerTest < ActionController::TestCase
     session.delete(:user_email)
   end
 
+  def get_hillsong_set_owner
+    session[:user_email] = users(:admin).email
+  end
+
+  def get_relevant_set_owner
+    session[:user_email] = users(:praise_member).email
+  end
+
 end

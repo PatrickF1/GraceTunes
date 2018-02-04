@@ -10,6 +10,17 @@ Rails.application.routes.draw do
 
   get "feedback", to: "feedback#show"
 
+  resources :praise_sets do
+    member do
+      put 'add_song'
+      put 'remove_song'
+      put 'set_song_position'
+      put 'set_song_key'
+      put 'archive'
+      put 'unarchive'
+    end
+  end
+
   # Authentication
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: 'sessions#error'

@@ -1,0 +1,28 @@
+.ghost .song_content {
+  background-color: lighten($light-gray, 10%);
+}
+
+[draggable="true"] {
+  opacity: 1;
+
+  &.chosen {
+    opacity: 1;
+  }
+
+  &.ghost {
+    opacity: 0;
+  }
+}
+
+.song-info {
+  display: inline-block;
+}
+
+.praise-set-song-key {
+  display: inline-block;
+  width: initial;
+}
+
+#praise_set_notes {
+  height: 100px;
+}

@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="form-group col-md-12">
+    <%= label_tag :song_id, 'Add Songs' %>
+    <%= select_tag :song_id, options_from_collection_for_select(Song.all, :id, :name), class: 'song-select form-control',
+        data: { path: add_song_praise_set_path } %>
+  </div>
+</div>
+
+<%= javascript_include_tag 'praise_sets/praise_set_songs' %>

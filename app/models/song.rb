@@ -7,6 +7,8 @@ class Song < ApplicationRecord
   )
 
   has_many :tags, through: :song_tags
+  has_many :praise_set_songs
+  has_many :praise_sets, :through => :praise_set_songs
 
   VALID_KEYS = Music::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)

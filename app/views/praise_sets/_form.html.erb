@@ -1,0 +1,46 @@
+<%= form_for @praise_set, html: {class: 'form'} do |f| %>
+  <% if @praise_set.errors.any? %>
+    <div class="praise-set-errors alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div id="error_explanation">
+        <strong><%= pluralize(@praise_set.errors.count, "error") %> prohibited this praise set from being saved:</strong>
+        <ul>
+        <% @praise_set.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@praise_set, :event_name) %>">
+      <%= f.label :event_name %>
+      <%= f.text_field :event_name, class: 'form-control' %>
+    </div>
+
+    <div class="form-group col-md-6 required <%= highlight_if_errors(@praise_set, :event_date) %>">
+      <%= f.label :event_date %>
+      <%= f.date_field :event_date, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-12">
+      <%= f.label :notes %>
+      <%= f.text_area :notes, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="footer">
+    <%= link_to 'Back', praise_sets_path, class: "btn btn-lg btn-default l-h-right-half-spaced" %>
+    <% if @praise_set.id %>
+      <% if @praise_set.archived? %>
+        <%= link_to 'Unarchive', unarchive_praise_set_path(@praise_set), method: :put, class: "btn btn-lg btn-success l-h-right-half-spaced" %>
+      <% else %>
+        <%= link_to 'Archive', archive_praise_set_path(@praise_set), method: :put,  class: "btn btn-lg btn-success l-h-right-half-spaced" %>
+      <% end %>
+    <% end %>
+    <%= f.submit 'Save', class: 'btn btn-lg btn-warning' %>
+  </div>
+<% end %>

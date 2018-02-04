@@ -108,10 +108,7 @@ class SongsControllerTest < ApplicationControllerTest
 
     song = songs(:God_be_praised)
     song.name = new_song_name
-    post :update, params: {
-      song: song.as_json,
-      id: song.id
-    }
+    update_song_form(song)
 
     updated_song = Song.find_by_name(new_song_name)
     assert_equal updated_song.id, song.id
@@ -120,16 +117,12 @@ class SongsControllerTest < ApplicationControllerTest
   test "after editing a song should redirect to its show song page" do
     get_edit_privileges
     song = songs(:God_be_praised)
-    post :update, params: {
-      song: song.as_json,
-      id: song.id
-    }
+    update_song_form(song)
     assert_redirected_to song_path(song)
   end
 
   test "readers should be directed to songs index if they try to update a song" do
-    song = songs(:God_be_praised)
-    post :update, params: { song: song.as_json, id: song.id }
+    update_song_form(songs(:God_be_praised))
     assert_redirected_to songs_path
   end
 
@@ -188,6 +181,13 @@ class SongsControllerTest < ApplicationControllerTest
         tempo: "Fast",
         chord_sheet: "New Song Chords"
       }
+    }
+  end
+
+  def update_song_form(song)
+    post :update, params: {
+      song: song.as_json,
+      id: song.id
     }
   end
 

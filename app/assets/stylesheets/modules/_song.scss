@@ -1,0 +1,33 @@
+.song {
+  border-radius: $default-border-radius;
+
+  .song_content {
+    padding: $default-padding / 2;
+
+    .song_title {
+      font-size: $default-font-size-xlarge;
+      font-weight: $default-font-weight-bold;
+    }
+
+    .song_dragIcon {
+      color: $light-gray;
+
+      &:hover {
+        cursor: grab;
+      }
+
+      &:active {
+        cursor: grabbing;
+      }
+    }
+
+    .song_trashIcon {
+      color: $light-gray;
+      transition: all .25s;
+
+      &:hover {
+        color: $danger-color;
+      }
+    }
+  }
+}
