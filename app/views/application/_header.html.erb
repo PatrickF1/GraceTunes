@@ -15,6 +15,12 @@
             <i class="fa fa-music"></i>Upload Song
           <% end %>
         </div>
+      <% else %>
+        <div class="header_link">
+          <%= link_to request_song_path, { method: :get, class: "#{set_active_if_path(request_song_path)}" } do %>
+            <i class="fa fa-music"></i>Request Song
+          <% end %>
+        </div>
       <% end %>
       <div class="header_link">
         <%= link_to feedback_path, class: "#{set_active_if_path(feedback_path)}" do %>
