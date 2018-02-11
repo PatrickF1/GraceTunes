@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   get "feedback", to: "contact#feedback"
+  get "request_song", to: "contact#request_song"
 
   # Authentication
   get 'auth/:provider/callback', to: 'sessions#create'
