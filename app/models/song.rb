@@ -1,4 +1,6 @@
 class Song < ApplicationRecord
+  audited
+
   include PgSearch
   pg_search_scope(
     :search_by_keywords,
