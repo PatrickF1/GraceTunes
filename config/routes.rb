@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :songs do
     member do
       get 'print'
+      get 'history'
     end
   end
 

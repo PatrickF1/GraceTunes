@@ -113,6 +113,11 @@ class SongsController < ApplicationController
     render layout: false
   end
 
+  def history
+    @song = Song.find(params[:id])
+    @audits = @song.audits
+  end
+
   private
   def song_params
     params.require(:song)

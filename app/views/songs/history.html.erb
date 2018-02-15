@@ -1,0 +1,17 @@
+<% set_page_title @song.name + " edit history" %>
+
+<div class="container">
+  <h1 class="page-header"><%= @song.name + " Edit History" %></h1>
+
+  <% @audits.reverse.each do |audit| %>
+    <div class="row">
+      <div class="col-md-12">
+        <h4>Version: <%= audit.version %></h4>
+        <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.name %></strong> (<%= audit.user.email %>)</h5>
+        <div>at <%= audit.created_at %></div>
+        <div><small><%= audit.remote_address %></small></div>
+        <hr/>
+      </div>
+    </div>
+  <% end %>
+</div>
