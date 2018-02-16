@@ -57,6 +57,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
+    diffy (3.2.0)
     erubi (1.6.0)
     execjs (2.7.0)
     faraday (0.11.0)
@@ -225,6 +226,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.7)
   byebug
   coffee-rails
+  diffy
   font-awesome-rails
   jbuilder (~> 2.5)
   jquery-datatables-rails (~> 3.4.0)
