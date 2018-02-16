@@ -24,7 +24,7 @@
             <div class="panel-heading" role="tab" id="<%= heading_name %>">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" href="#<%= field_name %>" aria-expanded="false" aria-controls="<%= field_name %>">
-                  <%= field %>
+                  <%= field.split('_').map(&:capitalize).join(' ') %>
                 </a>
               </h4>
             </div>
