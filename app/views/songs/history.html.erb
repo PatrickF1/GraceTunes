@@ -2,10 +2,12 @@
   <%= Diffy::CSS %>
 </style>
 
-<% set_page_title @song.name + " edit history" %>
+<% page_title = @song.name + " Edit History" %>
+
+<% set_page_title page_title %>
 
 <div class="container">
-  <h1 class="page-header"><%= @song.name + " Edit History" %></h1>
+  <h1 class="page-header"><%= page_title %></h1>
 
   <% @audits.reverse.each do |audit| %>
     <div class="row">
