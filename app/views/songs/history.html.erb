@@ -12,10 +12,8 @@
   <% @audits.reverse.each do |audit| %>
     <div class="row">
       <div class="col-md-12">
-        <h4>Version: <%= audit.version %></h4>
-        <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.name %></strong> (<%= audit.user.email %>)</h5>
-        <div>at <%= audit.created_at %></div>
-        <div><small><%= audit.remote_address %></small></div>
+        <h4>Version <%= audit.version %></h4>
+        <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
 
         <br/>
 
