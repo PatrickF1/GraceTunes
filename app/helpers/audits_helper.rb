@@ -2,8 +2,9 @@ module AuditsHelper
 
   def audit_action_past_tense(action)
     if action == "destroy"
-      return "deleted"
+      "deleted"
+    else
+      action + "d"
     end
-    action + "d"
   end
 end
