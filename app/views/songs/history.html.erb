@@ -18,9 +18,6 @@
         <br/>
 
         <% audit.audited_changes.each do |field, diff| %>
-          <% if field == "lyrics" %>
-            <% next %>
-          <% end %>
           <% split_diff = Diffy::SplitDiff.new(diff[0], diff[1], :format => :html) %>
           <% heading_name = audit.id.to_s + "_" + field + "_heading" %>
           <% field_name = audit.id.to_s + "_" + field %>

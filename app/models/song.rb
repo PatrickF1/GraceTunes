@@ -1,5 +1,5 @@
 class Song < ApplicationRecord
-  audited
+  audited except: :lyrics
 
   include PgSearch
   pg_search_scope(
