@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'songs/:id/history', to: 'audits#song_history', as: 'song_history'
+
   get "feedback", to: "contact#feedback"
   get "request_song", to: "contact#request_song"
 
