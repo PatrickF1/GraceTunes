@@ -12,7 +12,7 @@
   <% @audits.reverse.each do |audit| %>
     <div class="row">
       <div class="col-md-12">
-        <h4>Version <%= audit.version %></h4>
+        <h4>Edit <%= audit.version %></h4>
         <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
 
         <br/>
@@ -26,7 +26,7 @@
             <div class="panel-heading" role="tab" id="<%= heading_name %>">
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" href="#<%= field_name %>" aria-expanded="false" aria-controls="<%= field_name %>">
-                  <%= field.humanize %>
+                  <%= field.humanize.titleize %>
                 </a>
               </h4>
             </div>
