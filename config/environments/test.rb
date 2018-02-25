@@ -39,4 +39,7 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # disable auditing so tests run faster
+  Song.auditing_enabled = false
 end
