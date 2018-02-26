@@ -12,7 +12,7 @@
         <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
       <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
-      <b>Tempo:</b> <%= @song.tempo %>
+      <b>Tempo:</b> <%= @song.tempo %> <%= "(#{@song.bpm} BPM)" if @song.bpm.present? %>
     </p>
     <% if @song.standard_scan.present? %>
       <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
