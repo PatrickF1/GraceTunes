@@ -1,0 +1,37 @@
+<style>
+  <%= Diffy::CSS %>
+</style>
+
+<% audit.audited_changes.each do |field, diff| %>
+  <% split_diff = Diffy::SplitDiff.new(diff[0], diff[1], :format => :html) %>
+  <% heading_name = audit.id.to_s + "_" + field + "_heading" %>
+  <% field_name = audit.id.to_s + "_" + field %>
+  <div class="panel panel-default">
+
+    <div class="panel-heading" role="tab" id="<%= heading_name %>">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#<%= field_name %>" aria-expanded="false" aria-controls="<%= field_name %>">
+          <%= field.humanize %>
+        </a>
+      </h4>
+    </div>
+
+    <div class="panel-collapse collapse" id="<%= field_name %>" role="tabpanel" aria-lablledby="<%= heading_name %>">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6 col-xs-12">
+            <h4>Before</h4>
+            <hr/>
+            <%= split_diff.left.html_safe if !split_diff.left.nil? %>
+          </div>
+          <div class="col-md-6 col-xs-12">
+            <h4>After</h4>
+            <hr/>
+            <%= split_diff.right.html_safe if !split_diff.right.nil? %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>

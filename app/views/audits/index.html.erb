@@ -1,14 +1,13 @@
-<% page_title = @song.name + " Edit History" %>
-
-<% set_page_title page_title %>
+<% set_page_title "Recent Changes" %>
 
 <div class="container">
-  <h1 class="page-header"><%= page_title %></h1>
+  <h1 class="page-header">Recent Changes</h1>
 
-  <% @audits.reverse.each do |audit| %>
+  <% @audits_to_song_map.each do |audit, song| %>
     <div class="row">
       <div class="col-md-12">
-        <h4>Version <%= audit.version %></h4>
+        <h4>Change to <strong><%= song.name %></strong></h4>
+        <h5>Edit <%= audit.version %></h5>
         <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
         <%= render partial: "field_changes", locals: { audit: audit } %>

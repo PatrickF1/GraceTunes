@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :audits, only: [:index]
+
   get 'songs/:id/history', to: 'audits#song_history', as: 'song_history'
 
   get "feedback", to: "contact#feedback"

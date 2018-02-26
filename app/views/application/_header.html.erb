@@ -27,6 +27,13 @@
           <i class="fa fa-comment"></i>Feedback
         <% end %>
       </div>
+      <% if current_user.can_delete? %>
+        <div class="header_link">
+          <%= link_to audits_path, { method: :get, class: "#{set_active_if_path(audits_path)}" } do %>
+            <i class="fa fa-history"></i>Recent Changes
+          <% end %>
+        </div>
+      <% end %>
     </div>
 
     <div class="header_user">
