@@ -25,10 +25,14 @@
       <iframe class="spotify-widget" src=<%= @song.spotify_widget_source %>></iframe>
   <% end %>
   <div class="song-metadata">
-    <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>
-     <% if @song.standard_scan.present? %>
-       <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
-     <% end %>
+    <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;&nbsp;
+    |&nbsp;&nbsp;<span><strong>Tempo:</strong> <%= @song.tempo %></span>&nbsp;&nbsp;
+    <% if @song.bpm.present? %>
+      |&nbsp;&nbsp;<span><strong>BPM:</strong> <%= @song.bpm %></span>&nbsp;&nbsp;
+    <% end %>
+    <% if @song.standard_scan.present? %>
+      <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
+    <% end %>
   </div>
 
   <div class="song-controls">
