@@ -1,4 +1,4 @@
-class AddSpotifyUriToSongs < ActiveRecord::Migration[5.1]
+class AddSpotifyURIToSongs < ActiveRecord::Migration[5.1]
   def change
     add_column :songs, :spotify_uri, :string
     # initialize the new column to be empty string so that the

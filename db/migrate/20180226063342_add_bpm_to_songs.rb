@@ -1,4 +1,4 @@
-class AddBpmToSongs < ActiveRecord::Migration[5.1]
+class AddBPMToSongs < ActiveRecord::Migration[5.1]
   def up
     add_column :songs, :bpm, :integer
     execute <<-SQL
