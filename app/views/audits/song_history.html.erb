@@ -3,7 +3,14 @@
 <% set_page_title page_title %>
 
 <div class="container">
-  <h1 class="page-header"><%= page_title %></h1>
+  <h1 class="page-header">
+    <%= page_title %>
+    <small>
+      <%= link_to song_path, { method: :get, class: "pull-right pill pill_link-blue button-spacing" } do %>
+        <i class="fa fa-arrow-left"></i> Back
+      <% end %>
+    </small>
+  </h1>
 
   <% @audits.reverse.each do |audit| %>
     <div class="row">

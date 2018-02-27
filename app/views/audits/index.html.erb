@@ -6,7 +6,7 @@
   <% @audits_to_song_map.each do |audit, song| %>
     <div class="row">
       <div class="col-md-12">
-        <h4>Change to <strong><%= song.name %></strong></h4>
+        <h4>Change to <strong><%= link_to song.name, song_path(song) %></strong></h4>
         <h5>Edit <%= audit.version %></h5>
         <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
