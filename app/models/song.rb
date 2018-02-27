@@ -30,6 +30,7 @@ class Song < ApplicationRecord
     format: { with: /\Aspotify:track:\w{22}\z/ },
     if: -> (song) { song.spotify_uri.present? }
   validates :bpm, numericality: {
+    allow_nil: true,
     only_integer: true,
     greater_than: 0,
     less_than_or_equal_to: 1000
