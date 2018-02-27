@@ -13,5 +13,4 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'URI'
-  inflect.acronym 'BPM'
 end
