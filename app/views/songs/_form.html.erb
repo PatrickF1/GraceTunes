@@ -26,29 +26,32 @@
   </div>
 
   <div class="row">
-    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :tempo) %>">
+    <div class="form-group col-md-4 required <%= highlight_if_errors(@song, :tempo) %>">
       <%= f.label :tempo %>
       <%= f.select :tempo, Song::VALID_TEMPOS, { prompt: "Choose tempo" }, class: 'form-control' %>
     </div>
-
-    <div class="form-group col-md-6 required <%= highlight_if_errors(@song, :key) %>">
+    <div class="form-group col-md-4 <%= highlight_if_errors(@song, :bpm) %>">
+      <%= f.label :bpm %>
+      <%= f.number_field :bpm, in: 1..1000, class: 'form-control' %>
+    </div>
+    <div class="form-group col-md-4 required <%= highlight_if_errors(@song, :key) %>">
       <%= f.label :key %>
       <%= f.select :key, Song::VALID_KEYS, { prompt: "Choose key" }, class: 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :standard_scan %>
+    <%= f.label :standard_scan, "Standard Scan" %>
     <%= f.text_field :standard_scan, placeholder: "e.g. V1. V2. PC. C. V3. V4.", class: 'form-control' %>
   </div>
 
   <div class="form-group required <%= highlight_if_errors(@song, :chord_sheet) %>">
-    <%= f.label :chord_sheet %>
+    <%= f.label :chord_sheet, "Chord Sheet" %>
     <%= f.text_area :chord_sheet, class: 'fixed-width form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :spotify_uri, "Spotify URI" %>
+    <%= f.label :spotify_uri %>
     <br>
     <i>Open Spotify > Right Click On Track > Share > Copy Spotify URI</i>
     <%= f.text_field :spotify_uri, placeholder: "e.g. spotify:track:6qdpQ6jPiaCYE9Qw4nZVuD", class: 'form-control' %>

@@ -36,6 +36,14 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved with an invalid Spotify URI"
   end
 
+  test "should not save with an impossible BPM" do
+    song = songs(:ten_thousand_reasons)
+    song.bpm = 0
+    assert_not song.save, "Saved with a BPM of 0"
+    song.bpm = 9000
+    assert_not song.save, "Saved with a BPM of 9000"
+  end
+
   test "should upcase the standard scan" do
     song = songs(:God_be_praised)
     lowercased_standard_scan = "t. v1. v2. pc. c."

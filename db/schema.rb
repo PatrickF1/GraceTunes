@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180214065643) do
+ActiveRecord::Schema.define(version: 20180226063342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
+  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id"
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 20180214065643) do
     t.text "chord_sheet", null: false
     t.text "lyrics", null: false
     t.string "spotify_uri"
+    t.integer "bpm"
     t.index ["artist"], name: "index_songs_on_artist", using: :gin
     t.index ["lyrics"], name: "index_songs_on_lyrics", using: :gin
     t.index ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true
