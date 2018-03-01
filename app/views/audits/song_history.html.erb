@@ -12,8 +12,8 @@
   <% @update_audits.reverse.each do |audit| %>
     <div class="row">
       <div class="col-md-12">
-        <h4>Edit <%= audit.version %></h4>
-        <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
+        <h4><strong><%= audit.created_at.strftime('%B %d, %Y at %l:%M %p') %></strong></h4>
+        <h5>Edited by <%= audit.user.to_s %></h5>
 
         <br/>
 
