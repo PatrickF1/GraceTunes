@@ -53,6 +53,8 @@ class SongsController < ApplicationController
       Formatter.format_song_nashville(@song)
     end
 
+    @has_been_edited = @song.audits.where(action: 'update').count > 0
+
     respond_to do |format|
       format.html do
       end
