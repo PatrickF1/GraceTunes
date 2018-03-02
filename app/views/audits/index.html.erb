@@ -3,16 +3,29 @@
 <div class="container">
   <h1 class="page-header">Recent Changes</h1>
 
+  <%= render partial: 'audits/pagination' %>
+  <br/>
+
   <% @audits_to_song_map.each do |audit, song| %>
-    <div class="row">
+    <div class="row <%= audit_background_for_audit_action(audit.action) %>">
       <div class="col-md-12">
-        <h4>Change to <strong><%= link_to song.name, song_path(song) %></strong></h4>
+        <h4>
+          <span class="<%= text_class_for_audit_action(audit.action) %>">
+            <%= audit_action_past_tense(audit.action).capitalize %>
+          </span>
+          <strong><%= link_to song.name, song_path(song) %></strong>
+        </h4>
         <h5>Edit <%= audit.version %></h5>
-        <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
+        <h5>by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
         <%= render partial: "field_changes", locals: { audit: audit } %>
-        <hr/>
       </div>
     </div>
+    <hr/>
   <% end %>
+
+  <%= render partial: 'audits/pagination' %>
+
+  <%= will_paginate @collection, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+
 </div>
