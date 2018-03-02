@@ -18,7 +18,7 @@
         <h4>Version <%= audit.version %></h4>
         <h5><%= audit_action_past_tense(audit.action).capitalize %> by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
-        <%= render partial: "field_changes", locals: { audit: audit } %>
+        <%= render partial: "audit_details", locals: { audit: audit } %>
         <hr/>
       </div>
     </div>

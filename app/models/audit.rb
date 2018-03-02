@@ -6,4 +6,16 @@ class Audit
   end
 
   scope :history, -> { reorder("created_at DESC") }
+
+  def create?
+    action == "create"
+  end
+
+  def destroy?
+    action == "destroy"
+  end
+
+  def update?
+    action == "update"
+  end
 end

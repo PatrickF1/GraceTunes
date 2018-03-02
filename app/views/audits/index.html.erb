@@ -14,12 +14,18 @@
           <span class="<%= text_class_for_audit_action(audit.action) %>">
             <%= audit_action_past_tense(audit.action).capitalize %>
           </span>
-          <strong><%= link_to song.name, song_path(song) %></strong>
+          <strong>
+            <% if song.id %>
+              <%= link_to song.name, song_path(song) %>
+            <% else %>
+              <%= song.name %> <small>(now deleted)</small>
+            <% end %>
+          </strong>
         </h4>
         <h5>Edit <%= audit.version %></h5>
         <h5>by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
-        <%= render partial: "field_changes", locals: { audit: audit } %>
+        <%= render partial: "audit_details", locals: { audit: audit } %>
       </div>
     </div>
     <hr/>

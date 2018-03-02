@@ -1,0 +1,36 @@
+<style>
+  <%= Diffy::CSS %>
+</style>
+
+<% if audit.create? %>
+  <h4>Original Values</h4>
+<% elsif audit.destroy? %>
+  <h4>Last Values</h4>
+<% end %>
+<% audit.audited_changes.each do |field, diff| %>
+  <% heading_name = audit.id.to_s + "_" + field + "_heading" %>
+  <% field_name = audit.id.to_s + "_" + field %>
+  <div class="panel panel-default">
+
+    <div class="panel-heading" role="tab" id="<%= heading_name %>">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#<%= field_name %>" aria-expanded="false" aria-controls="<%= field_name %>">
+          <%= field.humanize %>
+        </a>
+      </h4>
+    </div>
+
+    <div class="panel-collapse collapse" id="<%= field_name %>" role="tabpanel" aria-lablledby="<%= heading_name %>">
+      <div class="panel-body">
+        <div class="row">
+          <% if audit.update? %>
+            <%= render partial: "field_changes", locals: { diff: diff } %>
+          <% else %>
+            <%= render partial: "field_values", locals: { value: diff } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>
