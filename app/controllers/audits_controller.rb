@@ -5,7 +5,6 @@ class AuditsController < ApplicationController
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1
     @audits = Audit.history
-    @total_pages = ((@audits.length - 1) / PAGE_SIZE) + 1
     @audits = @audits.paginate(page: @page_num, per_page: PAGE_SIZE)
 
     @audits_to_song_map = @audits.collect do |audit|
@@ -16,10 +15,6 @@ class AuditsController < ApplicationController
       end
       [audit, song]
     end.to_h
-
-    # pagination variables
-    @previous_disabled = @page_num == 1
-    @next_disabled = @page_num == @total_pages
   end
 
   def song_history

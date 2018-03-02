@@ -3,7 +3,8 @@
 <div class="container">
   <h1 class="page-header">Recent Changes</h1>
 
-  <%= will_paginate @collection, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+  <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+  <br/>
   <br/>
 
   <% @audits_to_song_map.each do |audit, song| %>
@@ -24,6 +25,6 @@
     <hr/>
   <% end %>
 
-  <%= will_paginate @collection, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+  <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
 
 </div>
