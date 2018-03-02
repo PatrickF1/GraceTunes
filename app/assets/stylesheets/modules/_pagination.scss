@@ -1,7 +1,8 @@
 .pagination {
 	margin: 0;
+	color: $blue;
 
-	.paginate_button {
+	.paginate_button, li {
 		background: none;
 		padding: 0 !important;
 
@@ -21,7 +22,7 @@
 
 		&.active {
 
-			a {
+			a, span {
 				background-color: $blue;
 				border-color: $blue;
 				color: $white;
