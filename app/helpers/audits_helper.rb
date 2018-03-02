@@ -1,4 +1,10 @@
 module AuditsHelper
+  AUDIT_ACTION_TO_BOOTSTRAP_CLASS = {
+    "create" => "success",
+    "destroy" => "danger",
+    "update" => "warning"
+  }
+  private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
 
   def audit_action_past_tense(action)
     if action == "destroy"
@@ -9,18 +15,10 @@ module AuditsHelper
   end
 
   def text_class_for_audit_action(audit_action)
-    {
-      create: 'text-success',
-      destroy: 'text-danger',
-      update: 'text-warning'
-    }[audit_action.to_sym]
+    "text-" + AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]
   end
 
   def audit_background_for_audit_action(audit_action)
-    {
-      create: 'bg-success',
-      destroy: 'bg-danger',
-      update: 'bg-warning',
-    }[audit_action.to_sym]
+    "bg-" + AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]
   end
 end
