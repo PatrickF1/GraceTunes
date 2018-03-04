@@ -4,18 +4,7 @@ module AuditsHelper
     Audit::CREATE => "success",
     Audit::DESTROY => "danger"
   }
-  AUDIT_ACTION_TO_PLURAL_NOUN = {
-    Audit::UPDATE => "updates",
-    Audit::CREATE => "creations",
-    Audit::DESTROY => "deletions"
-  }
   private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
-
-  def get_action_opts(selected, include_any = false)
-    options = Audit::VALID_ACTIONS.map { |action| [AUDIT_ACTION_TO_PLURAL_NOUN[action], action] }
-    options.insert(0, ['All', '']) if include_any
-    options_for_select(options, selected: selected)
-  end
 
   def audit_action_past_tense(action)
     if action == Audit::DESTROY
