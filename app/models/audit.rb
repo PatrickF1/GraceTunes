@@ -6,10 +6,6 @@ class Audit
   DESTROY = "destroy"
   VALID_ACTIONS = [UPDATE, CREATE, DESTROY]
 
-  scope :today, -> do
-    where("created_at >= ?", Time.zone.today.midnight).reorder(:created_at)
-  end
-
   scope :history, -> { reorder("created_at DESC") }
 
   def update?
