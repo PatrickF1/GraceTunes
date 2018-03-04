@@ -57,8 +57,3 @@
   <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
 
 </div>
-
-<script type="text/javascript">
-  $('#audit_action').change(function(){
-    window.location = <%= audits_url(audit_action: $)
-  });
