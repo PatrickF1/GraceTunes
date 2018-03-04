@@ -14,7 +14,7 @@ class AuditsController < ApplicationController
     @audits_to_song_map = @audits.collect do |audit|
       song = Song.find_by(id: audit.auditable_id)
       if song.nil?
-        destroy_audit = Audit.find_by(action: "destroy", auditable_id: audit.auditable_id)
+        destroy_audit = Audit.find_by(action: Audit::DESTROY, auditable_id: audit.auditable_id)
         song = Song.new(destroy_audit.audited_changes)
       end
       [audit, song]
