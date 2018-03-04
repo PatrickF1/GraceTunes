@@ -1,0 +1,19 @@
+.audits-controls, .audits-control{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.audits-filter{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  a:hover{
+    text-decoration: none;
+  }
+}
+
+.audits-filter *{
+  padding: 0px 5px;
+}

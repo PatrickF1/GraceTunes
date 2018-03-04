@@ -5,6 +5,10 @@ class AuditsController < ApplicationController
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1
     @audits = Audit.history
+    @audit_action_filter = params[:audit_action] if Audit.valid_action(params[:audit_action])
+    if @audit_action_filter
+      @audits = @audits.where(action: @audit_action_filter)
+    end
     @audits = @audits.paginate(page: @page_num, per_page: PAGE_SIZE)
 
     @audits_to_song_map = @audits.collect do |audit|

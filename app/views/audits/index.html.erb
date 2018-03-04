@@ -3,7 +3,30 @@
 <div class="container">
   <h1 class="page-header">Recent Changes</h1>
 
-  <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+  <div class="audits-controls">
+    <div class="audit-pages">
+      <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+    </div>
+    <div class="audits-filter">
+    <b>Only show</b>
+      <ul class="nav nav-pills">
+        <li role="presentation" class="<%= set_active_if_action(Audit::UPDATE) %>">
+          <%= link_to "Updates", audits_path(audit_action: Audit::UPDATE) %>
+        </li>
+        <li role="presentation" class="<%= set_active_if_action(Audit::CREATE) %>">
+          <%= link_to "Creations", audits_path(audit_action: Audit::CREATE) %>
+        </li>
+        <li role="presentation" class="<%= set_active_if_action(Audit::DESTROY) %>">
+          <%= link_to "Deletions", audits_path(audit_action: Audit::DESTROY) %>
+        </li>
+      </ul>
+      <% if @audit_action_filter %>
+        <%= link_to audits_path do %>
+          <i class="fa fa-times-circle"></i>Clear
+        <% end %>
+      <% end %>
+    </div>
+  </div>
   <br/>
   <br/>
 
@@ -34,3 +57,8 @@
   <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
 
 </div>
+
+<script type="text/javascript">
+  $('#audit_action').change(function(){
+    window.location = <%= audits_url(audit_action: $)
+  });
