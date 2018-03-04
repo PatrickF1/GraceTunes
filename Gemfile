@@ -7,7 +7,7 @@ gem 'rails', '5.1.1'
 gem 'pg'
 gem 'pg_search'
 gem 'will_paginate', '~> 3.1'
-gem 'will_paginate-bootstrap'
+gem 'bootstrap-will_paginate'
 
 gem 'normalize-rails'
 # Use Font-Aesome web fonts and stylesheets

@@ -5,7 +5,7 @@
 
   <div class="audits-controls">
     <div class="audit-pages">
-      <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+      <%= will_paginate @audits, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
     </div>
     <div class="audits-filter">
     <b>Only show</b>
@@ -54,6 +54,6 @@
     <hr/>
   <% end %>
 
-  <%= will_paginate @audits, renderer: BootstrapPagination::Rails, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
+  <%= will_paginate @audits, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
 
 </div>
