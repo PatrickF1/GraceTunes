@@ -36,6 +36,14 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.save, "Saved with an invalid Spotify URI"
   end
 
+  test "should not save with an impossible BPM" do
+    song = songs(:ten_thousand_reasons)
+    song.bpm = 0
+    assert_not song.save, "Saved with a BPM of 0"
+    song.bpm = 9000
+    assert_not song.save, "Saved with a BPM of 9000"
+  end
+
   test "should upcase the standard scan" do
     song = songs(:God_be_praised)
     lowercased_standard_scan = "t. v1. v2. pc. c."
@@ -155,6 +163,46 @@ class SongTest < ActiveSupport::TestCase
     assert new_song.save, "Did not allow two songs with the same name but different artist"
   end
 
+  # auditing tests
+  test "updating a song is audited" do
+    execute_with_auditing do
+      song = songs(:all_my_hope)
+      song.name = "Updated Name"
+      assert song.save
+      assert_not_empty song.audits, "Updating a song was not audited"
+    end
+  end
+
+  test "creating a song is audited" do
+    execute_with_auditing do
+      new_song = songs(:all_my_hope).dup
+      new_song.name = "Song about to be created"
+      assert new_song.save
+      assert_not_empty new_song.audits, "Creating a song was not audited"
+    end
+  end
+
+  test "song lyrics are not audited" do
+    # lyrics should not be audited because they are auto-generated from
+    # the chord sheet and should never be changed directly by users
+    execute_with_auditing do
+      song = songs(:all_my_hope).dup
+      song.name = "Song about to be created"
+      assert song.save
+      assert_nil(
+        song.audits[0].audited_changes["lyrics"],
+        "Lyrics were audited when creating a song"
+      )
+
+      song.chord_sheet = "lyrics have changed"
+      assert song.save
+      assert_nil(
+        song.audits[0].audited_changes["lyrics"],
+        "Lyrics were audited when updating a song's chord sheet"
+      )
+    end
+  end
+
   # full text search tests
   single_word_results = Song.search_by_keywords "relevant"
   multi_word_results = Song.search_by_keywords "Holy Lord"
@@ -216,5 +264,15 @@ class SongTest < ActiveSupport::TestCase
   def force_lyrics_extraction(song)
     song.lyrics = nil
     song.save
+  end
+
+  # temporarily enable Song auditing
+  def execute_with_auditing
+    begin
+      Song.auditing_enabled = true
+      yield
+    ensure
+      Song.auditing_enabled = false
+    end
   end
 end

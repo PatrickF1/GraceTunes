@@ -16,14 +16,26 @@ class Song < ApplicationRecord
 
   before_validation :normalize
 
-  validates :name, presence: true, uniqueness: { scope: :artist, message: "is taken by another song by this artist" }
+  validates :name, presence: true, uniqueness: {
+    scope: :artist,
+    message: "is taken by another song by this artist"
+  }
   validates :key, presence: true
   validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
   validates :tempo, presence: true
   validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
   validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
-  validates :spotify_uri, format: { with: /\Aspotify:track:\w{22}\z/ }, if: -> (song) { song.spotify_uri.present? }
+  validates :spotify_uri,
+    format: { with: /\Aspotify:track:\w{22}\z/ },
+    if: -> (song) { song.spotify_uri.present? }
+  validates :bpm, numericality: {
+    allow_nil: true,
+    only_integer: true,
+    greater_than: 0,
+    less_than_or_equal_to: 1000
+  }
+
   before_save :extract_lyrics
 
   def to_s
