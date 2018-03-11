@@ -25,8 +25,10 @@
         <div class="row">
           <% if audit.update? %>
             <%= render partial: "field_changes", locals: { diff: diff } %>
-          <% else %>
-            <%= render partial: "field_values", locals: { value: diff } %>
+          <% elsif audit.create? %>
+            <%= render partial: "field_creations", locals: { value: diff } %>
+          <% elsif audit.destroy? %>
+            <%= render partial: "field_deletions", locals: { value: diff } %>
           <% end %>
         </div>
       </div>

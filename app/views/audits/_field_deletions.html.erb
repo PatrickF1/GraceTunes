@@ -1,0 +1,4 @@
+<div class="col-md-12">
+  <!-- Deletions are on the left in the split diff -->
+  <%= Diffy::SplitDiff.new(value, "", :format => :html).left.html_safe %>
+</div>
