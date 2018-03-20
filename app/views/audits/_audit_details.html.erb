@@ -23,13 +23,12 @@
     <div class="panel-collapse collapse" id="<%= field_name %>" role="tabpanel" aria-lablledby="<%= heading_name %>">
       <div class="panel-body">
         <div class="row">
-          <% if audit.update? %>
-            <%= render partial: "field_changes", locals: { diff: diff } %>
-          <% elsif audit.create? %>
-            <%= render partial: "field_changes", locals: { diff: [nil, diff] } %>
+          <% if audit.create? %>
+            <% diff = [nil, diff] %>
           <% elsif audit.destroy? %>
-            <%= render partial: "field_changes", locals: { diff: [diff, nil] } %>
+            <% diff = [diff, nil] %>
           <% end %>
+          <%= render partial: "field_changes", locals: { diff: diff } %>
         </div>
       </div>
     </div>
