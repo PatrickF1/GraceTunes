@@ -31,8 +31,8 @@ class AuditsControllerTest < ApplicationControllerTest
     get :index, params: { audit_action: "create" }
 
     audits = assigns(:audits)
-    create_audits = [audits(:forever_reign_audit_1), audits(:deleted_song_audit_1)].to_set
-    other_audits = [audits(:forever_reign_audit_2), audits(:forever_reign_audit_3),
+    create_audits = [audits(:test_song_audit_1), audits(:deleted_song_audit_1)].to_set
+    other_audits = [audits(:test_song_audit_2), audits(:test_song_audit_3),
         audits(:deleted_song_audit_2), audits(:deleted_song_audit_3)].to_set
 
     assert(audits.to_set == create_audits)

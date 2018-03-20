@@ -1,86 +1,32 @@
-forever_reign_audit_1:
-  auditable: forever_reign
+test_song_audit_1:
+  auditable: test_song
   action: "create"
   audited_changes:
-    name: "Forever Reign"
-    artist: "Hillsong Worship"
-    key: "B"
+    name: "Test"
+    artist: "Tester"
+    key: "G"
     tempo: "Medium"
     standard_scan: "V1."
     chord_sheet: |
-      VERSE 1:
-                C
-      You are good, You are good
-      And there's nothing good in me
-               G/C
-      You are love, You are love
-      On display for all to see
-                C
-      You are light, You are light
-      When the darkness closes in
-              G/C
-      You are hope, You are hope
-      You've covered all my sin
-
-      VERSE 2:
-               C
-      You are peace, You are peace
-      When my fear is crippling
-               G/C
-      You are truth, You are truth
-      Even in my wandering
-               C
-      You are joy, You are joy
-      You're the reason that I sing
-              G/C
-      You are life, You are life
-      In You death has lost it's sting
-
-      CHORUS:
-       C                               G             Am
-      I'm running to Your arms, I'm running to Your arms
-                                               F
-      The riches of Your love will always be enough
-                     Am        G      F
-      And nothing compares to Your embrace
-                     Am      G      F
-      Light of the world, Forever reign
-
-      VERSE 3:
-               C
-      You are more, You are more
-      Than my words will ever say
-               G/C
-      You are Lord, You are Lord
-      All creation will proclaim
-               C
-      You are here, You are here
-      In Your presence I'm made whole
-              G/C
-      You are God, You are God
-      Of all else I'm letting go
-
-      BRIDGE:
-      Am             F
-      My heart will sing
-                C
-      No other name
-              G/B
-      Jesus, Jesus
+      Verse 1:
+      G      Am     G/B       C
+      This is a test song
+      D      Em     D/F#      G
+      Testing test tests
     version: 1
     created_at: "2018-03-01"
 
-forever_reign_audit_2:
+test_song_audit_2:
   auditable: forever_reign
   action: "update"
   audited_changes:
     key:
-      - "B"
+      - "G"
       - "C"
   version: 2
   created_at: "2018-03-03"
 
-forever_reign_audit_3:
+test_song_audit_3:
   auditable: forever_reign
   action: "update"
   audited_changes:
