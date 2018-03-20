@@ -19,7 +19,7 @@ class AuditsControllerTest < ApplicationControllerTest
 
   test "index should retrieve one page of audits" do
     get :index
-    assert_equal(assigns(:audits).size, AuditsController::PAGE_SIZE)
+    assert_equal(assigns(:audits).size, AuditsController::DEFAULT_PAGE_SIZE)
   end
 
   test "index should retrieve the given page of audits" do
