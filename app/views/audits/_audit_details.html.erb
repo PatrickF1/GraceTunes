@@ -2,11 +2,6 @@
   <%= Diffy::CSS %>
 </style>
 
-<% if audit.create? %>
-  <h4>Original Values</h4>
-<% elsif audit.destroy? %>
-  <h4>Last Values</h4>
-<% end %>
 <% audit.audited_changes.each do |field, diff| %>
   <% heading_name = audit.id.to_s + "_" + field + "_heading" %>
   <% field_name = audit.id.to_s + "_" + field %>
