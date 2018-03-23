@@ -28,7 +28,7 @@ class AuditsControllerTest < ApplicationControllerTest
   end
 
   test "index should only retrieve audits with the given audit action" do
-    get :index, params: { audit_action: "create" }
+    get :index, params: { audit_action: Audit::CREATE }
 
     audits = assigns(:audits)
     create_audits = [audits(:test_song_audit_1), audits(:deleted_song_audit_1)].to_set
@@ -37,5 +37,11 @@ class AuditsControllerTest < ApplicationControllerTest
 
     assert(audits.to_set == create_audits)
     assert_not(audits.to_set.intersect?(other_audits))
+  end
+
+  test "index should compact audited_changes of create and destroy actions" do
+    get :index, params: { audit_action: Audit::CREATE }
+    delete_song_create_audit = assigns(:audits)[1]
+    assert_equal({ "name" => "Delete Me", "key" => "G"}, delete_song_create_audit.audited_changes)
   end
 end

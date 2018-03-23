@@ -41,7 +41,10 @@ deleted_song_audit_1:
   action: "create"
   audited_changes:
     name: "Delete Me"
+    artist: ""
     key: "G"
+    bpm: null
+    standard_scan: ""
   version: 1
   created_at: "2018-01-01"
 
@@ -63,7 +66,9 @@ deleted_song_audit_3:
   action: "destroy"
   audited_changes:
     name: "Delete Me"
+    artist: ""
     key: "A"
+    bpm: null
     standard_scan: "V1."
   version: 3
   created_at: "2018-01-03"
