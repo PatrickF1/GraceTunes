@@ -38,10 +38,4 @@ class AuditsControllerTest < ApplicationControllerTest
     assert(audits.to_set == create_audits)
     assert_not(audits.to_set.intersect?(other_audits))
   end
-
-  test "index should compact audited_changes of create and destroy actions" do
-    get :index, params: { audit_action: Audit::CREATE }
-    delete_song_create_audit = assigns(:audits)[1]
-    assert_equal({ "name" => "Delete Me", "key" => "G"}, delete_song_create_audit.audited_changes)
-  end
 end

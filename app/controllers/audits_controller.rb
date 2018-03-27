@@ -21,9 +21,6 @@ class AuditsController < ApplicationController
         destroy_audit = Audit.find_by(action: Audit::DESTROY, auditable_id: audit.auditable_id)
         song = Song.new(destroy_audit.audited_changes)
       end
-      if audit.action == Audit::CREATE or audit.action == Audit::DESTROY
-        audit.audited_changes.delete_if { |field, value| value.blank? }
-      end
       [audit, song]
     end.to_h
   end

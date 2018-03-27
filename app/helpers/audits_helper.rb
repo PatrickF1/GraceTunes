@@ -6,6 +6,10 @@ module AuditsHelper
   }
   private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
 
+  def filter_empty_audited_changes(audited_changes)
+    audited_changes.select { |field, value| value.kind_of?(Array) or !value.blank? }
+  end
+
   def audit_action_past_tense(action)
     if action == Audit::DESTROY
       "deleted"

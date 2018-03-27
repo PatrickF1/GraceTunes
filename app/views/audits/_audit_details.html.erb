@@ -2,7 +2,7 @@
   <%= Diffy::CSS %>
 </style>
 
-<% audit.audited_changes.each do |field, diff| %>
+<% filter_empty_audited_changes(audit.audited_changes).each do |field, diff| %>
   <% heading_name = audit.id.to_s + "_" + field + "_heading" %>
   <% field_name = audit.id.to_s + "_" + field %>
   <div class="panel panel-default">
