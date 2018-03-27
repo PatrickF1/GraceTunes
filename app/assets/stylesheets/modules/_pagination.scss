@@ -1,47 +1,47 @@
 .pagination {
-	margin: 0;
+  margin: 0;
 
-	.paginate_button {
-		background: none;
-		padding: 0 !important;
+  .paginate_button, li {
+    background: none;
+    padding: 0 !important;
 
-		&:hover {
-			background: $white !important;
-			border-color: transparent !important;
-		}
+    &:hover {
+      background: $white !important;
+      border-color: transparent !important;
+    }
 
-		a {
-			color: $black;
+    a {
+      color: $black;
 
-			&:hover {
-				background: darken($white, 3%);
-				color: $black;
-			}
-		}
+      &:hover {
+        background: darken($white, 3%);
+        color: $black;
+      }
+      }
 
-		&.active {
+    &.active {
 
-			a {
-				background-color: $blue;
-				border-color: $blue;
-				color: $white;
-				transition: all .25s;
-				z-index: 0;
+      a, span {
+        background-color: $blue;
+        border-color: $blue;
+        color: $white;
+        transition: all .25s;
+        z-index: 0;
 
-				&:hover {
-					background-color: lighten($blue, 9%);
-					border-color: lighten($blue, 9%);
-				}
+        &:hover {
+          background-color: lighten($blue, 9%);
+          border-color: lighten($blue, 9%);
+        }
 
-		    &:active {
-		      background-color: darken($blue, 7%);
-		    }
-			}
+        &:active {
+          background-color: darken($blue, 7%);
+        }
+      }
 
-			&:hover {
-				background: transparent;
-				border-color: transparent;
-			}
-		}
-	}
+      &:hover {
+        background: transparent;
+        border-color: transparent;
+      }
+    }
+  }
 }
