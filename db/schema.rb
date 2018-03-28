@@ -10,12 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20180614012423) do
+=======
+ActiveRecord::Schema.define(version: 20180327233909) do
+>>>>>>> e30858d... New table with jsonb column and basic validations
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
-  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id"
@@ -42,6 +45,17 @@ ActiveRecord::Schema.define(version: 20180614012423) do
   create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
     t.datetime "deleted_at", null: false
     t.string "name", null: false
+  end
+
+  create_table "praise_sets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_email", null: false
+    t.string "event_name", null: false
+    t.date "event_date", null: false
+    t.text "notes"
+    t.boolean "archived", null: false
+    t.jsonb "praise_set_songs", default: []
   end
 
   create_table "song_tags", id: :serial, force: :cascade do |t|
