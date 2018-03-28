@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180226063342) do
+ActiveRecord::Schema.define(version: 20180327233909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "btree_gin"
-  enable_extension "pg_stat_statements"
 
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id"
@@ -37,6 +36,17 @@ ActiveRecord::Schema.define(version: 20180226063342) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "praise_sets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_email", null: false
+    t.string "event_name", null: false
+    t.date "event_date", null: false
+    t.text "notes"
+    t.boolean "archived", null: false
+    t.jsonb "praise_set_songs", default: []
   end
 
   create_table "song_tags", id: :serial, force: :cascade do |t|
