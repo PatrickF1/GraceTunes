@@ -5,6 +5,24 @@ body {
   padding-bottom: $default-padding * 2;
 }
 
+.content-push {
+  padding-top: 75px;
+}
+
+.link {
+  color: $dark-blue;
+  transition: all .25s;
+
+  &:hover {
+    color: darken($dark-blue, 20%);
+    text-decoration: none;
+  }
+}
+
 h1 {
   margin-bottom: $default-margin;
+}
+
+hr {
+  border-color: $border-color;
 }

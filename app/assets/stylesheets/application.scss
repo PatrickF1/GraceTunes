@@ -14,26 +14,32 @@
  *= require dataTables/extras/dataTables.responsive
  *= require dataTables/jquery.dataTables
  *= require_self
+ *= require select2
+ *= require select2-bootstrap
  */
 
- @import "bootstrap-sprockets";
- @import "bootstrap";
- @import "font-awesome";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome";
 
- @import "variables/colors";
- @import "variables/default";
- @import "variables/fonts";
+@import "variables/colors";
+@import "variables/default";
+@import "variables/fonts";
 
- @import "modules/alert";
- @import "modules/base";
- @import "modules/form";
- @import "modules/header";
- @import "modules/pagination";
- @import "modules/pill";
- @import "modules/search";
- @import "modules/table";
+@import "modules/alert";
+@import "modules/base";
+@import "modules/card";
+@import "modules/flex";
+@import "modules/footer";
+@import "modules/form";
+@import "modules/header";
+@import "modules/layout";
+@import "modules/pagination";
+@import "modules/pill";
+@import "modules/search";
+@import "modules/song";
+@import "modules/table";
 
- @import "controllers/sessions";
- @import "controllers/songs";
- @import "controllers/contact";
- @import "controllers/audits"
+@import "controllers/sessions";
+@import "controllers/songs";
+@import "controllers/praise_sets";

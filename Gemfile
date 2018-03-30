@@ -54,6 +54,12 @@ gem "audited", "~> 4.6"
 
 gem "diffy"
 
+# select fields with typing and querying
+gem 'select2-rails'
+
+# drag and drop sorting, including touch
+gem 'sortable-rails'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

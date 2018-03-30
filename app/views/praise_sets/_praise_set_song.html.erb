@@ -1,0 +1,18 @@
+<div class="song row praise-set-song">
+  <div class="col-md-12 song_content praise-set-song-content flex-row flex-align-items-center flex-justify-space-between">
+    <div class="flex-row flex-align-items-center">
+      <%= content_tag :i, class: "fa fa-bars fa-2x drag-handle song_dragIcon l-h-right-spaced" do %>
+      <% end %>
+      <div class="song-info">
+        <div class="song_title"><%= link_to song.name, song, class: "link" %></div>
+        <input type="hidden" name="praise_set[praise_set_songs][][song_id]" value="<%= song.id %>"/>
+        <span><strong>Key:</strong> <span class="key"><%= select_tag "praise_set[praise_set_songs][][song_key]", get_key_opts(song.key), class: "form-control input-sm praise-set-song-key" %></span></span>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span><strong>Tempo:</strong> <%= song.tempo %></span>
+      </div>
+    </div>
+    <%= link_to "", class: "remove-song song_trashIcon" do %>
+      <i class="fa fa-trash-o fa-2x"></i>
+    <% end %>
+  </div>
+</div>

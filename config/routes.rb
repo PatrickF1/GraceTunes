@@ -5,6 +5,14 @@ Rails.application.routes.draw do
   resources :songs do
     member do
       get 'print'
+      get 'praise_set_song_partial'
+    end
+  end
+
+  resources :praise_sets do
+    member do
+      put 'archive'
+      put 'unarchive'
     end
   end
 

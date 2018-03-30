@@ -19,3 +19,5 @@
 //= require js.cookie
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require select2
+//= require sortable-rails-jquery

@@ -1,6 +1,10 @@
 .form {
   max-width: 492px;
 
+  &.praise-set-form {
+    max-width: 100%;
+  }
+
   textarea {
     height: 300px;
     font-size: 19px;

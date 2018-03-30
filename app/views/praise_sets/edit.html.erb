@@ -1,0 +1,13 @@
+<% set_page_title "Edit #{@praise_set.event_name} Set" %>
+
+<div class="form-page container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1><%= @praise_set.event_name %> Set <% if @praise_set.archived %><small><span class="label label-success">Archived</span></small><% end %></h1>
+      <hr>
+    </div>
+  </div>
+
+  <%= render partial: "form" %>
+  <div style="height: 90px"></div>
+</div>
