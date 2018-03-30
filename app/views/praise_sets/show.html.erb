@@ -1,0 +1,25 @@
+<% set_page_title "#{@praise_set.event_name} Set" %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="page-header"><%= @praise_set.event_name %> Set <% if @praise_set.archived %><small><span class="label label-success">Archived</span></small><% end %></h1>
+      <div class="praise-set-metadata">
+        <span><strong>Owner:</strong> <%= @praise_set.owner.name %></span>&nbsp;&nbsp;|&nbsp;&nbsp;<span><strong>Event Date:</strong> <%= @praise_set.event_date %></span>
+      </div>
+       <div class="praise-set-songs">
+        <h2>Songs</h2>
+        <ol>
+          <% @praise_set.songs.each do |song| %>
+            <li><%= song.name %> (<%= song.key %>)</li>
+          <% end %>
+        </ol>
+      </div>
+       <% if @praise_set.notes %>
+        <div class="praise-set-notes">
+          <h2>Notes</h2>
+          <%= simple_format @praise_set.notes %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
