@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :songs do
     member do
       get 'print'
-      get 'praise_set_song_partial'
+      get 'praise_set_song'
     end
   end
 

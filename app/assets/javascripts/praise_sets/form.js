@@ -21,10 +21,10 @@ $(function() {
 
   $songSelect.on('select2:select', function(e) {
     $.ajax({
-      url: "/songs/" + e.params.data.id + "/praise_set_song_partial",
+      url: "/songs/" + e.params.data.id + "/praise_set_song",
       method: "GET",
-    }).done(function(song_partial) {
-      $('.praise-set-songs').append($(song_partial).hide().fadeIn());
+    }).done(function(praise_set_song) {
+      $('.praise-set-songs').append($(praise_set_song).hide().fadeIn());
       clearSelect();
     });
   });

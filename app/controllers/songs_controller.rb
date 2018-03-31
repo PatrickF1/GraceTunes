@@ -113,10 +113,9 @@ class SongsController < ApplicationController
     render layout: false
   end
 
-  def praise_set_song_partial
+  def praise_set_song
     song = Song.find(params[:id])
-    song.key = params[:song_key] if params[:song_key]
-    render partial: "/praise_sets/praise_set_song", locals: { song: song }
+    render partial: "praise_set_song", locals: { song: song }
   end
 
   private
