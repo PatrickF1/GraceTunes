@@ -1,17 +1,15 @@
-
-
-$(function(){
-  var clearSelect = function(){
+$(function() {
+  var clearSelect = function() {
     $('.song-select').val(null).trigger("change");
   }
 
-  var saveWarning = function(){
+  var saveWarning = function() {
     $('.save-warning').html("You have unsaved changes!");
   }
 
   clearSelect();
 
-  $('.praise-set-form').on('change input', '.form-control', function(){
+  $('.praise-set-form').on('change input', '.form-control', function() {
     saveWarning();
   });
 
@@ -21,17 +19,17 @@ $(function(){
     theme: "bootstrap"
   });
 
-  $songSelect.on('select2:select', function(e){
+  $songSelect.on('select2:select', function(e) {
     $.ajax({
       url: "/songs/" + e.params.data.id + "/praise_set_song_partial",
       method: "GET",
-    }).done(function(data){
-      $('.praise-set-songs').append($(data).hide().fadeIn());
+    }).done(function(song_partial) {
+      $('.praise-set-songs').append($(song_partial).hide().fadeIn());
       clearSelect();
     });
   });
 
-  $('.praise-set-songs').on("click", ".remove-song", function(e){
+  $('.praise-set-songs').on("click", ".remove-song", function(e) {
     e.preventDefault();
     $(this).parents(".praise-set-song").remove();
     saveWarning();
@@ -44,7 +42,7 @@ $(function(){
     handle: ".fa-bars",
     ghostClass: "ghost",
     chosenClass: "chosen",
-    onUpdate: function(e){
+    onUpdate: function(e) {
       saveWarning();
     }
   });
