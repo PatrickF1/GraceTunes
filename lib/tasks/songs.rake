@@ -98,20 +98,37 @@ def remove_broken_spotify_uris
   end
 end
 
+def set_current_user
+  user = nil
+  while user.nil?
+    puts "What is your GPmail? (e.g. patrick.fong@gpmail.org)"
+    user = User.find_by_email($stdin.gets.strip)
+  end
+  Audited.audit_class.as_user(user) do
+    yield
+  end
+end
+
 namespace :songs do
   desc 'Defragment song ids so that the lowest id starts at 1 and there are no gaps.'
   task :defrag_ids  => :environment do |t, args|
-    defragment_ids()
+    set_current_user do
+      defragment_ids()
+    end
   end
 
   desc "Attempt to fill in blank Spotify URIs."
   task :fill_in_spotify_uris, [:token] => :environment do |t, args|
-    fill_in_spotify_uris(args.token)
+    set_current_user do
+      fill_in_spotify_uris(args.token)
+    end
   end
 
   desc "Find and remove broken Spotify URIs."
   task :remove_broken_spotify_uris => :environment do |t, args|
-    remove_broken_spotify_uris()
+    set_current_user do
+      remove_broken_spotify_uris()
+    end
   end
 
 end
