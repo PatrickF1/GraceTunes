@@ -53,6 +53,8 @@ class SongsController < ApplicationController
       Formatter.format_song_nashville(@song)
     end
 
+    @has_been_edited = @song.audits.updates.count > 0
+
     respond_to do |format|
       format.html do
       end
@@ -70,7 +72,6 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     if @song.save
       flash[:success] = "#{@song.name} successfully created!"
-      logger.info "New song created: #{current_user} created #{@song}"
       redirect_to @song
     else
       render :new
@@ -85,7 +86,6 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
       flash[:success] = "#{@song.name} successfully updated!"
-      logger.info "Song updated: #{current_user} updated #{@song}"
       redirect_to @song
     else
       render :edit

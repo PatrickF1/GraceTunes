@@ -8,8 +8,10 @@
       <%= link_to edit_song_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
         <i class="fa fa-edit"></i> Edit
       <% end %>
-      <%= link_to song_history_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
-        <i class="fa fa-history"></i> History
+      <% if @has_been_edited %>
+        <%= link_to song_history_path, { method: :get, class: "pill pill_link-blue button-spacing" } do %>
+          <i class="fa fa-history"></i> History
+        <% end %>
       <% end %>
     <% end %>
     <% if current_user.can_delete? %>
