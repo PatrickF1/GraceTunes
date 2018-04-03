@@ -1,0 +1,11 @@
+<% split_diff = Diffy::SplitDiff.new(diff[0], diff[1], :format => :html) %>
+<div class="col-md-6 col-xs-12">
+  <h4>Before</h4>
+  <hr/>
+  <%= split_diff.left.html_safe if !split_diff.left.nil? %>
+</div>
+<div class="col-md-6 col-xs-12">
+  <h4>After</h4>
+  <hr/>
+  <%= split_diff.right.html_safe if !split_diff.right.nil? %>
+</div>
