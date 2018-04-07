@@ -1,7 +1,7 @@
 class SongsController < ApplicationController
 
   before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
-  before_action :require_delete_privileges, only: [:destroy] # implement destroy later
+  before_action :require_delete_privileges, only: [:destroy]
 
   SONGS_PER_PAGE_DEFAULT = 10
 
@@ -43,6 +43,15 @@ class SongsController < ApplicationController
         return
       end
     end
+  end
+
+  def recently_updated
+    songs = if params[:since].present?
+      Song.where("updated_at >= ?", params[:since])
+    else
+      Song
+    end
+
   end
 
   def show

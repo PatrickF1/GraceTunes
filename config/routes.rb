@@ -20,4 +20,11 @@ Rails.application.routes.draw do
   get 'auth/failure', to: 'sessions#error'
   get 'signout', to: 'sessions#destroy', as: 'sign_out'
   get 'signin', to: 'sessions#new', as: 'sign_in'
+
+  # Mobile API V1
+  # TODO: nested scopes?
+  # TODO: convert everything to double quotes
+  scope '/api/v1', defaults: {format: :json} do
+    get 'songs', to: 'songs#recently_updated'
+  end
 end
