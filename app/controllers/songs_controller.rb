@@ -51,7 +51,7 @@ class SongsController < ApplicationController
     else
       Song
     end
-
+    @songs = songs.map { |song| api_song.new(song) }
   end
 
   def show
