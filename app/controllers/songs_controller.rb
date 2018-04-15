@@ -46,12 +46,12 @@ class SongsController < ApplicationController
   end
 
   def recently_updated
-    songs = if params[:since].present?
-      Song.where("updated_at >= ?", params[:since])
+    songs = if params[:updated_since].present?
+      Song.where("updated_at >= ?", params[:updated_since])
     else
-      Song
+      Song.all
     end
-    @songs = songs.map { |song| api_song.new(song) }
+    @songs = songs.map { |song| ApiSong.new(song) }
   end
 
   def show
