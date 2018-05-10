@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   # Mobile API V1
   # TODO: nested scopes?
   # TODO: convert everything to double quotes
-  scope '/api/v1', defaults: {format: :json} do
+  namespace :api, defaults: {format: :json} do
     get 'songs', to: 'songs#recently_updated'
   end
 end

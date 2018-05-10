@@ -1,4 +1,4 @@
-class ApiSong
+class Song
   def initialize(song)
     @id = song.id
     @name = song.name

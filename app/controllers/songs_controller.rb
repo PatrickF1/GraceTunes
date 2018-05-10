@@ -45,15 +45,6 @@ class SongsController < ApplicationController
     end
   end
 
-  def recently_updated
-    songs = if params[:updated_since].present?
-      Song.where("updated_at >= ?", params[:updated_since])
-    else
-      Song.all
-    end
-    @songs = songs.map { |song| ApiSong.new(song) }
-  end
-
   def show
     @song = Song.find(params[:id])
     if params[:new_key].present?
