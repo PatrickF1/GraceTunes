@@ -1,4 +1,5 @@
-class Song
+class API::Song < ApplicationRecord
+  self.ignored_columns = %w(created_at lyrics spotify_uri)
   def initialize(song)
     @id = song.id
     @name = song.name
