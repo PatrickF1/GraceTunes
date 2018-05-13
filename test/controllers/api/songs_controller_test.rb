@@ -1,10 +1,12 @@
-
 require 'test_helper'
+require_relative 'api_controller_test.rb'
 
 class API::SongsControllerTest < API::APIControllerTest
 
-  test 'recently_updated should retreive only songs updated after date specified' do
-    get :recently_updated
+  test 'recently_updated should retrieve only songs updated after date specified' do
+    byebug
+    get :recently_updated, params: {as: "json"}
+    assert_response :success
   end
 
   test 'recently_updated should retrieve all songs if no date specified' do
