@@ -1,10 +1,10 @@
-class Api::SongsController < Api::APIController
+class API::SongsController < API::APIController
 
   def recently_updated
     @songs = if params[:updated_since].present?
-      Api::Song.where("updated_at >= ?", params[:updated_since])
+      API::Song.where("updated_at >= ?", params[:updated_since])
     else
-      Api::Song.all
+      API::Song.all
     end
   end
 

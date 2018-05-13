@@ -1,4 +1,4 @@
-class Api::Song < ApplicationRecord
+class API::Song < ApplicationRecord
 
   self.ignored_columns = %w(created_at lyrics spotify_uri)
 
