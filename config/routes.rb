@@ -22,8 +22,6 @@ Rails.application.routes.draw do
   get 'signin', to: 'sessions#new', as: 'sign_in'
 
   # Mobile API V1
-  # TODO: nested scopes?
-  # TODO: convert everything to double quotes
   namespace :api, defaults: {format: :json} do
     get 'songs', to: 'songs#recently_updated'
   end
