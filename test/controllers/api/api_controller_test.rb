@@ -10,7 +10,7 @@ class API::APIControllerTest < ActionController::TestCase
   end
 
   def clear_auth_headers
-    @request.headers['Authorization'] = nil
+    request.headers['Authorization'] = nil
   end
 
 end
