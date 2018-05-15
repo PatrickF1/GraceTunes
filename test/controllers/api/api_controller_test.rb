@@ -2,11 +2,11 @@ require 'test_helper'
 
 class API::APIControllerTest < ActionController::TestCase
 
-  # set HTTP headers needed to use API endpoints
+  # set up the HTTP headers needed to use API endpoints
   def setup
     request.headers['Accept'] = :json
     request.headers['Authorization'] = ActionController::HttpAuthentication::Basic
-      .encode_credentials('patrick', 'fong')
+      .encode_credentials(ENV['API_USERNAME'], ENV['API_PASSWORD'])
   end
 
   def clear_auth_headers

@@ -42,4 +42,8 @@ Rails.application.configure do
 
   # disable auditing so tests run faster
   Song.auditing_enabled = false
+
+  # set necessary environment variables
+  ENV['API_USERNAME'] = 'username'
+  ENV['API_PASSWORD'] = 'password'
 end
