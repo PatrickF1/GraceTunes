@@ -1,7 +1,7 @@
 class SongsController < ApplicationController
 
   before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
-  before_action :require_delete_privileges, only: [:destroy] # implement destroy later
+  before_action :require_delete_privileges, only: [:destroy]
 
   SONGS_PER_PAGE_DEFAULT = 10
 
