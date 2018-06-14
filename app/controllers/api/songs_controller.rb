@@ -8,4 +8,12 @@ class API::SongsController < API::APIController
     end
   end
 
+  def deleted
+    @deleted_songs = if params[:since].present?
+      DeletedSong.where("deleted_at >= ?", params[:since])
+    else
+      DeletedSong.all
+    end
+  end
+
 end
