@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180226063342) do
+ActiveRecord::Schema.define(version: 20180614012423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(version: 20180226063342) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "deleted_songs", force: :cascade do |t|
+    t.datetime "deleted_at", null: false
+    t.string "name", null: false
   end
 
   create_table "song_tags", id: :serial, force: :cascade do |t|

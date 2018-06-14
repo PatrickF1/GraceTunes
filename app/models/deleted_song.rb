@@ -1,0 +1,3 @@
+class DeletedSong < ApplicationRecord
+
+end
