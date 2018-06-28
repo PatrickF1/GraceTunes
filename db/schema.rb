@@ -39,7 +39,8 @@ ActiveRecord::Schema.define(version: 20180614012423) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "deleted_songs", force: :cascade do |t|
+  create_table "deleted_songs", id: false, force: :cascade do |t|
+    t.integer "song_id", null: false
     t.datetime "deleted_at", null: false
     t.string "name", null: false
   end
