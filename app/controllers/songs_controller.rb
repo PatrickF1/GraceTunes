@@ -98,7 +98,7 @@ class SongsController < ApplicationController
       ActiveRecord::Base.transaction do
         @song.destroy!
         DeletedSong.create!(
-          song_id: @song.id,
+          id: @song.id,
           deleted_at: Time.now,
           name: @song.name
         )
