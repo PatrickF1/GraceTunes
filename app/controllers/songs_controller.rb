@@ -99,7 +99,6 @@ class SongsController < ApplicationController
         @song.destroy!
         DeletedSong.create!(
           id: @song.id,
-          deleted_at: Time.now,
           name: @song.name
         )
         flash[:success] = "#{@song.name} successfully deleted!"
@@ -108,6 +107,7 @@ class SongsController < ApplicationController
     rescue ActiveRecord::RecordInvalid
       logger.info "#{current_user} tried to delete #{@song} but failed"
       flash[:error] = "Unable to delete #{@song.name}"
+      redirect_to @song
     end
   end
 
