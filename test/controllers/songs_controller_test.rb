@@ -165,10 +165,12 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "the id, name, and timestamp of deletion is recorded when destroying a song" do
+    get_deleting_privileges
+
     song = songs(:forever_reign)
     delete :destroy, params: { id: song.id }
     assert_response :found
-    record = DeletedSong.find(song.id) # TODO: this is not working presumably because of Minitest's use of DB transactions
+    record = DeletedSong.find(song.id)
 
     assert_equal(record.id, song.id)
     assert_equal(record.name, song.name)
