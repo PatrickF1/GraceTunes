@@ -19,7 +19,7 @@ class DeletedSongTest < ActiveSupport::TestCase
 
   test "should automatically assign deleted_at to current time on save" do
     deleted_song = DeletedSong.new(
-        id: 1,
+        id: 9,
         name: "Some Name"
       )
     assert deleted_song.save, "could not save deleted song without the deleted_at field"
