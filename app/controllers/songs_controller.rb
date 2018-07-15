@@ -94,17 +94,10 @@ class SongsController < ApplicationController
 
   def destroy
     @song = Song.find(params[:id])
-    begin
-      ActiveRecord::Base.transaction do
-        @song.destroy!
-        DeletedSong.create!(
-          id: @song.id,
-          name: @song.name
-        )
-        flash[:success] = "#{@song.name} successfully deleted!"
-        redirect_to songs_path
-      end
-    rescue ActiveRecord::RecordInvalid
+    if @song.destroy
+      flash[:success] = "#{@song.name} successfully deleted!"
+      redirect_to songs_path
+    else
       logger.info "#{current_user} tried to delete #{@song} but failed"
       flash[:error] = "Unable to delete #{@song.name}"
       redirect_to @song

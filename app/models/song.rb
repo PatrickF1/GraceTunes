@@ -15,6 +15,8 @@ class Song < ApplicationRecord
   MAX_LINE_LENGTH = 47
 
   before_validation :normalize
+  before_save :extract_lyrics
+  before_destroy :record_deleted_song
 
   validates :name, presence: true, uniqueness: {
     scope: :artist,
@@ -35,8 +37,6 @@ class Song < ApplicationRecord
     greater_than: 0,
     less_than_or_equal_to: 1000
   }
-
-  before_save :extract_lyrics
 
   def to_s
     name_and_artist = artist.blank? ? name : "#{name} by #{artist}"
@@ -96,5 +96,12 @@ class Song < ApplicationRecord
       line_numbers_string = line_numbers.join(',')
       errors.add(:chord_sheet, "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
     end
+  end
+
+  def record_deleted_song
+    DeletedSong.create!(
+      id: id,
+      name: name
+    )
   end
 end
