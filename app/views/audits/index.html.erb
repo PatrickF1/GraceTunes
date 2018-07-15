@@ -39,7 +39,7 @@
           </span>
           <strong>
             <% if is_deleted %>
-              <%= song_name %> <small>(now deleted)</small>
+              <%= song_name %> <small>(deleted)</small>
             <% else %>
               <%= link_to song_name, song_path(audit.auditable_id) %>
             <% end %>
