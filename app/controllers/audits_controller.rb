@@ -1,6 +1,6 @@
 class AuditsController < ApplicationController
 
-  DEFAULT_PAGE_SIZE = 5
+  DEFAULT_PAGE_SIZE = 10
 
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1
