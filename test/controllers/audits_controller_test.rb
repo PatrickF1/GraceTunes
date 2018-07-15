@@ -71,6 +71,6 @@ class AuditsControllerTest < ApplicationControllerTest
     audits.each do |audit|
       assert_equal(Audit::CREATE, audit.action, "retrieved an non-create audit")
     end
-    assert_equal(2, audits.length, "did not load all the create audits")
+    assert_equal(2, audits.length, "did not load all and only create audits")
   end
 end
