@@ -16,7 +16,7 @@ class AuditsController < ApplicationController
       song = Song.find_by(id: audit.auditable_id)
       if song.nil?
         is_deleted = true
-        song_name = DeletedSong.find(audit.auditable_id).name
+        song_name = SongDeletionRecord.find(audit.auditable_id).name
       else
         is_deleted = false
         song_name = song.name

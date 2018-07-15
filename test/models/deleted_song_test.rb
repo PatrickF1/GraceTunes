@@ -1,8 +1,8 @@
 require "test_helper"
 
-class DeletedSongTest < ActiveSupport::TestCase
+class SongDeletionRecordTest < ActiveSupport::TestCase
   test "should not save without an id" do
-    deleted_song = DeletedSong.new(
+    deleted_song = SongDeletionRecord.new(
           id: nil,
           name: "Some Name"
         )
@@ -10,7 +10,7 @@ class DeletedSongTest < ActiveSupport::TestCase
   end
 
   test "should not save without a name" do
-    deleted_song = DeletedSong.new(
+    deleted_song = SongDeletionRecord.new(
           id: 5,
           name: nil
         )
@@ -18,7 +18,7 @@ class DeletedSongTest < ActiveSupport::TestCase
   end
 
   test "should automatically assign deleted_at to current time on save" do
-    deleted_song = DeletedSong.new(
+    deleted_song = SongDeletionRecord.new(
         id: 9,
         name: "Some Name"
       )

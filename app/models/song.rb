@@ -16,7 +16,7 @@ class Song < ApplicationRecord
 
   before_validation :normalize
   before_save :extract_lyrics
-  before_destroy :record_deleted_song
+  before_destroy :record_deletion
 
   validates :name, presence: true, uniqueness: {
     scope: :artist,
@@ -98,8 +98,8 @@ class Song < ApplicationRecord
     end
   end
 
-  def record_deleted_song
-    DeletedSong.create!(
+  def record_deletion
+    SongDeletionRecord.create!(
       id: id,
       name: name
     )

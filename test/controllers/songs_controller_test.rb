@@ -170,7 +170,7 @@ class SongsControllerTest < ApplicationControllerTest
     song = songs(:forever_reign)
     delete :destroy, params: { id: song.id }
     assert_response :found
-    record = DeletedSong.find(song.id)
+    record = SongDeletionRecord.find(song.id)
 
     assert_equal(record.id, song.id)
     assert_equal(record.name, song.name)

@@ -1,4 +1,4 @@
-class DeletedSong < ApplicationRecord
+class SongDeletionRecord < ApplicationRecord
   validates :id, presence: true
   validates :deleted_at, presence: true
   validates :name, presence: true

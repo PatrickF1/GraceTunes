@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20180614012423) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "deleted_songs", id: :bigint, default: nil, force: :cascade do |t|
+  create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
     t.datetime "deleted_at", null: false
     t.string "name", null: false
   end

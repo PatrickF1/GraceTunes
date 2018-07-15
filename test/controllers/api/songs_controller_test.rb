@@ -37,20 +37,20 @@ class API::SongsControllerTest < API::APIControllerTest
     assert_response :unauthorized
   end
 
-  test 'deleted should retrieve information on all deleted songs if no date is specified' do
+  test 'deleted should retrieve records of all deleted songs if no date is specified' do
     get :deleted
     assert_response :success
     assert(JSON.parse(@response.body).count == 4, "Expecting all 4 deleted song fixtures to be returned")
   end
 
-  test 'deleted should retrieve information on deleted songs after the date specified' do
+  test 'deleted should retrieve records of songs deleted after the date specified' do
     deleted_since_value = "2018-07-01"
 
     get :deleted, params: {since: deleted_since_value}
     assert_response :success
     response_body = JSON.parse(@response.body)
     assert(response_body.count == 1, "Only lion_and_the_lamb was deleted after #{deleted_since_value}}")
-    assert_equal(deleted_songs(:lion_and_the_lamb), DeletedSong.new(response_body[0]))
+    assert_equal(song_deletion_records(:lion_and_the_lamb), SongDeletionRecord.new(response_body[0]))
 
   end
 

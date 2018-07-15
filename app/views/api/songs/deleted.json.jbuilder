@@ -1,1 +1,1 @@
-json.array! @deleted_songs
+json.array! @song_deletion_records
