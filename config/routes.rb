@@ -24,5 +24,6 @@ Rails.application.routes.draw do
   # Mobile API
   namespace :api, defaults: {format: :json} do
     get 'songs', to: 'songs#recently_updated'
+    get 'songs/deleted', to: 'songs#deleted'
   end
 end
