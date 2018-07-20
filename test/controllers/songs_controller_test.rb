@@ -157,6 +157,18 @@ class SongsControllerTest < ApplicationControllerTest
     assert_redirected_to songs_path
   end
 
+  test "the id, name, and timestamp of deletion is recorded when destroying a song" do
+    get_deleting_privileges
+
+    song = songs(:forever_reign)
+    delete :destroy, params: { id: song.id }
+    assert_response :found
+    record = SongDeletionRecord.find(song.id)
+
+    assert_equal(record.id, song.id)
+    assert_equal(record.name, song.name)
+  end
+
   # "print" action tests
   test "the standard scan field should not appear if it is blank" do
     get :print, params: { id: songs(:relevant_1).id }

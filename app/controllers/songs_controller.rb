@@ -1,7 +1,7 @@
 class SongsController < ApplicationController
 
   before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
-  before_action :require_delete_privileges, only: [:destroy] # implement destroy later
+  before_action :require_delete_privileges, only: [:destroy]
 
   SONGS_PER_PAGE_DEFAULT = 10
 
@@ -53,6 +53,8 @@ class SongsController < ApplicationController
       Formatter.format_song_nashville(@song)
     end
 
+    @has_been_edited = @song.audits.updates.count > 0
+
     respond_to do |format|
       format.html do
       end
@@ -70,7 +72,6 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     if @song.save
       flash[:success] = "#{@song.name} successfully created!"
-      logger.info "New song created: #{current_user} created #{@song}"
       redirect_to @song
     else
       render :new
@@ -85,7 +86,6 @@ class SongsController < ApplicationController
     @song = Song.find(params[:id])
     if @song.update_attributes(song_params)
       flash[:success] = "#{@song.name} successfully updated!"
-      logger.info "Song updated: #{current_user} updated #{@song}"
       redirect_to @song
     else
       render :edit
@@ -100,6 +100,7 @@ class SongsController < ApplicationController
     else
       logger.info "#{current_user} tried to delete #{@song} but failed"
       flash[:error] = "Unable to delete #{@song.name}"
+      redirect_to @song
     end
   end
 

@@ -30,7 +30,7 @@
   <br/>
   <br/>
 
-  <% @audits_to_song_map.each do |audit, song| %>
+  <% @audits_info_list.each do |audit, song_name, is_deleted| %>
     <div class="row <%= audit_background_for_audit_action(audit.action) %>">
       <div class="col-md-12">
         <h4>
@@ -38,10 +38,10 @@
             <%= audit_action_past_tense(audit.action).capitalize %>
           </span>
           <strong>
-            <% if song.id %>
-              <%= link_to song.name, song_path(song) %>
+            <% if is_deleted %>
+              <%= song_name %> <small>(deleted)</small>
             <% else %>
-              <%= song.name %> <small>(now deleted)</small>
+              <%= link_to song_name, song_path(audit.auditable_id) %>
             <% end %>
           </strong>
         </h4>
