@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20180614012423) do
-=======
-ActiveRecord::Schema.define(version: 20180327233909) do
->>>>>>> e30858d... New table with jsonb column and basic validations
+ActiveRecord::Schema.define(version: 20180720020232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
