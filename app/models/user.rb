@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   self.primary_key = :email
 
+  has_many :praise_sets, :foreign_key => "owner_email", :primary_key => "email"
+
   before_validation :normalize
 
   validates :name, presence: true
