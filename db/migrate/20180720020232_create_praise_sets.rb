@@ -9,5 +9,7 @@ class CreatePraiseSets < ActiveRecord::Migration[5.1]
       t.boolean :archived, null: false
       t.jsonb :praise_set_songs, default: []
     end
+
+    add_index :praise_sets, :owner_email
   end
 end

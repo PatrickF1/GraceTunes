@@ -38,11 +38,6 @@ ActiveRecord::Schema.define(version: 20180720020232) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
-    t.datetime "deleted_at", null: false
-    t.string "name", null: false
-  end
-
   create_table "praise_sets", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,6 +47,12 @@ ActiveRecord::Schema.define(version: 20180720020232) do
     t.text "notes"
     t.boolean "archived", null: false
     t.jsonb "praise_set_songs", default: []
+    t.index ["owner_email"], name: "index_praise_sets_on_owner_email"
+  end
+
+  create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
+    t.datetime "deleted_at", null: false
+    t.string "name", null: false
   end
 
   create_table "song_tags", id: :serial, force: :cascade do |t|
