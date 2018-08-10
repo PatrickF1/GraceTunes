@@ -11,5 +11,6 @@ class CreatePraiseSets < ActiveRecord::Migration[5.1]
     end
 
     add_index :praise_sets, :owner_email
+    add_foreign_key :praise_sets, :users, column: :owner_email, primary_key: :email
   end
 end

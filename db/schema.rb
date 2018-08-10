@@ -95,4 +95,5 @@ ActiveRecord::Schema.define(version: 20180720020232) do
     t.string "role", null: false
   end
 
+  add_foreign_key "praise_sets", "users", column: "owner_email", primary_key: "email"
 end
