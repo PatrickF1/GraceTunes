@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180614012423) do
+ActiveRecord::Schema.define(version: 20180720020232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,19 @@ ActiveRecord::Schema.define(version: 20180614012423) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "praise_sets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "owner_email", null: false
+    t.string "event_name", null: false
+    t.date "event_date", null: false
+    t.text "notes"
+    t.boolean "archived", null: false
+    t.jsonb "praise_set_songs", default: []
+    t.index ["event_date"], name: "index_praise_sets_on_event_date"
+    t.index ["owner_email"], name: "index_praise_sets_on_owner_email"
   end
 
   create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
@@ -83,4 +96,5 @@ ActiveRecord::Schema.define(version: 20180614012423) do
     t.string "role", null: false
   end
 
+  add_foreign_key "praise_sets", "users", column: "owner_email", primary_key: "email"
 end
