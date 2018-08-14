@@ -1,4 +1,4 @@
-class PraiseSet < ActiveRecord::Base
+class PraiseSet < ApplicationRecord
 
   belongs_to :owner, :foreign_key => "owner_email", :primary_key => "email", :class_name => "User"
 
