@@ -26,4 +26,8 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_not set.save, 'Saved without archived'
   end
 
+  test 'should not save with invalid praiseSetSongs' do
+
+  end
+
 end

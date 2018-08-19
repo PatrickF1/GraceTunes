@@ -3,6 +3,8 @@ class PraiseSetSong
 
   attr_accessor :id, :key
 
+  belongs_to :song, foreign_key: "id"
+
   validates :id, presence: true
   validates :key, presence: true
   validates_inclusion_of :key, in: Music::MAJOR_KEYS, if: -> (song) { song.key.present? }
