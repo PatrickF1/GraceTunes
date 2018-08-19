@@ -1,15 +1,15 @@
 class PraiseSetSong
   include ActiveModel::Model
 
-  attr_accessor :song_id, :song_key
+  attr_accessor :id, :key
 
-  validates :song_id, presence: true
-  validates :song_key, presence: true
-  validates_inclusion_of :song_key, in: Music::MAJOR_KEYS, if: -> (song) { song.song_key.present? }
+  validates :id, presence: true
+  validates :key, presence: true
+  validates_inclusion_of :key, in: Music::MAJOR_KEYS, if: -> (song) { song.key.present? }
 
   def initialize(id, key)
-    @song_id = id
-    @song_key = key
+    @id = id
+    @key = key
   end
 
   class ArraySerializer
@@ -17,7 +17,7 @@ class PraiseSetSong
       case array
         when Array
           array.map do |pss_json|
-            PraiseSetSong.new(pss_json.song_id, pss_json.song_key)
+            PraiseSetSong.new(pss_json.id, pss_json.key)
           end
         else
           raise ArgumentError, 'was expecting value to be an Array'
