@@ -20,7 +20,7 @@ class PraiseSetSong
             PraiseSetSong.new(pss_json.id, pss_json.key)
           end
         else
-          raise ArgumentError, 'was expecting value to be an Array'
+          raise ArgumentError, 'was expecting argument to be an Array'
       end
     end
 
