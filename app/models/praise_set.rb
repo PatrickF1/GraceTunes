@@ -1,4 +1,5 @@
 class PraiseSet < ApplicationRecord
+  serialize :praise_set_songs, PraiseSetSong::ArraySerializer
 
   belongs_to :owner, :foreign_key => "owner_email", :primary_key => "email", :class_name => "User"
 
