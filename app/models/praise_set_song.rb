@@ -13,11 +13,11 @@ class PraiseSetSong
   end
 
   class ArraySerializer
-    def self.load(value)
-      case value
+    def self.load(array)
+      case array
         when Array
-          value.map do |item|
-            PraiseSetSong.new(item.song_id, item.song_key)
+          array.map do |pss_json|
+            PraiseSetSong.new(pss_json.song_id, pss_json.song_key)
           end
         else
           raise ArgumentError, 'was expecting value to be an Array'
@@ -25,7 +25,7 @@ class PraiseSetSong
     end
 
     def self.dump(array)
-      array.map(&:attributes)
+      array.map { |pss| pss.serializable_hash }
     end
   end
 
