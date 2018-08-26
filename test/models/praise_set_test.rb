@@ -16,7 +16,7 @@ class PraiseSetTest < ActiveSupport::TestCase
 
   test 'should not save if owner does not exist' do
     set = praise_sets(:hillsong)
-    set.owner_email = 'admin@gpmail.org'
+    set.owner_email = 'doesntexist@gpmail.org'
     assert_not set.save, 'Saved with an invalid owner_email'
   end
 
