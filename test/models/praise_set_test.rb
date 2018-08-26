@@ -14,6 +14,12 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_not set.save, 'Saved without owner'
   end
 
+  test 'should not save if owner does not exist' do
+    set = praise_sets(:hillsong)
+    set.owner_email = 'admin@gpmail.org'
+    assert_not set.save, 'Saved with an invalid owner_email'
+  end
+
   test 'should not save without date' do
     set = praise_sets(:hillsong)
     set.event_date = nil
