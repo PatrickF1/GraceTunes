@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PraiseSetTest < ActiveSupport::TestCase
 
-  test 'should not save without name' do
+  test 'should not save without event name' do
     set = praise_sets(:hillsong)
     set.event_name = nil
     assert_not set.save, 'Saved without a name'
@@ -32,8 +32,10 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_not set.save, 'Saved without archived'
   end
 
-  test 'should not save with invalid praiseSetSongs' do
-
+  test 'should not save if there are dangling song ids in praise_set_songs' do
+    set = praise_sets(:hillsong)
+    set.praise_set_songs[0].id = -1
+    assert_not set.save 'Saved with a dangling song id'
   end
 
 end

@@ -10,13 +10,12 @@ class PraiseSetSong
 
   class ArraySerializer
     def self.load(array)
-      case array
-        when Array
-          array.map do |pss_json|
-            PraiseSetSong.new(pss_json.id, pss_json.key)
-          end
-        else
-          raise ArgumentError, 'was expecting argument to be an Array'
+      if array.kind_of?(Array)
+        array.map do |pss_json|
+          PraiseSetSong.new(pss_json.id, pss_json.key)
+        end
+      else
+        raise ArgumentError, "was expecting argument to be an Array but got a #{array.class} instead"
       end
     end
 
