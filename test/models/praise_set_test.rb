@@ -34,7 +34,7 @@ class PraiseSetTest < ActiveSupport::TestCase
 
   test 'should not save if there are dangling song ids in praise_set_songs' do
     set = praise_sets(:hillsong)
-    set.praise_set_songs[0].id = -1
+    set.praise_set_songs[0]["id"] = -1
     assert_not set.save 'Saved with a dangling song id'
   end
 

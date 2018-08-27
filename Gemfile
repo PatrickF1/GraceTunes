@@ -45,14 +45,13 @@ gem 'autoprefixer-rails'
 gem 'unicorn'
 gem 'rack-timeout'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 gem "omniauth-google-oauth2"
 
 gem "audited", "~> 4.6"
 
 gem "diffy"
+
+gem 'activerecord_json_validator'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
