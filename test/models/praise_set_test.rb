@@ -38,4 +38,16 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_not set.save 'Saved with a dangling song id'
   end
 
+  test 'should not save if praise_set_songs are missing fields' do
+    set = praise_sets(:hillsong)
+    set.praise_set_songs[0].delete("id")
+    assert_not set.save, 'Saved with a invalid praise set song'
+  end
+
+  test 'should not save if praise_set_songs is an object' do
+    set = praise_sets(:hillsong)
+    set.praise_set_songs = set.praise_set_songs[0]
+    assert_not set.save, 'Saved with praise_set_songs as an object'
+  end
+
 end
