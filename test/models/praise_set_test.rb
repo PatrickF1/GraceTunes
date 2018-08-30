@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class PraiseSetTest < ActiveSupport::TestCase
+  test 'should save with the proper structure' do
+    set = praise_sets(:sws_05142017)
+    assert set.save, 'Did not save despite the proper structure'
+  end
 
   test 'should not save without event name' do
     set = praise_sets(:hillsong)
