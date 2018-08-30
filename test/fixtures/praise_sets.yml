@@ -10,24 +10,6 @@ hillsong:
     -
       id: <%= ActiveRecord::FixtureSet.identify(:all_my_hope) %>
       key: "B"
-relevant_songs:
-  owner_email: "praise_member@gpmail.org"
-  event_name: "Relevant Songs Set"
-  event_date: "2017-03-25"
-  archived: false
-  praise_set_songs:
-    -
-      id: <%= ActiveRecord::FixtureSet.identify(:relevant_1) %>
-      key: "F#"
-    -
-      id: <%= ActiveRecord::FixtureSet.identify(:relevant_2) %>
-      key: "G"
-    -
-      id: <%= ActiveRecord::FixtureSet.identify(:relevant_3) %>
-      key: "A"
-    -
-      id: <%= ActiveRecord::FixtureSet.identify(:relevant_4) %>
-      key: "F#"
 sws_05142017:
   owner_email: "praise_member@gpmail.org"
   event_name: "Sunday Worship Service May 5, 2017"
