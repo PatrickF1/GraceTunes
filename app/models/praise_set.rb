@@ -22,16 +22,14 @@ class PraiseSet < ApplicationRecord
   validates :owner, presence: true
   validates_inclusion_of :archived, in: [true, false]
   validates :praise_set_songs, presence: true, json: { schema: PRAISE_SET_SONG_SCHEMA }
-  validate :praise_set_songs_foreign_keys
+  validate :praise_set_songs_foreign_keys, if: Proc.new { |p| p.errors[:praise_set_songs].empty? }
 
+  # assumes that praise_set_songs conforms to its JSON schema
   def praise_set_songs_foreign_keys
-    if errors.empty?
-      praise_set_songs.each do |pss|
-        if (song_id = pss["id"]).is_a? Integer
-          if not Song.find_by_id(song_id)
-            errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
-          end
-        end
+    praise_set_songs.each do |pss|
+      song_id = pss["id"]
+      if not Song.find_by_id(song_id)
+        errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
       end
     end
   end
