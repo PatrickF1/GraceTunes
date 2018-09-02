@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PraiseSetTest < ActiveSupport::TestCase
   test 'should save with the proper structure' do
-    set = praise_sets(:sws_05142017)
+    set = praise_sets(:hillsong)
     assert set.save, 'Did not save despite the proper structure'
   end
 
