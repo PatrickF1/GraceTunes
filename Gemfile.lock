@@ -33,9 +33,6 @@ GEM
       activemodel (= 5.1.6)
       activesupport (= 5.1.6)
       arel (~> 8.0)
-    activerecord_json_validator (1.2.0)
-      activerecord (>= 4.2.0, < 6)
-      json-schema (~> 2.8)
     activesupport (5.1.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
@@ -235,7 +232,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord_json_validator
   audited (~> 4.6)
   autoprefixer-rails
   bootstrap-sass (~> 3.3.7)
@@ -248,6 +244,7 @@ DEPENDENCIES
   jquery-datatables-rails (~> 3.4.0)
   jquery-rails
   js_cookie_rails
+  json-schema
   listen (>= 3.0.5, < 3.2)
   normalize-rails
   omniauth-google-oauth2

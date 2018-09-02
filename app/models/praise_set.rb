@@ -21,8 +21,7 @@ class PraiseSet < ApplicationRecord
   validates :event_date, presence: true
   validates :owner, presence: true
   validates_inclusion_of :archived, in: [true, false]
-  validates :praise_set_songs, presence: true, json: { schema: PRAISE_SET_SONG_SCHEMA }
-  validate :praise_set_songs_foreign_keys, if: Proc.new { |p| p.errors[:praise_set_songs].empty? }
+  validate :praise_set_songs_integrity
 
   # returns SongDeletionRecords for deleted songs
   def retrieve_songs
@@ -39,13 +38,20 @@ class PraiseSet < ApplicationRecord
   end
 
   private
-  # assumes that praise_set_songs conforms to its JSON schema
-  def praise_set_songs_foreign_keys
-    praise_set_songs.each do |pss|
-      song_id = pss["id"]
-      if not Song.find_by_id(song_id)
-        if not SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
-          errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
+
+  def praise_set_songs_integrity
+    # validate praise_set_songs is well-formed according to JSON schema
+    if not JSON::Validator.validate(PRAISE_SET_SONG_SCHEMA, praise_set_songs)
+      errors.add(:praise_set_songs, "does not conform to expected JSON schema")
+    else
+      # validate that songs ids refer to actual songs or deleted songs
+      # assumes that praise_set_songs conforms to its JSON schema, hence it is in the else block
+      praise_set_songs.each do |pss|
+        song_id = pss["id"]
+        if not Song.find_by_id(song_id)
+          if not SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
+            errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
+          end
         end
       end
     end

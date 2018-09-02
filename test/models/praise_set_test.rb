@@ -49,6 +49,12 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert set.save, 'Did not save with a reference to a deleted song'
   end
 
+  test 'should not save if praise_set_songs is nil' do
+    set = praise_sets(:hillsong)
+    set.praise_set_songs = nil
+    assert_not set.save, 'Saved without praise_set_songs'
+  end
+
   test 'should not save if praise_set_songs are missing fields' do
     set = praise_sets(:hillsong)
     set.praise_set_songs[0].delete("id")
