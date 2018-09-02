@@ -32,7 +32,7 @@ class PraiseSet < ApplicationRecord
       elsif (record = SongDeletionRecord.find_by_id(song_id))
         record
       else
-        raise 'Praise set references a song that does not exist.'
+        raise 'Praise set songs references a song that does not and has never existed.'
       end
     end
   end
@@ -42,7 +42,7 @@ class PraiseSet < ApplicationRecord
   def praise_set_songs_integrity
     # validate praise_set_songs is well-formed according to JSON schema
     if not JSON::Validator.validate(PRAISE_SET_SONG_SCHEMA, praise_set_songs)
-      errors.add(:praise_set_songs, "does not conform to expected JSON schema")
+      errors.add(:praise_set_songs, "does not not have the correct JSON structure")
     else
       # validate that songs ids refer to actual songs or deleted songs
       # assumes that praise_set_songs conforms to its JSON schema, hence it is in the else block

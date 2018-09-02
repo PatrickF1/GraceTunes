@@ -90,4 +90,13 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_equal song.name, deletion_record.name, "the SongDeletionRecord did not have the same name as the deleted song"
   end
 
+  test 'retrive_songs raises an exception if a referenced song does not and has never existed' do
+    set = praise_sets(:hillsong)
+    pss = set.praise_set_songs[1]
+    pss["id"] = -1
+    assert_raises StandardError do
+      set.retrieve_songs
+    end
+  end
+
 end
