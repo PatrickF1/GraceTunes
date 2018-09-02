@@ -10,3 +10,20 @@ hillsong:
     -
       id: <%= ActiveRecord::FixtureSet.identify(:all_my_hope) %>
       key: "B"
+sws_05142017:
+  owner_email: "praise_member@gpmail.org"
+  event_name: "Sunday Worship Service May 5, 2017"
+  event_date: "2017-05-14"
+  notes: |
+    blah blah notes
+  archived: true
+  praise_set_songs:
+    -
+      id: <%= ActiveRecord::FixtureSet.identify(:God_be_praised) %>
+      key: "Bb"
+    -
+      id: <%= ActiveRecord::FixtureSet.identify(:forever_reign) %>
+      key: "C"
+    -
+      id: <%= ActiveRecord::FixtureSet.identify(:ten_thousand_reasons) %>
+      key: "G"
