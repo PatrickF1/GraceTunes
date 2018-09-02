@@ -67,4 +67,21 @@ class PraiseSetTest < ActiveSupport::TestCase
     assert_not set.save, 'Saved with a praise set song that had an invalid key'
   end
 
+  test 'retrieve_songs returns referenced Songs' do
+    set = praise_sets(:hillsong)
+    songs = set.retrieve_songs
+    expected_songs = [songs(:forever_reign), songs(:all_my_hope)]
+    assert_equal expected_songs, songs, "did not retrieve the expected songs"
+  end
+
+  test 'retrieve_songs returns SongDeletionRecords for songs that have already been deleted' do
+    set = praise_sets(:hillsong)
+    song = Song.find(set.praise_set_songs[0]["id"])
+    song.destroy!
+    deletion_record = set.retrieve_songs[0]
+    assert_instance_of SongDeletionRecord, deletion_record, "should retrieve the SongDeletionRecord of deleted songs"
+    assert_equal song.id, deletion_record.id, "the SongDeletionRecord did not have the same id as the deleted song"
+    assert_equal song.name, deletion_record.name, "the SongDeletionRecord did not have the same name as the deleted song"
+  end
+
 end
