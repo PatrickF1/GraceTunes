@@ -4,6 +4,12 @@ require_relative 'application_controller_test.rb'
 class SongsControllerTest < ApplicationControllerTest
 
   # "index" action tests
+  test "index should require user to be signed in" do
+    sign_out
+    get :index
+    assert_redirected_to sign_in_path
+  end
+
   test "index should be retrieved successfully" do
     get :index
     assert_response :success
