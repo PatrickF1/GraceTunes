@@ -84,6 +84,7 @@ class Song < ApplicationRecord
     self.lyrics = lyrics.join("\n")
   end
 
+  # assumes that chord_sheet is not nil
   def line_length
     line_numbers = []
     self.chord_sheet.split("\n").each_with_index do |line, i|

@@ -5,29 +5,11 @@ hillsong:
   archived: true
   praise_set_songs:
     -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:forever_reign) %>
-      song_key: "C"
+      id: <%= ActiveRecord::FixtureSet.identify(:forever_reign) %>
+      key: "C"
     -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:all_my_hope) %>
-      song_key: "B"
-relevant_songs:
-  owner_email: "praise_member@gpmail.org"
-  event_name: "Relevant Songs Set"
-  event_date: "2017-03-25"
-  archived: false
-  praise_set_songs:
-    -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:relevant_1) %>
-      song_key: "F#"
-    -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:relevant_2) %>
-      song_key: "G"
-    -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:relevant_3) %>
-      song_key: "A"
-    -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:relevant_4) %>
-      song_key: "F#"
+      id: <%= ActiveRecord::FixtureSet.identify(:all_my_hope) %>
+      key: "B"
 sws_05142017:
   owner_email: "praise_member@gpmail.org"
   event_name: "Sunday Worship Service May 5, 2017"
@@ -37,11 +19,11 @@ sws_05142017:
   archived: true
   praise_set_songs:
     -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:God_be_praised) %>
-      song_key: "Bb"
+      id: <%= ActiveRecord::FixtureSet.identify(:God_be_praised) %>
+      key: "Bb"
     -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:forever_reign) %>
-      song_key: "C"
+      id: <%= ActiveRecord::FixtureSet.identify(:forever_reign) %>
+      key: "C"
     -
-      song_id: <%= ActiveRecord::FixtureSet.identify(:ten_thousand_reasons) %>
-      song_key: "G"
+      id: <%= ActiveRecord::FixtureSet.identify(:ten_thousand_reasons) %>
+      key: "G"
