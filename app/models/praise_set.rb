@@ -27,7 +27,7 @@ class PraiseSet < ApplicationRecord
   def retrieve_songs
     praise_set_songs.map do |pss|
       song_id = pss["id"]
-      if (song = Song.find_by_id(song_id))
+      if (song = Song.find_by(id: song_id))
         song
       elsif (record = SongDeletionRecord.find_by_id(song_id))
         record
@@ -48,7 +48,7 @@ class PraiseSet < ApplicationRecord
       # assumes that praise_set_songs conforms to its JSON schema, hence it is in the else block
       praise_set_songs.each do |pss|
         song_id = pss["id"]
-        if !Song.find_by_id(song_id)
+        if !Song.find_by(id: song_id)
           if !SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
             errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
           end
