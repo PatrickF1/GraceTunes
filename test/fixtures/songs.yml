@@ -589,20 +589,3 @@ relevant_4:
   tempo: "Fast"
   chord_sheet: ""
   lyrics: "lyrics go here"
-
-test_song:
-  updated_at: "2018-01-01 00:00:00"
-  name: "Test"
-  artist: "Tester"
-  key: "G"
-  tempo: "Medium"
-  standard_scan: "V1."
-  chord_sheet: |
-    Verse 1:
-    G      Am     G/B       C
-    This is a test song
-    D      Em     D/F#      G
-    Testing test tests
-  lyrics: |
-    This is a test song
-    Testing test tests
