@@ -7,4 +7,4 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   Enabled: false
 Metrics/LineLength:
-  Max: 90
+  Max: 100
