@@ -60,9 +60,9 @@ module SongsHelper
 
   def get_line_range(start, ending, lines)
     if (ending < start)
-      return ([0, ending].max)..([start, lines.length-1].min)
+      ([0, ending].max)..([start, lines.length-1].min)
     else
-      return ([0, start].max)..([ending, lines.length-1].min)
+      ([0, start].max)..([ending, lines.length-1].min)
     end
   end
 
