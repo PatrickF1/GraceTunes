@@ -2,96 +2,96 @@ require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
 
-  test "should not save without name" do
+  test "should be invalid without a name" do
     song = songs(:God_be_praised)
     song.name = nil
-    assert_not song.save, "Saved without a name"
+    assert_not song.valid?
   end
 
-  test "should save without artist" do
+  test "should be valid without an artist" do
     song = songs(:God_be_praised)
     song.artist = nil
-    assert song.save, "Did not save without artist"
+    assert song.valid?
   end
 
-  test "should not save without a valid key" do
+  test "should be invalid without a valid key" do
     song = songs(:God_be_praised)
     song.key = "ab"
-    assert_not song.save, "Saved with an invalid key"
+    assert_not song.valid?
     song.key = nil
-    assert_not song.save, "Saved without a key"
+    assert_not song.valid?
   end
 
-  test "should not save without a valid tempo" do
+  test "should be invalid without a valid tempo" do
     song = songs(:God_be_praised)
     song.tempo = "really fast"
-    assert_not song.save, "Saved with an invalid tempo"
+    assert_not song.valid?
     song.tempo = nil
-    assert_not song.save, "Saved without a tempo"
+    assert_not song.valid?, "Was valid without a tempo"
   end
 
-  test "should not save with a Spotify URI containing spaces" do
+  test "should be invalid with a Spotify URI containing spaces" do
     song = songs(:ten_thousand_reasons)
     song.spotify_uri = "obviously invalid Spotify URI"
-    assert_not song.save, "Saved with an invalid Spotify URI"
+    assert_not song.valid?
   end
 
-  test "should not save with an impossible BPM" do
+  test "should be invalid with an impossible BPM" do
     song = songs(:ten_thousand_reasons)
     song.bpm = 0
-    assert_not song.save, "Saved with a BPM of 0"
+    assert_not song.valid?, "Was valid with a BPM of 0"
     song.bpm = 9000
-    assert_not song.save, "Saved with a BPM of 9000"
+    assert_not song.valid?, "Was valid with a BPM of 9000"
   end
 
   test "should upcase the standard scan" do
     song = songs(:God_be_praised)
     lowercased_standard_scan = "t. v1. v2. pc. c."
     song.standard_scan = lowercased_standard_scan
-    song.save
+    assert song.valid?
     assert_equal(
       song.standard_scan,
       lowercased_standard_scan.upcase,
-      "The standard scan was not upcased on save"
+      "The standard scan was not upcased during validation"
     )
   end
 
-  test "should save with only one space between section abbreviations" do
+  test "should be valid with only one space between section abbreviations" do
     song = songs(:God_be_praised)
     spaced_out_standard_scan = "V1.          V2.        V3.        "
     song.standard_scan = spaced_out_standard_scan
-    song.save
+    assert song.valid?
     assert_nil(
       song.standard_scan.index("  "),
-      "Extra spaces in the standard scan were not removed on save"
+      "Extra spaces in the standard scan were not removed during validation"
     )
   end
 
   test "should add a period to standard scan abbreviations if there isn't already one" do
     song = songs(:God_be_praised)
     song.standard_scan = "V1 V2 V3"
-    song.save
+    song.valid?
     assert_equal(song.standard_scan,
       "V1. V2. V3.",
       "The abbreviations in the standard scan are not trailed by a period")
   end
 
-  test "should not save without a chord sheet" do
+  test "should be invalid without a chord sheet" do
     song = songs(:God_be_praised)
     song.chord_sheet = nil
-    assert_not song.save, "Saved without a chord sheet"
+    assert_not song.valid?
   end
 
-  test "should not save with line that is too long" do
+  test "should be invalid with line that is too long" do
     song = songs(:God_be_praised)
     song.chord_sheet += "This is a really long line. It is more than 45 characters so it's too long"
-    assert_not song.save, "Saved with too long of a line"
+    assert_not song.valid?, "Was valid despite too long of a line in chord sheet"
   end
 
-  test "should save without trailing whitespaces in the chord sheet" do
+  test "should remove trailing whitespaces in the chord sheet during validation" do
     song = songs(:God_be_praised)
     song.chord_sheet = "     E                            G#m                 "
-    assert song.save, "Song was not saved successfully"
+    assert song.valid?
     # leaving leading whitespaces untouched on purpose
     assert_equal(song.chord_sheet, "     E                            G#m")
   end
@@ -99,22 +99,22 @@ class SongTest < ActiveSupport::TestCase
   test "should uppercase header lines" do
     song = songs(:glorious_day)
     song.chord_sheet = "this is a header:"
-    assert song.save, "Song was not saved successfully"
+    assert song.valid?
     assert_equal(song.chord_sheet, "THIS IS A HEADER:", "Header not uppercased")
   end
 
-  test "never leaves lyrics field blank" do
+  test "validation never leaves lyrics field blank" do
     song = songs(:God_be_praised)
     song.lyrics = nil
-    song.save
+    assert song.valid?
     assert_not_equal(song.lyrics, nil)
   end
 
-  test "normalizes name and artist" do
+  test "normalizes name and artist during validations" do
     song = songs(:God_be_praised)
     song.name = "a name"
     song.artist = "a band"
-    song.save
+    song.valid?
     assert_equal(song.name, "A Name")
     assert_equal(song.artist, "A Band")
   end
@@ -139,7 +139,7 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(num_lyric_lines, 18)
   end
 
-  test "should not allow two songs with the same name and artist" do
+  test "should be invalid if it shares the same name and artist as an existing song" do
     existing_song = songs(:glorious_day)
     new_song = Song.new(
       name: existing_song.name,
@@ -148,19 +148,14 @@ class SongTest < ActiveSupport::TestCase
       key: Song::VALID_KEYS.first,
       chord_sheet: "testing"
     )
-    assert_not new_song.save, "Saved a duplicate song with the same name and artist"
+    assert_not new_song.valid?, "Was valid despite another song with the same name and artist"
   end
 
-  test "should allow two songs with the same name but different artists" do
+  test "should be valid even if another song shares the same name but not artist" do
     existing_song = songs(:glorious_day)
-    new_song = Song.new(
-      name: existing_song.name,
-      artist: existing_song.artist + " testing", # make sure artist is different
-      tempo: Song::VALID_TEMPOS.first,
-      key: Song::VALID_KEYS.first,
-      chord_sheet: "testing"
-    )
-    assert new_song.save, "Did not allow two songs with the same name but different artist"
+    new_song = existing_song.dup
+    new_song.artist = new_song.artist + " different"
+    assert new_song.valid?
   end
 
   # auditing tests
@@ -260,10 +255,10 @@ class SongTest < ActiveSupport::TestCase
 
   private
 
-  # clear the lyrics and save it to trigger the extract_lyrics callback
+  # clear the lyrics and validate it to trigger the extract_lyrics callback
   def force_lyrics_extraction(song)
     song.lyrics = nil
-    song.save
+    assert song.save, "Was expecting the song to save in order to extract the lyrics"
   end
 
   # temporarily enable Song auditing
