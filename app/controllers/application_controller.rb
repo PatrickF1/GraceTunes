@@ -14,22 +14,19 @@ class ApplicationController < ActionController::Base
   end
 
   def require_sign_in
-    if current_user.nil?
-      redirect_to sign_in_path
-    end
+    redirect_to sign_in_path if current_user.nil?
   end
 
   def require_edit_privileges
-    if !current_user.can_edit?
-      flash[:error] = "You don't have edit privileges."
-      redirect_to songs_path
-    end
+    return if current_user.can_edit?
+
+    flash[:error] = "You don't have edit privileges."
+    redirect_to songs_path
   end
 
   def require_delete_privileges
-    if !current_user.can_delete?
-      flash[:error] = "You don't have deleting privileges."
-      redirect_to songs_path
-    end
+    return if current_user.can_delete?
+    flash[:error] = "You don't have deleting privileges."
+    redirect_to songs_path
   end
 end
