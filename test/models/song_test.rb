@@ -159,7 +159,7 @@ class SongTest < ActiveSupport::TestCase
   end
 
   # auditing tests
-  test "updating a song is audited" do
+  test "should audit updates" do
     execute_with_auditing do
       song = songs(:all_my_hope)
       song.name = "Updated Name"
@@ -168,7 +168,7 @@ class SongTest < ActiveSupport::TestCase
     end
   end
 
-  test "creating a song is audited" do
+  test "should audit model creation" do
     execute_with_auditing do
       new_song = songs(:all_my_hope).dup
       new_song.name = "Song about to be created"
@@ -177,7 +177,7 @@ class SongTest < ActiveSupport::TestCase
     end
   end
 
-  test "song lyrics are not audited" do
+  test "should not audit changes to song lyrics" do
     # lyrics should not be audited because they are auto-generated from
     # the chord sheet and should never be changed directly by users
     execute_with_auditing do
