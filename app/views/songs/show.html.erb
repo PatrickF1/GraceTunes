@@ -24,7 +24,7 @@
     <% end %>
   </div>
   <% if @song.spotify_uri.present? %>
-      <iframe class="spotify-widget" src=<%= @song.spotify_widget_source %>></iframe>
+      <%= render partial: "spotify_widget", locals: {widget_source: @song.spotify_widget_source} %>
   <% end %>
   <div class="song-metadata">
     <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;
