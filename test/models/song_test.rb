@@ -103,10 +103,10 @@ class SongTest < ActiveSupport::TestCase
     assert_equal(song.chord_sheet, "THIS IS A HEADER:", "Header not uppercased")
   end
 
-  test "validation never leaves lyrics field blank" do
+  test "should never leave lyrics field blank when saving" do
     song = songs(:God_be_praised)
     song.lyrics = nil
-    assert song.valid?
+    assert song.save
     assert_not_equal(song.lyrics, nil)
   end
 
