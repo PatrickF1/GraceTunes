@@ -19,9 +19,9 @@ module ApplicationHelper
 
   def highlight_if_errors(resource, field_name)
     if resource.errors[field_name].present?
-      return "has-error"
+      "has-error"
     else
-      return ""
+      ""
     end
   end
 

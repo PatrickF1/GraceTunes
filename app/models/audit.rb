@@ -4,7 +4,7 @@ class Audit
   UPDATE = "update"
   CREATE = "create"
   DESTROY = "destroy"
-  VALID_ACTIONS = [UPDATE, CREATE, DESTROY]
+  VALID_ACTIONS = [UPDATE, CREATE, DESTROY].freeze
 
   scope :history, -> { reorder("created_at DESC") }
 
@@ -21,6 +21,6 @@ class Audit
   end
 
   def self.valid_action(action)
-    return VALID_ACTIONS.include?(action)
+    VALID_ACTIONS.include?(action)
   end
 end

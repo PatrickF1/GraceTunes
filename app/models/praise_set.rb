@@ -41,15 +41,15 @@ class PraiseSet < ApplicationRecord
 
   def praise_set_songs_integrity
     # validate praise_set_songs is well-formed according to JSON schema
-    if not JSON::Validator.validate(PRAISE_SET_SONG_SCHEMA, praise_set_songs)
+    if !JSON::Validator.validate(PRAISE_SET_SONG_SCHEMA, praise_set_songs)
       errors.add(:praise_set_songs, "does not not have the correct JSON structure")
     else
       # validate that songs ids refer to actual songs or deleted songs
       # assumes that praise_set_songs conforms to its JSON schema, hence it is in the else block
       praise_set_songs.each do |pss|
         song_id = pss["id"]
-        if not Song.find_by_id(song_id)
-          if not SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
+        if !Song.find_by_id(song_id)
+          if !SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
             errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
           end
         end
