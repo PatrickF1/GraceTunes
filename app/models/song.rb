@@ -88,7 +88,7 @@ class Song < ApplicationRecord
   def line_length
     line_numbers = []
     self.chord_sheet.split("\n").each_with_index do |line, i|
-      if(line.rstrip.length > MAX_LINE_LENGTH)
+      if (line.rstrip.length > MAX_LINE_LENGTH)
         line_numbers << (i + 1)
       end
     end
