@@ -1,83 +1,84 @@
 require 'test_helper'
 
 class PraiseSetTest < ActiveSupport::TestCase
-  test 'should save with the proper structure' do
-    set = praise_sets(:hillsong)
-    assert set.save, 'Did not save despite the proper structure'
-  end
 
-  test 'should not save without event name' do
+  test 'should be invalid without event name' do
     set = praise_sets(:hillsong)
     set.event_name = nil
-    assert_not set.save, 'Saved without a name'
+    assert_not set.valid?, 'Validated without a name'
   end
 
-  test 'should not save without owner' do
+  test 'should be invalid without owner' do
     set = praise_sets(:hillsong)
     set.owner = nil
-    assert_not set.save, 'Saved without owner'
+    assert_not set.valid?, 'Was valid without owner'
   end
 
-  test 'should not save if owner does not exist' do
+  test 'should be invalid if owner does not exist' do
     set = praise_sets(:hillsong)
     set.owner_email = 'doesntexist@gpmail.org'
-    assert_not set.save, 'Saved with an invalid owner_email'
+    assert_not set.valid?, 'Was valid with an invalid owner_email'
   end
 
-  test 'should not save without date' do
+  test 'should be invalid without date' do
     set = praise_sets(:hillsong)
     set.event_date = nil
-    assert_not set.save, 'Saved without date'
+    assert_not set.valid?, 'Was valid without date'
   end
 
-  test 'should not save without archived status' do
+  test 'should be invalid without archived status' do
     set = praise_sets(:hillsong)
     set.archived = nil
-    assert_not set.save, 'Saved without archived'
+    assert_not set.valid?, 'Was valid without archived'
   end
 
-  test 'should not save if there are dangling song ids in praise_set_songs' do
+  test 'should be valid with the proper praise_set_songs structure' do
+    set = praise_sets(:hillsong)
+    assert set.valid?, 'Was invalid despite having the proper praise_set_songs structure'
+  end
+
+  test 'should be invalid if praise_set_songs references songs that do not and have never existed' do
     set = praise_sets(:hillsong)
     set.praise_set_songs[0]["id"] = -1
-    assert_not set.save, 'Saved with a dangling song id'
+    assert_not set.valid?
   end
 
-  test 'should save despite referencing deleted songs' do
+  test 'should be valid despite referencing deleted songs' do
     set = praise_sets(:hillsong)
     song = Song.find(set.praise_set_songs[0]["id"])
     song.destroy!
-    assert set.save, 'Did not save with a reference to a deleted song'
+    assert set.valid?
   end
 
-  test 'should not save if praise_set_songs is nil' do
+  test 'should be invalid if praise_set_songs is nil' do
     set = praise_sets(:hillsong)
     set.praise_set_songs = nil
-    assert_not set.save, 'Saved without praise_set_songs'
+    assert_not set.valid?, 'Was valid without praise_set_songs'
   end
 
-  test 'should not save if praise_set_songs are missing fields' do
+  test 'should be invalid if praise_set_songs is missing fields' do
     set = praise_sets(:hillsong)
     set.praise_set_songs[0].delete("id")
-    assert_not set.save, 'Saved with a praise set song that was missing the id field'
+    assert_not set.valid?, 'Was valid with a praise set song that was missing the id field'
   end
 
-  test 'should not save if praise_set_songs is an object' do
+  test 'should be invalid if praise_set_songs is an object' do
     set = praise_sets(:hillsong)
     set.praise_set_songs = set.praise_set_songs[0]
-    assert_not set.save, 'Saved with praise_set_songs as an object'
+    assert_not set.valid?
   end
 
-  test 'should not save if praise_set_songs contains an invalid key' do
+  test 'should be invalid if praise_set_songs contains an invalid key' do
     set = praise_sets(:hillsong)
     set.praise_set_songs[0]["key"] = "ABCD"
-    assert_not set.save, 'Saved with a praise set song that had an invalid key'
+    assert_not set.valid?, 'Was valid with a praise set song that had an invalid key'
   end
 
   test 'retrieve_songs returns referenced Songs' do
     set = praise_sets(:hillsong)
     songs = set.retrieve_songs
     expected_songs = [songs(:forever_reign), songs(:all_my_hope)]
-    assert_equal expected_songs, songs, "did not retrieve the expected songs"
+    assert_equal expected_songs, songs, "did not retrieve the referenced songs"
   end
 
   test 'retrieve_songs returns SongDeletionRecords for songs that have already been deleted' do

@@ -1,58 +1,58 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  test "should not save without an email" do
+  test "should be invalid without an email" do
     user_nil_email = User.new(
       name: "Name",
       role: Role::READER
     )
-    assert_not user_nil_email.save, "saved with a nil email"
+    assert_not user_nil_email.valid?, "Was valid with a nil email"
 
     user_blank_email = User.new(
       email: "",
       name: "Name",
       role: Role::READER
     )
-    assert_not user_blank_email.save, "saved with a blank email"
+    assert_not user_blank_email.valid?, "Was valid with a blank email"
   end
 
-  test "should not be able to save a new user with an existing email" do
+  test "should not be valid if another user shares the same email" do
     duplicate_user = User.new(
       email: users(:praise_member).email,
       name: "Duplicate User",
       role: "Reader"
     )
-    assert_not duplicate_user.save, "saved a user with an existing email"
+    assert_not duplicate_user.valid?
   end
 
-  test "should not save without a name" do
+  test "should be invalid without a name" do
     user_nil_name = User.new(
       email: "test@email.com",
       role: Role::READER
     )
-    assert_not user_nil_name.save, "saved with a nil name"
+    assert_not user_nil_name.valid?, "Was valid with a nil name"
 
     user_blank_name = User.new(
       email: "test@email.com",
       name: "",
       role: Role::READER
     )
-    assert_not user_blank_name.save, "saved with a blank name"
+    assert_not user_blank_name.valid?, "Was valid with a blank name"
   end
 
-  test "should not save without a role" do
+  test "should be invalid without a role" do
     user_nil_role = User.new(
       email: "test@email.com",
       name: "Name"
     )
-    assert_not user_nil_role.save, "saved with a nil role"
+    assert_not user_nil_role.valid?, "Was valid with a nil role"
 
     user_blank_role = User.new(
       email: "test@email.com",
       name: "Name",
       role: ""
     )
-    assert_not user_blank_role.save, "saved with a blank role"
+    assert_not user_blank_role.valid?, "Was valid with a blank role"
   end
 
   test "email and name should be normalized" do
@@ -61,7 +61,7 @@ class UserTest < ActiveSupport::TestCase
       name: "lowercase name   ",
       role: Role::READER
     )
-    assert user.save
+    assert user.valid?
     assert_equal(user.email, "manySpaces@end.com")
     assert_equal(user.name, "Lowercase Name")
   end
