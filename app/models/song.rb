@@ -80,14 +80,14 @@ class Song < ApplicationRecord
   end
 
   def extract_lyrics
-    lyrics = self.chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
+    lyrics = chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
     self.lyrics = lyrics.join("\n")
   end
 
   # assumes that chord_sheet is not nil
   def line_length
     line_numbers = []
-    self.chord_sheet.split("\n").each_with_index do |line, i|
+    chord_sheet.split("\n").each_with_index do |line, i|
       if (line.rstrip.length > MAX_LINE_LENGTH)
         line_numbers << (i + 1)
       end

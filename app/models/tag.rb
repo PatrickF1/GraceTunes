@@ -8,7 +8,7 @@ class Tag < ApplicationRecord
 
   private
   def normalize
-    self.name = self.name.titleize
+    self.name = name.titleize
   end
 
 end

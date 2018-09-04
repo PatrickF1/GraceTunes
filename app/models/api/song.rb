@@ -5,7 +5,7 @@ class API::Song < ApplicationRecord
   def as_json(options = nil)
     chord_sheets = {}
     Music::MAJOR_KEYS.map do |key|
-      cloned_song = self.clone
+      cloned_song = clone
       Transposer.transpose_song(cloned_song, key)
       chord_sheets[key] = cloned_song.chord_sheet
     end
