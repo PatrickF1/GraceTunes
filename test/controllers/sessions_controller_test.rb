@@ -53,7 +53,7 @@ class SessionsControllerTest < ApplicationControllerTest
           "email" => email
       }
     }
-    assert_difference('User.count', difference = 1, "No new user was created") do
+    assert_difference('User.count', 1, "No new user was created") do
       get :create, params: { provider: "google_oauth2" }
     end
     assert_equal(Role::READER, User.find(email).role, "New users should have a role of Reader")

@@ -43,11 +43,11 @@ namespace :song_sheets do
 
   desc 'Validate the format of all the yaml song sheets in a directory.'
   task :validate, [:directory_path] => :environment do |t, args|
-    serialize_song_sheets(args.directory_path, save_into_db=false)
+    serialize_song_sheets(args.directory_path, false)
   end
 
   desc 'Load all the yaml song sheets in a directory into the database.'
   task :save_into_db, [:directory_path] => :environment do |t, args|
-    serialize_song_sheets(args.directory_path, save_into_db=true)
+    serialize_song_sheets(args.directory_path, true)
   end
 end

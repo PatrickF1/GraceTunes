@@ -84,7 +84,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "submitting a valid song should result in a new song in the database with the same name" do
     get_edit_privileges
-    assert_difference('Song.count', difference = 1) do
+    assert_difference('Song.count', 1) do
       post_new_song_form
     end
     assert_not_nil Song.find_by_name("New Song Just Posted")
@@ -155,7 +155,7 @@ class SongsControllerTest < ApplicationControllerTest
   test "admins should be able to delete songs" do
     get_deleting_privileges
 
-    assert_difference("Song.count", difference = -1) do
+    assert_difference("Song.count", -1) do
       delete :destroy, params: { id: songs(:forever_reign).id }
     end
 
