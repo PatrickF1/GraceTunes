@@ -17,7 +17,7 @@ module Transposer
   private
 
   def self.transpose_line(line, half_steps, old_key)
-    if !Parser::chords_line?(line)
+    if !Parser.chords_line?(line)
       return line
     end
 
@@ -27,14 +27,14 @@ module Transposer
   end
 
   def self.transpose_chord(chord, half_steps, old_key)
-    parsed_chord = Parser::parse_chord(chord)
-    if Music::accidental_for_key?(old_key, parsed_chord[:base])
+    parsed_chord = Parser.parse_chord(chord)
+    if Music.accidental_for_key?(old_key, parsed_chord[:base])
       new_base_note = transpose_accidental(parsed_chord[:base], half_steps, old_key,)
     else
-      new_note_index = (Music::get_note_index(parsed_chord[:base]) + half_steps) % 12
+      new_note_index = (Music.get_note_index(parsed_chord[:base]) + half_steps) % 12
       new_base_note = Music::CHROMATICS[new_note_index]
       new_key = Music::MAJOR_KEYS[(Music::MAJOR_KEYS.index(old_key) + half_steps) % 12]
-      new_base_note = new_base_note.kind_of?(Array) ? Music::which_note_in_key(new_base_note, new_key) : new_base_note # account for enharmonic equivalents
+      new_base_note = new_base_note.kind_of?(Array) ? Music.which_note_in_key(new_base_note, new_key) : new_base_note # account for enharmonic equivalents
     end
 
     parsed_chord[:chord].sub(parsed_chord[:base], new_base_note)
@@ -42,12 +42,12 @@ module Transposer
 
   def self.transpose_accidental(note, half_steps, old_key)
     # get note in original key
-    note_in_key = Music::get_note_in_key(old_key, note)
+    note_in_key = Music.get_note_in_key(old_key, note)
     # is the accidental sharper or flatter than note_in_key
-    sharper = Music::sharper?(note, note_in_key)
+    sharper = Music.sharper?(note, note_in_key)
     # transpose the note_in_key by half_steps
     transposed_in_key = transpose_chord(note_in_key, half_steps, old_key)
     # then sharpen/flatten as accidental was sharper/flatter than note_in_key
-    sharper ? Music::sharpen(transposed_in_key) : Music::flatten(transposed_in_key)
+    sharper ? Music.sharpen(transposed_in_key) : Music.flatten(transposed_in_key)
   end
 end
