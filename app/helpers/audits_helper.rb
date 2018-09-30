@@ -11,7 +11,7 @@ module AuditsHelper
   end
 
   def audit_action_past_tense(action)
-    if action == "destroy"
+    if action == AuditAction::DESTROY
       "deleted"
     else
       action + "d"
