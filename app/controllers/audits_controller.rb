@@ -1,12 +1,13 @@
 class AuditsController < ApplicationController
 
-  DEFAULT_PAGE_SIZE = 10
+  DEFAULT_PAGE_SIZE = 25
+  VALID_ACTIONS = ["update", "create", "destroy"].freeze
 
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1
     page_size = params[:page_size] ? params[:page_size].to_i : DEFAULT_PAGE_SIZE
-    @audits = Audit.history
-    if Audit.valid_action(params[:audit_action])
+    @audits = Audit.order(created_at: :desc)
+    if VALID_ACTIONS.include?(params[:audit_action])
       @audit_action_filter = params[:audit_action]
       @audits = @audits.where(action: @audit_action_filter)
     end
