@@ -3,9 +3,9 @@ class AuditAction
   CREATE = "create"
   DESTROY  = "destroy"
 
-  ALL = [READER, CREATE, DESTROY].freeze
+  ALL = [UPDATE, CREATE, DESTROY].freeze
 
   def self.valid_action?(action)
-    ALL.includes?(action.to_s)
+    ALL.include?(action.to_s)
   end
 end

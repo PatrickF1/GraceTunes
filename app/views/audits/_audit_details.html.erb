@@ -18,9 +18,9 @@
     <div class="panel-collapse collapse" id="<%= field_name %>" role="tabpanel" aria-lablledby="<%= heading_name %>">
       <div class="panel-body">
         <div class="row">
-          <% if audit.create? %>
+          <% if audit.action == AuditAction::CREATE %>
             <% diff = [nil, diff] %>
-          <% elsif audit.destroy? %>
+          <% elsif audit.action == AuditAction::DESTROY %>
             <% diff = [diff, nil] %>
           <% end %>
           <%= render partial: "field_changes", locals: { diff: diff } %>
