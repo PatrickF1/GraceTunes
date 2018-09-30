@@ -1,6 +1,6 @@
 class AuditsController < ApplicationController
 
-  DEFAULT_PAGE_SIZE = 25
+  DEFAULT_PAGE_SIZE = 20
   private_constant :DEFAULT_PAGE_SIZE
 
   def index
