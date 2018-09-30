@@ -1,8 +1,8 @@
 module AuditsHelper
   AUDIT_ACTION_TO_BOOTSTRAP_CLASS = {
-    "update" => "warning",
-    "create" => "success",
-    "destroy" => "danger"
+    AuditAction::UPDATE => "warning",
+    AuditAction::CREATE => "success",
+    AuditAction::DESTROY => "danger"
   }
   private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
 
