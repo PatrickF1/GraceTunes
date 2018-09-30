@@ -1,7 +1,7 @@
 class AuditsController < ApplicationController
 
   DEFAULT_PAGE_SIZE = 25
-  VALID_ACTIONS = ["update", "create", "destroy"].freeze
+  private_constant :DEFAULT_PAGE_SIZE
 
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1

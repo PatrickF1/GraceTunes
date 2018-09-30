@@ -8,17 +8,13 @@
       <%= will_paginate @audits, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
     </div>
     <div class="audits-filter">
-    <b>Only show</b>
+    <b>Filter by </b>
       <ul class="nav nav-pills">
-        <li role="presentation" class="<%= set_active_if_action(Audit::UPDATE) %>">
-          <%= link_to "Updates", audits_path(audit_action: Audit::UPDATE) %>
-        </li>
-        <li role="presentation" class="<%= set_active_if_action(Audit::CREATE) %>">
-          <%= link_to "Creations", audits_path(audit_action: Audit::CREATE) %>
-        </li>
-        <li role="presentation" class="<%= set_active_if_action(Audit::DESTROY) %>">
-          <%= link_to "Deletions", audits_path(audit_action: Audit::DESTROY) %>
-        </li>
+        <% AuditAction::ALL.each do |action| %>
+          <li role="presentation" class="<%= set_active_if_action(action) %>">
+            <%= link_to action.pluralize, audits_path(audit_action: action) %>
+          </li>
+        <% end %>
       </ul>
       <% if @audit_action_filter %>
         <%= link_to audits_path do %>
