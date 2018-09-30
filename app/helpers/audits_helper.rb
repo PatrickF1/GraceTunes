@@ -18,6 +18,17 @@ module AuditsHelper
     end
   end
 
+  def pluralize_audit_action(action)
+    case action
+    when AuditAction::UPDATE
+      "Updates"
+    when AuditAction::CREATE
+      "Creates"
+    when AuditAction::DESTROY
+      "Deletes"
+    end
+  end
+
   def text_class_for_audit_action(audit_action)
     "text-" + AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]
   end

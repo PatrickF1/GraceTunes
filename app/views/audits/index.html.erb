@@ -7,12 +7,13 @@
     <div class="audit-pages">
       <%= will_paginate @audits, param_name: "page_num", previous_label: "Previous", next_label: "Next" %>
     </div>
+
     <div class="audits-filter">
     <b>Filter by </b>
       <ul class="nav nav-pills">
         <% AuditAction::ALL.each do |action| %>
           <li role="presentation" class="<%= set_active_if_action(action) %>">
-            <%= link_to action.pluralize, audits_path(audit_action: action) %>
+            <%= link_to pluralize_audit_action(action).capitalize, audits_path(audit_action: action) %>
           </li>
         <% end %>
       </ul>
@@ -22,6 +23,7 @@
         <% end %>
       <% end %>
     </div>
+
   </div>
   <br/>
   <br/>
