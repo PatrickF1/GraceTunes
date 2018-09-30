@@ -1,8 +1,8 @@
 module AuditsHelper
   AUDIT_ACTION_TO_BOOTSTRAP_CLASS = {
-    Audit::UPDATE => "warning",
-    Audit::CREATE => "success",
-    Audit::DESTROY => "danger"
+    "update" => "warning",
+    "create" => "success",
+    "destroy" => "danger"
   }
   private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
 
@@ -11,7 +11,7 @@ module AuditsHelper
   end
 
   def audit_action_past_tense(action)
-    if action == Audit::DESTROY
+    if action == "destroy"
       "deleted"
     else
       action + "d"
