@@ -1,12 +1,13 @@
 class AuditsController < ApplicationController
 
-  DEFAULT_PAGE_SIZE = 10
+  DEFAULT_PAGE_SIZE = 20
+  private_constant :DEFAULT_PAGE_SIZE
 
   def index
     @page_num = params[:page_num] ? params[:page_num].to_i : 1
     page_size = params[:page_size] ? params[:page_size].to_i : DEFAULT_PAGE_SIZE
-    @audits = Audit.history
-    if Audit.valid_action(params[:audit_action])
+    @audits = Audited.audit_class.order(created_at: :desc)
+    if AuditAction.valid_action?(params[:audit_action])
       @audit_action_filter = params[:audit_action]
       @audits = @audits.where(action: @audit_action_filter)
     end

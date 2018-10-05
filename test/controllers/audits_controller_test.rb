@@ -60,11 +60,11 @@ class AuditsControllerTest < ApplicationControllerTest
   end
 
   test "index should only retrieve audits with the given audit action" do
-    get :index, params: { audit_action: Audit::CREATE }
+    get :index, params: { audit_action: AuditAction::CREATE }
 
     audits = assigns(:audits)
     audits.each do |audit|
-      assert_equal(Audit::CREATE, audit.action, "retrieved a non-create audit")
+      assert_equal(AuditAction::CREATE, audit.action, "retrieved a non-create audit")
     end
     assert_equal(2, audits.length, "did not load all and only create audits")
   end
