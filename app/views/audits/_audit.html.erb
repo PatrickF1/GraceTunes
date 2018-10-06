@@ -1,0 +1,34 @@
+<% @update_audits.reverse.each do |audit| %>
+  <div class="row">
+    <div class="col-md-12">
+      <h4><strong><%= audit.created_at.strftime('%B %d, %Y at %l:%M %p') %></strong></h4>
+      <h5>Edited by <%= audit.user.to_s %></h5>
+      <br/>
+      <%= render partial: "audit_details", locals: { audit: audit } %>
+      <hr/>
+    </div>
+  </div>
+<% end %>
+
+<% @audits_info_list.each do |audit, song_name, is_deleted| %>
+  <div class="row <%= audit_background_for_audit_action(audit.action) %>">
+    <div class="col-md-12">
+      <h4>
+        <span class="<%= text_class_for_audit_action(audit.action) %>">
+          <%= audit_action_past_tense(audit.action).capitalize %>
+        </span>
+        <strong>
+          <% if is_deleted %>
+            <%= song_name %> <small>(deleted)</small>
+          <% else %>
+            <%= link_to song_name, song_path(audit.auditable_id) %>
+          <% end %>
+        </strong>
+      </h4>
+      <h5>by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
+      <br/>
+      <%= render partial: "audit_details", locals: { audit: audit } %>
+    </div>
+  </div>
+  <hr/>
+<% end %>
