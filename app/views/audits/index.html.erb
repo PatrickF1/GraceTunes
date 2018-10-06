@@ -43,7 +43,6 @@
             <% end %>
           </strong>
         </h4>
-        <h5>Edit <%= audit.version %></h5>
         <h5>by <strong><%= audit.user.to_s %></strong> at <%= audit.created_at %></h5>
         <br/>
         <%= render partial: "audit_details", locals: { audit: audit } %>
