@@ -1,10 +1,10 @@
-.audits-controls, .audits-control{
+.audits-controls, .audits-control {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.audits-filter{
+.audits-filter {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -14,6 +14,6 @@
   }
 }
 
-.audits-filter *{
+.audits-filter * {
   padding: 0px 5px;
 }
