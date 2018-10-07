@@ -8,14 +8,7 @@
   </h1>
 
   <% @update_audits.reverse.each do |audit| %>
-    <div class="row">
-      <div class="col-md-12">
-        <h4><strong><%= audit.created_at.strftime('%B %d, %Y at %l:%M %p') %></strong></h4>
-        <h5>Edited by <%= audit.user.to_s %></h5>
-        <br/>
-        <%= render partial: "audit_details", locals: { audit: audit } %>
-        <hr/>
-      </div>
-    </div>
+    <%= render partial: "audit", locals: { audit: audit, song_name: @song.name, is_deleted: false } %>
+    <hr/>
   <% end %>
 </div>
