@@ -1,0 +1,20 @@
+<div class="row <%= audit_background_for_audit_action(audit.action) %>">
+  <div class="col-md-12">
+    <h4>
+      <strong>
+        <% if is_deleted %>
+          <del><%= song_name %></del>
+        <% else %>
+          <%= link_to song_name, song_path(audit.auditable_id) %>
+        <% end %>
+      </strong>
+      <span class="<%= text_class_for_audit_action(audit.action) %>">
+        <%= audit_action_past_tense(audit.action).capitalize %>
+      </span>
+    </h4>
+    <h5>by <strong><%= audit.user.to_s %></strong></h5>
+    <h5>on <span class="audit-created-at"><%= audit.created_at.in_time_zone("Pacific Time (US & Canada)").strftime('%B %d, %Y at %l:%M %p') %></h5></span>
+    <br/>
+    <%= render partial: "audit_details", locals: { audit: audit } %>
+  </div>
+</div>
