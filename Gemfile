@@ -25,6 +25,9 @@ gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'unicorn' # Use Unicorn as the app server
 gem 'will_paginate', '~> 3.1'
+gem 'wicked_pdf'
+gem 'render_anywhere'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere to get a debugger console

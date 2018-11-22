@@ -2,6 +2,11 @@ def song_name_from_path(song_path)
   "#{File.basename(song_path, '.yaml')}"
 end
 
+def create_file_with_song(song)
+  pdf = SongPdf.new(song)
+  pdf.save_pdf;
+end
+
 # serialize songs from .yaml files at directory_path and save into database if flag is set
 def serialize_song_sheets(directory_path, save_into_db=false)
   # make sure directory_path is a valid directory
@@ -50,4 +55,12 @@ namespace :song_sheets do
   task :save_into_db, [:directory_path] => :environment do |t, args|
     serialize_song_sheets(args.directory_path, true)
   end
+
+  desc 'Download all song sheets from the database.'
+  task :download_all_songs => :environment do |t, args|
+    Song.find_each do |song|
+      create_file_with_song(song)
+    end
+  end
+
 end
