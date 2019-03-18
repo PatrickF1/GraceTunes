@@ -111,7 +111,7 @@ class SongsController < ApplicationController
     elsif params[:numbers]
       Formatter.format_song_nashville(@song)
     end
-    render layout: false, locals: { :song => @song }
+    render layout: false
   end
 
   private

@@ -3,8 +3,7 @@ def song_name_from_path(song_path)
 end
 
 def create_file_with_song(song)
-  pdf = SongPdf.new(song)
-  pdf.save_pdf;
+  Pdfgenerator.generate_pdf(song)
 end
 
 # serialize songs from .yaml files at directory_path and save into database if flag is set

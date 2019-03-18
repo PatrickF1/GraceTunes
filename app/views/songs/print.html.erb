@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= song.name %></title>
+  <title><%= @song.name %></title>
   <%= stylesheet_link_tag 'print-songs', media: 'all' %>
 </head>
 <body>
   <div id="heading">
-    <h1 class="title"><%= song.name %></h1>
+    <h1 class="title"><%= @song.name %></h1>
     <p>
-      <% if song.artist.present? %>
-        <b>Artist:</b> <%= song.artist %> &nbsp;|&nbsp;
+      <% if @song.artist.present? %>
+        <b>Artist:</b> <%= @song.artist %> &nbsp;|&nbsp;
       <% end %>
-      <b>Key:</b> <%= song.key %> &nbsp;|&nbsp;
-      <b>Tempo:</b> <%= song.tempo %> <%= "(#{song.bpm} BPM)" if song.bpm.present? %>
+      <b>Key:</b> <%= @song.key %> &nbsp;|&nbsp;
+      <b>Tempo:</b> <%= @song.tempo %> <%= "(#{@song.bpm} BPM)" if @song.bpm.present? %>
     </p>
-    <% if song.standard_scan.present? %>
-      <p class="standard-scan"><b>Standard Scan:</b> <%= song.standard_scan %></p>
+    <% if @song.standard_scan.present? %>
+      <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
     <% end %>
   <br >
   </div>
 
   <table class="chord-sheet">
     <tr>
-      <% Parser.get_lines_for_columns(song).each do |column_lines| %>
+      <% Parser.get_lines_for_columns(@song).each do |column_lines| %>
         <td>
           <% column_lines.each do |line| %>
             <% class_for_line = Parser.get_class_for_line(line) %>
