@@ -55,8 +55,8 @@ namespace :song_sheets do
     serialize_song_sheets(args.directory_path, true)
   end
 
-  desc 'Download all song sheets from the database.'
-  task :download_all_songs => :environment do |t, args|
+  desc 'Generate song sheets for all songs in the database.'
+  task :generate_song_sheets => :environment do |t, args|
     Song.find_each do |song|
       create_file_with_song(song)
     end
