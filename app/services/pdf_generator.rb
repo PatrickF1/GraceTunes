@@ -1,4 +1,4 @@
-module Pdfgenerator
+module PdfGenerator
   PDF_CONFIG = {
     zoom: 6,
     margin: {

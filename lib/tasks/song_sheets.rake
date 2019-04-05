@@ -2,10 +2,6 @@ def song_name_from_path(song_path)
   "#{File.basename(song_path, '.yaml')}"
 end
 
-def create_file_with_song(song)
-  Pdfgenerator.generate_pdf(song)
-end
-
 # serialize songs from .yaml files at directory_path and save into database if flag is set
 def serialize_song_sheets(directory_path, save_into_db=false)
   # make sure directory_path is a valid directory
@@ -58,7 +54,7 @@ namespace :song_sheets do
   desc 'Generate song sheets for all songs in the database.'
   task :generate_song_sheets => :environment do |t, args|
     Song.find_each do |song|
-      create_file_with_song(song)
+      PdfGenerator.generate_pdf(song)
     end
   end
 
