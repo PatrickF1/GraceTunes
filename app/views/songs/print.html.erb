@@ -17,15 +17,15 @@
     <% if @song.standard_scan.present? %>
       <p class="standard-scan"><b>Standard Scan:</b> <%= @song.standard_scan %></p>
     <% end %>
-  </br>
+  <br >
   </div>
 
   <table class="chord-sheet">
     <tr>
-      <% get_lines_for_columns.each do |column_lines| %>
+      <% Parser.get_lines_for_columns(@song).each do |column_lines| %>
         <td>
           <% column_lines.each do |line| %>
-            <% class_for_line = get_class_for_line(line) %>
+            <% class_for_line = Parser.get_class_for_line(line) %>
             <% if class_for_line == "blank" %>
               <br class=<%= class_for_line %>>
             <% else %>

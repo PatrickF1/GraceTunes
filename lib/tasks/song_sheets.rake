@@ -50,4 +50,12 @@ namespace :song_sheets do
   task :save_into_db, [:directory_path] => :environment do |t, args|
     serialize_song_sheets(args.directory_path, true)
   end
+
+  desc 'Generate song sheets for all songs in the database.'
+  task :generate_song_sheets => :environment do |t, args|
+    Song.find_each do |song|
+      PdfGenerator.generate_pdf(song)
+    end
+  end
+
 end

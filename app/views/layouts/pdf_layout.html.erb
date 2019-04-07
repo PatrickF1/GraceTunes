@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- wicked_pdf_stylesheet_link_tag generates an absolute CSS file for print-songs.scss to generate for PDF-->
+  <%= wicked_pdf_stylesheet_link_tag 'print-songs', media: 'all' %>
+
+</head>
+<body>
+  <%= yield %>
+
+</body>
+</html>
