@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20190421193645) do
     t.text "lyrics", null: false
     t.string "spotify_uri"
     t.integer "bpm"
-    t.integer "times_viewed", default: 0, null: false
+    t.integer "view_count", default: 0, null: false
     t.index ["artist"], name: "index_songs_on_artist", using: :gin
     t.index ["lyrics"], name: "index_songs_on_lyrics", using: :gin
     t.index ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true

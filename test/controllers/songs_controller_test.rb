@@ -58,7 +58,10 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "visiting the show song page causes the song's view count to increment" do
-
+    forever_reign_id = songs(:forever_reign).id
+    assert_difference("Song.find(#{forever_reign_id}).view_count", 1) do
+      get :show, params: { id: songs(:forever_reign).id }
+    end
   end
 
   # "new" action tests
