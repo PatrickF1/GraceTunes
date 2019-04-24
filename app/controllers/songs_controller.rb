@@ -57,6 +57,7 @@ class SongsController < ApplicationController
 
     respond_to do |format|
       format.html do
+        Song.increment_counter(:view_count, @song.id, touch: false)
       end
       format.json do
         render json: @song
