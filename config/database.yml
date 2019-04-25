@@ -12,6 +12,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
+  username: test_user
   database: tunes_test
 
 # Production DB settings here are only for testing the app in production

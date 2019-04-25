@@ -7,7 +7,7 @@ capybara-*.html
 /db/*.sqlite3-journal
 /public/system
 /coverage/
-/spec/tmp
+/test/reports
 rerun.txt
 pickle-email-*.html
 
