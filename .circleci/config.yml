@@ -46,21 +46,10 @@ jobs: # a collection of steps
           paths:
             - vendor/bundle
 
-      # Only necessary if app uses webpacker or yarn in some other way
-      - restore_cache:
-          keys:
-            - gracetunes-yarn-{{ checksum "yarn.lock" }}
-            - gracetunes-yarn-
 
       - run:
           name: Yarn Install
           command: yarn install --cache-folder ~/.cache/yarn
-
-      # Store yarn / webpacker cache
-      - save_cache:
-          key: gracetunes-yarn-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
 
       - run:
           name: Wait for DB
