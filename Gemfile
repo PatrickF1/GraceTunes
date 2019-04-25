@@ -35,6 +35,7 @@ end
 
 group :test do
   gem 'rails-controller-testing'
+  gem 'minitest-ci'
 end
 
 group :development do
