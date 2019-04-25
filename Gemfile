@@ -4,7 +4,7 @@ ruby '2.4.1'
 
 gem 'audited', '~> 4.6'
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap-will_paginate'
 gem 'diffy'
 gem 'font-awesome-rails'
@@ -18,7 +18,7 @@ gem 'omniauth-google-oauth2'
 gem 'pg'
 gem 'pg_search'
 gem 'rack-timeout'
-gem 'rails', '5.1.6'
+gem 'rails', '5.1.7'
 gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
 gem 'sdoc', '~> 0.4.0', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
 gem 'turbolinks'
