@@ -10,10 +10,8 @@ class SongsController < ApplicationController
       format.json do
 
         songs = if params[:search][:value].present?
-          # if searching, sort songs by relevance
           Song.search_by_keywords(params[:search][:value])
         else
-          # if not searching, sort songs alphabetically
           Song.order(name: :asc)
         end
 
@@ -21,6 +19,15 @@ class SongsController < ApplicationController
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
         recordsFiltered = songs.length
+
+        case params[:sort]
+        when :relevance
+          # do nothing
+        when :created_at
+          songs = songs.order(created_at: :desc)
+        when :view_count
+          songs = songs.order(view_count: desc)
+        end
 
         if params[:start].present?
           page_size = (params[:length] || SONGS_PER_PAGE_DEFAULT).to_i
