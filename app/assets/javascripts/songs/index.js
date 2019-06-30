@@ -23,11 +23,12 @@ $(function() {
       // store song object to use later for showing song preview
       $(row).data('song', data);
     },
-    ajax: {
+    ajax: { // TODO: switch to preSubmit event
       sAjaxSource: '<%= songs_path(format: :json) %>',
       data: function(d) {
         d.tempo = $('#tempo').val();
         d.key = $('#key').val();
+        d.sort = $('#sort').val();
 
         return d;
       }
