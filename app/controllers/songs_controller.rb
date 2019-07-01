@@ -8,11 +8,10 @@ class SongsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-
         songs = if params[:search][:value].present?
           Song.search_by_keywords(params[:search][:value])
         else
-          Song.order(name: :asc)
+          Song
         end
 
         songs = songs.where(key: params[:key]) if params[:key].present?
@@ -21,12 +20,14 @@ class SongsController < ApplicationController
         recordsFiltered = songs.length
 
         case params[:sort]
-        when :relevance
+        when "relevance"
           # do nothing
-        when :created_at
+        when 'created_at'
           songs = songs.order(created_at: :desc)
-        when :view_count
-          songs = songs.order(view_count: desc)
+        when 'view_count'
+          songs = songs.order(view_count: :desc)
+        else
+          puts 'else'
         end
 
         if params[:start].present?
