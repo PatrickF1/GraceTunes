@@ -19,15 +19,13 @@ class SongsController < ApplicationController
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
         recordsFiltered = songs.length
 
-        case params[:sort]
-        when "relevance"
-          # do nothing
+        songs = case params[:sort]
+        when 'relevance'
+          songs.order(name: :asc)
         when 'created_at'
-          songs = songs.order(created_at: :desc)
+          songs.reorder(created_at: :desc)
         when 'view_count'
-          songs = songs.order(view_count: :desc)
-        else
-          puts 'else'
+          songs.reorder(view_count: :desc)
         end
 
         if params[:start].present?
