@@ -25,7 +25,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "index should be able to return songs ordered by view count" do
     get :index, params: {
-      sort: :view_count,
+      sort: 'Most Popular First',
       format: :json,
       xhr: true
     }
@@ -38,7 +38,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "index should be able to return songs ordered by date created" do
     get :index, params: {
-      sort: :created_at,
+      sort: 'Newest First',
       format: :json,
       xhr: true
     }
@@ -129,7 +129,7 @@ class SongsControllerTest < ApplicationControllerTest
       search: { value: rare_keyword },
       tempo: tempo,
       key: key,
-      sort: :view_count,
+      sort: 'Most Popular First',
       format: :json,
       xhr: :true
     }

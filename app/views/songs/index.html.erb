@@ -19,7 +19,7 @@
                 <td>Tempo</td>
                 <td><%= select_tag :tempo, get_tempo_opts('Any', include_any = true), class: 'form-control' %></td>
                 <td>Sort By</td>
-                <td><%= select_tag :sort, options_for_select([['Relevance', 'relevance'], ['Newest First', 'created_at'], ['Most Popular First', 'view_count']], 'Relevance'), class: 'form-control' %></td>
+                <td><%= select_tag :sort, options_for_select(['Relevance', 'Newest First', 'Most Popular First'], 'Relevance'), class: 'form-control' %></td>
                 <!-- TODO simplify sorting arugments -->
               </tr>
             </tbody>

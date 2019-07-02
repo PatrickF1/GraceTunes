@@ -19,13 +19,13 @@ class SongsController < ApplicationController
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
         # store total number of songs after filtering
-        recordsFiltered = songs.length # TODO try size
+        recordsFiltered = songs.length
 
         # reorder
         songs = case params[:sort]
-        when 'created_at'
+        when 'Newest First'
           songs.reorder(created_at: :desc)
-        when 'view_count'
+        when 'Most Popular First'
           songs.reorder(view_count: :desc)
         else
           # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
