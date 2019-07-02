@@ -63,22 +63,83 @@ class SongsControllerTest < ApplicationControllerTest
     assert_includes(songs_data, songs(:glorious_day))
   end
 
-  test "index should stack filters" do
-    get :index, params: {
-      search: { value: "forever" },
+  test "index should be able to combine filters, sorting, and search values" do
+    rare_keyword = 'ymmv'
+    key = "Db"
+    tempo =  "Fast"
+
+    # create songs to be expected in results
+    Song.create!(
+      name: "1",
+      artist: "A",
+      key: key,
+      tempo: tempo,
+      chord_sheet: ([rare_keyword] * 5).join(" "),
+      view_count: 1
+    )
+    Song.create!(
+      name: "2",
+      artist: "A",
+      key: key,
+      tempo: tempo,
+      chord_sheet: ([rare_keyword] * 2).join(" "),
+      view_count: 3
+    )
+    Song.create!(
+      name: "3",
+      artist: "A",
+      key: key,
+      tempo: tempo,
+      chord_sheet: ([rare_keyword] * 8).join(" "),
+      view_count: 2
+    )
+    Song.create!(
+      name: "4",
+      artist: "A",
+      key: key,
+      tempo: tempo,
+      chord_sheet: rare_keyword,
+      view_count: 4,
+    )
+
+    # create songs not to be expected in results
+    Song.create!(
+      name: "5",
+      artist: "A",
+      key: key,
       tempo: "Medium",
+      chord_sheet: rare_keyword
+    )
+    Song.create!(
+      name: "6",
+      artist: "A",
       key: "B",
+      tempo: tempo,
+      chord_sheet: rare_keyword
+    )
+    Song.create!(
+      name: "7",
+      artist: "A",
+      key: key,
+      tempo: tempo,
+      chord_sheet: "nothing"
+    )
+
+    get :index, params: {
+      search: { value: rare_keyword },
+      tempo: tempo,
+      key: key,
+      sort: :view_count,
       format: :json,
       xhr: :true
     }
+
     songs_data = load_songs
 
-    # these songs almost match but have different keys
-    assert(songs_data.exclude?(songs(:all_my_hope)))
-    assert(songs_data.exclude?(songs(:ten_thousand_reasons)))
-    assert(songs_data.exclude?(songs(:forever_reign)))
-
-    assert_includes(songs_data, songs(:glorious_day))
+    assert_equal(4, songs_data.length)
+    assert_equal("4", songs_data[0].name)
+    assert_equal("2", songs_data[1].name)
+    assert_equal("3", songs_data[2].name)
   end
 
   # "show" action tests
