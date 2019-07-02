@@ -10,9 +10,17 @@ class SongsControllerTest < ApplicationControllerTest
     assert_redirected_to sign_in_path
   end
 
-  test "index should be retrieved successfully" do
-    get :index
-    assert_response :success
+  test "index should retrieve songs by alphabetical order when there is no search value and sorting by relevance" do
+    get :index, params: {
+      sort: :relevance,
+      format: :json,
+      xhr: true
+    }
+
+    songs_data = load_songs
+
+    assert(songs(:ten_thousand_reasons), songs_data[0])
+    assert(songs(:all_my_hope), songs_data[1])
   end
 
   test "index should retrieve relevant keyword search results" do

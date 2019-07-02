@@ -12,14 +12,14 @@ class SongsController < ApplicationController
 
         # perform searching and filtering
         # pg_search requires search_by_keywords to be to run first before anything else
-        search_value = params[:search][:value]
+        search_value = params.dig(:search, :value)
         songs = songs.search_by_keywords(search_value) if search_value.present?
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
         # store total number of songs after filtering
-        recordsFiltered = songs.length # TODO try size?
+        recordsFiltered = songs.length # TODO try size
 
         # reorder
         songs = case params[:sort]
