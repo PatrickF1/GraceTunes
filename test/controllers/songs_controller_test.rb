@@ -36,6 +36,20 @@ class SongsControllerTest < ApplicationControllerTest
     assert_equal(songs(:God_be_praised), songs_data[1])
   end
 
+  test "index should be able to return songs ordered by date created" do
+    get :index, params: {
+      sort: :created_at,
+      format: :json,
+      xhr: true
+    }
+
+    songs_data = load_songs
+
+    assert_equal(songs(:God_be_praised), songs_data[0])
+    assert_equal(songs(:forever_reign), songs_data[1])
+    assert_equal(songs(:ten_thousand_reasons), songs_data[2])
+  end
+
   test "index should return results relevant to the search value" do
     get :index, params: {
       search: { value: "hand" },
