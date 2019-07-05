@@ -8,20 +8,31 @@ class SongsController < ApplicationController
   def index
     respond_to do |format|
       format.json do
+        songs = Song
 
-        songs = if params[:search][:value].present?
-          # if searching, sort songs by relevance
-          Song.search_by_keywords(params[:search][:value])
-        else
-          # if not searching, sort songs alphabetically
-          Song.order(name: :asc)
-        end
-
+        # perform searching and filtering
+        # pg_search requires search_by_keywords to be to run first before anything else
+        search_value = params.dig(:search, :value)
+        songs = songs.search_by_keywords(search_value) if search_value.present?
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
+
+        # store total number of songs after filtering
         recordsFiltered = songs.length
 
+        # reorder
+        songs = case params[:sort]
+        when 'Newest First'
+          songs.reorder(created_at: :desc)
+        when 'Most Popular First'
+          songs.reorder(view_count: :desc)
+        else
+          # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
+          songs.order(name: :asc)
+        end
+
+        # paginate
         if params[:start].present?
           page_size = (params[:length] || SONGS_PER_PAGE_DEFAULT).to_i
           page_num = (params[:start].to_i / page_size.to_i) + 1
@@ -29,6 +40,7 @@ class SongsController < ApplicationController
           songs = songs.paginate(page: page_num, per_page: page_size)
         end
 
+        # https://datatables.net/manual/server-side
         song_data = {
           draw: params[:draw].to_i,
           recordsTotal: Song.count,

@@ -1,8 +1,6 @@
-# Due to YAML and Minispec limitations, song fixtures have empty string lyrics
-# except for song fixtures specifically created for search relevancy tests.
-
 God_be_praised:
-  updated_at: "2018-01-01 00:00:00"
+  created_at: "2019-07-01 00:00:03"
+  updated_at: "2019-07-01 00:00:03"
   name: "God Be Praised"
   artist: "Elevation Worship"
   key: "D"
@@ -84,9 +82,11 @@ God_be_praised:
     Because I am free, I'll bow at Your feet
     Because I am loved, I'm able to love
     Because I am Yours, my worth is secure
+  view_count: 2
 
 forever_reign:
-  updated_at: "2018-01-01 00:00:00"
+  created_at: "2019-07-01 00:00:02"
+  updated_at: "2019-07-01 00:00:02"
   name: "Forever Reign"
   artist: "Hillsong Worship"
   key: "C"
@@ -186,7 +186,8 @@ forever_reign:
     Jesus, Jesus
 
 ten_thousand_reasons:
-  updated_at: "2018-01-01 00:00:00"
+  created_at: "2019-07-01 00:00:01"
+  updated_at: "2019-07-01 00:00:01"
   name: "10,000 Reasons"
   artist: "Matt Redman"
   key: "G"
@@ -251,6 +252,7 @@ ten_thousand_reasons:
     Ten thousand years and then forever more!
 
 glorious_day:
+  created_at: "2018-01-01 00:00:00"
   updated_at: "2018-01-01 00:00:00"
   name: "Glorious Day (Living He Loved Me)"
   artist: "Casting Crowns"
@@ -356,8 +358,10 @@ glorious_day:
     One day the skies with His glories will shine
     Wonderful day, my Beloved One, bringing
     My Savior, Jesus, is mine
+  view_count: 3
 
 hands_to_the_heaven:
+  created_at: "2018-01-01 00:00:00"
   updated_at: "2018-01-01 00:00:00"
   name: "Hands To The Heaven"
   artist: "Kari Jobe"
@@ -431,6 +435,7 @@ hands_to_the_heaven:
     Have your way, Have your way
 
 all_my_hope:
+  created_at: "2018-01-01 00:00:00"
   updated_at: "2018-01-01 00:00:00"
   name: "All My Hope"
   artist: "Hillsong Worship"
@@ -505,6 +510,7 @@ all_my_hope:
     Redemption is calling us home
 
 when_i_think_about_the_lord:
+  created_at: "2018-01-01 00:00:00"
   updated_at: "2018-01-01 00:00:00"
   name: "When I Think About the Lord"
   artist: "Shane and Shane"
@@ -564,28 +570,32 @@ when_i_think_about_the_lord:
     All the praise
 
 relevant_1:
-  updated_at: "2099-01-01 00:00:00"
+  created_at: "2000-01-01 00:00:00"
+  updated_at: "2000-01-01 00:00:00"
   name: "relevant"
   key: "F#"
   tempo: "Fast"
   chord_sheet: ""
   lyrics: "lyrics go here"
 relevant_2:
-  updated_at: "2099-01-01 00:00:00"
+  created_at: "2000-01-01 00:00:00"
+  updated_at: "2000-01-01 00:00:00"
   name: "not very"
   key: "F#"
   tempo: "Fast"
   chord_sheet: ""
   lyrics: "relevant relevant"
 relevant_3:
-  updated_at: "2099-01-01 00:00:00"
+  created_at: "2000-01-01 00:00:00"
+  updated_at: "2000-01-01 00:00:00"
   name: "even less"
   key: "F#"
   tempo: "Fast"
   chord_sheet: ""
   lyrics: "relevant"
 relevant_4:
-  updated_at: "2099-01-01 00:00:00"
+  created_at: "2000-01-01 00:00:00"
+  updated_at: "2000-01-01 00:00:00"
   name: "not at all"
   key: "F#"
   tempo: "Fast"

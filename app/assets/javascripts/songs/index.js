@@ -28,6 +28,7 @@ $(function() {
       data: function(d) {
         d.tempo = $('#tempo').val();
         d.key = $('#key').val();
+        d.sort = $('#sort').val();
 
         return d;
       }

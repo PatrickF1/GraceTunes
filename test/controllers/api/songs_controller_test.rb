@@ -25,10 +25,7 @@ class API::SongsControllerTest < API::APIControllerTest
     songs_json_object.map do |song_json|
       assert(song_json['updated_at'] >= updated_since_value)
     end
-    assert(
-      songs_json_object.count == 4,
-      "Expecting exactly the song fixtures relevant[1-4] to have been updated since #{updated_since_value}"
-    )
+    assert_equal(3, songs_json_object.count)
   end
 
   test 'deleted should not be accessible without correct HTTP auth headers' do
