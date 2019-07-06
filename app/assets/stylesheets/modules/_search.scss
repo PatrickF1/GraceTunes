@@ -20,11 +20,22 @@
     }
   }
 
-  .search_filter {
+  .search_filters {
     float: right;
 
-    td {
-      padding-left: $default-margin / 4;
+    .search_filter {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .search_filter__label {
+      flex-shrink: 0;
+      margin-left: $default-margin / 1.5;
+    }
+
+    .search_filter__form-control {
+      margin-left: $default-margin / 3;
     }
   }
 }

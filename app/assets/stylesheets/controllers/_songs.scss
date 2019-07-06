@@ -4,25 +4,27 @@
 @import url("https://fonts.googleapis.com/css?family=Inconsolata");
 
 .index-page {
-
-  @keyframes slide-in
-  {
-    0%   { width: 10vw }
-    100% { width: 50vw }
+  @keyframes slide-in {
+    0% {
+      width: 10vw;
+    }
+    100% {
+      width: 50vw;
+    }
   }
 
   .preview-drawer {
     animation: 0.3s slide-in;
     display: none;
     position: fixed;
-    top: 65px;
+    top: 70px;
     right: 0;
     padding: ($default-padding * 1.5) ($default-padding * 2);
     padding-bottom: 70px;
     background-color: white;
-    height: 100%;
-    width:  40vw;
-    max-width:  40vw;
+    height: calc(100vh - 70px);
+    width: 40vw;
+    max-width: 40vw;
     border-left: 1px solid whitesmoke;
     box-shadow: 0px 10px 40px -10px grey;
     overflow-y: scroll;
@@ -33,7 +35,7 @@
       margin-bottom: $default-margin / 2;
 
       .name {
-        margin: 0
+        margin: 0;
       }
     }
 
@@ -54,7 +56,7 @@
       padding-bottom: $default-padding * 2;
     }
 
-    [data-markjs=true] {
+    [data-markjs="true"] {
       background-color: $blue;
     }
 
@@ -66,7 +68,7 @@
       right: $default-margin;
       top: 0px;
       transform: scaleY(0.9);
-      transition: all .25s;
+      transition: all 0.25s;
 
       &:hover {
         color: darken($light-gray, 10%);
@@ -88,7 +90,6 @@
   .songs-table tbody tr {
     transition: background-color 0.2s ease;
   }
-
 }
 
 .show-page {

@@ -11,7 +11,7 @@ $header-logo-font-size: 25px;
   align-items: center;
   background-color: $blue;
   display: flex;
-  padding: ($default-padding / 2) $default-padding;
+  padding: 0 $default-padding;
   position: absolute;
   width: 100%;
   height: $header-height;
@@ -31,18 +31,26 @@ $header-logo-font-size: 25px;
   .header_links {
     display: flex;
     margin-left: $default-margin;
+    height: 100%;
+
+    .header_link {
+      height: 100%;
+    }
 
     .header_link_icon {
-     color: $white;
+      color: $white;
     }
 
     .header_link a {
       color: $white;
       letter-spacing: 1px;
-      padding: ($header-height / 3) ($default-padding / 2);
+      padding: 0 ($default-padding / 2);
       position: relative;
       text-decoration: none;
       text-transform: uppercase;
+      height: 100%;
+      display: flex;
+      align-items: center;
 
       .fa {
         margin-right: $default-margin / 4;
@@ -56,7 +64,7 @@ $header-logo-font-size: 25px;
         left: 0;
         opacity: 0;
         position: absolute;
-        transition: all .25s;
+        transition: all 0.25s;
         width: 100%;
       }
 
@@ -69,7 +77,6 @@ $header-logo-font-size: 25px;
       }
 
       &.header_link-active {
-
         &:after {
           background-color: $white;
           bottom: 0;
