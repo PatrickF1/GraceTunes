@@ -568,36 +568,3 @@ when_i_think_about_the_lord:
     All the praise
     All the praise
     All the praise
-
-relevant_1:
-  created_at: "2000-01-01 00:00:00"
-  updated_at: "2000-01-01 00:00:00"
-  name: "relevant"
-  key: "F#"
-  tempo: "Fast"
-  chord_sheet: ""
-  lyrics: "lyrics go here"
-relevant_2:
-  created_at: "2000-01-01 00:00:00"
-  updated_at: "2000-01-01 00:00:00"
-  name: "not very"
-  key: "F#"
-  tempo: "Fast"
-  chord_sheet: ""
-  lyrics: "relevant relevant"
-relevant_3:
-  created_at: "2000-01-01 00:00:00"
-  updated_at: "2000-01-01 00:00:00"
-  name: "even less"
-  key: "F#"
-  tempo: "Fast"
-  chord_sheet: ""
-  lyrics: "relevant"
-relevant_4:
-  created_at: "2000-01-01 00:00:00"
-  updated_at: "2000-01-01 00:00:00"
-  name: "not at all"
-  key: "F#"
-  tempo: "Fast"
-  chord_sheet: ""
-  lyrics: "lyrics go here"
