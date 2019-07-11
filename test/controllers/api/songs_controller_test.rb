@@ -12,7 +12,7 @@ class API::SongsControllerTest < API::APIControllerTest
   test 'recently_updated should retrieve all songs if no date is specified' do
     get :recently_updated
     assert_response :success
-    assert(JSON.parse(@response.body).count == 11, "Expecting all 11 song fixtures to be returned")
+    assert_equal(7, JSON.parse(@response.body).count, "Expecting all song fixtures to be returned")
   end
 
   test 'recently_updated should retrieve only the songs updated on or after the date specified' do

@@ -199,16 +199,19 @@ class SongTest < ActiveSupport::TestCase
   end
 
   # full text search tests
-  single_word_results = Song.search_by_keywords "relevant"
+  single_word_results = Song.search_by_keywords "praise"
   multi_word_results = Song.search_by_keywords "Holy Lord"
 
   test "search should prioritize songs with the keyword in the title" do
-    assert_equal(single_word_results.first, songs(:relevant_1))
+    assert_equal(songs(:God_be_praised), single_word_results.first)
   end
 
   test "search should prioritize songs with more occurrences of the keyword" do
-    assert_equal(single_word_results.second, songs(:relevant_2))
-    assert_equal(single_word_results.third, songs(:relevant_3))
+    # when_i_think_about_the_lord has three occurrences of "praise"
+    # ten_thousand_reasons and glorious_day both have only one occurence
+    assert_equal(songs(:when_i_think_about_the_lord), single_word_results.second)
+    assert_includes(single_word_results[2..3], songs(:ten_thousand_reasons))
+    assert_includes(single_word_results[2..3], songs(:glorious_day))
   end
 
   test "search should not include songs without occurrences of all keywords" do

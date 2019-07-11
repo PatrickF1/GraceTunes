@@ -149,7 +149,7 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   test "show song page should not display the standard scan when it is blank" do
-    get :show, params: { id: songs(:relevant_1).id }
+    get :show, params: { id: songs(:glorious_day).id }
     assert_select ".song-metadata", {text: /Standard Scan:/, count: 0}, "Standard scan should not appear if it is blank"
   end
 
@@ -287,7 +287,7 @@ class SongsControllerTest < ApplicationControllerTest
 
   # "print" action tests
   test "the standard scan field should not appear if it is blank" do
-    get :print, params: { id: songs(:relevant_1).id }
+    get :print, params: { id: songs(:glorious_day).id }
     assert_select ".standard-scan", false, "Standard scan should not appear if it is blank"
   end
 
