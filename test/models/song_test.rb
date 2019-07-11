@@ -258,10 +258,6 @@ class SongTest < ActiveSupport::TestCase
 
   private
 
-  def create_songs_for_relevance_testing
-
-  end
-
   # clear the lyrics and validate it to trigger the extract_lyrics callback
   def force_lyrics_extraction(song)
     song.lyrics = nil
