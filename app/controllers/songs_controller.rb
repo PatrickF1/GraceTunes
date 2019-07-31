@@ -18,19 +18,21 @@ class SongsController < ApplicationController
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
-        # store total number of songs after filtering
-        recordsFiltered = songs.length
-
         # reorder
         songs = case params[:sort]
         when 'Newest First'
           songs.reorder(created_at: :desc)
         when 'Most Popular First'
-          songs.reorder(view_count: :desc)
+          songs
+            .where.not(view_count: 0)
+            .reorder(view_count: :desc)
         else
           # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
           songs.order(name: :asc)
         end
+
+        # store total number of songs after all filtering is done
+        recordsFiltered = songs.length
 
         # paginate
         if params[:start].present?
