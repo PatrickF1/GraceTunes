@@ -36,7 +36,7 @@ class SongsControllerTest < ApplicationControllerTest
     assert_equal(songs(:God_be_praised), songs_data[1])
   end
 
-  test "index not return songs with zero view count when ordering by popularity" do
+  test "index should not return songs with zero view count when ordering by popularity" do
     get :index, params: {
       search: { value: "hope" },
       sort: 'Most Popular First',
