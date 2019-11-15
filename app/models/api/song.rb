@@ -12,7 +12,7 @@ class API::Song < ApplicationRecord
     end
     chord_sheets['numeral'] = Formatter.format_song_nashville(self)
 
-    super(except: [:created_at, :chord_sheet, :lyrics, :spotify_uri])
+    super(except: [:created_at, :key, :chord_sheet, :lyrics, :spotify_uri])
       .merge(chord_sheets: chord_sheets)
       .merge(key: suggested_key)
   end
