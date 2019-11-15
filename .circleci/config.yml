@@ -3,7 +3,9 @@ jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     parallelism: 1 # run three instances of this job in parallel
     docker: # run the steps with Docker
-      - image: circleci/ruby:2.5.7-node # ...with this image as the primary container; this is where all `steps` will run
+    # ...with this image as the primary container; this is where all `steps` will run
+    # -node means the image includes node, which is a Rails dependency
+      - image: circleci/ruby:2.5.7-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
