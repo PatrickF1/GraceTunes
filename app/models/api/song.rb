@@ -3,6 +3,7 @@ class API::Song < ApplicationRecord
   self.ignored_columns = %w(created_at lyrics spotify_uri)
 
   def as_json(options = nil)
+    suggested_key = self.key # Transposer.transpose_song destructively modifies key so save it
     chord_sheets = {}
     Music::MAJOR_KEYS.map do |key|
       cloned_song = clone
@@ -13,5 +14,6 @@ class API::Song < ApplicationRecord
 
     super(except: [:created_at, :chord_sheet, :lyrics, :spotify_uri])
       .merge(chord_sheets: chord_sheets)
+      .merge(key: suggested_key)
   end
 end
