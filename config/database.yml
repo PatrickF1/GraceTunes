@@ -1,4 +1,5 @@
 default: &default
+  username: gracetunes_user
   adapter: postgresql
   pool: 3
   timeout: 5000
@@ -12,11 +13,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  username: test_user
   database: tunes_test
 
-# Production DB settings here are only for testing the app in production
-# mode locally and will not be used when deployed on Heroku.
+# Production DB settings here are only for testing the app locally with
+# production config and will not be used when deployed to Heroku prod.
 # devcenter.heroku.com/articles/rails-database-connection-behavior
 production:
   <<: *default
