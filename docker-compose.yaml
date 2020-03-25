@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: gracetunes_user
+      POSTGRES_PASSWORD: password
+  app:
+    build: .
+    working_dir: /app
+    depends_on:
+      - db
+    tmpfs:
+      - /app
+    volumes:
+      - ./docker-entrypoint.sh:/entrypoint.sh:ro
+      - .:/src:ro
+    environment: # Please supply secrets (e.g., GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET) with .env file
+      PORT: 3000
+      PGHOST: db
+      PGPASSWORD: password
+      RAILS_ENV: development
+      API_USERNAME: username
+      API_PASSWORD: password
+      FEEDBACK_URL: https://docs.google.com/a/gpmail.org/forms/d/e/1FAIpQLSegoVnPJYmNTDHiCVJxBEk515GQGlVCQ_ny0ONedWdBtu7cLQ/viewform
+      REQUEST_SONG_URL: https://docs.google.com/forms/d/e/1FAIpQLSe4zko5wg2FfTfTGGAVENnARWfg-4AJSQqz54BlWdagBhKISA/viewform
+    ports:
+      - 3000:3000
+    entrypoint: /entrypoint.sh
