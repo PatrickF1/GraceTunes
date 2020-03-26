@@ -37,3 +37,6 @@ bower.json
 
 # Ignore Sublime Text workspace files
 *.sublime-workspace
+
+# JetBrains IDEs (e.g., RubyMine)
+.idea
