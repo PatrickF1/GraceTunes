@@ -4,10 +4,12 @@ ruby '2.5.7'
 
 gem 'audited', '~> 4.6'
 gem 'autoprefixer-rails'
+gem 'cancancan', '~> 3.0.2'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap-will_paginate'
 gem 'diffy'
 gem 'font-awesome-rails'
+gem 'google-id-token', '~> 1.4.2'
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jquery-datatables-rails', '~> 3.4.0' # Use datatables for rendering and searching songs
 gem 'jquery-rails' # Use jquery as the JavaScript library

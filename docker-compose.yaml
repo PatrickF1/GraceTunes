@@ -23,9 +23,6 @@ services:
       RAILS_ENV: development
       API_USERNAME: username
       API_PASSWORD: password
-      # Sourced from .env file
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       FEEDBACK_URL: https://docs.google.com/a/gpmail.org/forms/d/e/1FAIpQLSegoVnPJYmNTDHiCVJxBEk515GQGlVCQ_ny0ONedWdBtu7cLQ/viewform
       REQUEST_SONG_URL: https://docs.google.com/forms/d/e/1FAIpQLSe4zko5wg2FfTfTGGAVENnARWfg-4AJSQqz54BlWdagBhKISA/viewform
     ports:

@@ -1,9 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # Forward env variables, fail on errors
 set -aeu
 
 cp -r /src/* .
+
+[[ -f .env ]] && . .env
 
 bundle install
 bundle exec rails db:setup
