@@ -44,4 +44,5 @@ group :development do
   gem 'spring' # keeps the app running in the background so you don't need to keep rebotting it
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
+  gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make sure of it
 end
