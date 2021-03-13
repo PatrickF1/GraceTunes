@@ -1,4 +1,4 @@
-FROM ruby:2.5.7-alpine
+FROM ruby:2.7.2-alpine
 
 EXPOSE 3000
 

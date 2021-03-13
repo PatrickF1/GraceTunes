@@ -5,7 +5,7 @@ jobs: # a collection of steps
     docker: # run the steps with Docker
     # ...with this image as the primary container; this is where all `steps` will run
     # -node means the image includes node, which is a Rails dependency
-      - image: circleci/ruby:2.5.7-node
+      - image: circleci/ruby:2.7.2-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
