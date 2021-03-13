@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.7'
+ruby '2.7.2'
 
 gem 'audited', '~> 4.6'
 gem 'autoprefixer-rails'
