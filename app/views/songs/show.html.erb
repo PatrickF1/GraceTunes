@@ -20,11 +20,11 @@
       <% end %>
     <% end %>
     <%= link_to print_song_path, { method: :get, class: "pill pill_link-dark-blue", id: "print-btn", "data-print-url": print_song_path } do %>
-      <i class="fa fa-print"></i> Print in current key
+      <i class="fa fa-print"></i> Print
     <% end %>
   </div>
   <% if @song.spotify_uri.present? %>
-      <%= render partial: "spotify_widget", locals: {widget_source: @song.spotify_widget_source} %>
+    <%= render partial: "spotify_widget", locals: { widget_source: @song.spotify_widget_source } %>
   <% end %>
   <div class="song-metadata">
     <span><strong>Suggested Key:</strong> <span class="key"><%= @song.key %></span></span>&nbsp;
@@ -38,6 +38,9 @@
   </div>
 
   <div class="song-controls">
+    <span>Show Chords</span>
+    <input id="chords_toggle" checked type="checkbox">
+    &nbsp;&nbsp;|&nbsp;&nbsp;
     <span class="transpose-container">View in Key of<%= select_tag :transpose_to, get_key_opts(@song.key), class: "form-control transpose", "data-song-url": song_path(@song, format: :json) %></span>
     &nbsp;&nbsp;|&nbsp;&nbsp;
     <span class="to-numbers-container"><%= content_tag :div, "View with Numbers", class: "pill pill_link-dark-blue", id: "to_numbers", "data-song-url": song_path(@song, format: :json) %></span>

@@ -59,7 +59,9 @@ class SongsController < ApplicationController
 
   def show
     @song = Song.find(params[:id])
-    if params[:new_key].present?
+    if params[:disable_chords]
+      Formatter.format_song_no_chords(@song)
+    elsif params[:new_key].present?
       Transposer.transpose_song(@song, params[:new_key])
     elsif params[:numbers]
       Formatter.format_song_nashville(@song)
@@ -119,7 +121,9 @@ class SongsController < ApplicationController
 
   def print
     @song = Song.find(params[:id])
-    if params[:new_key].present?
+    if params[:disable_chords]
+      Formatter.format_song_no_chords(@song)
+    elsif params[:new_key].present?
       Transposer.transpose_song(@song, params[:new_key])
     elsif params[:numbers]
       Formatter.format_song_nashville(@song)

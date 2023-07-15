@@ -9,6 +9,17 @@ module Formatter
     song.chord_sheet = new_chord_sheet_list.join
   end
 
+  def self.format_song_no_chords(song)
+    new_chord_sheet_list = []
+    song.chord_sheet.each_line do |line|
+      if !Parser::chords_line?(line)
+        new_chord_sheet_list << line
+      end
+    end
+
+    song.chord_sheet = new_chord_sheet_list.join
+  end
+
   private
 
   def self.format_line_nashville(line, key)
