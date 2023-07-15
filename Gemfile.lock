@@ -42,8 +42,9 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (8.0.0)
     ast (2.4.0)
-    audited (4.7.1)
-      activerecord (>= 4.0, < 5.3)
+    audited (5.3.3)
+      activerecord (>= 5.0, < 7.1)
+      request_store (~> 1.2)
     autoprefixer-rails (8.5.0)
       execjs
     backport (1.1.2)
@@ -187,6 +188,8 @@ GEM
     rdoc (4.3.0)
     render_anywhere (0.0.12)
       rails (>= 3.0.7)
+    request_store (1.5.1)
+      rack (>= 1.4)
     reverse_markdown (1.4.0)
       nokogiri
     rubocop (0.58.2)
@@ -271,7 +274,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  audited (~> 4.6)
+  audited (~> 5.3)
   autoprefixer-rails
   bootstrap-sass (~> 3.4.1)
   bootstrap-will_paginate

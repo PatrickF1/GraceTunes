@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.7.2'
 
-gem 'audited', '~> 4.6'
+gem 'audited', '~> 5.3'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.4.1'
 gem 'bootstrap-will_paginate'
