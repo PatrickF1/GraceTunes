@@ -8,7 +8,7 @@ $(function () {
   });
 
   $('#chords_toggle').click(function (e) {
-    let enableChords = $(e.target).prop('checked');
+    var enableChords = $(e.target).prop('checked');
     if(enableChords) {
       viewWithChords();
       return;
@@ -21,36 +21,36 @@ $(function () {
     viewNumbers();
   });
 
-  let viewNumbers = function () {
+  var viewNumbers = function () {
     updateChordSheet({ numbers: true }, $(this).data("song-url"));
     updatePrintLink("numbers");
     hideToNumbersButton();
     showToChordsButton();
   }
 
-  let viewNoChords = function () {
+  var viewNoChords = function () {
     updatePrintLink("none");
     updateChordSheet({ disable_chords: true }, $(this).data("song-url"));
   }
 
-  let viewWithChords = function () {
-    let newKey = $('#transpose_to option:selected').val();
-    let transposeUrl = $("#transpose_to").data('song-url');
+  var viewWithChords = function () {
+    var newKey = $('#transpose_to option:selected').val();
+    var transposeUrl = $("#transpose_to").data('song-url');
     updateChordSheet({ new_key : newKey }, transposeUrl);
     updatePrintLink(newKey);
     showToNumbersButton();
     hideToChordsButton();
   }
 
-  let updateChordSheet = function (options, songUrl) {
+  var updateChordSheet = function (options, songUrl) {
     $.getJSON(songUrl, options, function (song) {
       $('.chord-sheet').html(song.chord_sheet);
     });
   }
 
-  let updatePrintLink = function (newKey) {
-    let param = {}
-    let $button = $('#print-btn');
+  var updatePrintLink = function (newKey) {
+    var param = {}
+    var $button = $('#print-btn');
     if (newKey === "none") {
       param = { disable_chords: true }
     } else if (newKey === "numbers") {
@@ -59,23 +59,23 @@ $(function () {
       param = { new_key: newKey }
     }
     // using $.param to generate query param in order to escape sharps
-    let printUrl = $button.data('print-url') + "?" + $.param(param)
+    var printUrl = $button.data('print-url') + "?" + $.param(param)
     $button.attr('href', printUrl);
   }
 
-  let showToNumbersButton = function () {
+  var showToNumbersButton = function () {
     $('.to-numbers-container').show();
   }
 
-  let showToChordsButton = function () {
+  var showToChordsButton = function () {
     $('.to-chords-container').show();
   }
 
-  let hideToNumbersButton = function () {
+  var hideToNumbersButton = function () {
     $('.to-numbers-container').hide();
   }
 
-  let hideToChordsButton = function () {
+  var hideToChordsButton = function () {
     $('.to-chords-container').hide();
   }
 });
