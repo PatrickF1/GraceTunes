@@ -135,6 +135,9 @@ GEM
     omniauth-oauth2 (1.7.3)
       oauth2 (>= 1.4, < 3)
       omniauth (>= 1.9, < 3)
+    omniauth-rails_csrf_protection (1.0.1)
+      actionpack (>= 4.2)
+      omniauth (~> 2.0)
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
@@ -293,6 +296,7 @@ DEPENDENCIES
   minitest-ci
   normalize-rails
   omniauth-google-oauth2
+  omniauth-rails_csrf_protection
   pg
   pg_search
   rack-timeout
