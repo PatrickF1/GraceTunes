@@ -15,6 +15,7 @@ gem 'js_cookie_rails' # Use js-cookie to handle cookies
 gem 'json-schema' # validate JSON data structures using json-schema
 gem 'normalize-rails'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'pg_search'
 gem 'rack-timeout'
