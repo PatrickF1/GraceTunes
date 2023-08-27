@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
     # Gmail emails are case insensitive so okay to lowercase it
     email = user_info["email"].downcase.strip
     # Temporary hack to make new domain emails map to old user roles
-    email = email.gsub('gpmail.org', 'acts2.network')
+    email = email.gsub('acts2.network', 'gpmail.org')
 
     # if person has never signed into GraceTunes before, create a user for him
     if !@current_user = User.find_by_email(email)
