@@ -3,13 +3,13 @@ require_relative 'application_controller_test.rb'
 
 class SessionsControllerTest < ApplicationControllerTest
 
-  test "the sign-in button should mention using your Gpmail account" do
+  test "the sign-in button should mention using your A2N account" do
     sign_out
     get :new
     assert_select(
       '.sign-in_button',
-      /Gpmail/i,
-      "No mention of Gpmail made on the sign in button."
+      /Acts/i,
+      "No mention of Acts 2 Network made on the sign in button."
     )
   end
 
