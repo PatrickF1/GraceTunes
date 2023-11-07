@@ -1,0 +1,20 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true # run 'bundle install' and cache installed gems
+      - name: Run minitest
+        run: bundle exec rails test
+        # timeout in case tests get stuck
+        timeout-minutes: 5
