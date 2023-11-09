@@ -190,7 +190,7 @@ ten_thousand_reasons:
   updated_at: "2019-07-01 00:00:01"
   name: "10,000 Reasons"
   artist: "Matt Redman"
-  key: "G"
+  key: "C"
   tempo: "Medium"
   standard_scan: "I. C1. V1. C1. V2. C1. V3. C1. C2. T."
   chord_sheet: |
@@ -434,13 +434,13 @@ hands_to_the_heaven:
     Come like a burning flame
     Have your way, Have your way
 
-all_my_hope:
+all_things_new:
   created_at: "2018-01-01 00:00:00"
   updated_at: "2018-01-01 00:00:00"
-  name: "All My Hope"
-  artist: "Hillsong Worship"
-  key: "C"
-  tempo: "Medium"
+  name: "All Things New"
+  artist: "Elevation Worship"
+  key: "Db"
+  tempo: "Slow"
   chord_sheet: |
     VERSE 1:
     Gb                        Db
