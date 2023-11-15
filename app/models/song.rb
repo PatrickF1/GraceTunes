@@ -1,7 +1,7 @@
 class Song < ApplicationRecord
   audited except: [:lyrics, :view_count]
 
-  include PgSearch
+  include PgSearch::Model
   pg_search_scope(
     :search_by_keywords,
     against: {name: 'A', artist: 'B', lyrics: 'C'},

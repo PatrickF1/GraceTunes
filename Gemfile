@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.2'
+ruby File.read(".ruby-version").strip
 
 gem 'audited', '~> 5.3'
 gem 'autoprefixer-rails'
@@ -19,9 +19,9 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'pg_search'
 gem 'rack-timeout'
-gem 'rails', '5.1.7'
-gem 'sass-rails', '~> 5.0' # Use SCSS for stylesheets
-gem 'sdoc', '~> 0.4.0', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
+gem 'rails', '6.1.7'
+gem 'sass-rails', '>= 5' # Use SCSS for stylesheets
+gem 'sdoc', '~> 2.6.1', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
 gem 'unicorn' # Use Unicorn as the app server
@@ -44,6 +44,6 @@ group :development do
   gem 'rubocop', require: false
   gem 'spring' # keeps the app running in the background so you don't need to keep rebotting it
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console', '>= 4.2.0'
   gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make sure of it
 end
