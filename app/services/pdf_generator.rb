@@ -5,7 +5,7 @@ module PdfGenerator
       left: 1
     }
   }
-  FOLDER_PATH = "app/assets/pdf";
+  FOLDER_PATH = "app/assets/pdf"
 
   def self.generate_pdf(song)
     pdf = WickedPdf.new.pdf_from_string(generate_html(song), PDF_CONFIG)

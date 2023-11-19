@@ -26,9 +26,6 @@ gem 'turbolinks'
 gem "terser", "~> 1.1"
 gem 'unicorn' # Use Unicorn as the app server
 gem 'will_paginate'
-gem 'wicked_pdf'
-gem 'render_anywhere'
-gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere to get a debugger console
@@ -46,4 +43,7 @@ group :development do
   gem 'spring-watcher-listen'
   gem 'web-console', '>= 4.2.0'
   gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make sure of it
+  # these gems are used to export all songs as PDF in a rake task that is run locally
+  gem 'wicked_pdf'
+  gem 'wkhtmltopdf-binary'
 end
