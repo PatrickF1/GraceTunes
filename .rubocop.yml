@@ -1,5 +1,6 @@
-Rails:
-  Enabled: true
+require:
+  - rubocop-rails
+
 Style/Documentation:
   Enabled: false
 Style/FrozenStringLiteralComment:
@@ -8,5 +9,5 @@ Style/StringLiterals:
   Enabled: false
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100

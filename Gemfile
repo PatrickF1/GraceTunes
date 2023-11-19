@@ -39,6 +39,7 @@ end
 group :development do
   gem 'listen'
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
   gem 'spring' # keeps the app running in the background so you don't need to keep rebotting it
   gem 'spring-watcher-listen'
   gem 'web-console', '>= 4.2.0'
