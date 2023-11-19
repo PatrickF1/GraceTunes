@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   get 'songs/:id/history', to: 'audits#song_history', as: 'song_history'
 
   get "about", to: "general#about"
-  get "feedback", to: "general#feedback"
   get "request_song", to: "general#request_song"
 
   # Authentication
