@@ -12,8 +12,8 @@ Rails.application.routes.draw do
 
   get 'songs/:id/history', to: 'audits#song_history', as: 'song_history'
 
-  get "feedback", to: "contact#feedback"
-  get "request_song", to: "contact#request_song"
+  get "about", to: "general#about"
+  get "request_song", to: "general#request_song"
 
   # Authentication
   get 'auth/:provider/callback', to: 'sessions#create'

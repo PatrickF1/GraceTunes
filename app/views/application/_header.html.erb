@@ -5,6 +5,11 @@
     <% end %>
     <div class="header_links">
       <div class="header_link">
+        <%= link_to about_path, { method: :get, class: "#{set_active_if_path(about_path)}" } do %>
+          <i class="fa fa-book"></i>About
+        <% end %>
+      </div>
+      <div class="header_link">
         <%= link_to songs_path, { method: :get, class: "#{set_active_if_path(songs_path)}" } do %>
           <i class="fa fa-search"></i>Search
         <% end %>
@@ -24,11 +29,6 @@
       <div class="header_link">
         <%= link_to request_song_path, { method: :get, class: "#{set_active_if_path(request_song_path)}" } do %>
           <i class="fa fa-music"></i>Request Song
-        <% end %>
-      </div>
-      <div class="header_link">
-        <%= link_to feedback_path, class: "#{set_active_if_path(feedback_path)}" do %>
-          <i class="fa fa-comment"></i>Feedback
         <% end %>
       </div>
     </div>
