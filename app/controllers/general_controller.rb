@@ -1,10 +1,12 @@
 class GeneralController < ApplicationController
+
+  def about
+  end
+
   def feedback
   end
 
   def request_song
   end
 
-  def about
-  end
 end
