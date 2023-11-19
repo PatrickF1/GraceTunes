@@ -1,9 +1,15 @@
+# This rake task originally existed to facilitate importing a Dropbox folder full of Word docs of songs into the GT DB.
+# There was an intermediate step in which people hand-converted the Word docs into YAML files, which is much easier to
+# work with programmatically.
+# Later, we had a need to give non members access to GT but giving select students access was hard, so instead we settled
+# on bulk exporting the DB as PDFs into a folder, which could then be shared with students.
+#
 def song_name_from_path(song_path)
   "#{File.basename(song_path, '.yaml')}"
 end
 
 # serialize songs from .yaml files at directory_path and save into database if flag is set
-def serialize_song_sheets(directory_path, save_into_db=false)
+def serialize_chord_sheets(directory_path, save_into_db=false)
   # make sure directory_path is a valid directory
   abort("Must specify directory_path.") if directory_path.nil?
   abort("\"#{directory_path}\" does not exist or is not a directory.") unless File.directory?(directory_path)
@@ -39,20 +45,20 @@ def serialize_song_sheets(directory_path, save_into_db=false)
   puts "Done #{save_into_db ? "saving" : "validating"} songs. There were #{num_invalid_songs} invalid songs."
 end
 
-namespace :song_sheets do
+namespace :chord_sheets do
 
-  desc 'Validate the format of all the yaml song sheets in a directory.'
+  desc 'Validate the format of all the yaml chord sheets in a directory.'
   task :validate, [:directory_path] => :environment do |t, args|
-    serialize_song_sheets(args.directory_path, false)
+    serialize_chord_sheets(args.directory_path, false)
   end
 
-  desc 'Load all the yaml song sheets in a directory into the database.'
+  desc 'Load all the YAML chord sheets in a directory into the database.'
   task :save_into_db, [:directory_path] => :environment do |t, args|
-    serialize_song_sheets(args.directory_path, true)
+    serialize_chord_sheets(args.directory_path, true)
   end
 
-  desc 'Generate song sheets for all songs in the database.'
-  task :generate_song_sheets => :environment do |t, args|
+  desc 'Generate chord sheets for all songs in the database.'
+  task :generate_chord_sheets => :environment do |t, args|
     Song.find_each do |song|
       PdfGenerator.generate_pdf(song)
     end
