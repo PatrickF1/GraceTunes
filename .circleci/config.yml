@@ -3,9 +3,9 @@ jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     parallelism: 1 # run three instances of this job in parallel
     docker: # run the steps with Docker
-    # ...with this image as the primary container; this is where all `steps` will run
-    # -node means the image includes node, which is a Rails dependency
-      - image: cimg/ruby:3.1.1-node
+      # ...with this image as the primary container; this is where all `steps` will run
+      # -node means the image includes node, which is a Rails dependency
+      - image: cimg/ruby:3.2.2-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
