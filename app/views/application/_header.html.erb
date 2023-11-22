@@ -14,15 +14,15 @@
           <i class="fa fa-search"></i>Search
         <% end %>
       </div>
+      <div class="header_link">
+        <%= link_to audits_path, { method: :get, class: "#{set_active_if_path(audits_path)}" } do %>
+          <i class="fa fa-history"></i>Recent Changes
+        <% end %>
+      </div>
       <% if current_user.can_edit? %>
         <div class="header_link">
           <%= link_to new_song_path, { method: :get, class: "#{set_active_if_path(new_song_path)}" } do %>
             <i class="fa fa-music"></i>Upload Song
-          <% end %>
-        </div>
-        <div class="header_link">
-          <%= link_to audits_path, { method: :get, class: "#{set_active_if_path(audits_path)}" } do %>
-            <i class="fa fa-history"></i>Recent Changes
           <% end %>
         </div>
       <% end %>
