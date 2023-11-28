@@ -47,6 +47,16 @@
 
   <div class="form-group required <%= highlight_if_errors(@song, :chord_sheet) %>">
     <%= f.label :chord_sheet, "Chord Sheet" %>
+    <br>
+    <i>*IMPORTANT*<br>
+      Please upload chord sheet with chords represented in numbers instead of letters.<br>
+      e.g. "I" as in capitalized roman number 1 instead of C<br>
+      Major chords: I II III IV V VI VII<br>
+      Minor chords: i ii iii iv v vi vii<br>
+      Suspended chords: Is IIs etc.<br>
+      Major 7 chords: I7 II7 etc.<br>
+      Diminished chords: Idim IIdim etc.<br>
+    </i>
     <%= f.text_area :chord_sheet, class: 'fixed-width form-control' %>
   </div>
 
