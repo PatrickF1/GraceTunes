@@ -19,7 +19,7 @@ class SongsController < ApplicationController
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
         # store total number of songs after filtering
-        recordsFiltered = songs.length
+        records_filtered = songs.length
 
         # reorder
         songs = case params[:sort]
@@ -44,7 +44,7 @@ class SongsController < ApplicationController
         song_data = {
           draw: params[:draw].to_i,
           recordsTotal: Song.count,
-          recordsFiltered: recordsFiltered,
+          recordsFiltered: records_filtered,
           data: songs
         }
 
