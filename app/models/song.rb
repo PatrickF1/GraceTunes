@@ -4,11 +4,9 @@ class Song < ApplicationRecord
   include PgSearch::Model
   pg_search_scope(
     :search_by_keywords,
-    against: {name: 'A', artist: 'B', lyrics: 'C'},
-    using: {tsearch: {any_word: false, prefix: true}}
+    against: { name: 'A', artist: 'B', lyrics: 'C' },
+    using: { tsearch: { any_word: false, prefix: true } }
   )
-
-  has_many :tags, through: :song_tags
 
   VALID_KEYS = Music::MAJOR_KEYS
   VALID_TEMPOS = %w(Fast Medium Slow)
@@ -29,8 +27,8 @@ class Song < ApplicationRecord
   validates :chord_sheet, presence: true
   validate :line_length, if: -> (song) { song.chord_sheet.present? }
   validates :spotify_uri,
-    format: { with: /\Aspotify:track:\w{22}\z/ },
-    if: -> (song) { song.spotify_uri.present? }
+            format: { with: /\Aspotify:track:\w{22}\z/ },
+            if: -> (song) { song.spotify_uri.present? }
   validates :bpm, numericality: {
     allow_nil: true,
     only_integer: true,
