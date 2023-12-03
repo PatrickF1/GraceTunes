@@ -7,10 +7,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user
 
-  # returns the current user if signed in or nil if not signed in
+  # Return a user constructed from the fields stored in the session, nil if one cannot be constructed
   def current_user
-    return nil if session[:user_email].nil?
-    @current_user ||= User.find_by_email(session[:user_email])
+    return @current_user if @current_user
+
+    if [:user_email, :name, :role].all? { |field| session.key?(field) }
+      @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
+    end
   end
 
   def require_sign_in
