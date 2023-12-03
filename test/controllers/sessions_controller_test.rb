@@ -38,7 +38,7 @@ class SessionsControllerTest < ApplicationControllerTest
     get :create, params: { provider: "google_oauth2" }
     assert_equal(email, session[:user_email], "Email not set correctly in the session")
     assert_not_nil(session[:name], "Name not set in the session")
-    assert_includes(Role.VALID_ROLES, session[:role], "A valid role was not set in the session")
+    assert_includes(Role::VALID_ROLES, session[:role], "A valid role was not set in the session")
 
     assert_redirected_to songs_path
   end
