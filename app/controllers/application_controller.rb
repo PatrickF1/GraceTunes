@@ -9,10 +9,10 @@ class ApplicationController < ActionController::Base
 
   # Return a user constructed from the fields stored in the session, nil if one cannot be constructed
   def current_user
-    unless [:user_email, :name, :role].all? { |field| session.key?(field) }
-      return nil
+    return @current_user if @current_user
+    if [:user_email, :name, :role].all? { |field| session.key?(field) }
+        @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
     end
-    @current_user ||= User.new(email: session[:user_email], name: session[:name], role: session[:role])
   end
 
   def require_sign_in

@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
     end
 
     session[:user_email] = @current_user.email
-    session[:full_name] = @current_user.name
+    session[:name] = @current_user.name
     session[:role] = @current_user.role
     redirect_to songs_path
   end
