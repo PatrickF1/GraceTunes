@@ -3,3 +3,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     hd: "acts2.network" # restrict logins to only Acts2Network accounts
   }
 end
+OmniAuth.config.allowed_request_methods = [:post, :get]

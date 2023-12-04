@@ -11,8 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2023_12_03_181007) do
-  create_schema "heroku_ext"
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
   enable_extension "pg_stat_statements"
@@ -32,7 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_181007) do
     t.string "comment"
     t.string "remote_address"
     t.string "request_uuid"
-    t.datetime "created_at", precision: nil
+    t.datetime "created_at"
     t.index ["associated_type", "associated_id"], name: "associated_index"
     t.index ["auditable_type", "auditable_id"], name: "auditable_index"
     t.index ["created_at"], name: "index_audits_on_created_at"
@@ -41,8 +39,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_181007) do
   end
 
   create_table "praise_sets", force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "owner_email", null: false
     t.string "event_name", null: false
     t.date "event_date", null: false
@@ -54,13 +52,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_181007) do
   end
 
   create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
-    t.datetime "deleted_at", precision: nil, null: false
+    t.datetime "deleted_at", null: false
     t.string "name", null: false
   end
 
   create_table "songs", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name", null: false
     t.string "key", null: false
     t.string "tempo", null: false
@@ -75,13 +73,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_181007) do
     t.index ["lyrics"], name: "index_songs_on_lyrics", using: :gin
     t.index ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true
     t.index ["name"], name: "index_songs_on_name", using: :gin
-    t.check_constraint "bpm >= 1 AND bpm <= 1000", name: "is_valid_bpm"
-    t.check_constraint "view_count >= 0", name: "view_count_gte_zero"
   end
 
   create_table "users", primary_key: "email", id: :string, force: :cascade do |t|
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name", null: false
     t.string "role", null: false
   end

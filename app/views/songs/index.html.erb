@@ -1,6 +1,10 @@
 <% set_page_title "Songs" %>
 
+
 <div class="index-page">
+<%= content_tag(:div, "", id:"app", data: {
+  controller: "react"
+})%>
   <div class="container">
     <div class="row">
       <div class="center-block">
@@ -65,4 +69,3 @@
   </div>
 </div>
 
-<%= javascript_include_tag 'songs/index' %>

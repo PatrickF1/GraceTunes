@@ -48,3 +48,7 @@ group :development do
   gem 'wicked_pdf'
   gem 'wkhtmltopdf-binary'
 end
+
+gem "jsbundling-rails", "~> 1.2"
+gem 'stimulus-rails'
+
