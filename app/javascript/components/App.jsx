@@ -4,6 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Navigate, Route, RouterP
 import RootLayout from '../layouts/RootLayout'
 import AboutPage from '../pages/AboutPage';
 import RequestSongPage from '../pages/RequestSongPage';
+import UploadSongPage from '../pages/UploadSongPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -12,7 +13,7 @@ const router = createBrowserRouter(
       <Route path="/songs" element={<div>songs</div>} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/history" element={<div>Audit page</div>} />
-      <Route path="/songs/new" element={<div>Upload song</div>} />
+      <Route path="/songs/new" element={<UploadSongPage />} />
       <Route path="/request-song" element={<RequestSongPage />} />
     </Route>
   )

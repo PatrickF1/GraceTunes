@@ -1,14 +1,13 @@
 .form {
-  max-width: 492px;
-
+  max-width: 600px;
   textarea {
     height: 300px;
     font-size: 19px;
     resize: vertical;
   }
+}
 
-  .form-group.required label:after {
-    content:"*";
-    color:red;
-  }
+.upload-song-page {
+  margin-top: 30px;
+  padding: 0 30px;
 }
