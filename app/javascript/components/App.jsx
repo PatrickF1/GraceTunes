@@ -5,6 +5,7 @@ import RootLayout from '../layouts/RootLayout'
 import AboutPage from '../pages/AboutPage';
 import RequestSongPage from '../pages/RequestSongPage';
 import UploadSongPage from '../pages/UploadSongPage';
+import HistoryPage from '../pages/HistoryPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -12,7 +13,7 @@ const router = createBrowserRouter(
       <Route exact path="/" element={<Navigate to="/songs" />} />
       <Route path="/songs" element={<div>songs</div>} />
       <Route path="/about" element={<AboutPage />} />
-      <Route path="/history" element={<div>Audit page</div>} />
+      <Route path="/history" element={<HistoryPage />} />
       <Route path="/songs/new" element={<UploadSongPage />} />
       <Route path="/request-song" element={<RequestSongPage />} />
     </Route>
