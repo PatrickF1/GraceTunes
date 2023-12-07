@@ -13,7 +13,7 @@ function AuditItem({ item }) {
         containerStyle = 'bg-danger'
     }
     return (
-        <Box sx={{ padding: "0 15px" }} className={containerStyle}>
+        <Box sx={{ padding: "15px" }} className={containerStyle}>
             <h4>
                 <strong>
                     {item.is_deleted
@@ -26,7 +26,7 @@ function AuditItem({ item }) {
             <br />
 
             {item.audited_changes.map((change, index) =>
-                <Accordion className="panel panel-default">
+                <Accordion key={index} className="panel panel-default">
                     <AccordionSummary
                         className="panel-heading"
                         expandIcon={<ExpandMore />}

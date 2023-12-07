@@ -1,4 +1,4 @@
-import { Chip, Divider, Pagination, Stack } from '@mui/material'
+import { Box, Chip, Divider, Pagination, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import FilterButton from './FilterButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -47,11 +47,11 @@ function RecentChangesList() {
                     {activeFilter && <Chip label="Clear" variant="outlined" color="error" icon={<CloseIcon />} onClick={() => handleFilterClick('')} />}
                 </Stack>
             </Stack>
-            {data.map(auditItem =>
-                <>
+            {data.map((auditItem, index) =>
+                <Box key={index}>
                     <AuditItem item={auditItem} />
                     <Divider />
-                </>
+                </Box>
             )}
 
         </Stack>
