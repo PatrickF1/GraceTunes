@@ -24,18 +24,22 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to sign_in_path
   end
 
-  test "signing in should set user_email in the session and redirect to songs index" do
+  test "signing in should set user fields in the session and redirect to songs index" do
     sign_out
+    name = "A2N Member"
     email = "gpmember@gpmail.org"
     # manually mock the info that would be sent by Google servers
     request.env['omniauth.auth'] = {
       "info" => {
-          "name" => "Gracepoint Member",
-          "email" => email
+        "name" => name,
+        "email" => email
       }
     }
     get :create, params: { provider: "google_oauth2" }
-    assert_equal(email, session[:user_email] , "Email not set correctly in the session")
+    assert_equal(email, session[:user_email], "Email not set correctly in the session")
+    assert_not_nil(session[:name], "Name not set in the session")
+    assert_includes(Role::VALID_ROLES, session[:role], "A valid role was not set in the session")
+
     assert_redirected_to songs_path
   end
 
@@ -49,8 +53,8 @@ class SessionsControllerTest < ApplicationControllerTest
     email = "never-before-seen@gpmail.org"
     request.env['omniauth.auth'] = {
       "info" => {
-          "name" => "Never before seen",
-          "email" => email
+        "name" => "Never before seen",
+        "email" => email
       }
     }
     assert_difference('User.count', 1, "No new user was created") do
