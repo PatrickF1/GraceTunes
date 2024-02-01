@@ -12,6 +12,7 @@ min_threads_count = ENV.fetch("RAILS_MIN_THREADS", 3)
 threads min_threads_count, max_threads_count
 
 env = ENV.fetch("RAILS_ENV", "development")
+
 # Specifies that the worker count should equal the number of processors in production.
 # Workers are forked webserver processes. If using threads and workers together
 # the concurrency of the application would be max `threads` * `workers`.
