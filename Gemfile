@@ -24,7 +24,7 @@ gem 'sass-rails', '>= 5' # Use SCSS for stylesheets
 gem 'sdoc', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
 gem 'turbolinks'
 gem "terser", "~> 1.1"
-gem 'unicorn' # Use Unicorn as the app server
+gem 'puma'
 gem 'will_paginate'
 
 group :development, :test do
