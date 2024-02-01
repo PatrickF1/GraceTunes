@@ -7,8 +7,9 @@
 # Any libraries that use thread pools should be configured to match
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
+# Heroku recommends setting min = max because apps can consume all the resources on its dyno
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS", 3)
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS", max_threads_count)
 threads min_threads_count, max_threads_count
 
 env = ENV.fetch("RAILS_ENV", "development")
@@ -18,7 +19,9 @@ env = ENV.fetch("RAILS_ENV", "development")
 # the concurrency of the application would be max `threads` * `workers`.
 if env == "production"
   require "concurrent-ruby"
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", Concurrent.physical_processor_count))
+  # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#process-count-value
+  # recommends 1-2 workers for standard-1x dynos
+  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 2))
   workers worker_count if worker_count > 1
 end
 
