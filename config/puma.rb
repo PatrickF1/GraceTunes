@@ -14,14 +14,12 @@ threads min_threads_count, max_threads_count
 
 env = ENV.fetch("RAILS_ENV", "development")
 
-# Specifies that the worker count should equal the number of processors in production.
 # Workers are forked webserver processes. If using threads and workers together
 # the concurrency of the application would be max `threads` * `workers`.
 if env == "production"
-  require "concurrent-ruby"
   # Normally, one worker per CPU core makes sense. But our dynos are multi-tenant
   # so Heroku recommends 1-2 workers
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 1))
+  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 2))
   workers worker_count if worker_count > 1
 end
 
