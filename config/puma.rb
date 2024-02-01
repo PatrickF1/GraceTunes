@@ -14,21 +14,13 @@ threads min_threads_count, max_threads_count
 
 env = ENV.fetch("RAILS_ENV", "development")
 
-# Workers are forked webserver processes. If using threads and workers together
-# the concurrency of the application would be max `threads` * `workers`.
-if env == "production"
-  # Normally, one worker per CPU core makes sense. But our dynos are multi-tenant
-  # so Heroku recommends 1-2 workers
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 2))
-  workers worker_count if worker_count > 1
-end
-
 # Specifies the `environment` that Puma will run in.
 environment env
 
-# Specifies the `worker_timeout` threshold that Puma will use to wait before
-# terminating a worker in development environments.
-worker_timeout 3600 if env == "development"
+# If a worker hasn't checked in with master after worker_timeout, it will be restarted
+# to protect against a hung or dead process. Set this value very high in development to
+# avoid interfering with debugging
+worker_timeout 9999 if env == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 port ENV.fetch("PORT", 3000)
