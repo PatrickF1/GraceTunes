@@ -19,9 +19,9 @@ env = ENV.fetch("RAILS_ENV", "development")
 # the concurrency of the application would be max `threads` * `workers`.
 if env == "production"
   require "concurrent-ruby"
-  # https://devcenter.heroku.com/articles/deploying-rails-applications-with-the-puma-web-server#process-count-value
-  # recommends 1-2 workers for standard-1x dynos
-  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 2))
+  # Normally, one worker per CPU core makes sense. But our dynos are multi-tenant
+  # so Heroku recommends 1-2 workers
+  worker_count = Integer(ENV.fetch("WEB_CONCURRENCY", 1))
   workers worker_count if worker_count > 1
 end
 
