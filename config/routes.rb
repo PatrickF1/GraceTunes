@@ -22,12 +22,9 @@ Rails.application.routes.draw do
   get 'signin', to: 'sessions#new', as: 'sign_in'
 
   namespace :api, defaults: {format: :json} do
-    namespace :v1 do
+    scope :v1 do
       resources :songs
     end
-    # Mobile API
-    get 'songs', to: 'songs#recently_updated'
-    get 'songs/deleted', to: 'songs#deleted'
   end
 
   # API for react front end
