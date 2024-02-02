@@ -40,7 +40,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # set necessary environment variables
-  ENV['API_USERNAME'] = 'username'
-  ENV['API_PASSWORD'] = 'password'
+  # disable auditing so tests run faster
+  Song.auditing_enabled = false
+
+>>>>>>> 9135619 (revert 2a938cc)
 end
