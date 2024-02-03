@@ -1,4 +1,10 @@
 class API::SongsController < API::APIController
+  def show
+    @song = Song.find(params[:id])
+    Song.increment_counter(:view_count, @song.id, touch: false)
+    render json: @song
+  end
+
   def create
     @song = Song.new(song_params)
     if @song.save
