@@ -4,6 +4,15 @@ class API::SongsController < API::APIController
   def show
     @song = Song.find_by(id: params[:id])
     if @song
+      case params[:format]
+      when 'numbers'
+        Formatter.format_song_nashville(@song)
+      when 'no_chords'
+        Formatter.format_song_no_chords(@song)
+      else
+        Transposer.transpose_song(@song, params[:key]) if params[:key].present?
+      end
+
       Song.increment_counter(:view_count, @song.id, touch: false)
       render json: @song
     else
@@ -68,7 +77,7 @@ class API::SongsController < API::APIController
     if @song.nil?
       render json: API::APIError.new("No song with id #{params[:id]}")
     elsif @song.destroy
-      render plain: "Song #{params[:id]} successfully deleted!"
+      head :no_content
     else
       logger.info "#{current_user} tried to delete #{@song} but failed"
       render json: API::APIError.new("Unable to delete song #{params[:id]}"), status: :internal_server_error
