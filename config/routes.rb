@@ -26,7 +26,4 @@ Rails.application.routes.draw do
       resources :songs
     end
   end
-
-  # API for react front end
-  #
 end

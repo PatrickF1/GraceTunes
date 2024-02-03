@@ -1,6 +1,5 @@
 God_be_praised:
   created_at: "2019-07-01 00:00:03"
-  updated_at: "2019-07-01 00:00:03"
   name: "God Be Praised"
   artist: "Elevation Worship"
   key: "D"
@@ -86,7 +85,6 @@ God_be_praised:
 
 forever_reign:
   created_at: "2019-07-01 00:00:02"
-  updated_at: "2019-07-01 00:00:02"
   name: "Forever Reign"
   artist: "Hillsong Worship"
   key: "C"
@@ -187,7 +185,6 @@ forever_reign:
 
 ten_thousand_reasons:
   created_at: "2019-07-01 00:00:01"
-  updated_at: "2019-07-01 00:00:01"
   name: "10,000 Reasons"
   artist: "Matt Redman"
   key: "G"
@@ -253,7 +250,6 @@ ten_thousand_reasons:
 
 glorious_day:
   created_at: "2018-01-01 00:00:00"
-  updated_at: "2018-01-01 00:00:00"
   name: "Glorious Day (Living He Loved Me)"
   artist: "Casting Crowns"
   key: "B"
@@ -362,7 +358,6 @@ glorious_day:
 
 hands_to_the_heaven:
   created_at: "2018-01-01 00:00:00"
-  updated_at: "2018-01-01 00:00:00"
   name: "Hands To The Heaven"
   artist: "Kari Jobe"
   key: "F#"
@@ -436,7 +431,6 @@ hands_to_the_heaven:
 
 all_my_hope:
   created_at: "2018-01-01 00:00:00"
-  updated_at: "2018-01-01 00:00:00"
   name: "All My Hope"
   artist: "Hillsong Worship"
   key: "C"
@@ -511,7 +505,6 @@ all_my_hope:
 
 when_i_think_about_the_lord:
   created_at: "2018-01-01 00:00:00"
-  updated_at: "2018-01-01 00:00:00"
   name: "When I Think About the Lord"
   artist: "Shane and Shane"
   key: "G"
