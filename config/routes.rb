@@ -21,9 +21,4 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy', as: 'sign_out'
   get 'signin', to: 'sessions#new', as: 'sign_in'
 
-  # Mobile API
-  namespace :api, defaults: {format: :json} do
-    get 'songs', to: 'songs#recently_updated'
-    get 'songs/deleted', to: 'songs#deleted'
-  end
 end
