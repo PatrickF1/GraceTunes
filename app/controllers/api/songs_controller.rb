@@ -9,6 +9,15 @@ class API::SongsController < API::APIController
     end
   end
 
+  def update
+    @song = Song.find(params[:id])
+    if @song.update(song_params)
+      render json: @song
+    else
+      render json: API::APIError.new("Couldn't edit song", @song.errors), status: :bad_request
+    end
+  end
+
   private
 
   def song_params
