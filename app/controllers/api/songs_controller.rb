@@ -2,7 +2,7 @@ class API::SongsController < API::APIController
   SONGS_PER_PAGE_DEFAULT = 100
 
   def show
-    @song = Song.find_by_id(params[:id])
+    @song = Song.find_by(id: params[:id])
     if @song
       Song.increment_counter(:view_count, @song.id, touch: false)
       render json: @song
@@ -59,6 +59,18 @@ class API::SongsController < API::APIController
       render json: @song
     else
       render json: API::APIError.new("Couldn't edit song", @song.errors), status: :bad_request
+    end
+  end
+
+  def destroy
+    @song = Song.find_by(id: params[:id])
+    if @song.nil?
+      render json: API::APIError.new("No song with id #{params[:id]}")
+    elsif @song.destroy
+      render plain: "Song #{params[:id]} successfully deleted!"
+    else
+      logger.info "#{current_user} tried to delete #{@song} but failed"
+      render json: API::APIError.new("Unable to delete song #{params[:id]}"), status: :internal_server_error
     end
   end
 
