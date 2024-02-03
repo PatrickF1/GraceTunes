@@ -2,9 +2,13 @@ class API::SongsController < API::APIController
   SONGS_PER_PAGE_DEFAULT = 100
 
   def show
-    @song = Song.find(params[:id])
-    Song.increment_counter(:view_count, @song.id, touch: false)
-    render json: @song
+    @song = Song.find_by_id(params[:id])
+    if @song
+      Song.increment_counter(:view_count, @song.id, touch: false)
+      render json: @song
+    else
+      render json: API::APIError.new("Song not found")
+    end
   end
 
   def index
