@@ -42,6 +42,4 @@ Rails.application.configure do
 
   # disable auditing so tests run faster
   Song.auditing_enabled = false
-
->>>>>>> 9135619 (revert 2a938cc)
 end
