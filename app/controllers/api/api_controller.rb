@@ -4,7 +4,7 @@ class API::APIController < ActionController::API
   helper_method :current_user
 
   def require_sign_in
-    head :forbidden
+    head :forbidden if @current_user.nil?
   end
 
   def current_user
