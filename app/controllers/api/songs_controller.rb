@@ -20,12 +20,13 @@ class API::SongsController < API::APIController
     end
   end
 
+  # Query params are single letter to save space, since HTTP urls
   def index
     songs = Song
 
     # perform searching and filtering
     # pg_search requires search_by_keywords to be to run first before anything else
-    songs = songs.search_by_keywords(params[:keywords]) if params[:keywords].present?
+    songs = songs.search_by_keywords(params[:query]) if params[:query].present?
     songs = songs.where(key: params[:key]) if params[:key].present?
     songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
     songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
@@ -33,9 +34,9 @@ class API::SongsController < API::APIController
     # reorder
     songs =
       case params[:sort]
-      when 'Newest First'
+      when 'created_at'
         songs.reorder(created_at: :desc)
-      when 'Most Popular First'
+      when 'views'
         songs.reorder(view_count: :desc)
       else
         # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
@@ -43,12 +44,10 @@ class API::SongsController < API::APIController
       end
 
     # paginate
-    if params[:start].present?
-      page_size = (params[:length] || SONGS_PER_PAGE_DEFAULT).to_i
-      page_num = (params[:start].to_i / page_size.to_i) + 1
+    page_num = params[:page_num]&.to_i || 1
+    page_size = [params[:page_size]&.to_i || SONGS_PER_PAGE_DEFAULT, 500].min
 
-      songs = songs.paginate(page: page_num, per_page: page_size)
-    end
+    songs = songs.paginate(page: page_num, per_page: page_size)
 
     render json: songs
   end
