@@ -33,7 +33,7 @@ class API::SongsController < API::APIController
 
     # reorder
     songs =
-      case params[:sort]
+      case params[:sort_by]
       when 'created_at'
         songs.reorder(created_at: :desc)
       when 'views'
@@ -49,7 +49,7 @@ class API::SongsController < API::APIController
 
     songs = songs.paginate(page: page_num, per_page: page_size)
 
-    render json: songs
+    render json: API::PaginatedResult.new(songs, 1, 1)
   end
 
   def create
