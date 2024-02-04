@@ -24,6 +24,10 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     scope :v1 do
       resources :songs
+
+      namespace :audits do
+        resources :songs
+      end
     end
   end
 end

@@ -30,6 +30,7 @@ class API::SongsController < API::APIController
     songs = songs.where(key: params[:key]) if params[:key].present?
     songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
     songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
+    matching_songs_count = songs.length
 
     # reorder
     songs =
@@ -49,7 +50,7 @@ class API::SongsController < API::APIController
 
     songs = songs.paginate(page: page_num, per_page: page_size)
 
-    render json: API::PaginatedResult.new(songs, 1, 1)
+    render json: API::PaginatedResult.new(songs, matching_songs_count, Song.count)
   end
 
   def create
