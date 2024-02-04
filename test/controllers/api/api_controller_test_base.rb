@@ -2,7 +2,6 @@ require "test_helper"
 class API::ControllerTestBase < ActionController::TestCase
   def setup
     # make sure user is signed in to access the app and can read
-    puts "this is working"
     load_user_into_session(users(:reader))
   end
 

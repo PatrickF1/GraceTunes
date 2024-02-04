@@ -8,7 +8,8 @@ class API::SongsControllerTest < API::ControllerTestBase
   end
 
   test "index should respect page_size param" do
-    get :index, params: {page_size: 1}
+    get :index, params: {page_size: 3}
     assert_response :ok
+    @response.parsed_body["data"].size == 3
   end
 end
