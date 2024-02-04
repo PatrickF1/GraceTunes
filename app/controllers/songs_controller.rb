@@ -16,10 +16,10 @@ class SongsController < ApplicationController
         songs = songs.search_by_keywords(search_value) if search_value.present?
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
+        # get number of matching songs post filtering
+        records_filtered = songs.count
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
-        # store total number of songs after filtering
-        records_filtered = songs.length
 
         # reorder
         songs = case params[:sort]
