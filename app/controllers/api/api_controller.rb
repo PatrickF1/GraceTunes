@@ -5,7 +5,7 @@ class API::APIController < ActionController::API
   DEFAULT_PAGE_SIZE = 100
 
   def require_sign_in
-    head :forbidden if @current_user.nil?
+    head :forbidden if current_user.nil?
   end
 
   def current_user
