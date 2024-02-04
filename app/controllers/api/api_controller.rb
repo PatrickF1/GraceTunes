@@ -1,4 +1,8 @@
 class API::APIController < ActionController::API
+  include ActionController::RequestForgeryProtection
+  # Prevent CSRF attacks by raising an exception.
+  protect_from_forgery with: :null_session
+
   before_action :require_sign_in
 
   def require_sign_in
