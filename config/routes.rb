@@ -25,8 +25,12 @@ Rails.application.routes.draw do
     scope :v1 do
       resources :songs
 
-      namespace :audits do
-        resources :songs
+      scope :audits do
+        scope :songs do
+          get ':id', to: "audits#song_history"
+          get '', to: 'audits#songs_history_index'
+        end
+
       end
     end
   end

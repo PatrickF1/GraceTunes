@@ -1,5 +1,4 @@
 class API::SongsController < API::APIController
-  SONGS_PER_PAGE_DEFAULT = 100
 
   def show
     song = Song.find_by(id: params[:id])
@@ -47,7 +46,7 @@ class API::SongsController < API::APIController
 
     # paginate
     page_num = params[:page_num]&.to_i || 1
-    page_size = [params[:page_size]&.to_i || SONGS_PER_PAGE_DEFAULT, 500].min
+    page_size = [params[:page_size]&.to_i || DEFAULT_PAGE_SIZE, 500].min
 
     songs = songs.paginate(page: page_num, per_page: page_size)
 
@@ -84,6 +83,8 @@ class API::SongsController < API::APIController
       render json: API::APIError.new("Unable to delete song #{params[:id]}"), status: :internal_server_error
     end
   end
+
+
 
   private
 

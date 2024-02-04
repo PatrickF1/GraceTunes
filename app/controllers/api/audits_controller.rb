@@ -1,18 +1,19 @@
-class API::Audits::SongsController < API::APIController
-  DEFAULT_PAGE_SIZE = 20
+# frozen_string_literal: true
 
-  def show
+class API::AuditsController < API::APIController
+  def song_history
     song = Song.find(params[:id])
     # only show 100 most recent audits to prevent DOS
     update_audits = song.audits.updates.limit(100)
     render json: update_audits
   end
 
-  def index
+  def songs_history_index
     page_num = params[:page_num] ? params[:page_num].to_i : 1
     page_size = params[:page_size] ? params[:page_size].to_i : DEFAULT_PAGE_SIZE
 
-    audits = Audited.audit_class.order(created_at: :desc)
+    # https://github.com/collectiveidea/audited/issues/261 says to use Audited::Audit to access all audits
+    audits = Audited::Audit.order(created_at: :desc)
     audits = audits.where(action: params[:action]) if AuditAction.valid_action?(params[:action])
     matching_audits_count = audits.size
 
@@ -31,6 +32,6 @@ class API::Audits::SongsController < API::APIController
 
     end
 
-    render json: API::PaginatedResult(audits_info_list, matching_audits_count, Audited.audit_class.count)
+    render json: API::PaginatedResult.new(audits_info_list, matching_audits_count, Audited.audit_class.count)
   end
 end
