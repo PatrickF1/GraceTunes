@@ -2,19 +2,19 @@ class API::SongsController < API::APIController
   SONGS_PER_PAGE_DEFAULT = 100
 
   def show
-    @song = Song.find_by(id: params[:id])
-    if @song
+    song = Song.find_by(id: params[:id])
+    if song
       case params[:format]
       when 'numbers'
-        Formatter.format_song_nashville(@song)
+        Formatter.format_song_nashville(song)
       when 'no_chords'
-        Formatter.format_song_no_chords(@song)
+        Formatter.format_song_no_chords(song)
       else
-        Transposer.transpose_song(@song, params[:key]) if params[:key].present?
+        Transposer.transpose_song(song, params[:key]) if params[:key].present?
       end
 
-      Song.increment_counter(:view_count, @song.id, touch: false)
-      render json: @song
+      Song.increment_counter(:view_count, song.id, touch: false)
+      render json: song
     else
       render json: API::APIError.new("Song not found")
     end
@@ -54,32 +54,32 @@ class API::SongsController < API::APIController
   end
 
   def create
-    @song = Song.new(song_params)
-    if @song.save
-      flash[:success] = "#{@song.name} successfully created!"
-      render json: @song
+    song = Song.new(song_params)
+    if song.save
+      flash[:success] = "#{song.name} successfully created!"
+      render json: song
     else
-      render json: API::APIError.new("Couldn't save song", @song.errors), status: :bad_request
+      render json: API::APIError.new("Couldn't save song", song.errors), status: :bad_request
     end
   end
 
   def update
-    @song = Song.find(params[:id])
-    if @song.update(song_params)
-      render json: @song
+    song = Song.find(params[:id])
+    if song.update(song_params)
+      render json: song
     else
-      render json: API::APIError.new("Couldn't edit song", @song.errors), status: :bad_request
+      render json: API::APIError.new("Couldn't edit song", song.errors), status: :bad_request
     end
   end
 
   def destroy
-    @song = Song.find_by(id: params[:id])
-    if @song.nil?
+    song = Song.find_by(id: params[:id])
+    if song.nil?
       render json: API::APIError.new("No song with id #{params[:id]}")
-    elsif @song.destroy
+    elsif song.destroy
       head :no_content
     else
-      logger.info "#{current_user} tried to delete #{@song} but failed"
+      logger.info "#{current_user} tried to delete #{song} but failed"
       render json: API::APIError.new("Unable to delete song #{params[:id]}"), status: :internal_server_error
     end
   end
