@@ -1,5 +1,8 @@
 class API::SongsController < API::APIController
 
+  before_action :require_edit_privileges, only: [:create, :update]
+  before_action :require_delete_privileges, only: [:destroy]
+
   def show
     song = Song.find_by(id: params[:id])
     if song
