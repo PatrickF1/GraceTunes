@@ -1,9 +1,6 @@
 class API::APIController < ActionController::API
-  include ActionController::RequestForgeryProtection
-  # Prevent CSRF attacks by raising an exception.
-  protect_from_forgery with: :null_session
 
-  # before_action :require_sign_in
+  before_action :require_sign_in
 
   DEFAULT_PAGE_SIZE = 100
 
