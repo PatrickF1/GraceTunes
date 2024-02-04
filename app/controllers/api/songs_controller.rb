@@ -18,7 +18,7 @@ class API::SongsController < API::APIController
       Song.increment_counter(:view_count, song.id, touch: false)
       render json: song
     else
-      render json: API::APIError.new("Song not found")
+      head :not_found
     end
   end
 
@@ -62,7 +62,7 @@ class API::SongsController < API::APIController
       flash[:success] = "#{song.name} successfully created!"
       render json: song
     else
-      render json: API::APIError.new("Couldn't save song", song.errors), status: :bad_request
+      render_bad_form_errors("Couldn't save song", song.errors)
     end
   end
 
@@ -71,25 +71,29 @@ class API::SongsController < API::APIController
     if song.update(song_params)
       render json: song
     else
-      render json: API::APIError.new("Couldn't edit song", song.errors), status: :bad_request
+      render_bad_form_errors("Couldn't edit song", song.errors)
     end
   end
 
   def destroy
     song = Song.find_by(id: params[:id])
     if song.nil?
-      render json: API::APIError.new("No song with id #{params[:id]}")
+      head :not_found
     elsif song.destroy
       head :no_content
     else
       logger.info "#{current_user} tried to delete #{song} but failed"
-      render json: API::APIError.new("Unable to delete song #{params[:id]}"), status: :internal_server_error
+      head :internal_server_error
     end
   end
 
 
 
   private
+
+  def render_bad_form_errors(message, errors)
+    render json: API::APIError.new(message, errors), status: :bad_request
+  end
 
   def song_params
     params.require(:song)
