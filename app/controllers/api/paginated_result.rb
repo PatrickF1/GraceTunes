@@ -1,7 +1,7 @@
 class API::PaginatedResult
-  def initialize(data, filtered_count, total_count)
+  def initialize(data, matching_count, total_count)
     @data = data
-    @filtered_count = filtered_count
+    @matching_count = matching_count
     @total_count = total_count
   end
 end

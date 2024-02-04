@@ -14,6 +14,8 @@ class API::Audits::SongsController < API::APIController
 
     audits = Audited.audit_class.order(created_at: :desc)
     audits = audits.where(action: params[:action]) if AuditAction.valid_action?(params[:action])
+    matching_audits_count = audits.size
+
     audits = audits.paginate(page: page_num, per_page: page_size)
 
     audits_info_list = audits.map do |audit|
@@ -29,6 +31,6 @@ class API::Audits::SongsController < API::APIController
 
     end
 
-    render json: audits_info_list
+    render json: API::PaginatedResult(audits_info_list, matching_audits_count, Audited.audit_class.count)
   end
 end

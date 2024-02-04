@@ -30,7 +30,6 @@ class API::SongsController < API::APIController
     songs = songs.where(key: params[:key]) if params[:key].present?
     songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
     songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
-    matching_songs_count = songs.length
 
     # reorder
     songs =
@@ -43,6 +42,8 @@ class API::SongsController < API::APIController
         # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
         songs.order(name: :asc)
       end
+
+    matching_songs_count = songs.size
 
     # paginate
     page_num = params[:page_num]&.to_i || 1
