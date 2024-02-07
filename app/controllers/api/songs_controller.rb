@@ -5,21 +5,21 @@ class API::SongsController < API::APIController
 
   def show
     song = Song.find_by(id: params[:id])
-    if song
-      case params[:format]
-      when 'numbers'
-        Formatter.format_song_nashville(song)
-      when 'no_chords'
-        Formatter.format_song_no_chords(song)
-      else
-        Transposer.transpose_song(song, params[:key]) if params[:key].present?
-      end
+    head(:not_found) unless song
 
-      Song.increment_counter(:view_count, song.id, touch: false)
-      render json: song
+    case params[:format]
+    when 'numbers'
+      Formatter.format_song_nashville(song)
+    when 'no_chords'
+      Formatter.format_song_no_chords(song)
     else
-      head :not_found
+      Transposer.transpose_song(song, params[:key]) if params[:key].present?
     end
+
+    Song.increment_counter(:view_count, song.id, touch: false)
+
+    render json: song
+
   end
 
   # Query params are single letter to save space, since HTTP urls
