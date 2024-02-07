@@ -76,14 +76,10 @@ class API::SongsController < API::APIController
   end
 
   def destroy
-    song = Song.find_by(id: params[:id])
-    if song.nil?
+    if Song.destroy_by(id: params[:id]).zero?
       head :not_found
-    elsif song.destroy
-      head :no_content
     else
-      logger.info "#{current_user} tried to delete #{song} but failed"
-      head :internal_server_error
+      head :no_content
     end
   end
 
