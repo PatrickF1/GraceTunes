@@ -53,7 +53,7 @@ class API::SongsController < API::APIController
 
     songs = songs.paginate(page: page_num, per_page: page_size)
 
-    render json: API::PaginatedResult.new(songs, matching_songs_count, Song.count)
+    render_paginated_result(songs, matching_songs_count, Song.count)
   end
 
   def create
@@ -62,7 +62,7 @@ class API::SongsController < API::APIController
       flash[:success] = "#{song.name} successfully created!"
       render json: song
     else
-      render_bad_form_errors("Couldn't save song", song.errors)
+      render_form_errors("Couldn't save song", song.errors)
     end
   end
 
@@ -71,7 +71,7 @@ class API::SongsController < API::APIController
     if song.update(song_params)
       render json: song
     else
-      render_bad_form_errors("Couldn't edit song", song.errors)
+      render_form_errors("Couldn't edit song", song.errors)
     end
   end
 
@@ -90,10 +90,6 @@ class API::SongsController < API::APIController
 
 
   private
-
-  def render_bad_form_errors(message, errors)
-    render json: API::APIError.new(message, errors), status: :bad_request
-  end
 
   def song_params
     params.require(:song)

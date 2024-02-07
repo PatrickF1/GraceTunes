@@ -32,6 +32,6 @@ class API::AuditsController < API::APIController
 
     end
 
-    render json: API::PaginatedResult.new(audits_info_list, matching_audits_count, Audited.audit_class.count)
+    render_paginated_result(audits_info_list, matching_audits_count, Audited.audit_class.count)
   end
 end
