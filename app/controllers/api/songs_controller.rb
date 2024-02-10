@@ -76,7 +76,7 @@ class API::SongsController < API::APIController
   end
 
   def destroy
-    if Song.destroy_by(id: params[:id]).zero?
+    if Song.destroy_by(id: params[:id]).empty?
       head :not_found
     else
       head :no_content
