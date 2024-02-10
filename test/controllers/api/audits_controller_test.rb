@@ -5,39 +5,36 @@ class API::AuditsControllerTest < API::ControllerTestBase
   # more maintainable than creating them through audit fixtures
   def setup
     super()
-    begin
-      Song.create!(
-        name: "A new creation",
-        artist: "Artist",
-        key: "G",
-        tempo: "Medium",
-        standard_scan: "V1.",
-        chord_sheet: "G      Am     G/B       C"
-      )
+    Song.create!(
+      name: "A new creation",
+      artist: "Artist",
+      key: "G",
+      tempo: "Medium",
+      standard_scan: "V1.",
+      chord_sheet: "G      Am     G/B       C"
+    )
 
-      forever_reign_song = songs(:forever_reign)
-      forever_reign_song.key = "G"
-      forever_reign_song.chord_sheet = "C D E F G A B"
-      forever_reign_song.save!
+    forever_reign_song = songs(:forever_reign)
+    forever_reign_song.key = "G"
+    forever_reign_song.chord_sheet = "C D E F G A B"
+    forever_reign_song.save!
 
-      forever_reign_song.standard_scan = "V2. V1."
-      forever_reign_song.save!
+    forever_reign_song.standard_scan = "V2. V1."
+    forever_reign_song.save!
 
-      song_to_delete = Song.new(
-        name: "A Song to Delete",
-        key: "G",
-        tempo: "Fast",
-        chord_sheet: "C    C  D   A  B"
-      )
-      song_to_delete.save!
+    song_to_delete = Song.new(
+      name: "A Song to Delete",
+      key: "G",
+      tempo: "Fast",
+      chord_sheet: "C    C  D   A  B"
+    )
+    song_to_delete.save!
 
-      song_to_delete.key = "A"
-      song_to_delete.save!
+    song_to_delete.key = "A"
+    song_to_delete.save!
 
-      song_to_delete.destroy!
-    ensure
-      Song.auditing_enabled = false
-    end
+    song_to_delete.destroy!
+
   end
 
   test "song_history should retrieve the audits for the specified song" do
