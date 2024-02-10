@@ -41,7 +41,7 @@ class API::AuditsControllerTest < API::ControllerTestBase
     id = songs(:forever_reign)
     get :song_history, params: { id: id }
 
-    assert @response.parsed_body.map{ |audit| audit['action']} == [AuditAction::UPDATE, AuditAction::UPDATE]
+    assert @response.parsed_body.map{ |audit| audit['action'] } == [AuditAction::UPDATE, AuditAction::UPDATE]
   end
 
   test "songs_history_index should retrieve audits in reverse order" do
@@ -60,7 +60,6 @@ class API::AuditsControllerTest < API::ControllerTestBase
 
     audits = @response.parsed_body['data'].map { |audit_tuple| audit_tuple[0] }
     audits.each do |audit|
-      puts audit
       assert_equal(AuditAction::CREATE, audit['action'], "retrieved a non-create audit")
     end
     assert_equal(2, audits.length, "did not load all and only create audits")
