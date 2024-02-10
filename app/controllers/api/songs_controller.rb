@@ -5,14 +5,17 @@ class API::SongsController < API::APIController
 
   def show
     song = Song.find_by(id: params[:id])
-    head(:not_found) unless song
+    return head(:not_found) unless song
 
-    case params[:format]
-    when 'numbers'
+    puts "params: #{params}"
+    case params[:sheet_format]
+    when 'nashville'
       Formatter.format_song_nashville(song)
+      puts 'no_chords'
     when 'no_chords'
       Formatter.format_song_no_chords(song)
     else
+      puts 'transposing'
       Transposer.transpose_song(song, params[:key]) if params[:key].present?
     end
 
