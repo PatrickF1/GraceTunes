@@ -21,4 +21,17 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy', as: 'sign_out'
   get 'signin', to: 'sessions#new', as: 'sign_in'
 
+  namespace :api, defaults: {format: :json} do
+    scope :v1 do
+      resources :songs
+
+      scope :audits do
+        scope :songs do
+          get ':id', to: "audits#song_history"
+          get '', to: 'audits#songs_history_index'
+        end
+
+      end
+    end
+  end
 end
