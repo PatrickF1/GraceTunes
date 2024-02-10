@@ -1,13 +1,19 @@
 require:
   - rubocop-rails
 
+Rails/SkipsModelValidations:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
 Style/Documentation:
   Enabled: false
-Style/FrozenStringLiteralComment:
-  Enabled: false
 Style/StringLiterals:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false
+Style/WordArray:
   Enabled: false
 Layout/SpaceInsideHashLiteralBraces:
   Enabled: false
 Layout/LineLength:
-  Max: 100
+  Max: 110
