@@ -34,9 +34,9 @@ class API::SongsController < API::APIController
     songs = songs.where(key: params[:key]) if params[:key].present?
     songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
     songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
-
     matching_songs_count = songs.size
-    # reorder
+
+    # perform sorting
     songs =
       case params[:sort_by]
       when 'created_at'
@@ -50,10 +50,9 @@ class API::SongsController < API::APIController
         songs
       end
 
-    # paginate
+    # perform paginate
     page_num = params[:page_num]&.to_i || 1
     page_size = [params[:page_size]&.to_i || DEFAULT_PAGE_SIZE, 500].min
-
     songs = songs.paginate(page: page_num, per_page: page_size)
 
     render_paginated_result(songs, matching_songs_count, Song.count)
