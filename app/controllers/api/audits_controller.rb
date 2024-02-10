@@ -14,7 +14,7 @@ class API::AuditsController < API::APIController
 
     # https://github.com/collectiveidea/audited/issues/261 says to use Audited::Audit to access all audits
     audits = Audited::Audit.order(created_at: :desc)
-    audits = audits.where(action: params[:action]) if AuditAction.valid_action?(params[:action])
+    audits = audits.where(action: params[:action_type]) if AuditAction.valid_action?(params[:action_type])
     matching_audits_count = audits.size
 
     audits = audits.paginate(page: page_num, per_page: page_size)
