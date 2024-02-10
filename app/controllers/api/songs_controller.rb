@@ -25,7 +25,6 @@ class API::SongsController < API::APIController
 
   end
 
-  # Query params are single letter to save space, since HTTP urls
   def index
     songs = Song
 
