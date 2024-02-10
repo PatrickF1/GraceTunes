@@ -37,11 +37,23 @@ class API::AuditsControllerTest < API::ControllerTestBase
 
   end
 
+  test "song_history requires user to be signed in" do
+    sign_out
+    get :song_history, params: { id: 1 }
+    assert_response :forbidden
+  end
+
   test "song_history should retrieve the audits for the specified song" do
     id = songs(:forever_reign)
     get :song_history, params: { id: id }
 
     assert @response.parsed_body.map{ |audit| audit['action'] } == [AuditAction::UPDATE, AuditAction::UPDATE]
+  end
+
+  test "songs_history_index requires user to be signed in" do
+    sign_out
+    get :songs_history_index
+    assert_response :forbidden
   end
 
   test "songs_history_index should retrieve audits in reverse order" do
