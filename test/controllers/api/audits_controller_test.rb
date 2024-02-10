@@ -5,6 +5,7 @@ class API::AuditsControllerTest < API::ControllerTestBase
   # more maintainable than creating them through audit fixtures
   def setup
     super()
+    Song.auditing_enabled = true
     Song.create!(
       name: "A new creation",
       artist: "Artist",
@@ -34,7 +35,6 @@ class API::AuditsControllerTest < API::ControllerTestBase
     song_to_delete.save!
 
     song_to_delete.destroy!
-
   end
 
   test "song_history requires user to be signed in" do
