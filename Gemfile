@@ -28,22 +28,22 @@ gem 'turbolinks'
 gem 'will_paginate'
 
 group :development, :test do
-  gem 'byebug' # Call 'byebug' anywhere to get a debugger console
+  gem "debug", ">= 1.0.0" # Call 'debugger' anywhere to get a debugger console
 end
 
 group :test do
-  gem 'rails-controller-testing'
   gem 'minitest-ci'
+  gem 'rails-controller-testing'
 end
 
 group :development do
   gem 'listen'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
+  gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make use of it
   gem 'spring' # keeps the app running in the background so you don't need to keep rebooting it
   gem 'spring-watcher-listen'
   gem 'web-console', '>= 4.2.0'
-  gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make use of it
   # these gems are used to export all songs as PDF in a rake task that is run locally
   gem 'wicked_pdf'
   gem 'wkhtmltopdf-binary'
