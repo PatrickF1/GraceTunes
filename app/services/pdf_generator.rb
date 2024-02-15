@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module PdfGenerator
   PDF_CONFIG = {
     zoom: 6,
     margin: {
       left: 1
     }
-  }
+  }.freeze
   FOLDER_PATH = "app/assets/pdf"
 
   def self.generate_pdf(song)
@@ -16,11 +18,10 @@ module PdfGenerator
   end
 
   def self.generate_html(song)
-    ApplicationController.render( template: "songs/print", layout: "pdf_layout", assigns: { song: song})
+    ApplicationController.render(template: "songs/print", layout: "pdf_layout", assigns: { song:})
   end
 
   def self.get_file_name(song_name)
-    song_name + '.pdf'
+    "#{song_name}.pdf"
   end
-
 end
