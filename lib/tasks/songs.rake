@@ -56,7 +56,7 @@ def fill_in_spotify_uris(token)
       response = http.request(request)
       if response.instance_of? Net::HTTPOK
         resp_body_json = JSON.parse(response.body)
-        if matching_track = resp_body_json.dig("tracks", "items", 0)
+        if (matching_track = resp_body_json.dig("tracks", "items", 0))
           if matching_track["explicit"]
             puts "! WARNING: explicit Spotify track found for #{song}. Not filling in!"
           else

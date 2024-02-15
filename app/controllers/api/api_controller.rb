@@ -20,9 +20,9 @@ class API::APIController < ActionController::API
   def current_user
     return @current_user if @current_user
 
-    if [:user_email, :name, :role].all? { |field| session.key?(field) }
-      @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
-    end
+    return unless [:user_email, :name, :role].all? { |field| session.key?(field) }
+
+    @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
   end
 
   def render_form_errors(message, errors)

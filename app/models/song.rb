@@ -69,12 +69,12 @@ class Song < ApplicationRecord
       end.join(" ")
     end
 
-    if chord_sheet
-      self.chord_sheet = chord_sheet.split("\n").map do |line|
-        line = line.upcase if Parser.header_line?(line)
-        line.rstrip
-      end.join("\n")
-    end
+    return unless chord_sheet
+
+    self.chord_sheet = chord_sheet.split("\n").map do |line|
+      line = line.upcase if Parser.header_line?(line)
+      line.rstrip
+    end.join("\n")
   end
 
   def extract_lyrics
@@ -88,12 +88,12 @@ class Song < ApplicationRecord
     chord_sheet.split("\n").each_with_index do |line, i|
       line_numbers << (i + 1) if line.rstrip.length > MAX_LINE_LENGTH
     end
-    if line_numbers.any?
-      line_pluralized = 'line'.pluralize(line_numbers.length)
-      line_numbers_string = line_numbers.join(',')
-      errors.add(:chord_sheet,
-                 "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
-    end
+    return unless line_numbers.any?
+
+    line_pluralized = 'line'.pluralize(line_numbers.length)
+    line_numbers_string = line_numbers.join(',')
+    errors.add(:chord_sheet,
+               "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
   end
 
   def record_deletion

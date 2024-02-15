@@ -67,7 +67,7 @@ class SongsControllerTest < ApplicationControllerTest
   test "index should be able to combine filters, sorting, and search values" do
     rare_keyword = 'ymmv'
     key = "Db"
-    tempo =  "Fast"
+    tempo = "Fast"
 
     # create songs to be expected in results
     Song.create!(
