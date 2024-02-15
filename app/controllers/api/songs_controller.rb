@@ -1,5 +1,6 @@
-class API::SongsController < API::APIController
+# frozen_string_literal: true
 
+class API::SongsController < API::APIController
   before_action :require_edit_privileges, only: [:create, :update]
   before_action :require_delete_privileges, only: [:destroy]
 
@@ -19,7 +20,6 @@ class API::SongsController < API::APIController
     Song.increment_counter(:view_count, song.id, touch: false)
 
     render json: song
-
   end
 
   def index
@@ -81,8 +81,6 @@ class API::SongsController < API::APIController
       head :no_content
     end
   end
-
-
 
   private
 

@@ -29,7 +29,6 @@ class API::AuditsController < API::APIController
         song_name = song.name
       end
       [audit, song_name, is_deleted]
-
     end
 
     render_paginated_result(audits_info_list, matching_audits_count, Audited.audit_class.count)

@@ -1,5 +1,6 @@
-class SongsController < ApplicationController
+# frozen_string_literal: true
 
+class SongsController < ApplicationController
   before_action :require_edit_privileges, only: [:new, :create, :edit, :update]
   before_action :require_delete_privileges, only: [:destroy]
 
@@ -20,17 +21,16 @@ class SongsController < ApplicationController
         records_filtered = songs.count
         songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
 
-
         # reorder
         songs = case params[:sort]
-        when 'Newest First'
-          songs.reorder(created_at: :desc)
-        when 'Most Popular First'
-          songs.reorder(view_count: :desc)
-        else
-          # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
-          songs.order(name: :asc)
-        end
+                when 'Newest First'
+                  songs.reorder(created_at: :desc)
+                when 'Most Popular First'
+                  songs.reorder(view_count: :desc)
+                else
+                  # does nothing if search_by_keywords was run, in which case songs are already ordered by relevance
+                  songs.order(name: :asc)
+                end
 
         # paginate
         if params[:start].present?
@@ -67,7 +67,7 @@ class SongsController < ApplicationController
       Formatter.format_song_nashville(@song)
     end
 
-    @has_been_edited = @song.audits.updates.count > 0
+    @has_been_edited = @song.audits.updates.count.positive?
 
     respond_to do |format|
       format.html do
@@ -132,8 +132,9 @@ class SongsController < ApplicationController
   end
 
   private
+
   def song_params
     params.require(:song)
-      .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri)
+          .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri)
   end
 end

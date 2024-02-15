@@ -1,5 +1,6 @@
-class API::APIController < ActionController::API
+# frozen_string_literal: true
 
+class API::APIController < ActionController::API
   before_action :require_sign_in
 
   DEFAULT_PAGE_SIZE = 100
@@ -25,10 +26,10 @@ class API::APIController < ActionController::API
   end
 
   def render_form_errors(message, errors)
-    render json: {message: message, errors: errors}, status: :bad_request
+    render json: {message:, errors:}, status: :bad_request
   end
 
   def render_paginated_result(data, matching_count, total_count)
-    render json: {data: data, matching_count: matching_count, total_count: total_count}
+    render json: {data:, matching_count:, total_count:}
   end
 end
