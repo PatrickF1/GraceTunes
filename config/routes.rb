@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: redirect('/songs')
@@ -30,7 +32,6 @@ Rails.application.routes.draw do
           get ':id', to: "audits#song_history"
           get '', to: 'audits#songs_history_index'
         end
-
       end
     end
   end

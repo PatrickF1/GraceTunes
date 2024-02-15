@@ -1,29 +1,29 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'json'
 
 # Turns off record_timestamps temporarily so that the updated_at field
 # will not be touched. Preserves current order of songs.
 def defragment_ids
-  begin
-    ActiveRecord::Base.record_timestamps = false
-    current_id = 1
-    # find_each retrives songs in order of "id ASC"
-    Song.find_each do |song|
-      song.id = current_id
-      song.save!
-      current_id += 1
-    end
-  ensure
-    ActiveRecord::Base.record_timestamps = true
+  ActiveRecord::Base.record_timestamps = false
+  current_id = 1
+  # find_each retrives songs in order of "id ASC"
+  Song.find_each do |song|
+    song.id = current_id
+    song.save!
+    current_id += 1
   end
+ensure
+  ActiveRecord::Base.record_timestamps = true
 end
 
 # generates a request to this API endpoint
 # https://developer.spotify.com/web-api/search-item/
 def generate_spotify_search_request(song, token)
-  q_query_param = %Q(track:"#{song.name}")
+  q_query_param = %(track:"#{song.name}")
   if song.artist.present?
-    q_query_param << %Q(+artist:"#{song.artist}")
+    q_query_param << %(+artist:"#{song.artist}")
   else
     puts "! WARNING: no artist provided for #{song}. Spotify may return an invalid song."
   end
@@ -99,37 +99,34 @@ def remove_broken_spotify_uris
 end
 
 # figure out who is running the task so that the changes can be properly audited
-def set_audit_user
+def set_audit_user(&block)
   user = nil
   while user.nil?
     puts "What is your GPmail? (e.g. patrick.fong@gpmail.org)"
-    user = User.find_by_email($stdin.gets.strip)
+    user = User.find_by(email: $stdin.gets.strip)
   end
-  Audited.audit_class.as_user(user) do
-    yield
-  end
+  Audited.audit_class.as_user(user, &block)
 end
 
 namespace :songs do
   desc 'Defragment song ids so that the lowest id starts at 1 and there are no gaps.'
-  task :defrag_ids  => :environment do |t, args|
+  task defrag_ids: :environment do |_t, _args|
     set_audit_user do
-      defragment_ids()
+      defragment_ids
     end
   end
 
   desc "Attempt to fill in blank Spotify URIs."
-  task :fill_in_spotify_uris, [:token] => :environment do |t, args|
+  task :fill_in_spotify_uris, [:token] => :environment do |_t, args|
     set_audit_user do
       fill_in_spotify_uris(args.token)
     end
   end
 
   desc "Find and remove broken Spotify URIs."
-  task :remove_broken_spotify_uris => :environment do |t, args|
+  task remove_broken_spotify_uris: :environment do |_t, _args|
     set_audit_user do
-      remove_broken_spotify_uris()
+      remove_broken_spotify_uris
     end
   end
-
 end

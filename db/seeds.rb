@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Add GraceTunes team to users table with admin privileges so they can access all parts of the app
 User.create(
   email: "patrick.fong@gpmail.org",
