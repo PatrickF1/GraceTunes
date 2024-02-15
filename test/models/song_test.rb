@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class SongTest < ActiveSupport::TestCase
-
   test "should be invalid without a name" do
     song = songs(:God_be_praised)
     song.name = nil
@@ -72,8 +73,8 @@ class SongTest < ActiveSupport::TestCase
     song.standard_scan = "V1 V2 V3"
     song.valid?
     assert_equal(song.standard_scan,
-      "V1. V2. V3.",
-      "The abbreviations in the standard scan are not trailed by a period")
+                 "V1. V2. V3.",
+                 "The abbreviations in the standard scan are not trailed by a period")
   end
 
   test "should be invalid without a chord sheet" do
@@ -154,7 +155,7 @@ class SongTest < ActiveSupport::TestCase
   test "should be valid even if another song shares the same name but not artist" do
     existing_song = songs(:glorious_day)
     new_song = existing_song.dup
-    new_song.artist = new_song.artist + " different"
+    new_song.artist = "#{new_song.artist} different"
     assert new_song.valid?
   end
 
@@ -266,11 +267,9 @@ class SongTest < ActiveSupport::TestCase
 
   # temporarily enable Song auditing
   def execute_with_auditing
-    begin
-      Song.auditing_enabled = true
-      yield
-    ensure
-      Song.auditing_enabled = false
-    end
+    Song.auditing_enabled = true
+    yield
+  ensure
+    Song.auditing_enabled = false
   end
 end

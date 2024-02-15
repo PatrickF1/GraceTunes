@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 class API::ControllerTestBase < ActionController::TestCase
   def setup
@@ -24,5 +26,4 @@ class API::ControllerTestBase < ActionController::TestCase
     session[:name] = user.name
     session[:role] = user.role
   end
-
 end

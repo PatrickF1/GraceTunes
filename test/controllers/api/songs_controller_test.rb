@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 require_relative 'api_controller_test_base'
 class API::SongsControllerTest < API::ControllerTestBase
-
   test "index should require user to be signed in" do
     sign_out
     get :index
@@ -56,6 +57,7 @@ class API::SongsControllerTest < API::ControllerTestBase
   end
 
   private
+
   def decode_songs
     assert_response :ok
     @songs = @response.parsed_body['data'].map do |s|
@@ -67,5 +69,4 @@ class API::SongsControllerTest < API::ControllerTestBase
     assert_response :ok
     @song = Song.new(@response.parsed_body.except('spotify_widget_source'))
   end
-
 end

@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class TransposerTest < ActiveSupport::TestCase
-
   test "transposing basic chords works correctly" do
     assert_equal "G", Transposer.send(:transpose_chord, "G", 0, "C")
     assert_equal "C#", Transposer.send(:transpose_chord, "C#", 0, "C")
@@ -28,5 +29,4 @@ class TransposerTest < ActiveSupport::TestCase
     assert_equal "C(b5)", Transposer.send(:transpose_chord, "D(b5)", -2, "D")
     assert_equal "Bb(b5)", Transposer.send(:transpose_chord, "D(b5)", -4, "D")
   end
-
 end
