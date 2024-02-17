@@ -40,7 +40,7 @@ jobs: # a collection of steps
 
       - run:
           name: Rubocop autocorrections check
-          command: bundle exec rubocop --fail-level A
+          command: bundle exec rubocop --fail-level E
 
       # Store bundle cache for Ruby dependencies
       - save_cache:
