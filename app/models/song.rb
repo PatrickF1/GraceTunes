@@ -78,7 +78,7 @@ class Song < ApplicationRecord
   end
 
   def extract_lyrics
-    lyrics = chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
+    lyrics = chord_sheet.split("\n").select { |line| Parser.lyrics_line?(line) }
     self.lyrics = lyrics.join("\n")
   end
 

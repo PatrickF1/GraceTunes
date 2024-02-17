@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     # if person has never signed into GraceTunes before, create a user for him
     unless (@current_user = User.find_by(email:))
       full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
-      @current_user = User.create(email:, name: full_name, role: Role::READER)
+      @current_user = User.create!(email:, name: full_name, role: Role::READER)
       logger.info "New user created: #{@current_user}"
     end
 

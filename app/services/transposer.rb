@@ -3,10 +3,10 @@
 module Transposer
   def self.transpose_song(song, new_key)
     old_key = song.key
-    old_key_index = Music::CHROMATICS.index(Music::CHROMATICS.detect do |note|
+    old_key_index = Music::CHROMATICS.index(Music::CHROMATICS.find do |note|
                                               note.is_a?(Array) ? note.include?(old_key) : (note == old_key)
                                             end)
-    new_key_index = Music::CHROMATICS.index(Music::CHROMATICS.detect do |note|
+    new_key_index = Music::CHROMATICS.index(Music::CHROMATICS.find do |note|
                                               note.is_a?(Array) ? note.include?(new_key) : (note == new_key)
                                             end)
     half_steps = new_key_index - old_key_index

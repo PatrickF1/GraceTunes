@@ -3,6 +3,10 @@ require:
 
 Rails/SkipsModelValidations:
   Enabled: false
+Rails/SaveBang:
+  Enabled: true
+Style/CollectionMethods:
+  Enabled: true
 Style/ClassAndModuleChildren:
   Enabled: false
 Style/Documentation:

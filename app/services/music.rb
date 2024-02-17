@@ -21,7 +21,7 @@ module Music
   end
 
   def self.get_note_index(note)
-    CHROMATICS.index(CHROMATICS.detect { |n| n.is_a?(Array) ? n.include?(note) : (n == note) })
+    CHROMATICS.index(CHROMATICS.find { |n| n.is_a?(Array) ? n.include?(note) : (n == note) })
   end
 
   def self.get_note_scale_index(note, key)
@@ -99,7 +99,7 @@ module Music
   # { key => scale }
   MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, _index|
     scale = []
-    offset = CHROMATICS.index(CHROMATICS.detect do |note|
+    offset = CHROMATICS.index(CHROMATICS.find do |note|
                                 note.is_a?(Array) ? note.include?(key) : (note == key)
                               end)
     MAJOR_INTERVALS.each_with_index do |increment, interval_index|
