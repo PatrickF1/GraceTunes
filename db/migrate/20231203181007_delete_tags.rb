@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DeleteTags < ActiveRecord::Migration[7.1]
   def change
     drop_table(:song_tags) do |t|

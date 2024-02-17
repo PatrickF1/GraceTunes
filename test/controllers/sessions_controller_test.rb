@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'test_helper'
-require_relative 'application_controller_test.rb'
+require_relative 'application_controller_test'
 
 class SessionsControllerTest < ApplicationControllerTest
-
   test "the sign-in button should mention using your A2N account" do
     sign_out
     get :new

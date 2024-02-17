@@ -1,5 +1,6 @@
-class SessionsController < ApplicationController
+# frozen_string_literal: true
 
+class SessionsController < ApplicationController
   skip_before_action :require_sign_in
 
   def new
@@ -15,9 +16,9 @@ class SessionsController < ApplicationController
     email = email.gsub('acts2.network', 'gpmail.org')
 
     # if person has never signed into GraceTunes before, create a user for him
-    unless (@current_user = User.find_by_email(email))
+    unless (@current_user = User.find_by(email:))
       full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
-      @current_user = User.create(email: email, name: full_name, role: Role::READER)
+      @current_user = User.create!(email:, name: full_name, role: Role::READER)
       logger.info "New user created: #{@current_user}"
     end
 
@@ -34,14 +35,14 @@ class SessionsController < ApplicationController
 
   def error
     logger.info "Error authenticating user: #{params[:message]}"
-    case params[:message]
-    when 'invalid_credentials'
-      flash[:error] = "Invalid credentials: you must sign in with a Acts2Network account."
-    when 'access_denied'
-      flash[:error] = "Access to the account was denied."
-    else
-      flash[:error] = "Something went wrong while authenticating. Please try again."
-    end
+    flash[:error] = case params[:message]
+                    when 'invalid_credentials'
+                      "Invalid credentials: you must sign in with a Acts2Network account."
+                    when 'access_denied'
+                      "Access to the account was denied."
+                    else
+                      "Something went wrong while authenticating. Please try again."
+                    end
     redirect_to sign_in_path
   end
 end

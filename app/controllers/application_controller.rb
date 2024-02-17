@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -11,9 +13,9 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if @current_user
 
-    if [:user_email, :name, :role].all? { |field| session.key?(field) }
-      @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
-    end
+    return unless [:user_email, :name, :role].all? { |field| session.key?(field) }
+
+    @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
   end
 
   def require_sign_in
@@ -29,6 +31,7 @@ class ApplicationController < ActionController::Base
 
   def require_delete_privileges
     return if current_user.can_delete?
+
     flash[:error] = "You don't have deleting privileges."
     redirect_to songs_path
   end

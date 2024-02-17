@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require "test_helper"
-require_relative 'application_controller_test.rb'
+require_relative 'application_controller_test'
 
 class SongsControllerTest < ApplicationControllerTest
-
   # "index" action tests
   test "index should require user to be signed in" do
     sign_out
@@ -54,7 +55,7 @@ class SongsControllerTest < ApplicationControllerTest
     get :index, params: {
       search: { value: "hand" },
       format: :json,
-      xhr: true,
+      xhr: true
     }
 
     songs_data = load_songs
@@ -66,47 +67,47 @@ class SongsControllerTest < ApplicationControllerTest
   test "index should be able to combine filters, sorting, and search values" do
     rare_keyword = 'ymmv'
     key = "Db"
-    tempo =  "Fast"
+    tempo = "Fast"
 
     # create songs to be expected in results
     Song.create!(
       name: "1",
       artist: "A",
-      key: key,
-      tempo: tempo,
+      key:,
+      tempo:,
       chord_sheet: ([rare_keyword] * 5).join(" "),
       view_count: 1
     )
     Song.create!(
       name: "2",
       artist: "A",
-      key: key,
-      tempo: tempo,
+      key:,
+      tempo:,
       chord_sheet: ([rare_keyword] * 2).join(" "),
       view_count: 3
     )
     Song.create!(
       name: "3",
       artist: "A",
-      key: key,
-      tempo: tempo,
+      key:,
+      tempo:,
       chord_sheet: ([rare_keyword] * 8).join(" "),
       view_count: 2
     )
     Song.create!(
       name: "4",
       artist: "A",
-      key: key,
-      tempo: tempo,
+      key:,
+      tempo:,
       chord_sheet: rare_keyword,
-      view_count: 4,
+      view_count: 4
     )
 
     # create songs not to be expected in results
     Song.create!(
       name: "5",
       artist: "A",
-      key: key,
+      key:,
       tempo: "Medium",
       chord_sheet: rare_keyword
     )
@@ -114,24 +115,24 @@ class SongsControllerTest < ApplicationControllerTest
       name: "6",
       artist: "A",
       key: "B",
-      tempo: tempo,
+      tempo:,
       chord_sheet: rare_keyword
     )
     Song.create!(
       name: "7",
       artist: "A",
-      key: key,
-      tempo: tempo,
+      key:,
+      tempo:,
       chord_sheet: "nothing"
     )
 
     get :index, params: {
       search: { value: rare_keyword },
-      tempo: tempo,
-      key: key,
+      tempo:,
+      key:,
       sort: 'Most Popular First',
       format: :json,
-      xhr: :true
+      xhr: true
     }
 
     songs_data = load_songs
@@ -150,7 +151,8 @@ class SongsControllerTest < ApplicationControllerTest
 
   test "show song page should not display the standard scan when it is blank" do
     get :show, params: { id: songs(:glorious_day).id }
-    assert_select ".song-metadata", {text: /Standard Scan:/, count: 0}, "Standard scan should not appear if it is blank"
+    assert_select ".song-metadata", {text: /Standard Scan:/, count: 0},
+                  "Standard scan should not appear if it is blank"
   end
 
   test "visiting the show song page causes the song's view count to increment" do
@@ -190,7 +192,7 @@ class SongsControllerTest < ApplicationControllerTest
     assert_difference('Song.count', 1) do
       post_new_song_form
     end
-    assert_not_nil Song.find_by_name("New Song Just Posted")
+    assert_not_nil Song.find_by(name: "New Song Just Posted")
   end
 
   test "after creating a new song should redirect to its show song page" do
@@ -222,7 +224,7 @@ class SongsControllerTest < ApplicationControllerTest
       id: song.id
     }
 
-    updated_song = Song.find_by_name(new_song_name)
+    updated_song = Song.find_by(name: new_song_name)
     assert_equal updated_song.id, song.id
   end
 
@@ -292,6 +294,7 @@ class SongsControllerTest < ApplicationControllerTest
   end
 
   private
+
   def load_songs
     JSON.parse(@response.body)["data"].map do |s|
       s.delete('relevance')
@@ -311,5 +314,4 @@ class SongsControllerTest < ApplicationControllerTest
       }
     }
   end
-
 end

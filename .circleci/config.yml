@@ -38,6 +38,10 @@ jobs: # a collection of steps
           name: Bundle Install
           command: bundle check || bundle install
 
+      - run:
+          name: Rubocop autocorrections check
+          command: bundle exec rubocop --fail-level W
+
       # Store bundle cache for Ruby dependencies
       - save_cache:
           key: gracetunes-bundle-v2-{{ checksum "Gemfile.lock" }}

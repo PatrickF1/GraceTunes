@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class ApplicationControllerTest < ActionController::TestCase
-
   def setup
     # make sure user is signed in to access the app and can read
     load_user_into_session(users(:reader))

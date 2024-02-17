@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby File.read(".ruby-version").strip
@@ -38,7 +40,7 @@ end
 
 group :development do
   gem 'listen'
-  gem 'rubocop', require: false
+  gem 'rubocop', '>=1.60', require: false # install rubocop but don't load it into app memory
   gem 'rubocop-rails', require: false
   gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make use of it
   gem 'spring' # keeps the app running in the background so you don't need to keep rebooting it

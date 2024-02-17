@@ -1,5 +1,6 @@
-class PraiseSet < ApplicationRecord
+# frozen_string_literal: true
 
+class PraiseSet < ApplicationRecord
   PRAISE_SET_SONG_SCHEMA = {
     type: "array",
     items: {
@@ -13,14 +14,14 @@ class PraiseSet < ApplicationRecord
         }
       }
     }
-  }
+  }.freeze
 
-  belongs_to :owner, :foreign_key => "owner_email", :primary_key => "email", :class_name => "User"
+  belongs_to :owner, foreign_key: "owner_email", primary_key: "email", class_name: "User"
 
   validates :event_name, presence: true
   validates :event_date, presence: true
   validates :owner, presence: true
-  validates_inclusion_of :archived, in: [true, false]
+  validates :archived, inclusion: { in: [true, false] }
   validate :praise_set_songs_integrity
 
   # returns SongDeletionRecords for deleted songs
@@ -29,7 +30,7 @@ class PraiseSet < ApplicationRecord
       song_id = pss["id"]
       if (song = Song.find_by(id: song_id))
         song
-      elsif (record = SongDeletionRecord.find_by_id(song_id))
+      elsif (record = SongDeletionRecord.find_by(id: song_id))
         record
       else
         raise 'Praise set songs references a song that does not and has never existed.'
@@ -48,13 +49,10 @@ class PraiseSet < ApplicationRecord
       # assumes that praise_set_songs conforms to its JSON schema, hence it is in the else block
       praise_set_songs.each do |pss|
         song_id = pss["id"]
-        if !Song.find_by(id: song_id)
-          if !SongDeletionRecord.find_by_id(song_id) # ignore deleted songs
-            errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
-          end
+        if !Song.find_by(id: song_id) && !SongDeletionRecord.find_by(id: song_id) # ignore deleted songs
+          errors.add(:praise_set_songs, "can't reference song id #{song_id}, which does not exist")
         end
       end
     end
   end
-
 end

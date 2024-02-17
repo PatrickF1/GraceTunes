@@ -1,5 +1,6 @@
-class AuditsController < ApplicationController
+# frozen_string_literal: true
 
+class AuditsController < ApplicationController
   DEFAULT_PAGE_SIZE = 20
   private_constant :DEFAULT_PAGE_SIZE
 

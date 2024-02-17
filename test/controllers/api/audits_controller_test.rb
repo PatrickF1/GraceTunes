@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 require_relative 'api_controller_test_base'
 class API::AuditsControllerTest < API::ControllerTestBase
-
   # dynamically generate all the audits data on setup, which should be
   # more maintainable than creating them through audit fixtures
   def setup
@@ -45,9 +46,9 @@ class API::AuditsControllerTest < API::ControllerTestBase
 
   test "song_history should retrieve the audits for the specified song" do
     id = songs(:forever_reign)
-    get :song_history, params: { id: id }
+    get :song_history, params: { id: }
 
-    assert @response.parsed_body.map{ |audit| audit['action'] } == [AuditAction::UPDATE, AuditAction::UPDATE]
+    assert @response.parsed_body.map { |audit| audit['action'] } == [AuditAction::UPDATE, AuditAction::UPDATE]
   end
 
   test "songs_history_index requires user to be signed in" do
@@ -76,5 +77,4 @@ class API::AuditsControllerTest < API::ControllerTestBase
     end
     assert_equal(2, audits.length, "did not load all and only create audits")
   end
-
 end

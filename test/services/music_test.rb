@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class MusicTest < ActiveSupport::TestCase
-
   test "checking if note is flat" do
     assert Music.flat?("Ab")
     assert_not Music.flat?("C")
@@ -73,5 +74,4 @@ class MusicTest < ActiveSupport::TestCase
     assert_equal "A", Music.get_natural("Ab")
     assert_equal "A", Music.get_natural("A")
   end
-
 end

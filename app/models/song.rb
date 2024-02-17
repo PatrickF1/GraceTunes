@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Song < ApplicationRecord
   audited except: [:lyrics, :view_count]
 
@@ -9,7 +11,7 @@ class Song < ApplicationRecord
   )
 
   VALID_KEYS = Music::MAJOR_KEYS
-  VALID_TEMPOS = %w(Fast Medium Slow)
+  VALID_TEMPOS = %w[Fast Medium Slow].freeze
   MAX_LINE_LENGTH = 47
 
   before_validation :normalize
@@ -21,14 +23,14 @@ class Song < ApplicationRecord
     message: "is taken by another song by this artist"
   }
   validates :key, presence: true
-  validates_inclusion_of :key, in: VALID_KEYS, if: -> (song) { song.key.present? }
+  validates :key, inclusion: { in: VALID_KEYS, if: ->(song) { song.key.present? } }
   validates :tempo, presence: true
-  validates_inclusion_of :tempo, in: VALID_TEMPOS, if: -> (song) { song.tempo.present? }
+  validates :tempo, inclusion: { in: VALID_TEMPOS, if: ->(song) { song.tempo.present? } }
   validates :chord_sheet, presence: true
-  validate :line_length, if: -> (song) { song.chord_sheet.present? }
+  validate :line_length, if: ->(song) { song.chord_sheet.present? }
   validates :spotify_uri,
             format: { with: /\Aspotify:track:\w{22}\z/ },
-            if: -> (song) { song.spotify_uri.present? }
+            if: ->(song) { song.spotify_uri.present? }
   validates :bpm, numericality: {
     allow_nil: true,
     only_integer: true,
@@ -67,18 +69,16 @@ class Song < ApplicationRecord
       end.join(" ")
     end
 
-    if chord_sheet
-      self.chord_sheet = chord_sheet.split("\n").map do |line|
-        if Parser.header_line?(line)
-          line = line.upcase
-        end
-        line.rstrip
-      end.join("\n")
-    end
+    return unless chord_sheet
+
+    self.chord_sheet = chord_sheet.split("\n").map do |line|
+      line = line.upcase if Parser.header_line?(line)
+      line.rstrip
+    end.join("\n")
   end
 
   def extract_lyrics
-    lyrics = chord_sheet.split("\n").find_all { |line| Parser.lyrics_line?(line) }
+    lyrics = chord_sheet.split("\n").select { |line| Parser.lyrics_line?(line) }
     self.lyrics = lyrics.join("\n")
   end
 
@@ -86,21 +86,20 @@ class Song < ApplicationRecord
   def line_length
     line_numbers = []
     chord_sheet.split("\n").each_with_index do |line, i|
-      if (line.rstrip.length > MAX_LINE_LENGTH)
-        line_numbers << (i + 1)
-      end
+      line_numbers << (i + 1) if line.rstrip.length > MAX_LINE_LENGTH
     end
-    if line_numbers.any?
-      line_pluralized = 'line'.pluralize(line_numbers.length)
-      line_numbers_string = line_numbers.join(',')
-      errors.add(:chord_sheet, "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
-    end
+    return unless line_numbers.any?
+
+    line_pluralized = 'line'.pluralize(line_numbers.length)
+    line_numbers_string = line_numbers.join(',')
+    errors.add(:chord_sheet,
+               "#{line_pluralized}: #{line_numbers_string} cannot be longer than #{MAX_LINE_LENGTH} characters long")
   end
 
   def record_deletion
     SongDeletionRecord.create!(
-      id: id,
-      name: name
+      id:,
+      name:
     )
   end
 end
