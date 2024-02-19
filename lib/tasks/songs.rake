@@ -102,7 +102,7 @@ end
 def set_audit_user(&block)
   user = nil
   while user.nil?
-    puts "What is your GPmail? (e.g. patrick.fong@gpmail.org)"
+    puts "What is your Acts2 email? (e.g. patrick.fong@acts2.network)"
     user = User.find_by(email: $stdin.gets.strip)
   end
   Audited.audit_class.as_user(user, &block)

@@ -12,8 +12,6 @@ class SessionsController < ApplicationController
     user_info = request.env["omniauth.auth"]["info"]
     # Gmail emails are case insensitive so okay to lowercase it
     email = user_info["email"].downcase.strip
-    # Temporary hack to make new domain emails map to old user roles
-    email = email.gsub('acts2.network', 'gpmail.org')
 
     # if person has never signed into GraceTunes before, create a user for him
     unless (@current_user = User.find_by(email:))
