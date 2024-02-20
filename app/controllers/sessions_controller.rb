@@ -18,7 +18,8 @@ class SessionsController < ApplicationController
       @current_user = User.create!(email:, role: Role::READER)
       logger.info "New user created: #{@current_user}"
     end
-    full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
+
+    full_name = user_info["name"].split('(')[0].strip # remove church plant city extension
 
     cookies[:name] = full_name
     session[:user_email] = @current_user.email
