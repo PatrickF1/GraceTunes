@@ -33,6 +33,11 @@ class UserTest < ActiveSupport::TestCase
     assert_not user_blank_role.valid?, "Was valid with a blank role"
   end
 
+  test "should be invalid if role is invalid" do
+    user_invalid_role = User.new(email: "test@email.com", role: "not a real role")
+    assert_not user_invalid_role.valid?, "Was valid with an invalid role"
+  end
+
   test "email should be normalized" do
     user = User.new(
       email: "manySpaces@end.com    ",

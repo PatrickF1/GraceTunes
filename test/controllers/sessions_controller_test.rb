@@ -20,7 +20,7 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to songs_path
   end
 
-  test "signing in should set authoritative user fields in the session redirect to songs index" do
+  test "signing in should set user fields in the session and redirect to songs index" do
     name = "A2N Member"
     email = "member@acts2.network"
     sign_back_in(name, email)
@@ -33,7 +33,7 @@ class SessionsControllerTest < ApplicationControllerTest
 
   test "signing in should pull the user's role from database when it exists" do
     name = "A2N Member"
-    email = "admin@acts2.network"
+    email = users(:admin).email
     sign_back_in(name, email)
 
     assert_equal(Role::ADMIN, session[:role])
