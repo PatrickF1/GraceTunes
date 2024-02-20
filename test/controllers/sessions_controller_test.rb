@@ -31,14 +31,8 @@ class SessionsControllerTest < ApplicationControllerTest
     sign_out
     name = "A2N Member"
     email = "member@acts2.network"
-    # manually mock the info that would be sent by Google servers
-    request.env['omniauth.auth'] = {
-      "info" => {
-        "name" => name,
-        "email" => email
-      }
-    }
-    get :create, params: { provider: "google_oauth2" }
+    sign_in(name, email)
+
     assert_equal(email, session[:user_email], "Email not set correctly in the session")
     assert_includes(Role::VALID_ROLES, session[:role], "A valid role was not set in the session")
 
@@ -49,14 +43,8 @@ class SessionsControllerTest < ApplicationControllerTest
     sign_out
     name = "A2N Member"
     email = "admin@acts2.network"
-    # manually mock the info that would be sent by Google servers
-    request.env['omniauth.auth'] = {
-      "info" => {
-        "name" => name,
-        "email" => email
-      }
-    }
-    get :create, params: { provider: "google_oauth2" }
+    sign_in(name, email)
+
     assert_equal(Role::ADMIN, session[:role])
   end
 
@@ -64,14 +52,8 @@ class SessionsControllerTest < ApplicationControllerTest
     sign_out
     name = "Patrick Fong (Berk/Sf)"
     email = "member@acts2.network"
-    # manually mock the info that would be sent by Google servers
-    request.env['omniauth.auth'] = {
-      "info" => {
-        "name" => name,
-        "email" => email
-      }
-    }
-    get :create, params: { provider: "google_oauth2" }
+    sign_in(name, email)
+
     assert_equal('Patrick Fong', cookies[:name])
   end
 
@@ -83,14 +65,9 @@ class SessionsControllerTest < ApplicationControllerTest
   test "create should create never-before-seen users as Readers" do
     sign_out
     email = "never-before-seen@acts2.network"
-    request.env['omniauth.auth'] = {
-      "info" => {
-        "name" => "Never before seen",
-        "email" => email
-      }
-    }
+
     assert_difference('User.count', 1, "No new user was created") do
-      get :create, params: { provider: "google_oauth2" }
+      sign_in("Never Seen Before", email)
     end
     assert_equal(Role::READER, User.find(email).role, "New users should have a role of Reader")
   end
@@ -98,5 +75,18 @@ class SessionsControllerTest < ApplicationControllerTest
   test "destroy should clear the user's cookie" do
     get :destroy
     assert_nil(session[:user_email], "Destroy did not clear the user's cookie")
+  end
+
+  private
+
+  def sign_in(name, email)
+    # manually mock the info that would be sent by Google servers
+    request.env['omniauth.auth'] = {
+      "info" => {
+        "name" => name,
+        "email" => email
+      }
+    }
+    get :create, params: { provider: "google_oauth2" }
   end
 end
