@@ -28,9 +28,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    cookies.delete(:name)
-    session.delete(:user_email)
-    session.delete(:role)
+    reset_session
     redirect_to sign_in_path
   end
 

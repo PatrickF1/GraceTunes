@@ -20,13 +20,6 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to songs_path
   end
 
-  test "signing out deletes session info redirects to the sign-in page" do
-    get :destroy
-    assert_nil(session[:user_email])
-    assert_nil(session[:role])
-    assert_redirected_to sign_in_path
-  end
-
   test "signing in should set authoritative user fields in the session redirect to songs index" do
     sign_out
     name = "A2N Member"
@@ -72,9 +65,15 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_equal(Role::READER, User.find(email).role, "New users should have a role of Reader")
   end
 
-  test "destroy should clear the user's cookie" do
+  test "destroy should redirect to the sign-in page" do
     get :destroy
-    assert_nil(session[:user_email], "Destroy did not clear the user's cookie")
+    assert_redirected_to sign_in_path
+  end
+
+  test "destroy should clear the user's session and cookies" do
+    get :destroy
+    assert_empty(session.to_hash, "Destroy did not clear the user's session")
+    assert_empty(cookies.to_hash, "Destroy did not clear the user's cookies")
   end
 
   private
