@@ -13,9 +13,9 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if @current_user
 
-    return unless [:user_email, :name, :role].all? { |field| session.key?(field) }
+    return unless [:user_email, :role].all? { |field| session.key?(field) }
 
-    @current_user = User.new(email: session[:user_email], name: session[:name], role: session[:role])
+    @current_user = User.new(email: session[:user_email], role: session[:role])
   end
 
   def require_sign_in

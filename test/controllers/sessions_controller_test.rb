@@ -25,7 +25,7 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to sign_in_path
   end
 
-  test "signing in should set user fields in the session and redirect to songs index" do
+  test "signing in should set user fields in the session and cookie and redirect to songs index" do
     sign_out
     name = "A2N Member"
     email = "gpmember@acts2.network"
@@ -38,7 +38,7 @@ class SessionsControllerTest < ApplicationControllerTest
     }
     get :create, params: { provider: "google_oauth2" }
     assert_equal(email, session[:user_email], "Email not set correctly in the session")
-    assert_not_nil(session[:name], "Name not set in the session")
+    assert_not_nil(cookies[:name], "Name not set in the session")
     assert_includes(Role::VALID_ROLES, session[:role], "A valid role was not set in the session")
 
     assert_redirected_to songs_path
