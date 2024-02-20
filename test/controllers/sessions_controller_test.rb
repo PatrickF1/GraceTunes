@@ -28,7 +28,7 @@ class SessionsControllerTest < ApplicationControllerTest
   test "signing in should set user fields in the session and redirect to songs index" do
     sign_out
     name = "A2N Member"
-    email = "gpmember@gpmail.org"
+    email = "gpmember@acts2.network"
     # manually mock the info that would be sent by Google servers
     request.env['omniauth.auth'] = {
       "info" => {
@@ -51,7 +51,7 @@ class SessionsControllerTest < ApplicationControllerTest
 
   test "create should create never-before-seen users as Readers" do
     sign_out
-    email = "never-before-seen@gpmail.org"
+    email = "never-before-seen@acts2.network"
     request.env['omniauth.auth'] = {
       "info" => {
         "name" => "Never before seen",
