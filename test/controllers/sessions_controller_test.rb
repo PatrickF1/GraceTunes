@@ -20,8 +20,10 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to songs_path
   end
 
-  test "signing out redirects to the sign-in page" do
+  test "signing out deletes session info redirects to the sign-in page" do
     get :destroy
+    assert_nil(session[:user_email])
+    assert_nil(session[:role])
     assert_redirected_to sign_in_path
   end
 
