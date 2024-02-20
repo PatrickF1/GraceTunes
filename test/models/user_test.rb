@@ -9,7 +9,6 @@ class UserTest < ActiveSupport::TestCase
 
     user_blank_email = User.new(
       email: "",
-      name: "Name",
       role: Role::READER
     )
     assert_not user_blank_email.valid?, "Was valid with a blank email"
@@ -29,7 +28,6 @@ class UserTest < ActiveSupport::TestCase
 
     user_blank_role = User.new(
       email: "test@email.com",
-      name: "Name",
       role: ""
     )
     assert_not user_blank_role.valid?, "Was valid with a blank role"
