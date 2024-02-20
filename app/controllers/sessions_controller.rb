@@ -15,13 +15,13 @@ class SessionsController < ApplicationController
 
     # if person has never signed into GraceTunes before, create a user for him
     unless (@current_user = User.find_by(email:))
-      full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
-      @current_user = User.create!(email:, name: full_name, role: Role::READER)
+      @current_user = User.create!(email:, role: Role::READER)
       logger.info "New user created: #{@current_user}"
     end
+    full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
 
     session[:user_email] = @current_user.email
-    session[:name] = @current_user.name
+    session[:name] = full_name
     session[:role] = @current_user.role
     redirect_to songs_path
   end
