@@ -20,8 +20,8 @@ class SessionsController < ApplicationController
     end
     full_name = user_info["name"].split('(')[0].strip # remove churchplant extention
 
+    cookies[:name] = full_name
     session[:user_email] = @current_user.email
-    session[:name] = full_name
     session[:role] = @current_user.role
     redirect_to songs_path
   end
