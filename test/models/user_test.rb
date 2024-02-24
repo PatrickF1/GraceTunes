@@ -4,11 +4,12 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   test "should be invalid without an email" do
-    user_nil_email = User.new(role: Role::READER)
+    user_nil_email = User.new(name: "Name", role: Role::READER)
     assert_not user_nil_email.valid?, "Was valid with a nil email"
 
     user_blank_email = User.new(
       email: "",
+      name: "Name",
       role: Role::READER
     )
     assert_not user_blank_email.valid?, "Was valid with a blank email"
@@ -17,34 +18,53 @@ class UserTest < ActiveSupport::TestCase
   test "should not be valid if another user shares the same email" do
     duplicate_user = User.new(
       email: users(:praise_member).email,
+      name: "Duplicate User",
       role: "Reader"
     )
     assert_not duplicate_user.valid?
   end
 
+  test "should be invalid without a name" do
+    user_nil_name = User.new(
+      email: "test@email.com",
+      role: Role::READER
+    )
+    assert_not user_nil_name.valid?, "Was valid with a nil name"
+
+    user_blank_name = User.new(
+      email: "test@email.com",
+      name: "",
+      role: Role::READER
+    )
+    assert_not user_blank_name.valid?, "Was valid with a blank name"
+  end
+
   test "should be invalid without a role" do
-    user_nil_role = User.new(email: "test@email.com")
+    user_nil_role = User.new(email: "test@email.com", name: "Name")
     assert_not user_nil_role.valid?, "Was valid with a nil role"
 
     user_blank_role = User.new(
       email: "test@email.com",
+      name: "Name",
       role: ""
     )
     assert_not user_blank_role.valid?, "Was valid with a blank role"
   end
 
   test "should be invalid if role is invalid" do
-    user_invalid_role = User.new(email: "test@email.com", role: "not a real role")
+    user_invalid_role = User.new(email: "test@email.com", name: "Name", role: "not a real role")
     assert_not user_invalid_role.valid?, "Was valid with an invalid role"
   end
 
-  test "email should be normalized" do
+  test "email and name should be normalized" do
     user = User.new(
       email: "manySpaces@end.com    ",
+      name: "lowercase name   ",
       role: Role::READER
     )
     assert user.valid?
     assert_equal(user.email, "manySpaces@end.com")
+    assert_equal(user.name, "Lowercase Name")
   end
 
   test "readers should not be able to perform write actions" do

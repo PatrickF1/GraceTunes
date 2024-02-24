@@ -26,6 +26,7 @@ class SessionsControllerTest < ApplicationControllerTest
     sign_back_in(name, email)
 
     assert_equal(email, session[:user_email], "Email not set correctly in the session")
+    assert_not_nil(session[:name], "Name not set in the session")
     assert_includes(Role::VALID_ROLES, session[:role], "A valid role was not set in the session")
 
     assert_redirected_to songs_path
@@ -39,12 +40,12 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_equal(Role::ADMIN, session[:role])
   end
 
-  test "signing in correctly sets the user's name in cookie without city extension" do
+  test "signing in correctly sets the user's name in session without city extension" do
     name = "Patrick Fong (Berk/Sf)"
     email = "member@acts2.network"
     sign_back_in(name, email)
 
-    assert_equal('Patrick Fong', cookies[:name])
+    assert_equal('Patrick Fong', session[:name])
   end
 
   test "a failed sign-in should redirect the user to the sign in path" do
