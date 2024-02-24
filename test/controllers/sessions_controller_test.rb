@@ -48,6 +48,14 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_equal('Patrick Fong', session[:name])
   end
 
+  test "signing in after name has changed should update user's name in database" do
+    name = "Praise Lead"
+    email = users(:praise_member).email
+    assert_changes -> { User.find(email).name } do
+      sign_back_in(name, email)
+    end
+  end
+
   test "a failed sign-in should redirect the user to the sign in path" do
     get :error
     assert_redirected_to sign_in_path

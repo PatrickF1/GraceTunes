@@ -1,6 +1,6 @@
 reader:
   email: "random_member@acts2.network"
-  name: "Gracepoint Member"
+  name: "A2N Member"
   role: <%= Role::READER %>
 praise_member:
   email: "praise_member@acts2.network"

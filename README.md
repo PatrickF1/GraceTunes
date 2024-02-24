@@ -1,6 +1,6 @@
-# [GraceTunes](https://github.com/GracepointMinistries/GraceTunes)
+# [GraceTunes](https://github.com/PatrickF1/GraceTunes)
 
-[![CircleCI](https://circleci.com/gh/GracepointMinistries/GraceTunes.svg?style=svg&circle-token=0eb992b314d613c025899f81849bf6981ec6d82b)](https://circleci.com/gh/GracepointMinistries/GraceTunes)
+[![CircleCI](https://circleci.com/gh/PatrickF1/GraceTunes.svg?style=svg&circle-token=0eb992b314d613c025899f81849bf6981ec6d82b)](https://circleci.com/gh/GracepointMinistries/GraceTunes)
 
 ## Development
 
