@@ -12,17 +12,21 @@ class SessionsController < ApplicationController
     user_info = request.env["omniauth.auth"]["info"]
     # Gmail emails are case insensitive so okay to lowercase it
     email = user_info["email"].downcase.strip
-
-    # if person has never signed into GraceTunes before, create a user for him
-    unless (@current_user = User.find_by(email:))
-      @current_user = User.create!(email:, role: Role::READER)
-      logger.info "New user created: #{@current_user}"
-    end
-
     full_name = user_info["name"].split('(')[0].strip # remove church plant city extension
 
-    cookies[:name] = full_name
+    @current_user = User.find_by(email:)
+    if @current_user.nil?
+      # this person has never signed in before, create a user for them
+      @current_user = User.create!(email:, name: full_name, role: Role::READER)
+      logger.info "New user created: #{@current_user}"
+    elsif @current_user.name != full_name
+      # their name according to Tribe has updated
+      @current_user.name = full_name
+      logger.error "Unable to update the name for #{@current_user}" unless @current_user.save
+    end
+
     session[:user_email] = @current_user.email
+    session[:name] = @current_user.name
     session[:role] = @current_user.role
     redirect_to songs_path
   end
