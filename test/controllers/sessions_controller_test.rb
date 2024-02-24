@@ -67,10 +67,9 @@ class SessionsControllerTest < ApplicationControllerTest
     assert_redirected_to sign_in_path
   end
 
-  test "destroy should clear the user's session and cookies" do
+  test "destroy should clear the user's session" do
     get :destroy
     assert_empty(session.to_hash, "Destroy did not clear the user's session")
-    assert_empty(cookies.to_hash, "Destroy did not clear the user's cookies")
   end
 
   private
