@@ -23,6 +23,7 @@ class API::ControllerTestBase < ActionController::TestCase
 
   def load_user_into_session(user)
     session[:user_email] = user.email
+    session[:name] = user.name
     session[:role] = user.role
   end
 end

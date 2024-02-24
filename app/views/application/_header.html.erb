@@ -34,8 +34,7 @@
     </div>
 
     <div class="header_user">
-      <%# TODO(Patrick): delete session[:name] reference after March by which everyone will have a name cookie %>
-      <span class="header_username">Welcome, <%= cookies[:name] or session[:name] %>!</span>
+      <span class="header_username">Welcome, <%= current_user.name %>!</span>
       <%= link_to "Sign Out", sign_out_path, { method: :get, class: "pill pill_link-red" } %>
     </div>
 
