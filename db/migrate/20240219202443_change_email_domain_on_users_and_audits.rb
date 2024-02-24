@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeEmailDomainOnUsersAndAudits < ActiveRecord::Migration[7.1]
   def up
     execute("UPDATE users SET email = replace(email, '@gpmail.org',  '@acts2.network')")
