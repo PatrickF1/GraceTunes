@@ -9,8 +9,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :role, presence: true
-  validates :role, inclusion: { in: Role::VALID_ROLES, if: ->(user) { user.role.present? } }
+  validates :role, presence: true, inclusion: { in: Role::VALID_ROLES, if: ->(user) { user.role.present? } }
 
   def normalize
     self.name = name.titleize.strip if name
