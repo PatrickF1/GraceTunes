@@ -22,7 +22,7 @@ gem 'pg'
 gem 'pg_search'
 gem 'puma'
 gem 'rack-timeout'
-gem 'rails', '7.1'
+gem 'rails', '7.1.3.1'
 gem 'sass-rails', '>= 5' # Use SCSS for stylesheets
 gem 'sdoc', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
 gem 'terser', "~> 1.1" # JS minifier
