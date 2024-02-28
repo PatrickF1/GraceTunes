@@ -364,7 +364,7 @@ GEM
       activesupport
     will_paginate (3.3.1)
     wkhtmltopdf-binary (0.12.6.6)
-    yard (0.9.34)
+    yard (0.9.35)
     zeitwerk (2.6.12)
 
 PLATFORMS
