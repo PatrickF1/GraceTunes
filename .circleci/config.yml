@@ -5,7 +5,7 @@ jobs: # a collection of steps
     docker: # run the steps with Docker
       # ...with this image as the primary container; this is where all `steps` will run
       # -node means the image includes node, which is a Rails dependency
-      - image: cimg/ruby:3.2.2-node
+      - image: cimg/ruby:3.3.0-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -14,7 +14,7 @@ jobs: # a collection of steps
           PORT: 3000
           WEB_CONCURRENCY: 1
           RAILS_ENV: test
-      - image: circleci/postgres:9.6.12-alpine # database image
+      - image: cimg/postgres:15.6 # database image
         environment: # environment variables for database
           POSTGRES_USER: gracetunes_user
           POSTGRES_DB: tunes_test
