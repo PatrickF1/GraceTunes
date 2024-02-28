@@ -1,20 +1,22 @@
+# frozen_string_literal: true
+
 module AuditsHelper
   AUDIT_ACTION_TO_BOOTSTRAP_CLASS = {
     AuditAction::UPDATE => "warning",
     AuditAction::CREATE => "success",
     AuditAction::DESTROY => "danger"
-  }
+  }.freeze
   private_constant :AUDIT_ACTION_TO_BOOTSTRAP_CLASS
 
   def filter_empty_audited_changes(audited_changes)
-    audited_changes.select { |field, value| value.kind_of?(Array) or !value.blank? }
+    audited_changes.select { |_field, value| value.is_a?(Array) or value.present? }
   end
 
   def audit_action_past_tense(action)
     if action == AuditAction::DESTROY
       "deleted"
     else
-      action + "d"
+      "#{action}d"
     end
   end
 
@@ -30,11 +32,11 @@ module AuditsHelper
   end
 
   def text_class_for_audit_action(audit_action)
-    "text-" + AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]
+    "text-#{AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]}"
   end
 
   def audit_background_for_audit_action(audit_action)
-    "bg-" + AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]
+    "bg-#{AUDIT_ACTION_TO_BOOTSTRAP_CLASS[audit_action]}"
   end
 
   def set_active_if_action(action)

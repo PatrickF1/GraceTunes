@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require "test_helper"
 require_relative 'application_controller_test'
 
 class AuditsControllerTest < ApplicationControllerTest
-
   # dynamically generate all the audits data on setup, which should be
   # more maintainable than creating them through audit fixtures
   def setup
@@ -33,7 +34,7 @@ class AuditsControllerTest < ApplicationControllerTest
         key: "G",
         tempo: "Fast",
         chord_sheet: "C    C  D   A  B"
-        )
+      )
       song_to_delete.save!
 
       song_to_delete.key = "A"
@@ -53,9 +54,7 @@ class AuditsControllerTest < ApplicationControllerTest
   test "index should retrieve audits in reverse order" do
     get :index
     assigns(:audits).each_with_index do |audit, index|
-      if index < assigns(:audits).size - 1
-        assert audit.created_at > assigns(:audits)[index+1].created_at
-      end
+      assert audit.created_at > assigns(:audits)[index + 1].created_at if index < assigns(:audits).size - 1
     end
   end
 

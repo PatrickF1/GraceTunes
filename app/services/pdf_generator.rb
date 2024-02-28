@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module PdfGenerator
   PDF_CONFIG = {
     zoom: 6,
     margin: {
       left: 1
     }
-  }
-  FOLDER_PATH = "app/assets/pdf";
+  }.freeze
+  FOLDER_PATH = "app/assets/pdf"
 
   def self.generate_pdf(song)
     pdf = WickedPdf.new.pdf_from_string(generate_html(song), PDF_CONFIG)
@@ -16,11 +18,10 @@ module PdfGenerator
   end
 
   def self.generate_html(song)
-    ApplicationController.render( template: "songs/print", layout: "pdf_layout", assigns: { song: song})
+    ApplicationController.render(template: "songs/print", layout: "pdf_layout", assigns: { song:})
   end
 
   def self.get_file_name(song_name)
-    song_name + '.pdf'
+    "#{song_name}.pdf"
   end
-
 end

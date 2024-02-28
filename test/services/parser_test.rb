@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class ParserTest < ActiveSupport::TestCase
-
   test "parser does not identify lyric lines as chords" do
     song = songs(:God_be_praised)
     song.lyrics.split("\n").each do |line|
@@ -40,12 +41,14 @@ class ParserTest < ActiveSupport::TestCase
 
   test "parser gets list of chords from line" do
     assert_equal ["G", "D"], Parser.chords_from_line("   G    D")
-    assert_equal ["A", "Em", "C#", "D", "B"],  Parser.chords_from_line("A      Em      C# D B")
+    assert_equal ["A", "Em", "C#", "D", "B"], Parser.chords_from_line("A      Em      C# D B")
     assert_equal ["A", "G", "C", "G"], Parser.chords_from_line("A      G/C    G")
-    assert_equal ["D#m", "Bb", "F#", "C#", "E#", "D#m", "Bb", "C#"], Parser.chords_from_line(" D#m  Bb    F#     C#/E#   D#m    Bb   C#")
+    assert_equal ["D#m", "Bb", "F#", "C#", "E#", "D#m", "Bb", "C#"],
+                 Parser.chords_from_line(" D#m  Bb    F#     C#/E#   D#m    Bb   C#")
     assert_equal ["Em7", "D#2", "B9"], Parser.chords_from_line("Em7   D#2     B9")
-    assert_equal ["Cmaj7", "Ebmaj3", "D#maj5"],  Parser.chords_from_line("Cmaj7       Ebmaj3      D#maj5")
-    assert_equal ["Em7", "G#", "F", "Cmaj7", "D", "Cb3"], Parser.chords_from_line("Em7/G#       F/Cmaj7        D/Cb3")
+    assert_equal ["Cmaj7", "Ebmaj3", "D#maj5"], Parser.chords_from_line("Cmaj7       Ebmaj3      D#maj5")
+    assert_equal ["Em7", "G#", "F", "Cmaj7", "D", "Cb3"],
+                 Parser.chords_from_line("Em7/G#       F/Cmaj7        D/Cb3")
     assert_equal ["E7sus4"], Parser.chords_from_line("E7sus4    ")
     assert_equal ["A(5)", "B(7)"], Parser.chords_from_line("A(5)     B(7)")
     assert_equal ["D(b5)", "E(#)"], Parser.chords_from_line("D(b5)         E(#)")
@@ -81,25 +84,25 @@ class ParserTest < ActiveSupport::TestCase
   test "get_lines_for_columns splits the song early when the end of the column occurs too close to the end" do
     @song = songs(:God_be_praised)
     lines = @song.chord_sheet.split("\n")
-    assert_equal [lines[0..48], lines[49..lines.length-1]], Parser.get_lines_for_columns(@song)
+    assert_equal [lines[0..48], lines[49..lines.length - 1]], Parser.get_lines_for_columns(@song)
   end
 
   test "get_lines_for_columns splits the song early when the end of the column occurs too close to a section break" do
     @song = songs(:forever_reign)
     lines = @song.chord_sheet.split("\n")
-    assert_equal [lines[0..46], lines[47..lines.length-1]], Parser.get_lines_for_columns(@song)
+    assert_equal [lines[0..46], lines[47..lines.length - 1]], Parser.get_lines_for_columns(@song)
   end
 
   test "get_lines_for_columns splits the song at the end of the column when it's not too close to a section break or end of the song" do
     @song = songs(:glorious_day)
     lines = @song.chord_sheet.split("\n")
-    assert_equal [lines[0..50], lines[51..lines.length-1]], Parser.get_lines_for_columns(@song)
+    assert_equal [lines[0..50], lines[51..lines.length - 1]], Parser.get_lines_for_columns(@song)
   end
 
   test "get_lines_for_columns leaves the second column empty when all the lines can fit in one column" do
     @song = songs(:when_i_think_about_the_lord)
     lines = @song.chord_sheet.split("\n")
-    assert_equal [lines[0..lines.length-1],[]], Parser.get_lines_for_columns(@song)
+    assert_equal [lines[0..lines.length - 1], []], Parser.get_lines_for_columns(@song)
   end
 
   test "lyric_line_far_from_blank? should indicate if a line is a lyric line that is far from a blank" do
@@ -145,8 +148,8 @@ class ParserTest < ActiveSupport::TestCase
   test "line_type_in_range? should handle end of song" do
     song = songs(:God_be_praised)
     lines = song.chord_sheet.split("\n")
-    assert_not Parser.line_type_in_range?(lines.length-1, "header", 5, lines)
-    assert Parser.line_type_in_range?(lines.length-2, "chord", 5, lines)
+    assert_not Parser.line_type_in_range?(lines.length - 1, "header", 5, lines)
+    assert Parser.line_type_in_range?(lines.length - 2, "chord", 5, lines)
   end
 
   test "get_line_range handles reverse ranges" do
@@ -172,5 +175,4 @@ class ParserTest < ActiveSupport::TestCase
     lines = song.chord_sheet.split("\n")
     assert_equal 0..52, Parser.get_line_range(100, -74, lines)
   end
-
 end

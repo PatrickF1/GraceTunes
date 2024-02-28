@@ -2,20 +2,21 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190421193645) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_19_202443) do
+  create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "btree_gin"
   enable_extension "pg_stat_statements"
+  enable_extension "plpgsql"
 
   create_table "audits", force: :cascade do |t|
     t.integer "auditable_id"
@@ -31,7 +32,7 @@ ActiveRecord::Schema.define(version: 20190421193645) do
     t.string "comment"
     t.string "remote_address"
     t.string "request_uuid"
-    t.datetime "created_at"
+    t.datetime "created_at", precision: nil
     t.index ["associated_type", "associated_id"], name: "associated_index"
     t.index ["auditable_type", "auditable_id"], name: "auditable_index"
     t.index ["created_at"], name: "index_audits_on_created_at"
@@ -40,8 +41,8 @@ ActiveRecord::Schema.define(version: 20190421193645) do
   end
 
   create_table "praise_sets", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "owner_email", null: false
     t.string "event_name", null: false
     t.date "event_date", null: false
@@ -53,22 +54,13 @@ ActiveRecord::Schema.define(version: 20190421193645) do
   end
 
   create_table "song_deletion_records", id: :bigint, default: nil, force: :cascade do |t|
-    t.datetime "deleted_at", null: false
+    t.datetime "deleted_at", precision: nil, null: false
     t.string "name", null: false
   end
 
-  create_table "song_tags", id: :serial, force: :cascade do |t|
-    t.integer "song_id"
-    t.integer "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["song_id"], name: "index_song_tags_on_song_id"
-    t.index ["tag_id"], name: "index_song_tags_on_tag_id"
-  end
-
   create_table "songs", id: :serial, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "name", null: false
     t.string "key", null: false
     t.string "tempo", null: false
@@ -83,17 +75,13 @@ ActiveRecord::Schema.define(version: 20190421193645) do
     t.index ["lyrics"], name: "index_songs_on_lyrics", using: :gin
     t.index ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true
     t.index ["name"], name: "index_songs_on_name", using: :gin
-  end
-
-  create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.check_constraint "bpm >= 1 AND bpm <= 1000", name: "is_valid_bpm"
+    t.check_constraint "view_count >= 0", name: "view_count_gte_zero"
   end
 
   create_table "users", primary_key: "email", id: :string, force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "name", null: false
     t.string "role", null: false
   end

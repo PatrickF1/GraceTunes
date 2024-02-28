@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PraiseSetTest < ActiveSupport::TestCase
-
   test 'should be invalid without event name' do
     set = praise_sets(:hillsong)
     set.event_name = nil
@@ -16,7 +17,7 @@ class PraiseSetTest < ActiveSupport::TestCase
 
   test 'should be invalid if owner does not exist' do
     set = praise_sets(:hillsong)
-    set.owner_email = 'doesntexist@gpmail.org'
+    set.owner_email = 'doesntexist@acts2.network'
     assert_not set.valid?, 'Was valid with an invalid owner_email'
   end
 
@@ -86,9 +87,12 @@ class PraiseSetTest < ActiveSupport::TestCase
     song = Song.find(set.praise_set_songs[0]["id"])
     song.destroy!
     deletion_record = set.retrieve_songs[0]
-    assert_instance_of SongDeletionRecord, deletion_record, "should retrieve the SongDeletionRecord of deleted songs"
-    assert_equal song.id, deletion_record.id, "the SongDeletionRecord did not have the same id as the deleted song"
-    assert_equal song.name, deletion_record.name, "the SongDeletionRecord did not have the same name as the deleted song"
+    assert_instance_of SongDeletionRecord, deletion_record,
+                       "should retrieve the SongDeletionRecord of deleted songs"
+    assert_equal song.id, deletion_record.id,
+                 "the SongDeletionRecord did not have the same id as the deleted song"
+    assert_equal song.name, deletion_record.name,
+                 "the SongDeletionRecord did not have the same name as the deleted song"
   end
 
   test 'retrive_songs raises an exception if a referenced song does not and has never existed' do
@@ -99,5 +103,4 @@ class PraiseSetTest < ActiveSupport::TestCase
       set.retrieve_songs
     end
   end
-
 end

@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   self.primary_key = :email
 
-  has_many :praise_sets, :foreign_key => "owner_email", :primary_key => "email"
+  has_many :praise_sets, foreign_key: "owner_email", primary_key: "email"
 
   before_validation :normalize
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :role, presence: true
-  validates_inclusion_of :role, in: Role::VALID_ROLES, if: -> (user) { user.role.present? }
+  validates :role, presence: true, inclusion: { in: Role::VALID_ROLES, if: ->(user) { user.role.present? } }
 
   def normalize
     self.name = name.titleize.strip if name
@@ -27,5 +28,4 @@ class User < ApplicationRecord
   def to_s
     "#{name} <#{email}>"
   end
-
 end

@@ -1,5 +1,5 @@
 hillsong:
-  owner_email: "admin@gpmail.org"
+  owner_email: "admin@acts2.network"
   event_name: "Hillsong set"
   event_date: "2017-01-01"
   archived: true
@@ -11,7 +11,7 @@ hillsong:
       id: <%= ActiveRecord::FixtureSet.identify(:all_my_hope) %>
       key: "B"
 sws_05142017:
-  owner_email: "praise_member@gpmail.org"
+  owner_email: "praise_member@acts2.network"
   event_name: "Sunday Worship Service May 5, 2017"
   event_date: "2017-05-14"
   notes: |

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module Music
-  CHROMATICS = ['A', ['A#','Bb'], ['B', 'Cb'], ['B#', 'C'], ['C#','Db'], 'D', ['D#','Eb'], ['E', 'Fb'], ['E#', 'F'], ['F#','Gb'], 'G', ['G#','Ab']].freeze
+  CHROMATICS = ['A', ['A#', 'Bb'], ['B', 'Cb'], ['B#', 'C'], ['C#', 'Db'], 'D', ['D#', 'Eb'], ['E', 'Fb'],
+                ['E#', 'F'], ['F#', 'Gb'], 'G', ['G#', 'Ab']].freeze
   MAJOR_KEYS = ['Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G'].freeze # use Db, F#, B for 3 enharmonic equivalent keys
   MAJOR_STEPS = [0, 2, 2, 1, 2, 2, 2].freeze
   MAJOR_INTERVALS = [0, 2, 4, 5, 7, 9, 11].freeze
@@ -11,14 +14,14 @@ module Music
     5 => "V",
     6 => "VI",
     7 => "VII"
-  }
+  }.freeze
 
   def self.key_has_note?(key, note)
     MAJOR_SCALES[key].find { |n| n[:base] == note }.present?
   end
 
   def self.get_note_index(note)
-    CHROMATICS.index(CHROMATICS.detect {|n| n.kind_of?(Array) ? n.include?(note) : (n == note)})
+    CHROMATICS.index(CHROMATICS.find { |n| n.is_a?(Array) ? n.include?(note) : (n == note) })
   end
 
   def self.get_note_scale_index(note, key)
@@ -44,23 +47,23 @@ module Music
 
   def self.sharpen(note)
     if natural?(note) || number?(note)
-      note.to_s + "#"
+      "#{note}#"
     elsif flat?(note)
       get_natural(note)
     else
       new_chromatic = CHROMATICS[(get_note_index(note) + 1) % 12]
-      new_chromatic.kind_of?(Array) ? new_chromatic[0] : new_chromatic # get lower of the next chromatic
+      new_chromatic.is_a?(Array) ? new_chromatic[0] : new_chromatic # get lower of the next chromatic
     end
   end
 
   def self.flatten(note)
     if natural?(note) || number?(note)
-      note.to_s + "b"
+      "#{note}b"
     elsif sharp?(note)
       get_natural(note)
     else
       new_chromatic = CHROMATICS[(get_note_index(note) - 1) % 12]
-      new_chromatic.kind_of?(Array) ? new_chromatic[1] : new_chromatic # get higher of the previous chromatic
+      new_chromatic.is_a?(Array) ? new_chromatic[1] : new_chromatic # get higher of the previous chromatic
     end
   end
 
@@ -89,17 +92,19 @@ module Music
   end
 
   def self.number?(note)
-    ROMAN_NUMERALS.has_value?(note.upcase)
+    ROMAN_NUMERALS.value?(note.upcase)
   end
 
   # needs to be after method definitions
   # { key => scale }
-  MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, index|
+  MAJOR_SCALES = MAJOR_KEYS.each_with_index.map do |key, _index|
     scale = []
-    offset = CHROMATICS.index(CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(key) : (note == key)})
+    offset = CHROMATICS.index(CHROMATICS.find do |note|
+                                note.is_a?(Array) ? note.include?(key) : (note == key)
+                              end)
     MAJOR_INTERVALS.each_with_index do |increment, interval_index|
       chromatic = CHROMATICS[(offset + increment) % 12]
-      if !chromatic.kind_of?(Array)
+      if !chromatic.is_a?(Array)
         note = { base: chromatic }
       elsif chromatic.include? key
         note = { base: key }
@@ -116,7 +121,6 @@ module Music
       note[:modifier] = :diminished if interval_index == 6
       scale << note
     end
-    [ key, scale ]
+    [key, scale]
   end.to_h.freeze
-
 end

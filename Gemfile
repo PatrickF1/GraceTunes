@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 ruby File.read(".ruby-version").strip
@@ -18,32 +20,33 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'pg_search'
+gem 'puma'
 gem 'rack-timeout'
 gem 'rails', '7.1'
 gem 'sass-rails', '>= 5' # Use SCSS for stylesheets
 gem 'sdoc', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
+gem 'terser', "~> 1.1" # JS minifier
 gem 'turbolinks'
-gem "terser", "~> 1.1"
-gem 'unicorn' # Use Unicorn as the app server
 gem 'will_paginate'
-gem 'wicked_pdf'
-gem 'render_anywhere'
-gem 'wkhtmltopdf-binary'
 
 group :development, :test do
-  gem 'byebug' # Call 'byebug' anywhere to get a debugger console
+  gem "debug", ">= 1.0.0" # Call 'debugger' anywhere to get a debugger console
 end
 
 group :test do
-  gem 'rails-controller-testing'
   gem 'minitest-ci'
+  gem 'rails-controller-testing'
 end
 
 group :development do
   gem 'listen'
-  gem 'rubocop', require: false
-  gem 'spring' # keeps the app running in the background so you don't need to keep rebotting it
+  gem 'rubocop', '>=1.60', require: false # install rubocop but don't load it into app memory
+  gem 'rubocop-rails', require: false
+  gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make use of it
+  gem 'spring' # keeps the app running in the background so you don't need to keep rebooting it
   gem 'spring-watcher-listen'
   gem 'web-console', '>= 4.2.0'
-  gem 'solargraph' # ruby language server, need a plugin for editor/IDE to make sure of it
+  # these gems are used to export all songs as PDF in a rake task that is run locally
+  gem 'wicked_pdf'
+  gem 'wkhtmltopdf-binary'
 end

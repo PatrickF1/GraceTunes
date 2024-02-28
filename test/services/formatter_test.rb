@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class FormatterTest < ActiveSupport::TestCase
-
   test "formatting basic chords as nashville roman numerals works correctly" do
     assert_equal "I", Formatter.send(:format_chord_nashville, "G", "G")
     assert_equal "ii", Formatter.send(:format_chord_nashville, "Am", "G")

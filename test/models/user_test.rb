@@ -1,11 +1,10 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   test "should be invalid without an email" do
-    user_nil_email = User.new(
-      name: "Name",
-      role: Role::READER
-    )
+    user_nil_email = User.new(name: "Name", role: Role::READER)
     assert_not user_nil_email.valid?, "Was valid with a nil email"
 
     user_blank_email = User.new(
@@ -41,10 +40,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "should be invalid without a role" do
-    user_nil_role = User.new(
-      email: "test@email.com",
-      name: "Name"
-    )
+    user_nil_role = User.new(email: "test@email.com", name: "Name")
     assert_not user_nil_role.valid?, "Was valid with a nil role"
 
     user_blank_role = User.new(
@@ -53,6 +49,11 @@ class UserTest < ActiveSupport::TestCase
       role: ""
     )
     assert_not user_blank_role.valid?, "Was valid with a blank role"
+  end
+
+  test "should be invalid if role is invalid" do
+    user_invalid_role = User.new(email: "test@email.com", name: "Name", role: "not a real role")
+    assert_not user_invalid_role.valid?, "Was valid with an invalid role"
   end
 
   test "email and name should be normalized" do

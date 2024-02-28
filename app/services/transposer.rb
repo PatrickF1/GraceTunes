@@ -1,9 +1,14 @@
-module Transposer
+# frozen_string_literal: true
 
+module Transposer
   def self.transpose_song(song, new_key)
     old_key = song.key
-    old_key_index = Music::CHROMATICS.index(Music::CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(old_key) : (note == old_key)})
-    new_key_index = Music::CHROMATICS.index(Music::CHROMATICS.detect {|note| note.kind_of?(Array) ? note.include?(new_key) : (note == new_key)})
+    old_key_index = Music::CHROMATICS.index(Music::CHROMATICS.find do |note|
+                                              note.is_a?(Array) ? note.include?(old_key) : (note == old_key)
+                                            end)
+    new_key_index = Music::CHROMATICS.index(Music::CHROMATICS.find do |note|
+                                              note.is_a?(Array) ? note.include?(new_key) : (note == new_key)
+                                            end)
     half_steps = new_key_index - old_key_index
     new_chord_sheet_list = []
     song.chord_sheet.each_line do |line|
@@ -14,12 +19,8 @@ module Transposer
     song.key = new_key
   end
 
-  private
-
   def self.transpose_line(line, half_steps, old_key)
-    if !Parser.chords_line?(line)
-      return line
-    end
+    return line unless Parser.chords_line?(line)
 
     line.gsub(Parser::CHORD_TOKENIZER) do |chord|
       transpose_chord(chord, half_steps, old_key)
@@ -29,12 +30,12 @@ module Transposer
   def self.transpose_chord(chord, half_steps, old_key)
     parsed_chord = Parser.parse_chord(chord)
     if Music.accidental_for_key?(old_key, parsed_chord[:base])
-      new_base_note = transpose_accidental(parsed_chord[:base], half_steps, old_key,)
+      new_base_note = transpose_accidental(parsed_chord[:base], half_steps, old_key)
     else
       new_note_index = (Music.get_note_index(parsed_chord[:base]) + half_steps) % 12
       new_base_note = Music::CHROMATICS[new_note_index]
       new_key = Music::MAJOR_KEYS[(Music::MAJOR_KEYS.index(old_key) + half_steps) % 12]
-      new_base_note = new_base_note.kind_of?(Array) ? Music.which_note_in_key(new_base_note, new_key) : new_base_note # account for enharmonic equivalents
+      new_base_note = new_base_note.is_a?(Array) ? Music.which_note_in_key(new_base_note, new_key) : new_base_note # account for enharmonic equivalents
     end
 
     parsed_chord[:chord].sub(parsed_chord[:base], new_base_note)

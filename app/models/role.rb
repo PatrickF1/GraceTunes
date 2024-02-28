@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Role
   # Readers can perform any read action
   READER = "Reader"

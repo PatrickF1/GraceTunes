@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class ApplicationHelperTest < ActionView::TestCase
-
   test "get_page_title appends GraceTunes to end" do
     setup_view_flow
     set_page_title "Some title..."
@@ -17,5 +18,4 @@ class ApplicationHelperTest < ActionView::TestCase
   def setup_view_flow
     @view_flow = ActionView::OutputFlow.new
   end
-
 end

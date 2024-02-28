@@ -1,54 +1,72 @@
-require 'test_helper'
-require_relative 'api_controller_test.rb'
+# frozen_string_literal: true
 
-class API::SongsControllerTest < API::APIControllerTest
-
-  test 'recently_updated should not be accessible without correct HTTP auth headers' do
-    clear_auth_headers
-    get :recently_updated
-    assert_response :unauthorized
+require_relative 'api_controller_test_base'
+class API::SongsControllerTest < API::ControllerTestBase
+  test "index should require user to be signed in" do
+    sign_out
+    get :index
+    assert_response :forbidden
   end
 
-  test 'recently_updated should retrieve all songs if no date is specified' do
-    get :recently_updated
-    assert_response :success
-    assert_equal(7, JSON.parse(@response.body).count, "Expecting all song fixtures to be returned")
+  test "index should respect page_size param" do
+    get :index, params: {page_size: 1}
+    decode_songs
+    assert_equal(@songs.size, 1)
   end
 
-  test 'recently_updated should retrieve only the songs updated on or after the date specified' do
-    updated_since_value = "2019-01-01 00:00:00"
+  test "index should return songs most relevant to query when no sort_by" do
+    get :index, params: { query: "hand", page_size: 2 }
+    decode_songs
+    assert_equal([songs(:hands_to_the_heaven), songs(:glorious_day)], @songs)
+  end
 
-    get :recently_updated, params: {updated_since: updated_since_value}
-    assert_response :success
+  test "index sort_by: created_at should return newest songs first" do
+    get :index, params: {sort_by: :created_at, page_size: 3}
+    decode_songs
+    assert_equal([songs(:God_be_praised), songs(:forever_reign), songs(:ten_thousand_reasons)], @songs)
+  end
 
-    songs_json_object = JSON.parse(@response.body)
-    songs_json_object.map do |song_json|
-      assert(song_json['updated_at'] >= updated_since_value)
+  test "show 404s if no song by id" do
+    get :show, params: {id: -1}
+    assert_response :not_found
+  end
+
+  test "show sheet_format: no_chords removes chords" do
+    song = songs(:God_be_praised)
+    get :show, params: {id: song.id, sheet_format: :no_chords}
+    decode_song
+    Formatter.format_song_no_chords(song)
+    assert_equal(song, @song)
+  end
+
+  test "readers should not be allowed to create or update songs" do
+    song = songs(:God_be_praised)
+    post :update, params: { song: song.as_json, id: song.id }
+    assert_response :forbidden
+
+    post :create, params: { song: song.as_json }
+    assert_response :forbidden
+  end
+
+  test "non-admins should not be able to delete songs" do
+    assert_no_difference("Song.count") do
+      delete :destroy, params: { id: songs(:forever_reign).id }
     end
-    assert_equal(3, songs_json_object.count)
+
+    assert_response :forbidden
   end
 
-  test 'deleted should not be accessible without correct HTTP auth headers' do
-    clear_auth_headers
-    get :deleted
-    assert_response :unauthorized
+  private
+
+  def decode_songs
+    assert_response :ok
+    @songs = @response.parsed_body['data'].map do |s|
+      Song.new(s.except('spotify_widget_source'))
+    end
   end
 
-  test 'deleted should retrieve records of all deleted songs if no date is specified' do
-    get :deleted
-    assert_response :success
-    assert(JSON.parse(@response.body).count == 4, "Expecting all 4 deleted song fixtures to be returned")
+  def decode_song
+    assert_response :ok
+    @song = Song.new(@response.parsed_body.except('spotify_widget_source'))
   end
-
-  test 'deleted should retrieve records of songs deleted after the date specified' do
-    deleted_since_value = "2018-07-01"
-
-    get :deleted, params: {since: deleted_since_value}
-    assert_response :success
-    response_body = JSON.parse(@response.body)
-    assert(response_body.count == 1, "Only lion_and_the_lamb was deleted after #{deleted_since_value}}")
-    assert_equal(song_deletion_records(:lion_and_the_lamb), SongDeletionRecord.new(response_body[0]))
-
-  end
-
 end

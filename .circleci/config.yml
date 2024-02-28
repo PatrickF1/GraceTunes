@@ -3,9 +3,9 @@ jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     parallelism: 1 # run three instances of this job in parallel
     docker: # run the steps with Docker
-    # ...with this image as the primary container; this is where all `steps` will run
-    # -node means the image includes node, which is a Rails dependency
-      - image: cimg/ruby:3.1.1-node
+      # ...with this image as the primary container; this is where all `steps` will run
+      # -node means the image includes node, which is a Rails dependency
+      - image: cimg/ruby:3.2.2-node
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -13,8 +13,6 @@ jobs: # a collection of steps
           PGHOST: 127.0.0.1
           PORT: 3000
           WEB_CONCURRENCY: 1
-          API_USERNAME: username
-          API_PASSWORD: password
           RAILS_ENV: test
       - image: circleci/postgres:9.6.12-alpine # database image
         environment: # environment variables for database
@@ -39,6 +37,10 @@ jobs: # a collection of steps
       - run: # Install Ruby dependencies
           name: Bundle Install
           command: bundle check || bundle install
+
+      - run:
+          name: Rubocop autocorrections check
+          command: bundle exec rubocop --fail-level W
 
       # Store bundle cache for Ruby dependencies
       - save_cache:
