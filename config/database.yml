@@ -3,6 +3,7 @@ default: &default
   adapter: postgresql
   pool: 3
   timeout: 5000
+  host: localhost
 
 development:
   <<: *default
@@ -14,7 +15,6 @@ development:
 test: &test
   <<: *default
   database: tunes_test
-  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
   password: password
 
 # Production DB settings here are only for testing the app locally with
