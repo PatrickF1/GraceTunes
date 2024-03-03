@@ -11,6 +11,18 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15.6
+        env:
+          POSTGRES_USER: gracetunes_user
+          POSTGRES_DB: tunes_test
+          POSTGRES_PASSWORD: ""
+        ports:
+          - 5432:5432
+        # Add a health check
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
