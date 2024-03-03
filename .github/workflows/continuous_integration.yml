@@ -39,3 +39,10 @@ jobs:
           PORT: 3000
           WEB_CONCURRENCY: 1
           RAILS_ENV: test
+
+  linter:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - name: Rubocop check
+        run: bundle exec rubocop --fail-level W
