@@ -14,7 +14,6 @@ development:
 test: &test
   <<: *default
   database: tunes_test
-  host: <%= ENV.fetch('POSTGRES_HOST', 'localhost') %>
 
 # Production DB settings here are only for testing the app locally with
 # production config and will not be used when deployed to Heroku prod.
