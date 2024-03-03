@@ -40,8 +40,6 @@ jobs:
       run: bundle check || bundle install
     - name: Rubocop autocorrections check
       run: bundle exec rubocop --fail-level W
-    - name: Wait for DB
-      run: dockerize -wait tcp://localhost:5432 -timeout 1m
     - name: Database setup
       run: bundle exec rails db:schema:load --trace
     - name: Run minitest in parallel

@@ -38,7 +38,6 @@ jobs:
           POSTGRES_HOST: postgres_service
           PORT: 3000
           WEB_CONCURRENCY: 1
-          RAILS_ENV: ci
 
   linter:
     runs-on: ubuntu-latest
