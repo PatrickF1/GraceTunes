@@ -1,14 +1,9 @@
 name: PatrickF1/GraceTunes/PatrickF1/GraceTunes
 on:
   push:
-    branches:
-    - main
-env:
-  FEEDBACK_URL: xxxxlink
-  GOOGLE_CLIENT_ID: xxxx.com
-  GOOGLE_CLIENT_SECRET: xxxxxnx6
-  REQUEST_SONG_URL: xxxxlink
-  SECRET_KEY_BASE: xxxx9e7e
+    branches: [main]
+  pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-latest
