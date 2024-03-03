@@ -16,8 +16,8 @@ jobs:
         image: postgres:15.6
         env:
           POSTGRES_USER: gracetunes_user
+          POSTGRES_PASSWORD: "password"
           POSTGRES_DB: tunes_test
-          POSTGRES_PASSWORD: ""
         ports:
           - 5432:5432
         # Add a health check

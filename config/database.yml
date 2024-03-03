@@ -14,6 +14,7 @@ development:
 test:
   <<: *default
   database: tunes_test
+  password: password
 
 # Production DB settings here are only for testing the app locally with
 # production config and will not be used when deployed to Heroku prod.
