@@ -15,8 +15,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
+          # Ruby version is read from .ruby-version
           bundler-cache: true # run 'bundle install' and cache installed gems
       - name: Run minitest
         run: bundle exec rails test
         # timeout in case tests get stuck
         timeout-minutes: 5
+        env:
+          PORT: 3000
+          WEB_CONCURRENCY: 1
+          RAILS_ENV: test
