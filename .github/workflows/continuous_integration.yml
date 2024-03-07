@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15.6
+        env:
+          POSTGRES_USER: gracetunes_user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: tunes_test
+        ports:
+          # map port 5432 on service container to port 5432 on the runner host
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          # Ruby version is read from .ruby-version
+          bundler-cache: true # run 'bundle install', automatically caches installed gems
+      - name: Run minitest
+        run: bundle exec rails test
+        # timeout in case tests get stuck
+        timeout-minutes: 5
+        env:
+          PORT: 3000
+          WEB_CONCURRENCY: 1
+
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true # run 'bundle install' and cache installed gems
+      - name: Rubocop check
+        run: bundle exec rubocop --fail-level W
