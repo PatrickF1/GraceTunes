@@ -366,8 +366,8 @@ GEM
       activesupport
     will_paginate (3.3.1)
     wkhtmltopdf-binary (0.12.6.6)
-    zeitwerk (2.6.13)
     yard (0.9.36)
+    zeitwerk (2.6.13)
 
 PLATFORMS
   arm64-darwin-23
