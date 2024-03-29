@@ -2,9 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import { Provider } from "react-redux"
 import App from "./App.jsx"
-import configureStore from "./store"
-
-const store = configureStore()
+import store from "./store"
 
 const root = ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
