@@ -2,7 +2,7 @@ import React from "react"
 import "./Navigation.css"
 
 function Navigation() {
-  return <>This is our nav bar currently.</>
+  return <div className="navBar">This is our nav bar currently.</div>
 }
 
 export default Navigation
