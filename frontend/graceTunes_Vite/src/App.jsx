@@ -1,10 +1,10 @@
 import React from "react"
-import Navigation from "./components/Navigation"
+import NavBar from "./components/navigation/NavBar"
 
 function App() {
   return (
     <>
-      <Navigation />
+      <NavBar />
       <h1>Reactifying frontend of GT w/ Vite</h1>
     </>
   )
