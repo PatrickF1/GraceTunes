@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_19_202443) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_05_155900) do
   create_schema "heroku_ext"
 
   # These are extensions that must be enabled in order to support this database
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_202443) do
     t.string "spotify_uri"
     t.integer "bpm"
     t.integer "view_count", default: 0, null: false
+    t.string "category"
     t.index ["artist"], name: "index_songs_on_artist", using: :gin
     t.index ["lyrics"], name: "index_songs_on_lyrics", using: :gin
     t.index ["name", "artist"], name: "index_songs_on_name_and_artist", unique: true

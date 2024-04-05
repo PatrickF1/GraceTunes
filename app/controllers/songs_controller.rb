@@ -17,9 +17,10 @@ class SongsController < ApplicationController
         songs = songs.search_by_keywords(search_value) if search_value.present?
         songs = songs.where(key: params[:key]) if params[:key].present?
         songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
+        songs = songs.where(category: params[:category]) if params[:category].present?
         # get number of matching songs post filtering
         records_filtered = songs.count
-        songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
+        songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri, category')
 
         # reorder
         songs = case params[:sort]
@@ -135,6 +136,6 @@ class SongsController < ApplicationController
 
   def song_params
     params.require(:song)
-          .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri)
+          .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri, :category)
   end
 end

@@ -28,6 +28,12 @@
                 </td>
                 <td>
                   <div class="search_filter">
+                    <span class="search_filter__label">Category</span>
+                    <%= select_tag :category, get_category_opts('Any', include_any = true), class: 'form-control search_filter__form-control' %>
+                  </div>
+                </td>
+                <td>
+                  <div class="search_filter">
                     <span class="search_filter__label">Sort By</span><%= select_tag :sort, options_for_select(['Relevance', 'Newest First', 'Most Popular First'], 'Relevance'), class: 'form-control search_filter__form-control' %>
                   </div>
                 </td>
@@ -42,6 +48,7 @@
               <th>Name</th>
               <th>Artist</th>
               <th>Key</th>
+              <th>Category</th>
               <th>Tempo</th>
             </tr>
           </thead>

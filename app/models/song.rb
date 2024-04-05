@@ -12,6 +12,7 @@ class Song < ApplicationRecord
 
   VALID_KEYS = Music::MAJOR_KEYS
   VALID_TEMPOS = %w[Fast Medium Slow].freeze
+  VALID_CATEGORIES = %w[Special Easter Hymn Christmas].freeze
   MAX_LINE_LENGTH = 47
 
   before_validation :normalize

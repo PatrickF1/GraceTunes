@@ -32,6 +32,9 @@
     <% if @song.bpm.present? %>
       <span>(<%= @song.bpm %> BPM)</span>
     <% end %>
+    <% if @song.category.present? %>
+      <span><strong>Category:</strong> <%= @song.category %></span>
+    <% end %>
     <% if @song.standard_scan.present? %>
       <div><strong>Standard Scan:</strong> <%= @song.standard_scan %></div>
     <% end %>

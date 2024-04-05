@@ -17,6 +17,7 @@ $(function() {
       { data: 'name', render: $.fn.dataTable.render.text() },
       { data: 'artist', render: $.fn.dataTable.render.text() },
       { data: 'key' },
+      { data: 'category' },
       { data: 'tempo' },
     ],
     createdRow: function(row, data, index) {
@@ -29,7 +30,7 @@ $(function() {
         d.tempo = $('#tempo').val();
         d.key = $('#key').val();
         d.sort = $('#sort').val();
-
+        d.category = $('#category').val();
         return d;
       }
     }
