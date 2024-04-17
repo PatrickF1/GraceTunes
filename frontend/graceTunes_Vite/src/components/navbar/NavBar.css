@@ -1,9 +1,64 @@
-.navBar {
-  align-items: center;
-  background-color: #6fbace;
+.navHeader {
   display: flex;
-  padding: 0 30px;
-  position: absolute;
-  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #6fbace;
   height: 70px;
+  font-size: 13px;
+  padding: 0px 30px;
+}
+
+.logo {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  letter-spacing: 1px;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  /* ::after element is position relative to this element vs the whole page */
+  color: #a9d6e2;
+}
+
+.hover-underline-animation::after {
+  content: "";
+  /* So you have to have the content field in order to generate the effect? */
+  position: absolute;
+  /* What is positioned relative to the nearest ancestor? */
+  width: 100%;
+  /* Spans full width of parent element */
+  transform: scaleX(0);
+  /* Initial width is scaled down to 0 prior to animation */
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #a9d6e2;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  /* Underline gets scaled out to max width */
+  transform-origin: bottom left;
+  /* Animation starts on the left side */
+}
+
+.nav-bar-left {
+  /* border: 2px solid blue; */
+  display: flex;
+  align-items: center;
 }
