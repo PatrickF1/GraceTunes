@@ -27,6 +27,7 @@ class Song < ApplicationRecord
   validates :key, inclusion: { in: VALID_KEYS, if: ->(song) { song.key.present? } }
   validates :tempo, presence: true
   validates :tempo, inclusion: { in: VALID_TEMPOS, if: ->(song) { song.tempo.present? } }
+  validates :category, inclusion: { in: VALID_CATEGORIES, if: ->(song) { song.category.present? } }
   validates :chord_sheet, presence: true
   validate :line_length, if: ->(song) { song.chord_sheet.present? }
   validates :spotify_uri,
