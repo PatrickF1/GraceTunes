@@ -31,18 +31,24 @@ class SongTest < ActiveSupport::TestCase
     assert_not song.valid?, "Was valid without a tempo"
   end
 
-  test "should be invalid with a Spotify URI containing spaces" do
-    song = songs(:ten_thousand_reasons)
-    song.spotify_uri = "obviously invalid Spotify URI"
-    assert_not song.valid?
-  end
-
   test "should be invalid with an impossible BPM" do
     song = songs(:ten_thousand_reasons)
     song.bpm = 0
     assert_not song.valid?, "Was valid with a BPM of 0"
     song.bpm = 9000
     assert_not song.valid?, "Was valid with a BPM of 9000"
+  end
+
+  test "should be invalid when category is invalid" do
+    song = songs(:ten_thousand_reasons)
+    song.category = "nothing"
+    assert_not song.valid?, "Was valid with a an invalid category"
+  end
+
+  test "should be invalid with a Spotify URI containing spaces" do
+    song = songs(:ten_thousand_reasons)
+    song.spotify_uri = "obviously invalid Spotify URI"
+    assert_not song.valid?
   end
 
   test "should upcase the standard scan" do

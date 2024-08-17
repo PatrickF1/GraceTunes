@@ -30,7 +30,8 @@ class API::SongsController < API::APIController
     songs = songs.search_by_keywords(params[:query]) if params[:query].present?
     songs = songs.where(key: params[:key]) if params[:key].present?
     songs = songs.where(tempo: params[:tempo]) if params[:tempo].present?
-    songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri')
+    songs = songs.where(category: params[:category]) if params[:category].present?
+    songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri, category')
     matching_songs_count = songs.size
 
     # perform sorting
@@ -86,6 +87,6 @@ class API::SongsController < API::APIController
 
   def song_params
     params.require(:song)
-          .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri)
+          .permit(:name, :key, :artist, :tempo, :bpm, :standard_scan, :chord_sheet, :spotify_uri, :category)
   end
 end

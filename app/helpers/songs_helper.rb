@@ -12,4 +12,10 @@ module SongsHelper
     options.insert(0, ['Any', '']) if include_any
     options_for_select(options, selected:)
   end
+
+  def get_category_opts(selected, include_any = false)
+    options = Song::VALID_CATEGORIES.map { |k| [k, k] }
+    options.insert(0, ['Any', '']) if include_any
+    options_for_select(options, selected:)
+  end
 end
