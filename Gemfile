@@ -10,6 +10,7 @@ gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
 gem 'diffy'
 gem 'font-awesome-rails'
+gem "importmap-rails", "~> 2.1"
 gem 'jbuilder' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jquery-datatables-rails', '~> 3.4.0' # Use datatables for rendering and searching songs
 gem 'jquery-rails' # Use jquery as the JavaScript library
