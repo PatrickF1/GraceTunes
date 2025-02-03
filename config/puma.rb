@@ -28,7 +28,7 @@ worker_timeout 9999 if env == "development"
 port ENV.fetch("PORT", 3000)
 
 # Specifies the `pidfile` that Puma will use.
-pidfile ENV.fetch("PIDFILE", "tmp/pids/server.pid")
+pidfile ENV.fetch("PIDFILE", "tmp/puma-server.pid")
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
