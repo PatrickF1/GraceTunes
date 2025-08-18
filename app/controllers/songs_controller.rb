@@ -20,7 +20,7 @@ class SongsController < ApplicationController
         songs = songs.where(category: params[:category]) if params[:category].present?
         # get number of matching songs post filtering
         records_filtered = songs.count
-        songs = songs.select('id, artist, tempo, key, name, chord_sheet, spotify_uri, category')
+        songs = songs.select('id, artist, tempo, bpm, key, name, chord_sheet, spotify_uri, category, standard_scan')
 
         # reorder
         songs = case params[:sort]
