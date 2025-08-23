@@ -23,6 +23,7 @@ gem 'pg_search'
 gem 'puma'
 gem 'rack-timeout'
 gem 'rails', '7.1.3.1'
+gem 'firebase_id_token' # verify Firebase Google ID tokens for API bearer auth
 gem 'sass-rails', '>= 5' # Use SCSS for stylesheets
 gem 'sdoc', group: :doc # bundle exec rake doc:rails generates the API under doc/api.
 gem 'terser', "~> 1.1" # JS minifier
