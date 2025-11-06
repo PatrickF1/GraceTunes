@@ -9,7 +9,9 @@
 </head>
 <body>
   <%= render 'header' unless @no_header %>
-
+  <div>
+      GraceTunes is shutting down soon. Please use <a href="tunes.acts2.network">Tunes</a> instead.
+  </div>
   <%= render partial: "flash_messages", flash: flash %>
   <%= yield %>
 
